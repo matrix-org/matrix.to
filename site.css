@@ -98,6 +98,11 @@ body {
     display: table-row;
 }
 
+.mxt_HomePage_link_title {
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .mxt_HomePage_link_logo,
 .mxt_HomePage_link_name,
 .mxt_HomePage_link_author,

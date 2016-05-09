@@ -220,6 +220,26 @@ export default React.createClass({
                         </p>
                     </div>
 
+                    <div className="mxt_HomePage_link mxt_HomePage_link_title">
+                        <div className="mxt_HomePage_link_logo">
+                        </div>
+                        <div className="mxt_HomePage_link_name">
+                            Name
+                        </div>
+                        <div className="mxt_HomePage_link_comments">
+                            Description
+                        </div>
+                        <div className="mxt_HomePage_link_author">
+                            Author
+                        </div>
+                        <div className="mxt_HomePage_link_maturity">
+                            Maturity
+                        </div>
+                        <div className="mxt_HomePage_link_link">
+                            Access to <b>{ this.state.entity }</b>
+                        </div>
+                    </div>
+
                     { linkable_clients.map((client) => {
                         var link;
                         if (isRoom && client.room_url) {
