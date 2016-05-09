@@ -19,7 +19,6 @@ import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import HomePage from './HomePage'
-import LinkPage from './LinkPage'
 
 
 export default React.createClass({
