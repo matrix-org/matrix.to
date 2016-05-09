@@ -143,6 +143,8 @@ body {
 }
 
 .mxt_Footer {
+    margin-top: 50px;
+    margin-bottom: 10px;
     text-align: center;
     font-size: 12px;
 }

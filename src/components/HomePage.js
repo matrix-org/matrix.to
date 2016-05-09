@@ -22,9 +22,9 @@ var linkable_clients = [
         logo: "",
         author: "Vector.im",
         homepage: "https://vector.im",
-        room_url: "https://vector.im/beta/#/room/",
-        user_url: "https://vector.im/beta/#/user/",
-        msg_url: "https://vector.im/beta/#/room/",
+        room_url(alias)  { return "https://vector.im/beta/#/room/" + alias },
+        user_url(userId) { return "https://vector.im/beta/#/user/" + userId },
+        msg_url(msg)     { return "https://vector.im/beta/#/room/" + msg },
         maturity: "Late beta",
         comments: "Fully-featured Matrix client for Web, iOS & Android",
     },
@@ -33,20 +33,9 @@ var linkable_clients = [
         logo: "",
         author: "Matrix.org",
         homepage: "https://matrix.org",
-        room_url: "https://matrix.org/beta/#/room/",
-        user_url: null,
+        room_url(alias) { return "https://matrix.org/beta/#/room/" + alias },
         maturity: "Deprecated",
         comments: "The original developer-focused client for Web, iOS & Android",
-    },
-    {
-        name: "PTO (Perpetually Talking Online",
-        logo: "",
-        author: "Torrie Fischer",
-        homepage: "https://pto.im",
-        room_url: "irc://irc.matrix.org/",
-        user_url: null,
-        maturity: "Alpha",
-        comments: "Access any room anywhere in Matrix via good old IRC!",
     },
 ];
 
@@ -57,8 +46,8 @@ var unlinkable_clients = [
         author: "Tor Hveem",
         homepage: "https://github.com/torhve/weechat-matrix-protocol-script",
         maturity: "Late beta",
-        room_instructions: "Type /join $entity",
-        user_instructions: "Type /invite $entity",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
         comments: "Commandline Matrix interface using Weechat",
     },
     {
@@ -67,8 +56,8 @@ var unlinkable_clients = [
         author: "Felix Rohrbach",
         homepage: "https://github.com/Fxrh/Quaternion",
         maturity: "Late alpha",
-        room_instructions: "Type /join $entity",
-        user_instructions: "Type /invite $entity",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
         comments: "Qt5 and C++ cross-platform desktop Matrix client",
     },
     {
@@ -77,8 +66,8 @@ var unlinkable_clients = [
         author: "David A Roberts",
         homepage: "https://github.com/davidar/tensor",
         maturity: "Late alpha",
-        room_instructions: "Type /join $entity",
-        user_instructions: "Type /invite $entity",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
         comments: "QML and JS cross-platform desktop Matrix client",
     },
     {
@@ -87,9 +76,20 @@ var unlinkable_clients = [
         author: "David A Roberts",
         homepage: "https://github.com/davidar/tensor2",
         maturity: "Alpha",
-        room_instructions: "Type /join $entity",
-        user_instructions: "Type /invite $entity",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
         comments: "QML and C++ cross-platform desktop Matrix client",
+    },
+    {
+        name: "PTO (Perpetually Talking Online)",
+        logo: "",
+        author: "Torrie Fischer",
+        homepage: "https://pto.im",
+        //room_url(alias) { return "irc://irc.matrix.org/" + alias },
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
+        maturity: "Alpha",
+        comments: "Access any room anywhere in Matrix via good old IRC!",
     },
     {
         name: "Mclient.el",
@@ -211,6 +211,17 @@ export default React.createClass({
             // maturity: "Late beta",
             // comments: "Fully-featured Matrix client for Web, iOS & Android",
 
+            var description;
+            if (isRoom) {
+                description = <span>the <b>{ this.state.entity }</b> room</span>;
+            }
+            else if (isUser) {
+                description = <span>the user <b>{ this.state.entity }</b></span>;
+            }
+            else if (isMsg) {
+                description = <span><b>this message</b></span>;
+            }
+
             links = (
                 <div key="links" className="mxt_HomePage_links">
                     <div className="mxt_HomePage_links_intro">
@@ -218,7 +229,7 @@ export default React.createClass({
                             Matrix is an ecosystem for open and interoperable communication.
                         </p>
                         <p>
-                            To connect to <b>{ isMsg ? "this message" : this.state.entity }</b>, please select an app:
+                            To connect to { description }, please select an app:
                         </p>
                     </div>
 
@@ -245,13 +256,13 @@ export default React.createClass({
                     { linkable_clients.map((client) => {
                         var link;
                         if (isRoom && client.room_url) {
-                            link = client.room_url + this.state.entity;
+                            link = client.room_url(this.state.entity);
                         }
                         else if (isUser && client.user_url) {
-                            link = client.user_url + this.state.entity;
+                            link = client.user_url(this.state.entity);
                         }
                         else if (isMsg && client.msg_url) {
-                            link = client.msg_url + this.state.entity;
+                            link = client.msg_url(this.state.entity);
                         }
                         if (!link) return <div key={ client.name }/>;
 
@@ -284,13 +295,13 @@ export default React.createClass({
                     { unlinkable_clients.map((client) => {
                         var instructions;
                         if (isRoom && client.room_instructions) {
-                            instructions = client.room_instructions.replace("$entity", this.state.entity);
+                            instructions = client.room_instructions(this.state.entity);
                         }
                         else if (isUser && client.user_instructions) {
-                            instructions = client.user_instructions.replace("$entity", this.state.entity);
+                            instructions = client.user_instructions(this.state.entity);
                         }
                         else if (isMsg && client.msg_instructions) {
-                            instructions = client.msg_instructions.replace("$entity", this.state.entity);
+                            instructions = client.msg_instructions(this.state.entity);
                         }
                         if (!instructions) return <div key={ client.name } />;
 
