@@ -171,17 +171,19 @@ export default React.createClass({
     // XXX: cargo-culted from matrix-react-sdk
     isAliasValid(alias) {
         // XXX: FIXME SPEC-1
-        return (alias.match(/^#([^\/:,]+?):(.+)$/) && encodeURI(alias) === alias);
+        return (alias.match(/^#([^\/:]+?):(.+)$/) && encodeURI(alias) === alias);
     },
 
     isUserIdValid(userId) {
         // XXX: FIXME SPEC-1
-        return (userId.match(/^@([^\/:,]+?):(.+)$/) && encodeURI(userId) === userId);
+        return (userId.match(/^@([^\/:]+?):(.+)$/) && encodeURI(userId) === userId);
     },
 
     isMsglinkValid(msglink) {
         // XXX: FIXME SPEC-1
-        return (msglink.match(/^(\!#)([^\/:,]+?):(.+)\/\$[^\/:,]+?:(.+)$/) && encodeURI(msglink) === msglink);
+        console.log(msglink);
+        console.log(encodeURI(msglink));
+        return (msglink.match(/^[\!#]([^\/:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/) && encodeURI(msglink) === msglink);
     },
 
     render() {
@@ -216,7 +218,7 @@ export default React.createClass({
                             Matrix is an ecosystem for open and interoperable communication.
                         </p>
                         <p>
-                            To connect to <b>{ this.state.entity }</b>, please select an app:
+                            To connect to <b>{ isMsg ? "this message" : this.state.entity }</b>, please select an app:
                         </p>
                     </div>
 
@@ -236,7 +238,7 @@ export default React.createClass({
                             Maturity
                         </div>
                         <div className="mxt_HomePage_link_link">
-                            Access to <b>{ this.state.entity }</b>
+                            Access to <b>{ isMsg ? "message" : this.state.entity }</b>
                         </div>
                     </div>
 
@@ -253,7 +255,6 @@ export default React.createClass({
                         }
                         if (!link) return <div key={ client.name }/>;
 
-                        var link = isRoom ? client.room_url + this.state.entity : client.user_url + this.state.entity;
                         return (
                             <div key={ client.name } className="mxt_HomePage_link">
                                 <div className="mxt_HomePage_link_logo">
