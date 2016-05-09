@@ -117,6 +117,7 @@ export default React.createClass({
             this.setState({
                 entity: null,
                 showLink: false,
+                error: null,
             });
             return;
         }
@@ -131,6 +132,7 @@ export default React.createClass({
         this.setState({
             entity: entity,
             showLink: true,
+            error: null,
         });
     },
 
@@ -162,6 +164,7 @@ export default React.createClass({
         this.setState({
             showLink: true,
             entity: entity,
+            error: null,
         });
     },
 
