@@ -1,0 +1,138 @@
+/*
+Copyright 2016 OpenMarket Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+body {
+    margin: 0px;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    color: #454545;
+    font-size: 15px;
+}
+
+.mxt_Site {
+}
+
+.mxt_Header {
+}
+
+.mxt_Footer {
+}
+
+.mxt_HomePage {
+    margin: auto;
+    max-width: 1000px;
+}
+
+.mxt_HomePage_logo {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: block;
+    margin: auto;
+}
+
+.mxt_HomePage_cta {
+    padding: 50px;
+    padding-bottom: 30px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.mxt_HomePage_inputBox {
+    text-align: center;
+    color: #000;
+    font-size: 24px;
+}
+
+.mxt_HomePage_inputBox_prompt {
+    display: inline;
+    font-size: 24px;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    margin-right: 5px;
+}
+
+.mxt_HomePage_inputBox_button {
+    display: inline;
+    border: 0px solid;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    padding: 7px 14px 7px 14px;
+    margin: 5px;
+    background-color: #454545;
+    color: #fff;
+    font-weight: bold;
+}
+
+.mxt_HomePage_error {
+    background-color: #f88;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid #f00;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 20px;
+    width: 50%;
+    font-size: 18px;
+}
+
+.mxt_HomePage_links {
+    margin-top: 50px;
+}
+
+.mxt_HomePage_links_intro {
+    font-size: 16px;
+}
+
+.mxt_HomePage_link {
+    display: table-row;
+}
+
+.mxt_HomePage_link_logo,
+.mxt_HomePage_link_name,
+.mxt_HomePage_link_author,
+.mxt_HomePage_link_maturity,
+.mxt_HomePage_link_link,
+.mxt_HomePage_link_instructions,
+.mxt_HomePage_link_comments {
+    display: table-cell;
+    padding: 5px;
+}
+
+.mxt_HomePage_link_logo {
+}
+
+.mxt_HomePage_link_name {
+}
+
+.mxt_HomePage_link_author {
+}
+
+.mxt_HomePage_link_homepage {
+    font-size: 12px;
+}
+
+.mxt_HomePage_link_maturity {
+}
+
+.mxt_HomePage_link_link {
+}
+
+.mxt_HomePage_link_instructions {
+}
+
+.mxt_HomePage_link_comments {
+}
+
+.mxt_HomePage_info {
+}
