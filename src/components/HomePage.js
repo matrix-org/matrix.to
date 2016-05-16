@@ -19,7 +19,7 @@ import React from 'react'
 var linkable_clients = [
     {
         name: "Vector",
-        logo: "",
+        logo: "img/vector-48px.png",
         author: "Vector.im",
         homepage: "https://vector.im",
         room_url(alias)  { return "https://vector.im/beta/#/room/" + alias },
@@ -30,7 +30,7 @@ var linkable_clients = [
     },
     {
         name: "Matrix Console",
-        logo: "",
+        logo: "img/console-48px.png",
         author: "Matrix.org",
         homepage: "https://matrix.org",
         room_url(alias) { return "https://matrix.org/beta/#/room/" + alias },
@@ -42,7 +42,7 @@ var linkable_clients = [
 var unlinkable_clients = [
     {
         name: "Weechat",
-        logo: "",
+        logo: "img/weechat-48px.png",
         author: "Tor Hveem",
         homepage: "https://github.com/torhve/weechat-matrix-protocol-script",
         maturity: "Late beta",
@@ -52,7 +52,7 @@ var unlinkable_clients = [
     },
     {
         name: "Quaternion",
-        logo: "",
+        logo: "img/quaternion-48px.png",
         author: "Felix Rohrbach",
         homepage: "https://github.com/Fxrh/Quaternion",
         maturity: "Late alpha",
@@ -62,7 +62,7 @@ var unlinkable_clients = [
     },
     {
         name: "Tensor",
-        logo: "",
+        logo: "img/tensor-48px.png",
         author: "David A Roberts",
         homepage: "https://github.com/davidar/tensor",
         maturity: "Late alpha",
@@ -72,7 +72,7 @@ var unlinkable_clients = [
     },
     {
         name: "Tensor2",
-        logo: "",
+        logo: "img/tensor-48px.png",
         author: "David A Roberts",
         homepage: "https://github.com/davidar/tensor2",
         maturity: "Alpha",
@@ -82,7 +82,7 @@ var unlinkable_clients = [
     },
     {
         name: "PTO (Perpetually Talking Online)",
-        logo: "",
+        logo: "img/pto-48px.png",
         author: "Torrie Fischer",
         homepage: "https://pto.im",
         //room_url(alias) { return "irc://irc.matrix.org/" + alias },
@@ -389,6 +389,11 @@ export default React.createClass({
                         Links are designed to be human-friendly, both for reading and constructing, and are
                         essentially a compatibility step in the journey towards
                         a <a href="https://matrix.org/jira/browse/SPEC-5">ubiquitous mx://</a> URL scheme.
+                    </p>
+                    <p>
+                        As with all of Matrix, Matrix.to is released as open source under the terms of
+                        the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> - get the source
+                        from <a href="https://github.com/matrix-org/matrix.to">Github</a>.
                     </p>
                 </div>
             </div>

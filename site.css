@@ -115,6 +115,9 @@ body {
 }
 
 .mxt_HomePage_link_logo {
+    vertical-align: top;
+    text-align: center;
+    padding-right: 15px;
 }
 
 .mxt_HomePage_link_name {
