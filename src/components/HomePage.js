@@ -249,7 +249,7 @@ export default React.createClass({
                             Maturity
                         </div>
                         <div className="mxt_HomePage_link_link">
-                            Access to <b>{ isMsg ? "message" : this.state.entity }</b>
+                            Access { isMsg ? "message" : <b>{ this.state.entity }</b> }
                         </div>
                     </div>
 
