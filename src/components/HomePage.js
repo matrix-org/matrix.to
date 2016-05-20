@@ -125,7 +125,7 @@ export default React.createClass({
         if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isMsglinkValid(entity)) {
             this.setState({
                 entity: entity,
-                error: "Invalid room alias, user ID or message permalink",
+                error: "Invalid room alias, user ID or message permalink '" + entity + "'",
             });
             return;
         }
