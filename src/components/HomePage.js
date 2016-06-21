@@ -23,6 +23,7 @@ var linkable_clients = [
         author: "Vector.im",
         homepage: "https://vector.im",
         room_url(alias)  { return "https://vector.im/beta/#/room/" + alias },
+        room_id_url(id)  { return "https://vector.im/beta/#/room/" + id },
         user_url(userId) { return "https://vector.im/beta/#/user/" + userId },
         msg_url(msg)     { return "https://vector.im/beta/#/room/" + msg },
         maturity: "Late beta",
@@ -34,6 +35,7 @@ var linkable_clients = [
         author: "Matrix.org",
         homepage: "https://matrix.org",
         room_url(alias) { return "https://matrix.org/beta/#/room/" + alias },
+        room_id_url(id) { return "https://matrix.org/beta/#/room/" + id },
         maturity: "Deprecated",
         comments: "The original developer-focused client for Web, iOS & Android",
     },
@@ -122,7 +124,7 @@ export default React.createClass({
             return;
         }
 
-        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isMsglinkValid(entity)) {
+        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isMsglinkValid(entity) && !this.isRoomIdValid(entity)) {
             this.setState({
                 entity: entity,
                 error: "Invalid room alias, user ID or message permalink '" + entity + "'",
@@ -174,6 +176,11 @@ export default React.createClass({
         return (alias.match(/^#([^\/:]+?):(.+)$/) && encodeURI(alias) === alias);
     },
 
+    isRoomIdValid(id) {
+        // XXX: FIXME SPEC-1
+        return (id.match(/^!([^\/:]+?):(.+)$/) && encodeURI(id) === id);
+    },
+
     isUserIdValid(userId) {
         // XXX: FIXME SPEC-1
         return (userId.match(/^@([^\/:]+?):(.+)$/) && encodeURI(userId) === userId);
@@ -197,6 +204,7 @@ export default React.createClass({
             var link = "https://matrix.to/#/" + this.state.entity;
 
             var isRoom = this.isAliasValid(this.state.entity);
+            var isRoomId = this.isRoomIdValid(this.state.entity);
             var isUser = this.isUserIdValid(this.state.entity);
             var isMsg = this.isMsglinkValid(this.state.entity);
 
@@ -257,6 +265,9 @@ export default React.createClass({
                         var link;
                         if (isRoom && client.room_url) {
                             link = client.room_url(this.state.entity);
+                        }
+                        else if (isRoomId && client.room_id_url) {
+                            link = client.room_id_url(this.state.entity);
                         }
                         else if (isUser && client.user_url) {
                             link = client.user_url(this.state.entity);

@@ -29,12 +29,16 @@ The matrix.to URL scheme is:
 | Entity type: | Example URL                                                       |
 |--------------|-------------------------------------------------------------------|
 | Rooms:       | https://matrix.to/#/#matrix:matrix.org                            |
+| Rooms by ID: | https://matrix.to/#/!cURbafjkfsMDVwdRDQ:matrix.org                |
 | Users:       | https://matrix.to/#/@matthew:matrix.org                           |
 | Messages:    | https://matrix.to/#/#matrix:matrix.org/$1448831580433WbpiJ:jki.re |
 
 The #/ component is optional, and exists to avoid leaking the target URL to the
 server hosting matrix.to.  https://matrix.to/@matthew:matrix.org works too, and
 provides better legibility at the expense of privacy.
+
+Note that linking to rooms by ID should only be used for rooms to which the target
+user has been invited: these links cannot be assumed to work for all visitors.
 
 (Technically the # and @ in the URL fragment should probably be escaped, but in
 practice for legibility we bend the rules and include it verbatim)
