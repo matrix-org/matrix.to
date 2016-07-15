@@ -114,7 +114,7 @@ export default React.createClass({
     },
 
     onHashChange() {
-        var entity = window.location.hash.substr(2); // strip off #/ prefix
+        var entity = unescape(window.location.hash.substr(2)); // strip off #/ prefix
         if (!entity) {
             this.setState({
                 entity: null,
