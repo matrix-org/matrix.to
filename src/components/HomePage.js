@@ -18,15 +18,15 @@ import React from 'react'
 
 var linkable_clients = [
     {
-        name: "Vector",
-        logo: "img/vector-48px.png",
-        author: "Vector.im",
-        homepage: "https://vector.im",
-        room_url(alias)  { return "https://vector.im/beta/#/room/" + alias },
-        room_id_url(id)  { return "https://vector.im/beta/#/room/" + id },
-        user_url(userId) { return "https://vector.im/beta/#/user/" + userId },
-        msg_url(msg)     { return "https://vector.im/beta/#/room/" + msg },
-        maturity: "Late beta",
+        name: "Riot",
+        logo: "img/riot-48px.png",
+        author: "Vector Creations",
+        homepage: "https://riot.im",
+        room_url(alias)  { return "https://riot.im/app/#/room/" + alias },
+        room_id_url(id)  { return "https://riot.im/app/#/room/" + id },
+        user_url(userId) { return "https://riot.im/app/#/user/" + userId },
+        msg_url(msg)     { return "https://riot.im/app/#/room/" + msg },
+        maturity: "Stable",
         comments: "Fully-featured Matrix client for Web, iOS & Android",
     },
     {
