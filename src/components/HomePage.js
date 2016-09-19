@@ -275,7 +275,7 @@ export default React.createClass({
                         else if (isMsg && client.msg_url) {
                             link = client.msg_url(this.state.entity);
                         }
-                        if (!link) return <div key={ client.name }/>;
+                        if (!link) return null;
 
                         return (
                             <div key={ client.name } className="mxt_HomePage_link">
@@ -314,7 +314,7 @@ export default React.createClass({
                         else if (isMsg && client.msg_instructions) {
                             instructions = client.msg_instructions(this.state.entity);
                         }
-                        if (!instructions) return <div key={ client.name } />;
+                        if (!instructions) return null;
 
                         return (
                             <div key={ client.name } className="mxt_HomePage_link">
