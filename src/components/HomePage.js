@@ -234,7 +234,7 @@ export default React.createClass({
                 <div key="links" className="mxt_HomePage_links">
                     <div className="mxt_HomePage_links_intro">
                         <p>
-                            Matrix is an ecosystem for open and interoperable communication.
+                            <a href="https://matrix.org">Matrix</a> is an ecosystem for open and interoperable communication.
                         </p>
                         <p>
                             To connect to { description }, please select an app:
