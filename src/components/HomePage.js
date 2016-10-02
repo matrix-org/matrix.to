@@ -73,16 +73,6 @@ var unlinkable_clients = [
         comments: "QML and JS cross-platform desktop Matrix client",
     },
     {
-        name: "Tensor2",
-        logo: "img/tensor-48px.png",
-        author: "David A Roberts",
-        homepage: "https://github.com/davidar/tensor2",
-        maturity: "Alpha",
-        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        comments: "QML and C++ cross-platform desktop Matrix client",
-    },
-    {
         name: "PTO (Perpetually Talking Online)",
         logo: "img/pto-48px.png",
         author: "Torrie Fischer",
