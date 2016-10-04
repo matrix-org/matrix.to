@@ -90,6 +90,16 @@ var unlinkable_clients = [
         homepage: "http://fort.kickass.systems:10082/cgit/personal/rrix/pub/matrix.el.git/",
         maturity: "Alpha",
         comments: "Matrix client for Gnu Emacs",
+    },
+    {
+        name: "NaChat",
+        logo: "",
+        author: "Benjamin Saunders",
+        homepage: "https://github.com/Ralith/nachat",
+        maturity: "Alpha",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
+        comments: "Qt5 and C++ cross-platform desktop Matrix client",
     }
 ];
 
