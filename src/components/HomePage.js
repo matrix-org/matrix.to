@@ -73,15 +73,14 @@ var unlinkable_clients = [
         comments: "QML and JS cross-platform desktop Matrix client",
     },
     {
-        name: "PTO (Perpetually Talking Online)",
-        logo: "img/pto-48px.png",
-        author: "Torrie Fischer",
-        homepage: "https://pto.im",
-        //room_url(alias) { return "irc://irc.matrix.org/" + alias },
+        name: "NaChat",
+        logo: "img/nachat.svg",
+        author: "Benjamin Saunders",
+        homepage: "https://github.com/Ralith/nachat",
+        maturity: "Alpha",
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        maturity: "Alpha",
-        comments: "Access any room anywhere in Matrix via good old IRC!",
+        comments: "Qt5 and C++ cross-platform desktop Matrix client",
     },
     {
         name: "Mclient.el",
@@ -92,15 +91,16 @@ var unlinkable_clients = [
         comments: "Matrix client for Gnu Emacs",
     },
     {
-        name: "NaChat",
-        logo: "",
-        author: "Benjamin Saunders",
-        homepage: "https://github.com/Ralith/nachat",
-        maturity: "Alpha",
+        name: "PTO (Perpetually Talking Online)",
+        logo: "img/pto-48px.png",
+        author: "Torrie Fischer",
+        homepage: "https://pto.im",
+        //room_url(alias) { return "irc://irc.matrix.org/" + alias },
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        comments: "Qt5 and C++ cross-platform desktop Matrix client",
-    }
+        maturity: "Alpha",
+        comments: "Access any room anywhere in Matrix via good old IRC!",
+    },
 ];
 
 export default React.createClass({
