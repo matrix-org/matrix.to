@@ -77,7 +77,7 @@ var unlinkable_clients = [
         logo: "img/nachat.svg",
         author: "Benjamin Saunders",
         homepage: "https://github.com/Ralith/nachat",
-        maturity: "Alpha",
+        maturity: "Late alpha",
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
         comments: "Qt5 and C++ cross-platform desktop Matrix client",
