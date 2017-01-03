@@ -399,7 +399,7 @@ export default React.createClass({
                     <p>
                         Links are designed to be human-friendly, both for reading and constructing, and are
                         essentially a compatibility step in the journey towards
-                        a <a href="https://matrix.org/jira/browse/SPEC-5">ubiquitous mx://</a> URL scheme.
+                        a <a href="https://github.com/matrix-org/matrix-doc/issues/455">ubiquitous mx://</a> URL scheme.
                     </p>
                     <p>
                         As with all of Matrix, Matrix.to is released as open source under the terms of
