@@ -30,6 +30,16 @@ var linkable_clients = [
         comments: "Fully-featured Matrix client for Web, iOS & Android",
     },
     {
+        name: "Matrix-Static",
+        logo: "img/matrix-static-48px.png",
+        author: "Michael Telatynski",
+        homepage: "https://github.com/t3chguy/matrix-static",
+        //room_url(alias) { return "https://view.matrix.org/alias/" + alias },
+        room_id_url(id) { return "https://view.matrix.org/room/" + id },
+        maturity: "Stable",
+        comments: "A static golang generated preview of public world readable Matrix rooms.",
+    }
+    {
         name: "Matrix Console",
         logo: "img/console-48px.png",
         author: "Matrix.org",
