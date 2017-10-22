@@ -93,6 +93,15 @@ var unlinkable_clients = [
         comments: "Qt5 and C++ cross-platform desktop Matrix client",
     },
     {
+        name: "Nheko",
+        logo: "img/nheko.png",
+        author: "Konstantinos Sideris",
+        homepage: "https://github.com/mujx/nheko",
+        maturity: "Late alpha",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        comments: "Qt5 and C++ desktop client",
+    },
+    {
         name: "Mclient.el",
         logo: "",
         author: "Ryan Rix",
