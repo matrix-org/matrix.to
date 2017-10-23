@@ -372,7 +372,7 @@ export default React.createClass({
             prompt = [
                 <div key="inputBox" className="mxt_HomePage_inputBox">
                     <form onSubmit={ this.onSubmit }>
-                        <input autoFocus className="mxt_HomePage_inputBox_prompt" value={ this.state.entity } ref="prompt" size="36" type="text" value={ this.state.value } placeholder="#room:domain.com or @user:domain.com" />
+                        <input autoFocus className="mxt_HomePage_inputBox_prompt" value={ this.state.entity } ref="prompt" size="36" type="text" placeholder="#room:domain.com or @user:domain.com" />
                         <input className="mxt_HomePage_inputBox_button" type="submit" value="Get link!" />
                     </form>
                     { error }
