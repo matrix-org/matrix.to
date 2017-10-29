@@ -120,6 +120,15 @@ var unlinkable_clients = [
         maturity: "Alpha",
         comments: "Access any room anywhere in Matrix via good old IRC!",
     },
+    {
+        name: "uMatriks",
+        logo: "img/uMatriks-256px.png",
+        author: "LarreaMikel",
+        homepage: "https://github.com/LarreaMikel/uMatriks",
+        maturity: "0.7",
+        room_instructions(alias)  { return <span>Type <code><b>{ alias }</b></code></span> },
+        comments: "uMatriks is a Matrix protocol client for Ubuntu Touch.",
+    },
 ];
 
 export default React.createClass({
