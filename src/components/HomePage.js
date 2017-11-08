@@ -126,6 +126,8 @@ var unlinkable_clients = [
         author: "LarreaMikel",
         homepage: "https://github.com/LarreaMikel/uMatriks",
         maturity: "Alpha",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
         comments: "uMatriks is a Matrix protocol client for Ubuntu Touch.",
     },
 ];
