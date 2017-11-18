@@ -109,6 +109,15 @@ var unlinkable_clients = [
         homepage: "http://fort.kickass.systems:10082/cgit/personal/rrix/pub/matrix.el.git/",
         maturity: "Alpha",
         comments: "Matrix client for Gnu Emacs",
+    },
+    {
+        name: "Matrix IRCd",
+        logo: "img/ircd-48px.png",
+        author: "matrix.org",
+        homepage: "https://github.com/matrix-org/matrix-ircd",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        maturity: "Alpha",
+        comments: "Access any room anywhere in Matrix via good old IRC!",
     }
 ];
 
