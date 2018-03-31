@@ -30,16 +30,12 @@ var linkable_clients = [
         maturity: "Stable",
         comments: "Fully-featured Matrix client for Web, iOS & Android",
     },
-    {
-        name: "Matrix Console",
-        logo: "img/console-48px.png",
-        author: "Matrix.org",
-        homepage: "https://matrix.org",
-        room_url(alias) { return "https://matrix.org/beta/#/room/" + alias },
-        room_id_url(id) { return "https://matrix.org/beta/#/room/" + id },
-        maturity: "Deprecated",
-        comments: "The original developer-focused client for Web, iOS & Android",
-    },
+
+
+
+
+
+
     {
         name: "Matrix-Static",
         logo: "img/matrix-static-48px.png",
