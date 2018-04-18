@@ -111,6 +111,13 @@ var unlinkable_clients = [
         comments: "Matrix client for Gnu Emacs",
     },
     {
+        name: "Fractal",
+        logo: "img/org.gnome.Fractal.svg",
+        author: "Daniel Garcia Moreno",
+        maturity: "Alpha",
+        comments: "Matrix messaging app for GNOME written in Rust"
+    }
+    {
         name: "Matrix IRCd",
         logo: "img/ircd-48px.png",
         author: "matrix.org",
