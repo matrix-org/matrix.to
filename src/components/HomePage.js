@@ -116,7 +116,7 @@ var unlinkable_clients = [
         author: "Daniel Garcia Moreno",
         maturity: "Alpha",
         comments: "Matrix messaging app for GNOME written in Rust"
-    }
+    },
     {
         name: "Matrix IRCd",
         logo: "img/ircd-48px.png",
