@@ -45,7 +45,7 @@ var linkable_clients = [
         logo: "img/matrix-static-48px.png",
         author: "Michael Telatynski",
         homepage: "https://github.com/t3chguy/matrix-static",
-        room_url(alias) { return "https://view.matrix.org/alias/" + alias.replace('#', '%23') },
+        room_url(alias) { return "https://view.matrix.org/alias/" + alias.replace(/#/g, '%23') },
         room_id_url(id) { return "https://view.matrix.org/room/" + id },
         maturity: "Stable",
         comments: "A static golang generated preview of public world readable Matrix rooms.",
