@@ -50,6 +50,16 @@ var linkable_clients = [
         maturity: "Stable",
         comments: "A static golang generated preview of public world readable Matrix rooms.",
     },
+    {
+        name: "fluffychat",
+        logo: "img/fluffychat.png",
+        author: "Christian Pauly",
+        homepage: "http://fluffy.chat",
+        room_url(alias) { return "fluffychat://" + alias.replace(/#/g, '%23') },
+        room_id_url(id) { return "fluffychat://" + id },
+        maturity: "Stable",
+        comments: "Chat with your friends from Ubuntu Touch",
+    },
 ];
 
 var unlinkable_clients = [
