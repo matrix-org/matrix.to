@@ -20,7 +20,7 @@ var linkable_clients = [
     {
         name: "Riot",
         logo: "img/riot-48px.png",
-        author: "Vector Creations",
+        author: "New Vector",
         homepage: "https://riot.im",
         room_url(alias)  { return "https://riot.im/app/#/room/" + alias },
         room_id_url(id)  { return "https://riot.im/app/#/room/" + id },
