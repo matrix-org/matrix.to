@@ -43,4 +43,4 @@ user has been invited: these links cannot be assumed to work for all visitors.
 (Technically the # and @ in the URL fragment should probably be escaped, but in
 practice for legibility we bend the rules and include it verbatim)
 
-You can discuss matrix.to in [`#matrix.to:riot.ovh`](https://matrix.to/#/#matrix.to:riot.ovh)
+You can discuss matrix.to in [`#matrix.to:matrix.org`](https://matrix.to/#/#matrix.to:matrix.org)
