@@ -20,12 +20,13 @@ var linkable_clients = [
     {
         name: "Riot",
         logo: "img/riot-48px.png",
-        author: "Vector Creations",
+        author: "New Vector",
         homepage: "https://riot.im",
         room_url(alias)  { return "https://riot.im/app/#/room/" + alias },
         room_id_url(id)  { return "https://riot.im/app/#/room/" + id },
         user_url(userId) { return "https://riot.im/app/#/user/" + userId },
         msg_url(msg)     { return "https://riot.im/app/#/room/" + msg },
+        group_url(group)     { return "https://riot.im/app/#/group/" + group },
         maturity: "Stable",
         comments: "Fully-featured Matrix client for Web, iOS & Android",
     },
@@ -44,7 +45,7 @@ var linkable_clients = [
         logo: "img/matrix-static-48px.png",
         author: "Michael Telatynski",
         homepage: "https://github.com/t3chguy/matrix-static",
-        room_url(alias) { return "https://view.matrix.org/alias/" + alias.replace('#', '%23') },
+        room_url(alias) { return "https://view.matrix.org/alias/" + alias.replace(/#/g, '%23') },
         room_id_url(id) { return "https://view.matrix.org/room/" + id },
         maturity: "Stable",
         comments: "A static golang generated preview of public world readable Matrix rooms.",
@@ -110,13 +111,18 @@ var unlinkable_clients = [
         comments: "Matrix client for Gnu Emacs",
     },
     {
-        name: "PTO (Perpetually Talking Online)",
-        logo: "img/pto-48px.png",
-        author: "Torrie Fischer",
-        homepage: "https://pto.im",
-        //room_url(alias) { return "irc://irc.matrix.org/" + alias },
+        name: "Fractal",
+        logo: "img/org.gnome.Fractal.svg",
+        author: "Daniel Garcia Moreno",
+        maturity: "Alpha",
+        comments: "Matrix messaging app for GNOME written in Rust"
+    },
+    {
+        name: "Matrix IRCd",
+        logo: "img/ircd-48px.png",
+        author: "matrix.org",
+        homepage: "https://github.com/matrix-org/matrix-ircd",
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
         maturity: "Alpha",
         comments: "Access any room anywhere in Matrix via good old IRC!",
     },
@@ -152,10 +158,10 @@ export default React.createClass({
             return;
         }
 
-        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isMsglinkValid(entity) && !this.isRoomIdValid(entity)) {
+        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isMsglinkValid(entity) && !this.isRoomIdValid(entity) && !this.isGroupValid(entity)) {
             this.setState({
                 entity: entity,
-                error: "Invalid room alias, user ID or message permalink '" + entity + "'",
+                error: "Invalid room alias, user ID, message permalink or group '" + entity + "'",
             });
             return;
         }
@@ -184,8 +190,8 @@ export default React.createClass({
         ev.preventDefault();
 
         var entity = this.refs.prompt.value.trim();
-        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity)) {
-            this.setState({ error: "Invalid room alias or user ID" });
+        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isGroupValid(entity)) {
+            this.setState({ error: "Invalid room alias, user ID or group" });
             return;
         }
         var loc = window.location;
@@ -221,6 +227,12 @@ export default React.createClass({
         return (msglink.match(/^[\!#]([^\/:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/) && encodeURI(msglink) === msglink);
     },
 
+    isGroupValid(group) {
+        console.log(group);
+        console.log(encodeURI(group));
+        return (group.match(/^\+([^\/:]+?):(.+)$/) && encodeURI(group) === group);
+    },
+
     render() {
         var error;
         if (this.state.error) {
@@ -235,6 +247,7 @@ export default React.createClass({
             var isRoomId = this.isRoomIdValid(this.state.entity);
             var isUser = this.isUserIdValid(this.state.entity);
             var isMsg = this.isMsglinkValid(this.state.entity);
+            var isGroup = this.isGroupValid(this.state.entity);
 
             var links;
 
@@ -256,6 +269,9 @@ export default React.createClass({
             }
             else if (isMsg) {
                 description = <span><b>this message</b></span>;
+            }
+            else if (isGroup) {
+                description = <span>the <b>{ this.state.entity }</b> group</span>;
             }
 
             links = (
@@ -303,6 +319,9 @@ export default React.createClass({
                         else if (isMsg && client.msg_url) {
                             link = client.msg_url(this.state.entity);
                         }
+                        else if (isGroup && client.group_url) {
+                            link = client.group_url(this.state.entity);
+                        }
                         if (!link) return null;
 
                         return (
@@ -341,6 +360,9 @@ export default React.createClass({
                         }
                         else if (isMsg && client.msg_instructions) {
                             instructions = client.msg_instructions(this.state.entity);
+                        }
+                        else if (isGroup && client.group_instructions) {
+                            instructions = client.group_instructions(this.state.entity);
                         }
                         if (!instructions) return null;
 
@@ -390,7 +412,7 @@ export default React.createClass({
             prompt = [
                 <div key="inputBox" className="mxt_HomePage_inputBox">
                     <form onSubmit={ this.onSubmit }>
-                        <input autoFocus className="mxt_HomePage_inputBox_prompt" value={ this.state.entity } ref="prompt" size="36" type="text" placeholder="#room:domain.com or @user:domain.com" />
+                        <input autoFocus className="mxt_HomePage_inputBox_prompt" value={ this.state.entity } ref="prompt" size="36" type="text" placeholder="#room:example.com, @user:example.com or +group:example.com" />
                         <input className="mxt_HomePage_inputBox_button" type="submit" value="Get link!" />
                     </form>
                     { error }

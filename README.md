@@ -14,7 +14,7 @@ fragment to avoid web clients leaking it to the server.
 
 Matrix.to links are designed to be human-friendly, both for reading and
 constructing, and are essentially a compatibility step in the journey towards a
-ubiquitous mx:// URL scheme (see https://matrix.org/jira/browse/SPEC-5).
+ubiquitous mx:// URL scheme (see https://github.com/matrix-org/matrix-doc/issues/455).
 
 Anyone is welcome to host their own version of the Matrix.to app - Matrix.to is
 **not** a single point of failure on the Matrix ecosystem; if the matrix.to
@@ -42,3 +42,5 @@ user has been invited: these links cannot be assumed to work for all visitors.
 
 (Technically the # and @ in the URL fragment should probably be escaped, but in
 practice for legibility we bend the rules and include it verbatim)
+
+You can discuss matrix.to in [`#matrix.to:matrix.org`](https://matrix.to/#/#matrix.to:matrix.org)
