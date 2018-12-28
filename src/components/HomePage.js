@@ -30,12 +30,6 @@ var linkable_clients = [
         maturity: "Stable",
         comments: "Fully-featured Matrix client for Web, iOS & Android",
     },
-
-
-
-
-
-
     {
         name: "Matrix-Static",
         logo: "img/matrix-static-48px.png",
