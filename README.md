@@ -33,9 +33,8 @@ The matrix.to URL scheme is:
 | Users:       | https://matrix.to/#/@matthew:matrix.org                           |
 | Messages:    | https://matrix.to/#/#matrix:matrix.org/$1448831580433WbpiJ:jki.re |
 
-The #/ component is optional, and exists to avoid leaking the target URL to the
-server hosting matrix.to.  https://matrix.to/@matthew:matrix.org works too, and
-provides better legibility at the expense of privacy.
+The #/ component is mandatory and exists to avoid leaking the target URL to the
+server hosting matrix.to.
 
 Note that linking to rooms by ID should only be used for rooms to which the target
 user has been invited: these links cannot be assumed to work for all visitors.
