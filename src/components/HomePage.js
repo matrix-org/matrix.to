@@ -86,8 +86,8 @@ var unlinkable_clients = [
     {
         name: "Nheko",
         logo: "img/nheko.png",
-        author: "Konstantinos Sideris",
-        homepage: "https://github.com/mujx/nheko",
+        author: "Konstantinos Sideris, Joseph Donofry",
+        homepage: "https://github.com/Nheko-Reborn/nheko",
         maturity: "Late alpha",
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         comments: "Qt5 and C++ desktop client",
