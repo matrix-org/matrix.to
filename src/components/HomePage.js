@@ -46,8 +46,8 @@ var unlinkable_clients = [
     {
         name: "Weechat",
         logo: "img/weechat-48px.png",
-        author: "Tor Hveem",
-        homepage: "https://github.com/torhve/weechat-matrix-protocol-script",
+        author: "Poljar",
+        homepage: "https://github.com/poljar/weechat-matrix",
         maturity: "Late beta",
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
