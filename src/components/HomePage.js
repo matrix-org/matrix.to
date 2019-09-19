@@ -19,7 +19,11 @@ import React from 'react'
 var linkable_clients = [
     {
         name: "Riot",
-        logo: "img/riot-48px.png",
+        logo: {
+            width: "48px",
+            src: "img/riot@2x.png",
+            srcSet: "img/riot.png, img/riot@2x.png 2x",
+        },
         author: "New Vector",
         homepage: "https://riot.im",
         room_url(alias)  { return "https://riot.im/app/#/room/" + alias },
@@ -305,10 +309,17 @@ export default React.createClass({
                         }
                         if (!link) return null;
 
+                        let logo;
+                        if (typeof client.logo === "string") {
+                            logo = <img src={client.logo} />;
+                        } else {
+                            logo = <img {...client.logo} />;
+                        }
+
                         return (
                             <div key={ client.name } className="mxt_HomePage_link">
                                 <div className="mxt_HomePage_link_logo">
-                                    <a href={ link }><img src={ client.logo }/></a>
+                                    <a href={ link }>{ logo }</a>
                                 </div>
                                 <div className="mxt_HomePage_link_name">
                                     <a href={ link }>{ client.name }</a>
