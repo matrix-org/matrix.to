@@ -358,10 +358,17 @@ export default React.createClass({
                         }
                         if (!instructions) return null;
 
+                        let logo;
+                        if (typeof client.logo === "string") {
+                            logo = <img src={client.logo} />;
+                        } else {
+                            logo = <img {...client.logo} />;
+                        }
+
                         return (
                             <div key={ client.name } className="mxt_HomePage_link">
                                 <div className="mxt_HomePage_link_logo">
-                                    <a href={ client.homepage }><img src={ client.logo }/></a>
+                                    <a href={ client.homepage }>{ logo }</a>
                                 </div>
                                 <div className="mxt_HomePage_link_name">
                                     <a href={ client.homepage }>{ client.name }</a>
