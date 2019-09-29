@@ -74,16 +74,6 @@ var unlinkable_clients = [
         comments: "QML and JS cross-platform desktop Matrix client",
     },
     {
-        name: "NaChat",
-        logo: "img/nachat.svg",
-        author: "Benjamin Saunders",
-        homepage: "https://github.com/Ralith/nachat",
-        maturity: "Late alpha",
-        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        comments: "Qt5 and C++ cross-platform desktop Matrix client",
-    },
-    {
         name: "Nheko",
         logo: "img/nheko.png",
         author: "Konstantinos Sideris",
