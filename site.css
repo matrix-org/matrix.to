@@ -49,20 +49,26 @@ body {
     font-size: 20px;
 }
 
-.mxt_HomePage_inputBox {
+.mxt_HomePage_inputBox, .mxt_DefaultRiotServer_inputBox {
     text-align: center;
     color: #000;
     font-size: 24px;
 }
 
-.mxt_HomePage_inputBox_prompt {
+.mxt_HomePage_inputBox_prompt, .mxt_DefaultRiotServer_inputBox_prompt {
     display: inline;
     font-size: 24px;
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
     margin-right: 5px;
 }
 
-.mxt_HomePage_inputBox_button {
+.mxt_DefaultRiotServer_inputBox_prompt_set {
+    background-color: #efffee;
+    border: 1px solid transparent;
+    box-shadow: 0 0 10px #afccaa;
+}
+
+.mxt_HomePage_inputBox_button, .mxt_DefaultRiotServer_inputBox_button {
     display: inline;
     border: 0px solid;
     border-radius: 5px;

@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react'
 
+import DefaultRiotServer from './DefaultRiotServer'
+
 var linkable_clients = [
     {
         name: "Riot",
@@ -25,12 +27,13 @@ var linkable_clients = [
             srcSet: "img/riot.png, img/riot@2x.png 2x",
         },
         author: "New Vector",
-        homepage: "https://riot.im",
-        room_url(alias)  { return "https://riot.im/app/#/room/" + alias },
-        room_id_url(id)  { return "https://riot.im/app/#/room/" + id },
-        user_url(userId) { return "https://riot.im/app/#/user/" + userId },
-        msg_url(msg)     { return "https://riot.im/app/#/room/" + msg },
-        group_url(group)     { return "https://riot.im/app/#/group/" + group },
+        homepage: "https://riot.im/",
+        appUrl: "https://riot.im/app",
+        room_url(alias)  { return this.appUrl + "/#/room/" + alias },
+        room_id_url(id)  { return this.appUrl + "/#/room/" + id },
+        user_url(userId) { return this.appUrl + "/#/user/" + userId },
+        msg_url(msg)     { return this.appUrl + "/#/room/" + msg },
+        group_url(group)     { return this.appUrl + "/#/group/" + group },
         maturity: "Stable",
         comments: "Fully-featured Matrix client for Web, iOS & Android",
     },
@@ -223,6 +226,31 @@ export default React.createClass({
             var isUser = this.isUserIdValid(this.state.entity);
             var isMsg = this.isMsglinkValid(this.state.entity);
             var isGroup = this.isGroupValid(this.state.entity);
+
+            var defaultRiotServer = window.localStorage.getItem('defaultRiotServer');
+            if (defaultRiotServer) {
+                var link;
+                var riotClient = linkable_clients[0];
+                riotClient.appUrl = defaultRiotServer;
+                if (isRoom && riotClient.room_url) {
+                    link = riotClient.room_url(this.state.entity);
+                }
+                else if (isRoomId && riotClient.room_id_url) {
+                    link = riotClient.room_id_url(this.state.entity);
+                }
+                else if (isUser && riotClient.user_url) {
+                    link = riotClient.user_url(this.state.entity);
+                }
+                else if (isMsg && riotClient.msg_url) {
+                    link = riotClient.msg_url(this.state.entity);
+                }
+                else if (isGroup && riotClient.group_url) {
+                    link = riotClient.group_url(this.state.entity);
+                }
+                if (link) {
+                    window.location = link;
+                }
+            }
 
             var links;
 
@@ -445,6 +473,16 @@ export default React.createClass({
                         the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> - get the source
                         from <a href="https://github.com/matrix-org/matrix.to">Github</a>.
                     </p>
+
+                    <h3>Set Default Riot server</h3>
+                    <p>
+                        If you would like to automatically redirect to a Riot instance when visiting a Matrix.to link,
+                        You may enter it here. If you do so this, clicking on a share link will automatically redirect
+                        statelessly with JavaScript.  This Riot server is stored only within your browser's local
+                        storage. If you would like to change this, simply visit <a href="/">Matrix.to</a> and you may
+                        update or delete your preferred Riot instance.
+                    </p>
+                    <DefaultRiotServer />
                 </div>
             </div>
         );
