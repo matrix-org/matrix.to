@@ -182,30 +182,34 @@ export default React.createClass({
     // XXX: cargo-culted from matrix-react-sdk
     isAliasValid(alias) {
         // XXX: FIXME SPEC-1
-        return (alias.match(/^#([^\/:]+?):(.+)$/) && encodeURI(alias) === alias);
+        // XXX: MSC1608: Proposal for room alias grammar
+        return (alias.match(/^#([^:]+?):(.+)$/) && encodeURI(alias) === alias);
     },
 
     isRoomIdValid(id) {
         // XXX: FIXME SPEC-1
-        return (id.match(/^!([^\/:]+?):(.+)$/) && encodeURI(id) === id);
+        // XXX: MSC1608: Proposal for room alias grammar
+        return (id.match(/^!([^:]+?):(.+)$/) && encodeURI(id) === id);
     },
 
     isUserIdValid(userId) {
         // XXX: FIXME SPEC-1
-        return (userId.match(/^@([^\/:]+?):(.+)$/) && encodeURI(userId) === userId);
+        // XXX: MSC1608: Proposal for room alias grammar
+        return (userId.match(/^@([^:]+?):(.+)$/) && encodeURI(userId) === userId);
     },
 
     isMsglinkValid(msglink) {
         // XXX: FIXME SPEC-1
+        // XXX: MSC1608: Proposal for room alias grammar
         console.log(msglink);
         console.log(encodeURI(msglink));
-        return (msglink.match(/^[\!#]([^\/:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/) && encodeURI(msglink) === msglink);
+        return (msglink.match(/^[\!#]([^:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/) && encodeURI(msglink) === msglink);
     },
 
     isGroupValid(group) {
         console.log(group);
         console.log(encodeURI(group));
-        return (group.match(/^\+([^\/:]+?):(.+)$/) && encodeURI(group) === group);
+        return (group.match(/^\+([^:]+?):(.+)$/) && encodeURI(group) === group);
     },
 
     render() {
