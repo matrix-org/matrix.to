@@ -1,22 +1,23 @@
 Matrix.to
 ----------
+<img src="https://matrix.to/img/matrix-logo.svg"  width="400"/>
 
 Matrix.to is a simple stateless privacy-protecting URL redirecting service,
 which lets users share links to entities in the Matrix.org ecosystem without
-being tied to any specific app.  This lets users choose their own favourite
+being tied to any specific app.  This lets users choose their favourite
 Matrix client to participate in conversations rather than being forced to use
 the same app as whoever sent the link.
 
 Matrix.to preserves user privacy by not sharing any information about the links
 being followed with the Matrix.to server - the redirection is calculated
-entirely clientside using JavaScript, and the link details is hidden behind a
+entirely clientside using JavaScript, and the link detail is hidden behind a
 fragment to avoid web clients leaking it to the server.
 
 Matrix.to links are designed to be human-friendly, both for reading and
 constructing, and are essentially a compatibility step in the journey towards a
 ubiquitous mx:// URL scheme (see https://github.com/matrix-org/matrix-doc/issues/455).
 
-Anyone is welcome to host their own version of the Matrix.to app - Matrix.to is
+Anyone is welcome to host their version of the Matrix.to app - Matrix.to is
 **not** a single point of failure on the Matrix ecosystem; if the matrix.to
 deployment ever failed, users could trivially copy the room/user/message details
 out of the URLs and follow them manually, or change the hostname to point at an
