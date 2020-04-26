@@ -63,16 +63,22 @@ body {
 }
 
 .mxt_HomePage_inputBox_button {
+    margin: 5px;
+}
+
+.mxt_HomePage_button {
     display: inline;
     border: 0px solid;
     border-radius: 5px;
     font-size: 20px;
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
     padding: 7px 14px 7px 14px;
-    margin: 5px;
     background-color: #454545;
     color: #fff;
     font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
 }
 
 .mxt_HomePage_error {
@@ -104,39 +110,28 @@ body {
 }
 
 .mxt_HomePage_link_logo,
-.mxt_HomePage_link_name,
 .mxt_HomePage_link_author,
 .mxt_HomePage_link_maturity,
-.mxt_HomePage_link_link,
 .mxt_HomePage_link_instructions,
 .mxt_HomePage_link_comments {
     display: table-cell;
     padding: 5px;
+    vertical-align: middle;
 }
 
 .mxt_HomePage_link_logo {
-    vertical-align: top;
     text-align: center;
-    padding-right: 15px;
-}
-
-.mxt_HomePage_link_name {
 }
 
 .mxt_HomePage_link_author {
 }
 
-.mxt_HomePage_link_homepage {
-    font-size: 12px;
-}
-
 .mxt_HomePage_link_maturity {
 }
 
-.mxt_HomePage_link_link {
-}
-
 .mxt_HomePage_link_instructions {
+    white-space: nowrap;
+    padding-right: 15px;
 }
 
 .mxt_HomePage_link_comments {

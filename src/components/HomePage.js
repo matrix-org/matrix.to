@@ -249,34 +249,36 @@ export default React.createClass({
                 description = <span>the <b>{ this.state.entity }</b> group</span>;
             }
 
+            let connectBlurb;
+            if (description) {
+                connectBlurb = <p>To connect to { description }, please select an app:</p>;
+            }
+            else {
+                connectBlurb = <p>To connect, please select an app:</p>;
+            }
+
             links = (
                 <div key="links" className="mxt_HomePage_links">
                     <div className="mxt_HomePage_links_intro">
                         <p>
                             <a href="https://matrix.org">Matrix</a> is an ecosystem for open and interoperable communication.
                         </p>
-                        <p>
-                            To connect to { description }, please select an app:
-                        </p>
+                        { connectBlurb }
                     </div>
 
                     <div className="mxt_HomePage_link mxt_HomePage_link_title">
+                        <div className="mxt_HomePage_link_instructions">
+                            Select an app
+                        </div>
                         <div className="mxt_HomePage_link_logo">
-                        </div>
-                        <div className="mxt_HomePage_link_name">
-                            Name
-                        </div>
+                        </div> 
                         <div className="mxt_HomePage_link_comments">
-                            Description
                         </div>
-                        <div className="mxt_HomePage_link_author">
+                       <div className="mxt_HomePage_link_author">
                             Author
                         </div>
                         <div className="mxt_HomePage_link_maturity">
                             Maturity
-                        </div>
-                        <div className="mxt_HomePage_link_link">
-                            Access { isMsg ? "message" : <b>{ this.state.entity }</b> }
                         </div>
                     </div>
 
@@ -308,16 +310,14 @@ export default React.createClass({
 
                         return (
                             <div key={ client.name } className="mxt_HomePage_link">
-                                <div className="mxt_HomePage_link_logo">
-                                    <a href={ link }>{ logo }</a>
+                                <div className="mxt_HomePage_link_instructions">
+                                    <a href={ link } className="mxt_HomePage_button">Use { client.name }</a>
                                 </div>
-                                <div className="mxt_HomePage_link_name">
-                                    <a href={ link }>{ client.name }</a>
-                                    <div className="mxt_HomePage_link_homepage">
-                                        <a href={ client.homepage }>{ client.homepage }</a>
-                                    </div>
+                                <div className="mxt_HomePage_link_logo">
+                                    { logo }
                                 </div>
                                 <div className="mxt_HomePage_link_comments">
+                                    <span><a href={ client.homepage }>{ client.name }</a>: </span>
                                     { client.comments }
                                 </div>
                                 <div className="mxt_HomePage_link_author">
@@ -325,9 +325,6 @@ export default React.createClass({
                                 </div>
                                 <div className="mxt_HomePage_link_maturity">
                                     { client.maturity }
-                                </div>
-                                <div className="mxt_HomePage_link_link">
-                                    <a href={ link }>{ link }</a>
                                 </div>
                             </div>
                         );
@@ -357,16 +354,15 @@ export default React.createClass({
 
                         return (
                             <div key={ client.name } className="mxt_HomePage_link">
-                                <div className="mxt_HomePage_link_logo">
-                                    <a href={ client.homepage }>{ logo }</a>
+                                <div className="mxt_HomePage_link_instructions">
+                                    <span>Using { client.name }: </span><br/>
+                                    <span>{ instructions }</span>
                                 </div>
-                                <div className="mxt_HomePage_link_name">
-                                    <a href={ client.homepage }>{ client.name }</a>
-                                    <div className="mxt_HomePage_link_homepage">
-                                        <a href={ client.homepage }>{ client.homepage }</a>
-                                    </div>
+                                <div className="mxt_HomePage_link_logo">
+                                    { logo }
                                 </div>
                                 <div className="mxt_HomePage_link_comments">
+                                    <span><a href={ client.homepage }>{ client.name }</a>: </span>
                                     { client.comments }
                                 </div>
                                 <div className="mxt_HomePage_link_author">
@@ -375,34 +371,25 @@ export default React.createClass({
                                 <div className="mxt_HomePage_link_maturity">
                                     { client.maturity }
                                 </div>
-                                <div className="mxt_HomePage_link_instructions">
-                                    { instructions }
-                                </div>
                             </div>
                         );
                     })}
-
-                    <p>
-                        To add clients to this list, <a href="https://matrix.to/#/#matrix-dev:matrix.org">please contact us</a> or
-                        simply send us a pull request <a href="https://github.com/matrix-org/matrix.to">on github</a>!
-                    </p>
                 </div>
             );
 
-            prompt = [
-                <div key="inputbox" className="mxt_HomePage_inputBox">
-                    <a href={ link } className="mxt_HomePage_inputBox_link">{ link }</a>
-                    { error }
-                </div>,
-                links
-            ];
+            if (error) {
+                prompt = [error, links];
+            }
+            else {
+                prompt = [ links ];
+            }
         }
         else {
             prompt = [
                 <div key="inputBox" className="mxt_HomePage_inputBox">
                     <form onSubmit={ this.onSubmit }>
                         <input autoFocus className="mxt_HomePage_inputBox_prompt" value={ this.state.entity } ref="prompt" size="36" type="text" placeholder="#room:example.com, @user:example.com or +group:example.com" />
-                        <input className="mxt_HomePage_inputBox_button" type="submit" value="Get link!" />
+                        <input className="mxt_HomePage_inputBox_button mxt_HomePage_button" type="submit" value="Get link!" />
                     </form>
                     { error }
                 </div>,
@@ -444,6 +431,10 @@ export default React.createClass({
                         As with all of Matrix, Matrix.to is released as open source under the terms of
                         the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> - get the source
                         from <a href="https://github.com/matrix-org/matrix.to">Github</a>.
+                    </p>
+                    <p>
+                        To add clients to the list, <a href="https://matrix.to/#/#matrix-dev:matrix.org">please contact us</a> or
+                        simply send us a pull request <a href="https://github.com/matrix-org/matrix.to">on github</a>!
                     </p>
                 </div>
             </div>
