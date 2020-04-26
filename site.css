@@ -137,6 +137,17 @@ body {
 .mxt_HomePage_link_comments {
 }
 
+.mxt_HomePage_otherLink {
+    margin-top: 25px;
+}
+
+.mxt_HomePage_otherLink_entity {
+    font-size: 12px;
+    font-family: monospace;
+    text-decoration: none;
+    color: #454545;
+}
+
 .mxt_HomePage_info {
 }
 

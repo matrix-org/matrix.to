@@ -377,11 +377,15 @@ export default React.createClass({
                 </div>
             );
 
+            var otherLink = (
+                <div className="mxt_HomePage_otherLink">Connect URL: <a className="mxt_HomePage_otherLink_entity" href={ link }>{ link }</a></div>
+            );
+
             if (error) {
-                prompt = [error, links];
+                prompt = [ error, links, otherLink ];
             }
             else {
-                prompt = [ links ];
+                prompt = [ links, otherLink ];
             }
         }
         else {
