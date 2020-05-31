@@ -44,6 +44,16 @@ var linkable_clients = [
         maturity: "Stable",
         comments: "A static golang generated preview of public world readable Matrix rooms.",
     },
+    {
+        name: "Telegram",
+        logo: "https://tiny.cc/telegramicon",
+        author: "Pavel Durov",
+        homepage: "https://telegram.org",
+        room_url(alias) { return "https://telegram.me/" + alias.replace(/#/g, '') },
+        room_id_url(id) { return "https://telegram.me/" + id },
+        maturity: "Alpha",
+        comments: "Possibly bridged room to Telegram Messenger with the same name, try at own risk",
+    },
 ];
 
 var unlinkable_clients = [
