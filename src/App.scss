@@ -14,18 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import "./App.scss";
-
-import SingleColumn from "./layouts/SingleColumn";
-
-function App() {
-  return (
-    <SingleColumn>
-      <div className="topSpacer" />
-      <div className="bottomSpacer" />
-    </SingleColumn>
-  );
+@mixin spacer {
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
-export default App;
+.topSpacer {
+  @include spacer;
+
+  height: 30vh;
+}
+
+.bottomSpacer {
+  @include spacer;
+
+  height: 10vh;
+}
