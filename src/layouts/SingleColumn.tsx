@@ -15,17 +15,13 @@ limitations under the License.
 */
 
 import React from "react";
-import "./App.scss";
 
-import SingleColumn from "./layouts/SingleColumn";
+import "./SingleColumn.scss";
 
-function App() {
-  return (
-    <SingleColumn>
-      <div className="topSpacer" />
-      <div className="bottomSpacer" />
-    </SingleColumn>
-  );
+interface IProps {
+  children?: React.ReactNode;
 }
 
-export default App;
+export default (props: IProps) => {
+  return <div className="singleColumnLayout">{props.children}</div>;
+};
