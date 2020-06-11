@@ -10,7 +10,8 @@ import {
 
 /*
  * Verifiers are regexes which will match valid
- * identifiers to their type
+ * identifiers to their type. (This is a lie, they
+ * can return anything)
  */
 type Verifier<A> = [RegExp, A];
 export const roomVerifiers: Verifier<
@@ -91,7 +92,7 @@ export function parsePermalink(identifier: string) {
 
 /*
  * descriminate applies the verifiers to the identifier and
- * returns it's type
+ * returns the identifier's type
  */
 export function discriminate<T, F>(
   identifier: string,
@@ -143,9 +144,9 @@ export function parseArgs(args: string): Arguments {
 }
 
 /*
- * toURI converts a parsed link to uri. Typically it's recommended
- * to show the original link if it existed but this is handy in the
- * case where this was constructed.
+ * toURI converts a Link to uri. It's recommended
+ * to use the original link instead of toURI if it existed.
+ * This is handy function in case the Link was constructed.
  */
 export function toURI(hostname: string, link: SafeLink): string {
   const cleanHostname = hostname.trim().replace(/\/+$/, "");
