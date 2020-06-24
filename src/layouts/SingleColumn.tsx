@@ -22,6 +22,8 @@ interface IProps {
   children?: React.ReactNode;
 }
 
-export default (props: IProps) => {
+const SingleColumn: React.FC<IProps> = (props: IProps) => {
   return <div className="singleColumnLayout">{props.children}</div>;
 };
+
+export default SingleColumn;
