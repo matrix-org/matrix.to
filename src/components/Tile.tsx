@@ -19,9 +19,11 @@ import React from "react";
 import "./Tile.scss";
 
 interface IProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
-export default (props: IProps) => {
-  return <div className="tile">{props.children}</div>;
+const Tile: React.FC<IProps> = (props: IProps) => {
+    return <div className="tile">{props.children}</div>;
 };
+
+export default Tile;

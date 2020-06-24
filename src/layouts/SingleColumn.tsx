@@ -19,9 +19,11 @@ import React from "react";
 import "./SingleColumn.scss";
 
 interface IProps {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
-export default (props: IProps) => {
-  return <div className="singleColumnLayout">{props.children}</div>;
+const SingleColumn: React.FC<IProps> = (props: IProps) => {
+    return <div className="singleColumnLayout">{props.children}</div>;
 };
+
+export default SingleColumn;

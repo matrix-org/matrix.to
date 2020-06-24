@@ -20,42 +20,44 @@ import classnames from "classnames";
 import "./Button.scss";
 
 interface IProps extends React.ButtonHTMLAttributes<Element> {
-  // Briefly display these instead of the children onClick
-  flashChildren?: React.ReactNode;
+    // Briefly display these instead of the children onClick
+    flashChildren?: React.ReactNode;
 }
 
 /**
  * Like a normal button except it will flash content when clicked.
  */
-export default ({
-  onClick,
-  children,
-  flashChildren,
-  className,
-  ...restProps
+const Button: React.FC<IProps> = ({
+    onClick,
+    children,
+    flashChildren,
+    className,
+    ...restProps
 }: IProps) => {
-  const [wasClicked, setWasClicked] = React.useState(false);
+    const [wasClicked, setWasClicked] = React.useState(false);
 
-  const wrappedOnClick: React.MouseEventHandler = (e) => {
-    if (onClick) {
-      onClick(e);
-    }
+    const wrappedOnClick: React.MouseEventHandler = (e) => {
+        if (onClick) {
+            onClick(e);
+        }
 
-    setWasClicked(true);
-    window.setTimeout(() => {
-      setWasClicked(false);
-    }, 1000);
-  };
+        setWasClicked(true);
+        window.setTimeout(() => {
+            setWasClicked(false);
+        }, 1000);
+    };
 
-  const content = wasClicked ? flashChildren : children;
+    const content = wasClicked ? flashChildren : children;
 
-  const classNames = classnames("button", className, {
-    buttonHighlight: wasClicked,
-  });
+    const classNames = classnames("button", className, {
+        buttonHighlight: wasClicked,
+    });
 
-  return (
-    <button className={classNames} onClick={wrappedOnClick} {...restProps}>
-      {content}
-    </button>
-  );
+    return (
+        <button className={classNames} onClick={wrappedOnClick} {...restProps}>
+            {content}
+        </button>
+    );
 };
+
+export default Button;
