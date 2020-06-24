@@ -17,11 +17,14 @@ limitations under the License.
 @import "../color-scheme";
 
 .tile {
-  background-color: $background;
+    background-color: $background;
 
-  border-radius: 8px;
-  padding: 1rem;
+    border-radius: 8px;
+    padding: 1rem;
 
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
 }

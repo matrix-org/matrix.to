@@ -18,11 +18,13 @@ import React from "react";
 import "./App.scss";
 
 import SingleColumn from "./layouts/SingleColumn";
+import CreateLinkTile from "./components/CreateLinkTile";
 
 const App: React.FC = () => {
     return (
         <SingleColumn>
             <div className="topSpacer" />
+            <CreateLinkTile />
             <div className="bottomSpacer" />
         </SingleColumn>
     );

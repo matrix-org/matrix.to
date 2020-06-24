@@ -16,20 +16,33 @@ limitations under the License.
 
 import React from "react";
 import classnames from "classnames";
+import { useField } from "formik";
 
-import "./Tile.scss";
+import "./Input.scss";
 
-interface IProps {
-    className?: string;
-    children: React.ReactNode;
+interface IProps extends React.InputHTMLAttributes<Element> {
+    name: string;
+    type: string;
 }
 
-const Tile: React.FC<IProps> = (props: IProps) => {
+const Input: React.FC<IProps> = ({ className, ...props }) => {
+    const [field, meta] = useField(props);
+
+    const error =
+        meta.touched && meta.error ? (
+            <div className="inputError">{meta.error}</div>
+        ) : null;
+
+    const classNames = classnames("input", className, {
+        error: meta.error,
+    });
+
     return (
-        <div className={classnames("tile", props.className)}>
-            {props.children}
-        </div>
+        <>
+            <input type="text" className={classNames} {...field} {...props} />
+            {error}
+        </>
     );
 };
 
-export default Tile;
+export default Input;

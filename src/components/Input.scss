@@ -14,38 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "color-scheme";
+@import "../color-scheme";
+@import "../error";
 
-// CSS reset
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-}
-
-// Styling for universal elements
-
-html,
-body,
-#root {
-    height: 100%;
+.input {
     width: 100%;
+    padding: 12px;
 
-    font-family: Helvetica Neue;
-    font-style: normal;
+    background: $background;
 
-    background-color: $app-background;
-    color: $font;
+    border: 1px solid $font;
+    border-radius: 24px;
+
+    font-size: 14px;
+    line-height: 24px;
+
+    &.error {
+        @include error;
+    }
 }
 
-h1 {
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 32px;
+.inputError {
+    @include error;
     text-align: center;
-}
-
-a {
-    color: $link;
-    text-decoration: none;
 }

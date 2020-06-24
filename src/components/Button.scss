@@ -17,19 +17,19 @@ limitations under the License.
 @import "../color-scheme";
 
 .button {
-  width: 100%;
+    width: 100%;
 
-  padding: 1rem;
-  border-radius: 1000px;
-  border: 0;
+    padding: 1rem;
+    border-radius: 2rem;
+    border: 0;
 
-  background-color: $foreground;
-  color: $background;
+    background-color: $foreground;
+    color: $background;
 
-  font-size: 14px;
-  font-weight: 500px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .buttonHighlight {
-  background-color: $accent;
+    background-color: $accent;
 }

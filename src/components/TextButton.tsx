@@ -14,38 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "color-scheme";
+import React from "react";
+import classnames from "classnames";
 
-// CSS reset
+import "./TextButton.scss";
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-}
-
-// Styling for universal elements
-
-html,
-body,
-#root {
-    height: 100%;
-    width: 100%;
-
-    font-family: Helvetica Neue;
-    font-style: normal;
-
-    background-color: $app-background;
-    color: $font;
-}
-
-h1 {
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
-}
-
-a {
-    color: $link;
-    text-decoration: none;
-}
+const TextButton: React.FC<React.ButtonHTMLAttributes<Element>> = ({
+    className,
+    ...restProps
+}) => {
+    return (
+        <button
+            className={classnames("textButton", className)}
+            {...restProps}
+        />
+    );
+};
+export default TextButton;
