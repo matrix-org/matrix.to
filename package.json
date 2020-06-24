@@ -30,7 +30,7 @@
             "git add"
         ],
         "src/**/*.{json,css,scss,md}": [
-            "prettier --write",
+            "prettier --write --tab-width 4",
             "git add"
         ]
     },

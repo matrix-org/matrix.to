@@ -15,19 +15,19 @@ limitations under the License.
 */
 
 @mixin spacer {
-  width: 100%;
-  flex-grow: 1;
-  flex-shrink: 0;
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
 }
 
 .topSpacer {
-  @include spacer;
+    @include spacer;
 
-  height: 30vh;
+    height: 30vh;
 }
 
 .bottomSpacer {
-  @include spacer;
+    @include spacer;
 
-  height: 10vh;
+    height: 10vh;
 }
