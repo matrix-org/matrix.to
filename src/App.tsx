@@ -20,12 +20,12 @@ import "./App.scss";
 import SingleColumn from "./layouts/SingleColumn";
 
 const App: React.FC = () => {
-  return (
-    <SingleColumn>
-      <div className="topSpacer" />
-      <div className="bottomSpacer" />
-    </SingleColumn>
-  );
+    return (
+        <SingleColumn>
+            <div className="topSpacer" />
+            <div className="bottomSpacer" />
+        </SingleColumn>
+    );
 };
 
 export default App;
