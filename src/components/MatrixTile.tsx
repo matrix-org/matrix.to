@@ -14,20 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+import React from "react";
+import Tile from "./Tile";
 
-.topSpacer {
-    @include spacer;
+import logo from "../imgs/matrix-logo.svg";
 
-    height: 20vh;
-}
+import "./MatrixTile.scss";
 
-.bottomSpacer {
-    @include spacer;
+const MatrixTile: React.FC = () => {
+    return (
+        <Tile className="matrixTile">
+            <img src={logo} alt="matrix-logo" />
+            <div>
+                Matrix.to is a stateless URL redirecting service for the{" "}
+                <a href="https://matrix.org">Matrix</a> ecosystem.
+            </div>
+        </Tile>
+    );
+};
 
-    height: 10vh;
-}
+export default MatrixTile;

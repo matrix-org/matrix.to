@@ -19,12 +19,15 @@ import "./App.scss";
 
 import SingleColumn from "./layouts/SingleColumn";
 import CreateLinkTile from "./components/CreateLinkTile";
+import MatrixTile from "./components/MatrixTile";
 
 const App: React.FC = () => {
     return (
         <SingleColumn>
             <div className="topSpacer" />
             <CreateLinkTile />
+            <hr />
+            <MatrixTile />
             <div className="bottomSpacer" />
         </SingleColumn>
     );

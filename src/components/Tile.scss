@@ -22,9 +22,8 @@ limitations under the License.
     border-radius: 8px;
     padding: 1rem;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    justify-items: center;
 
     text-align: center;
 }

@@ -17,8 +17,9 @@ limitations under the License.
 .createLinkTile {
     background: none;
 
-    > * {
-        margin: 12px 0;
+    row-gap: 24px;
+
+    * {
         width: 100%;
     }
 
@@ -26,5 +27,6 @@ limitations under the License.
         display: grid;
         row-gap: 24px;
         align-self: center;
+        padding: 0 30px;
     }
 }

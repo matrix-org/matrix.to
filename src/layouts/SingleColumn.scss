@@ -6,6 +6,8 @@
 
     max-width: 550px;
 
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    row-gap: 60px;
+
+    align-items: center;
 }

@@ -34,6 +34,9 @@ body,
     font-family: Helvetica Neue;
     font-style: normal;
 
+    font-size: 14px;
+    line-height: 24px;
+
     background-color: $app-background;
     color: $font;
 }
@@ -48,4 +51,9 @@ h1 {
 a {
     color: $link;
     text-decoration: none;
+}
+
+hr {
+    border: 1px solid lighten($grey, 50);
+    margin: 0 40px;
 }
