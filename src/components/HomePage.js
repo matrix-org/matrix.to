@@ -20,8 +20,8 @@ var linkable_clients = [
     {
         name: "Element",
         logo: {
-            width: "64px",
-            src: "img/element-64px.png",
+            width: "48px",
+            src: "img/element.svg",
         },
         author: "Element",
         homepage: "https://element.io",
