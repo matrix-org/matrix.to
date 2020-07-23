@@ -21,13 +21,10 @@ import "./TextButton.scss";
 
 const TextButton: React.FC<React.ButtonHTMLAttributes<Element>> = ({
     className,
-    ...restProps
+    ...props
 }) => {
     return (
-        <button
-            className={classnames("textButton", className)}
-            {...restProps}
-        />
+        <button className={classnames("textButton", className)} {...props} />
     );
 };
 export default TextButton;

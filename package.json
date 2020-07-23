@@ -3,21 +3,11 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@testing-library/jest-dom": "^4.2.4",
-        "@testing-library/react": "^9.3.2",
-        "@testing-library/user-event": "^7.1.2",
-        "@types/classnames": "^2.2.10",
-        "@types/jest": "^24.0.0",
-        "@types/node": "^12.0.0",
-        "@types/react": "^16.9.0",
-        "@types/react-dom": "^16.9.0",
-        "@types/yup": "^0.29.3",
         "classnames": "^2.2.6",
         "formik": "^2.1.4",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-scripts": "3.4.1",
-        "typescript": "~3.7.2",
         "yup": "^0.29.1"
     },
     "scripts": {
@@ -56,10 +46,20 @@
         ]
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
+        "@types/classnames": "^2.2.10",
+        "@types/jest": "^24.0.0",
+        "@types/node": "^12.0.0",
+        "@types/react": "^16.9.0",
+        "@types/react-dom": "^16.9.0",
+        "@types/yup": "^0.29.3",
         "eslint-config-matrix-org": "^0.1.0",
         "husky": "^4.2.5",
         "lint-staged": "^10.2.7",
         "node-sass": "^4.14.1",
-        "prettier": "^2.0.5"
+        "prettier": "^2.0.5",
+        "typescript": "~3.7.2"
     }
 }

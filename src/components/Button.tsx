@@ -31,7 +31,7 @@ const Button: React.FC<
     IProps & React.RefAttributes<HTMLButtonElement>
 > = React.forwardRef(
     (
-        { onClick, children, flashChildren, className, ...restProps }: IProps,
+        { onClick, children, flashChildren, className, ...props }: IProps,
         ref: React.Ref<HTMLButtonElement>
     ) => {
         const [wasClicked, setWasClicked] = React.useState(false);
@@ -58,7 +58,7 @@ const Button: React.FC<
                 className={classNames}
                 onClick={wrappedOnClick}
                 ref={ref}
-                {...restProps}
+                {...props}
             >
                 {content}
             </button>
