@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+.createLinkTile {
+    background: none;
 
-.topSpacer {
-    @include spacer;
+    row-gap: 24px;
 
-    height: 20vh;
-}
+    * {
+        width: 100%;
+    }
 
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
+    > form {
+        display: grid;
+        row-gap: 24px;
+        align-self: center;
+        padding: 0 30px;
+    }
 }

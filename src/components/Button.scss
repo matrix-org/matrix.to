@@ -14,20 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@mixin spacer {
+@import "../color-scheme";
+
+.button {
     width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
+
+    padding: 1rem;
+    border-radius: 2rem;
+    border: 0;
+
+    background-color: $foreground;
+    color: $background;
+
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.topSpacer {
-    @include spacer;
-
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
+.buttonHighlight {
+    background-color: $accent;
 }

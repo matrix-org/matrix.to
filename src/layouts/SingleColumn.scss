@@ -1,11 +1,13 @@
 .singleColumnLayout {
-  height: 100%;
+    height: 100%;
 
-  padding: 0 1em;
-  margin: 0 auto;
+    padding: 0 1em;
+    margin: 0 auto;
 
-  max-width: 550px;
+    max-width: 550px;
 
-  display: flex;
-  flex-direction: column;
+    display: grid;
+    row-gap: 60px;
+
+    align-items: center;
 }

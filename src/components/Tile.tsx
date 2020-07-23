@@ -14,20 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
+import React from "react";
+import classnames from "classnames";
+
+import "./Tile.scss";
+
+interface IProps {
+    className?: string;
+    children: React.ReactNode;
 }
 
-.topSpacer {
-    @include spacer;
+const Tile: React.FC<IProps> = (props: IProps) => {
+    return (
+        <div className={classnames("tile", props.className)}>
+            {props.children}
+        </div>
+    );
+};
 
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
-}
+export default Tile;

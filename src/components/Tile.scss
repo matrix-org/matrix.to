@@ -14,20 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+@import "../color-scheme";
 
-.topSpacer {
-    @include spacer;
+.tile {
+    background-color: $background;
 
-    height: 20vh;
-}
+    border-radius: 8px;
+    padding: 1rem;
 
-.bottomSpacer {
-    @include spacer;
+    display: grid;
+    justify-items: center;
 
-    height: 10vh;
+    text-align: center;
 }
