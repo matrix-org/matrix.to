@@ -415,7 +415,7 @@ export default React.createClass({
         return (
             <div className="mxt_HomePage">
                 <a href="#">
-                    <img className="mxt_HomePage_logo" src="img/matrix-logo.svg" width="352" height="150" alt="[matrix]"/>
+                    <img className="mxt_HomePage_logo" src="img/matrix-logo.svg" width="352" height="150" alt="Matrix"/>
                 </a>
 
                 { prompt }
