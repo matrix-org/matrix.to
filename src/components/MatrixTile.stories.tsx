@@ -14,24 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
+import React from "react";
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+import MatrixTile from "./MatrixTile";
 
-.topSpacer {
-    @include spacer;
+export default { title: "MatrixTile" };
 
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
-}
+export const Default = () => <MatrixTile />;
