@@ -11,7 +11,7 @@ import { addParameters } from '@storybook/react';
 import "../src/index.scss";
 
 addDecorator(
-  storyFn => <div style={{ textAlign: 'center' }}>{storyFn()}</div>
+    storyFn => <div style={{ textAlign: 'center' }}>{storyFn()}</div>
 );
 
 addDecorator(withA11y);
@@ -21,8 +21,8 @@ addDecorator(withKnobs);
 addDecorator(withDesign);
 
 addParameters({
-  backgrounds: [
-    {name: 'light', value: '#F4F4F4'},
-    {name: 'white', value: '#FFFFFF', default: true},
-  ]
+    backgrounds: [
+        {name: 'light', value: '#F4F4F4'},
+        {name: 'white', value: '#FFFFFF', default: true},
+    ],
 });
