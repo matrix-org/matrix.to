@@ -15,7 +15,9 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "lint:fix": "eslint src/**/*.ts src/**/*.tsx --fix"
+        "lint:fix": "eslint src/**/*.ts src/**/*.tsx --fix",
+        "storybook": "start-storybook -p 9009 -s public",
+        "build-storybook": "build-storybook -s public"
     },
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": [
@@ -46,6 +48,16 @@
         ]
     },
     "devDependencies": {
+        "@storybook/addon-a11y": "^5.3.19",
+        "@storybook/addon-actions": "^5.3.19",
+        "@storybook/addon-backgrounds": "^5.3.19",
+        "@storybook/addon-knobs": "^5.3.19",
+        "@storybook/addon-links": "^5.3.19",
+        "@storybook/addon-storysource": "^5.3.19",
+        "@storybook/addon-viewport": "^5.3.19",
+        "@storybook/addons": "^5.3.19",
+        "@storybook/preset-create-react-app": "^3.1.4",
+        "@storybook/react": "^5.3.19",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
@@ -60,6 +72,7 @@
         "lint-staged": "^10.2.7",
         "node-sass": "^4.14.1",
         "prettier": "^2.0.5",
+        "storybook-addon-designs": "^5.4.0",
         "typescript": "~3.7.2"
     }
 }
