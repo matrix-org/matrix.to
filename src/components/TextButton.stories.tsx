@@ -23,8 +23,7 @@ export default {
     parameters: {
         design: {
             type: "figma",
-            url:
-                "https://www.figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=149%3A10756",
+            url: "https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=149%3A10756",
         },
     },
 };
