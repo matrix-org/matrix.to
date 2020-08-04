@@ -21,7 +21,7 @@ export default React.createClass({
     render() {
         return (
             <div className="mxt_Footer">
-                Copyright 2016 - 2019 <a href="https://matrix.org">Matrix.org</a>
+                Copyright 2016 - 2020 <a href="https://matrix.org">Matrix.org</a>
             </div>
         );
     }
