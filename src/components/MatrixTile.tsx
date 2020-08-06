@@ -26,8 +26,8 @@ const MatrixTile: React.FC = () => {
         <Tile className="matrixTile">
             <img src={logo} alt="matrix-logo" />
             <div>
-                Matrix.to is a stateless URL redirecting service for the{" "}
-                <a href="https://matrix.org">Matrix</a> ecosystem.
+                This invite uses <a href="https://matrix.org">Matrix</a>, an
+                open network for secure, decentralized communication.
             </div>
         </Tile>
     );

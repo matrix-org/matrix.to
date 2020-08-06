@@ -14,12 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$app-background: #f4f4f4;
-$background: #ffffff;
-$foreground: #000000;
-$font: #333333;
-$grey: #666666;
-$accent: #0098d4;
-$error: #d6001c;
-$link: #0098d4;
-$borders: #f4f4f4;
+import React from "react";
+import { Room } from "cypher/src/schemas/PublicRoomsSchema";
+import { Event } from "cypher/src/schemas/EventSchema";
+
+import RoomPreview from "./RoomPreview";
+
+interface IProps {
+    room: Room;
+    event: Event;
+}
+
+const EventPreview: React.FC<IProps> = ({ room, event }: IProps) => (
+    <>
+        <RoomPreview room={room} />
+        <p>"{event.content}"</p>
+        <p>{event.sender}</p>
+    </>
+);
+
+export default EventPreview;
