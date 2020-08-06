@@ -14,24 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
+import React from "react";
+import classnames from "classnames";
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+import "./TextButton.scss";
 
-.topSpacer {
-    @include spacer;
-
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
-}
+const TextButton: React.FC<React.ButtonHTMLAttributes<Element>> = ({
+    className,
+    ...props
+}) => {
+    return (
+        <button className={classnames("textButton", className)} {...props} />
+    );
+};
+export default TextButton;

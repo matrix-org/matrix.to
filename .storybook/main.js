@@ -14,24 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
+module.exports = {
+    stories: ['../src/**/*.stories.tsx'],
+    addons: [
+        '@storybook/preset-create-react-app',
+        '@storybook/addon-actions',
+        '@storybook/addon-links',
+        '@storybook/addon-storysource',
+        '@storybook/addon-viewport/register',
+        '@storybook/addon-a11y/register',
+        '@storybook/addon-knobs/register',
+        '@storybook/addon-actions/register',
+        'storybook-addon-designs',
+        '@storybook/addon-backgrounds/register',
+    ],
+};
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
-
-.topSpacer {
-    @include spacer;
-
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
-}

@@ -14,24 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
+.createLinkTile {
+    background: none;
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+    row-gap: 24px;
 
-.topSpacer {
-    @include spacer;
+    * {
+        width: 100%;
+    }
 
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
+    > form {
+        display: grid;
+        row-gap: 24px;
+        align-self: center;
+        padding: 0 30px;
+    }
 }

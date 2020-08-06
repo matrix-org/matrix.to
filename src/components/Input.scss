@@ -14,24 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
+@import "../color-scheme";
+@import "../error";
 
-@mixin spacer {
+.input {
     width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
+    padding: 12px;
+
+    background: $background;
+
+    border: 1px solid $font;
+    border-radius: 24px;
+
+    font-size: 14px;
+    line-height: 24px;
+
+    &.error {
+        @include error;
+    }
 }
 
-.topSpacer {
-    @include spacer;
-
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
+.inputError {
+    @include error;
+    text-align: center;
 }

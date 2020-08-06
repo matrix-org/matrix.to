@@ -14,24 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
+@import "../color-scheme";
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+.tile {
+    background-color: $background;
 
-.topSpacer {
-    @include spacer;
+    border-radius: 8px;
+    padding: 1rem;
 
-    height: 20vh;
-}
+    display: grid;
+    justify-items: center;
 
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
+    text-align: center;
 }

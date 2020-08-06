@@ -14,24 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
+import React from "react";
+import { action } from "@storybook/addon-actions";
+import { text } from "@storybook/addon-knobs";
 
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+import Button from "./Button";
 
-.topSpacer {
-    @include spacer;
+export default { title: "Button" };
 
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
-}
+export const WithText = () => (
+    <Button onClick={action("clicked")}>
+        {text("label", "Hello Story Book")}
+    </Button>
+);

@@ -14,24 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#root {
-    background-color: $app-background;
-}
-
-@mixin spacer {
-    width: 100%;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
-
-.topSpacer {
-    @include spacer;
-
-    height: 20vh;
-}
-
-.bottomSpacer {
-    @include spacer;
-
-    height: 10vh;
+@mixin error {
+    color: $error;
+    border-color: $error;
 }
