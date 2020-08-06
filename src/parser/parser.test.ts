@@ -1,42 +1,36 @@
 import {
-  parseLink,
+  parseHash,
   parsePermalink,
   parseArgs,
   verifiers,
-  discriminate,
-  toURI,
+  identifyTypeFromRegex,
+  toURL,
 } from "./parser";
+
 import { LinkDiscriminator } from "./types";
 
-const curriedDiscriminate = (id: string) =>
-  discriminate(id, verifiers, LinkDiscriminator.ParseFailed);
+function identifierType(id: string) {
+  return identifyTypeFromRegex(id, verifiers, LinkDiscriminator.ParseFailed);
+}
 
 it("types identifiers correctly", () => {
-  expect(curriedDiscriminate("@user:matrix.org")).toEqual(
-    LinkDiscriminator.UserId
+  expect(identifierType("@user:matrix.org")).toEqual(LinkDiscriminator.UserId);
+  expect(identifierType("!room:matrix.org")).toEqual(LinkDiscriminator.RoomId);
+  expect(identifierType("!somewhere:example.org/$event:example.org")).toEqual(
+    LinkDiscriminator.Permalink
   );
-  expect(curriedDiscriminate("!room:matrix.org")).toEqual(
-    LinkDiscriminator.RoomId
-  );
-  expect(
-    curriedDiscriminate("!somewhere:example.org/$event:example.org")
-  ).toEqual(LinkDiscriminator.Permalink);
-  expect(curriedDiscriminate("+group:matrix.org")).toEqual(
+  expect(identifierType("+group:matrix.org")).toEqual(
     LinkDiscriminator.GroupId
   );
-  expect(curriedDiscriminate("#alias:matrix.org")).toEqual(
-    LinkDiscriminator.Alias
-  );
+  expect(identifierType("#alias:matrix.org")).toEqual(LinkDiscriminator.Alias);
 });
 
 it("types garbadge as such", () => {
-  expect(curriedDiscriminate("sdfa;fdlkja")).toEqual(
+  expect(identifierType("sdfa;fdlkja")).toEqual(LinkDiscriminator.ParseFailed);
+  expect(identifierType("$event$matrix.org")).toEqual(
     LinkDiscriminator.ParseFailed
   );
-  expect(curriedDiscriminate("$event$matrix.org")).toEqual(
-    LinkDiscriminator.ParseFailed
-  );
-  expect(curriedDiscriminate("/user:matrix.org")).toEqual(
+  expect(identifierType("/user:matrix.org")).toEqual(
     LinkDiscriminator.ParseFailed
   );
 });
@@ -51,11 +45,13 @@ it("parses sharer", () => {
   expect(parseArgs("sharer=blah")).toHaveProperty("sharer", "blah");
 });
 
-it("parses random args", () => {
-  expect(parseArgs("via=qreqrqwer&banter=2342")).toHaveProperty(
-    "extras.banter",
-    ["2342"]
-  );
+it("parses client", () => {
+  expect(parseArgs("client=blah.com")).toHaveProperty("client", "blah.com");
+});
+
+it("parses federated", () => {
+  expect(parseArgs("federated=true")).toHaveProperty("federated", true);
+  expect(parseArgs("federated=false")).toHaveProperty("federated", false);
 });
 
 it("parses permalinks", () => {
@@ -68,15 +64,15 @@ it("parses permalinks", () => {
 
 it("formats links correctly", () => {
   const bigLink =
-    "!somewhere:example.org/$event:example.org?via=dfasdf&via=jfjafjaf&uselesstag=useless";
-  const host = "matrix.org";
-  const prefix = host + "/#/";
-  const parse = parseLink(bigLink);
+    "!somewhere:example.org/$event:example.org?via=dfasdf&via=jfjafjaf";
+  const origin = "https://matrix.org";
+  const prefix = origin + "/#/";
+  const parse = parseHash(bigLink);
 
   switch (parse.kind) {
     case LinkDiscriminator.ParseFailed:
       fail("Parse failed");
     default:
-      expect(toURI(host, parse)).toEqual(prefix + bigLink);
+      expect(toURL(origin, parse).toString()).toEqual(prefix + bigLink);
   }
 });

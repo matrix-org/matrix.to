@@ -1,4 +1,4 @@
-import _ from "lodash";
+import forEach from "lodash/forEach";
 
 import {
   LinkDiscriminator,
@@ -9,47 +9,23 @@ import {
 } from "./types";
 
 /*
- * Verifiers are regexes which will match valid
- * identifiers to their type. (This is a lie, they
- * can return anything)
- */
-type Verifier<A> = [RegExp, A];
-export const roomVerifiers: Verifier<
-  LinkDiscriminator.Alias | LinkDiscriminator.RoomId
->[] = [
-  [/^#([^\/:]+?):(.+)$/, LinkDiscriminator.Alias],
-  [/^!([^\/:]+?):(.+)$/, LinkDiscriminator.RoomId],
-];
-export const verifiers: Verifier<LinkDiscriminator>[] = [
-  [/^[\!#]([^\/:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/, LinkDiscriminator.Permalink],
-  [/^@([^\/:]+?):(.+)$/, LinkDiscriminator.UserId],
-  [/^\+([^\/:]+?):(.+)$/, LinkDiscriminator.GroupId],
-  ...roomVerifiers,
-];
-
-/*
- * parseLink takes a striped hash link (without the '#/' prefix)
+ * parseLink takes a striped matrix.to hash link (without the '#/' prefix)
  * and parses into a Link. If the parse failed the result will
  * be ParseFailed
  */
-export function parseLink(link: string): Link {
-  const [identifier, args] = link.split("?");
+export function parseHash(hash: string): Link {
+  const [identifier, args] = hash.split("?");
 
-  const kind = discriminate(
+  const kind = identifyTypeFromRegex(
     identifier,
     verifiers,
     LinkDiscriminator.ParseFailed
   );
-  const { vias, sharer, extras } = parseArgs(args);
 
   let parsedLink: LinkContent = {
     identifier,
-    arguments: {
-      vias,
-      sharer,
-      extras,
-    },
-    originalLink: link,
+    arguments: parseArgs(args),
+    originalLink: hash,
   };
 
   if (kind === LinkDiscriminator.Permalink) {
@@ -76,7 +52,7 @@ export function parseLink(link: string): Link {
  */
 export function parsePermalink(identifier: string) {
   const [roomLink, eventId] = identifier.split("/");
-  const roomKind = discriminate(
+  const roomKind = identifyTypeFromRegex(
     roomLink,
     roomVerifiers,
     // This is hacky but we're assuming identifier is a valid permalink
@@ -91,10 +67,84 @@ export function parsePermalink(identifier: string) {
 }
 
 /*
- * descriminate applies the verifiers to the identifier and
+ * parseArgs parses the <extra args> part of matrix.to links
+ */
+export function parseArgs(args: string): Arguments {
+  const params = new URLSearchParams(args);
+  const _federated = params.get("federated");
+  const federated = _federated !== null ? _federated === "true" : null;
+
+  return {
+    vias: params.getAll("via"),
+    federated: bottomExchange(federated),
+    client: bottomExchange(params.get("client")),
+    sharer: bottomExchange(params.get("sharer")),
+  };
+}
+
+/*
+ * Repalces null with undefined
+ */
+function bottomExchange<T>(nullable: T | null): T | undefined {
+  if (nullable === null) return undefined;
+  return nullable;
+}
+
+/*
+ * toURI converts a Link to a url. It's recommended
+ * to use the original link instead of toURI if it existed.
+ * This is handy function in case the Link was constructed.
+ */
+export function toURL(origin: string, link: SafeLink): URL {
+  switch (link.kind) {
+    case LinkDiscriminator.GroupId:
+    case LinkDiscriminator.UserId:
+    case LinkDiscriminator.RoomId:
+    case LinkDiscriminator.Alias:
+    case LinkDiscriminator.Permalink:
+      const params = new URLSearchParams();
+      forEach(link.arguments, (value, key) => {
+        if (value === undefined) {
+          // do nothing
+        } else if (key === "vias") {
+          (<string[]>(<unknown>value)).forEach((via) =>
+            params.append("via", via)
+          );
+        } else {
+          params.append(key, value.toString());
+        }
+      });
+
+      const url = new URL(origin);
+      url.hash = `/${link.identifier}?${params.toString()}`;
+      return url;
+  }
+}
+
+/*
+ * Verifiers are regexes which will match valid
+ * identifiers to their type. (This is a lie, they
+ * can return anything)
+ */
+type Verifier<A> = [RegExp, A];
+export const roomVerifiers: Verifier<
+  LinkDiscriminator.Alias | LinkDiscriminator.RoomId
+>[] = [
+  [/^#([^\/:]+?):(.+)$/, LinkDiscriminator.Alias],
+  [/^!([^\/:]+?):(.+)$/, LinkDiscriminator.RoomId],
+];
+export const verifiers: Verifier<LinkDiscriminator>[] = [
+  [/^[\!#]([^\/:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/, LinkDiscriminator.Permalink],
+  [/^@([^\/:]+?):(.+)$/, LinkDiscriminator.UserId],
+  [/^\+([^\/:]+?):(.+)$/, LinkDiscriminator.GroupId],
+  ...roomVerifiers,
+];
+
+/*
+ * identifyTypeFromRegex applies the verifiers to the identifier and
  * returns the identifier's type
  */
-export function discriminate<T, F>(
+export function identifyTypeFromRegex<T, F>(
   identifier: string,
   verifiers: Verifier<T>[],
   fail: F
@@ -114,63 +164,4 @@ export function discriminate<T, F>(
 
     return discriminator;
   }, fail);
-}
-
-/*
- * parseArgs parses the <extra args> part of matrix.to links
- */
-export function parseArgs(args: string): Arguments {
-  const parsedArgTuples = _.groupBy(
-    args
-      .split("&")
-      .map((x) => x.split("="))
-      .filter((x) => x.length == 2),
-    (arg) => {
-      return arg[0];
-    }
-  );
-
-  const parsedArgs = _.mapValues(parsedArgTuples, (arg) =>
-    arg.map((x) => x[1])
-  );
-
-  const { via, sharer, ...extras } = parsedArgs;
-
-  return {
-    vias: via,
-    sharer: (parsedArgs.sharer || [undefined])[0],
-    extras,
-  };
-}
-
-/*
- * toURI converts a Link to uri. It's recommended
- * to use the original link instead of toURI if it existed.
- * This is handy function in case the Link was constructed.
- */
-export function toURI(hostname: string, link: SafeLink): string {
-  const cleanHostname = hostname.trim().replace(/\/+$/, "");
-  switch (link.kind) {
-    case LinkDiscriminator.GroupId:
-    case LinkDiscriminator.UserId:
-    case LinkDiscriminator.RoomId:
-    case LinkDiscriminator.Alias:
-    case LinkDiscriminator.Permalink:
-      const uri = encodeURI(cleanHostname + "/#/" + link.identifier);
-      const vias = link.arguments.vias.map((s) => "via=" + s).join("&");
-      const sharer = link.arguments.sharer
-        ? "sharer=" + link.arguments.sharer
-        : "";
-      const extras = _.map(link.arguments.extras, (vals, key) =>
-        vals.map((v) => key + "=" + v).join("&")
-      ).join("&");
-
-      const args = [vias, sharer, extras].filter(Boolean).join("&");
-
-      if (args) {
-        return uri + "?" + args;
-      }
-
-      return uri;
-  }
 }

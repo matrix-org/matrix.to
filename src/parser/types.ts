@@ -1,10 +1,13 @@
-import _ from "lodash";
-
 export interface Arguments {
   vias: string[];
-  // Either one of the enums or a custom link
-  sharer: string;
-  extras: { [key: string]: string[] };
+  // Schemeless http identifier
+  client?: string;
+  // Indicates whether a room exists on a federating server (assumed to be the
+  // default), or if the client must connect via the server identified by the
+  // room ID or event ID
+  federated?: boolean;
+  // MXID
+  sharer?: string;
 }
 
 export interface LinkContent {
