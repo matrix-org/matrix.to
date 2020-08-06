@@ -25,8 +25,7 @@ export default {
     parameters: {
         design: {
             type: "figma",
-            url:
-                "https://www.figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=59%3A1",
+            url: "https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=59%3A1",
         },
     },
     decorators: [withDesign],
