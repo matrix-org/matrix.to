@@ -63,6 +63,7 @@
         "@testing-library/user-event": "^7.1.2",
         "@types/classnames": "^2.2.10",
         "@types/jest": "^24.0.0",
+        "@types/lodash": "^4.14.159",
         "@types/node": "^12.0.0",
         "@types/react": "^16.9.0",
         "@types/react-dom": "^16.9.0",
@@ -73,6 +74,7 @@
         "node-sass": "^4.14.1",
         "prettier": "^2.0.5",
         "storybook-addon-designs": "^5.4.0",
+        "ts-jest": "^26.1.4",
         "typescript": "~3.7.2"
     }
 }
