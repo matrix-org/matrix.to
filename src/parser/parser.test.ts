@@ -25,7 +25,7 @@ it("types identifiers correctly", () => {
   expect(identifierType("#alias:matrix.org")).toEqual(LinkDiscriminator.Alias);
 });
 
-it("types garbadge as such", () => {
+it("types garbage as such", () => {
   expect(identifierType("sdfa;fdlkja")).toEqual(LinkDiscriminator.ParseFailed);
   expect(identifierType("$event$matrix.org")).toEqual(
     LinkDiscriminator.ParseFailed
