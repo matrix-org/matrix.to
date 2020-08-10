@@ -21,11 +21,13 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { withDesign } from 'storybook-addon-designs'
 import { addParameters } from '@storybook/react';
 
+import SingleColumn from '../src/layouts/SingleColumn';
+
 // Default styles
 import "../src/index.scss";
 
 addDecorator(
-    storyFn => <div style={{ textAlign: 'center' }}>{storyFn()}</div>
+    storyFn => <SingleColumn>{storyFn()}</SingleColumn>
 );
 
 addDecorator(withA11y);
@@ -36,8 +38,8 @@ addDecorator(withDesign);
 
 addParameters({
     backgrounds: [
-        {name: 'light', value: '#F4F4F4'},
-        {name: 'white', value: '#FFFFFF', default: true},
+        {name: 'light', value: '#F4F4F4', default: true},
+        {name: 'white', value: '#FFFFFF'},
     ],
 });
 

@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$app-background: #f4f4f4;
-$background: #ffffff;
-$foreground: #000000;
-$font: #333333;
-$grey: #666666;
-$accent: #0098d4;
-$error: #d6001c;
-$link: #0098d4;
-$borders: #f4f4f4;
+import React from "react";
+import classnames from "classnames";
+
+import "./Button.scss";
+
+interface IProps extends React.LinkHTMLAttributes<HTMLElement> {}
+
+const LinkButton: React.FC<IProps> = ({ className, ...props }: IProps) => (
+    <a className={classnames("button", className)} {...props} />
+);
+
+export default LinkButton;

@@ -19,11 +19,15 @@ limitations under the License.
 .tile {
     background-color: $background;
 
-    border-radius: 8px;
-    padding: 1rem;
+    border-radius: 16px;
+    padding: 2rem;
 
     display: grid;
     justify-items: center;
 
     text-align: center;
+
+    p {
+        color: $grey;
+    }
 }

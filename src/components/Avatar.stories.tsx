@@ -14,12 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$app-background: #f4f4f4;
-$background: #ffffff;
-$foreground: #000000;
-$font: #333333;
-$grey: #666666;
-$accent: #0098d4;
-$error: #d6001c;
-$link: #0098d4;
-$borders: #f4f4f4;
+import React from "react";
+
+import { UserAvatar } from "./Avatar";
+
+export default {
+    title: "Avatar",
+    parameters: {
+        design: {
+            type: "figma",
+            url:
+                "https://www.figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=143%3A5853",
+        },
+    },
+};
+
+export const Default: React.FC<{}> = () => (
+    <UserAvatar
+        user={{
+            avatar_url: "mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf",
+            displayname: "Jorik Schellekens",
+        }}
+    />
+);
