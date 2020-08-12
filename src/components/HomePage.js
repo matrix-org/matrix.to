@@ -108,6 +108,14 @@ var unlinkable_clients = [
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         maturity: "Alpha",
         comments: "Access any room anywhere in Matrix via good old IRC!",
+    },
+    {
+        name: "Pattle",
+        logo: "img/pattle-48px.png",
+        author: "Wilko Manger",
+        homepage: "https://pattle.im/",
+        maturity: "Alpha",
+        comments: "Pattle is an easy to use Android app for Matrix, with design inspired by other popular IM apps.",
     }
 ];
 
