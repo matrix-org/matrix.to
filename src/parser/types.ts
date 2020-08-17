@@ -49,6 +49,5 @@ export interface ParseFailed {
     originalLink: string;
 }
 
+export type Link = Alias | RoomId | UserId | Permalink | GroupId | ParseFailed;
 export type SafeLink = Alias | RoomId | UserId | Permalink | GroupId;
-
-export type Link = SafeLink | ParseFailed;

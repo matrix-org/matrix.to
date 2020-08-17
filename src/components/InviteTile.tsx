@@ -16,39 +16,32 @@ limitations under the License.
 
 import React from "react";
 
+import "./InviteTile.scss";
+
 import Tile from "./Tile";
 import LinkButton from "./LinkButton";
 import TextButton from "./TextButton";
-
-import "./InviteTile.scss";
-
-export interface InviteLink {
-    type: "link";
-    link: string;
-}
-
-export interface InviteInstruction {
-    type: "instruction";
-    text: string;
-}
-
-type InviteAction = InviteLink | InviteInstruction;
+import { Client, ClientKind } from "../clients/types";
+import { SafeLink } from "../parser/types";
 
 interface IProps {
     children?: React.ReactNode;
-    inviteAction: InviteAction;
+    client: Client;
+    link: SafeLink;
 }
 
-const InviteTile: React.FC<IProps> = ({ children, inviteAction }: IProps) => {
+const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
     let invite: React.ReactNode;
-    switch (inviteAction.type) {
-        case "link":
+    switch (client.kind) {
+        case ClientKind.LINKED_CLIENT:
             invite = (
-                <LinkButton href={inviteAction.link}>Accept invite</LinkButton>
+                <LinkButton href={client.toUrl(link).toString()}>
+                    Accept invite
+                </LinkButton>
             );
             break;
-        case "instruction":
-            invite = <p>{inviteAction.text}</p>;
+        case ClientKind.TEXT_CLIENT:
+            invite = <p>{client.toInviteString(link)}</p>;
             break;
     }
 

@@ -20,4 +20,4 @@ import MatrixTile from "./MatrixTile";
 
 export default { title: "MatrixTile" };
 
-export const Default = () => <MatrixTile />;
+export const Default: React.FC = () => <MatrixTile />;

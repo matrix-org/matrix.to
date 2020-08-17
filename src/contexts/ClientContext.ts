@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 
-import { Client, discoverServer } from "cypher";
-import { prefixFetch } from "cypher/src/utils/fetch";
+import { prefixFetch, Client, discoverServer } from "matrix-cypher";
 
 type State = {
     clientURL: string;
@@ -62,4 +61,8 @@ export const reducer = async (state: State, action: Action): Promise<State> => {
 
 // The null is a hack to make the type checker happy
 // create context does not need an argument
-export default React.createContext<typeof reducer | null>(null);
+const { Provider, Consumer } = React.createContext<typeof reducer | null>(null);
+
+// Quick rename to make importing easier
+export const ClientProvider = Provider;
+export const ClientConsumer = Consumer;

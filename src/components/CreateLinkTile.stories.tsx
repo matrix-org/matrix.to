@@ -29,4 +29,4 @@ export default {
     },
 };
 
-export const Default = () => <CreateLinkTile />;
+export const Default: React.FC = () => <CreateLinkTile />;

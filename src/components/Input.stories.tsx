@@ -32,8 +32,8 @@ export default {
     decorators: [withDesign],
 };
 
-export const Default = () => (
-    <Formik initialValues={{}} onSubmit={() => {}}>
+export const Default: React.FC = () => (
+    <Formik initialValues={{}} onSubmit={(): void => {}}>
         <Form>
             <Input
                 name="Example input"

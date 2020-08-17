@@ -16,9 +16,9 @@ limitations under the License.
 
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import { convertMXCtoMediaQuery } from "cypher";
-import { Room } from "cypher/src/schemas/PublicRoomsSchema";
-import { User } from "cypher/src/schemas/UserSchema";
+import { Room, User } from "matrix-cypher";
+
+import { convertMXCtoMediaQuery } from "../utils/cypher-wrapper";
 import logo from "../imgs/matrix-logo.svg";
 
 import "./Avatar.scss";
@@ -38,7 +38,7 @@ const Avatar: React.FC<IProps> = ({ className, avatarUrl, label }: IProps) => {
     return (
         <img
             src={src}
-            onError={(_) => setSrc(logo)}
+            onError={(): void => setSrc(logo)}
             alt={label}
             className={classNames("avatar", className)}
         />
@@ -47,18 +47,24 @@ const Avatar: React.FC<IProps> = ({ className, avatarUrl, label }: IProps) => {
 
 interface IPropsUserAvatar {
     user: User;
+    userId: string;
 }
 
 export const UserAvatar: React.FC<IPropsUserAvatar> = ({
     user,
+    userId,
 }: IPropsUserAvatar) => (
     <Avatar
-        avatarUrl={convertMXCtoMediaQuery(
-            // TODO: replace with correct client
-            "matrix.org",
+        avatarUrl={
             user.avatar_url
-        )}
-        label={user.displayname}
+                ? convertMXCtoMediaQuery(
+                      // TODO: replace with correct client
+                      "https://matrix.org",
+                      user.avatar_url
+                  )
+                : ""
+        }
+        label={user.displayname ? user.displayname : userId}
     />
 );
 
@@ -74,7 +80,7 @@ export const RoomAvatar: React.FC<IPropsRoomAvatar> = ({
             room.avatar_url
                 ? convertMXCtoMediaQuery(
                       // TODO: replace with correct client
-                      "matrix.org",
+                      "https://matrix.org",
                       room.avatar_url
                   )
                 : ""
