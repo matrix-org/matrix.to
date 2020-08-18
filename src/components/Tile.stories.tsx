@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React from 'react';
 
-import Tile from "./Tile";
+import Tile from './Tile';
 
 export default {
-    title: "Tile",
+    title: 'Tile',
     parameters: {
         design: {
-            type: "figma",
+            type: 'figma',
             url:
-                "https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=143%3A5853",
+                'https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=143%3A5853',
         },
     },
 };

@@ -13,12 +13,12 @@ export interface LinkContent {
 }
 
 export enum LinkKind {
-    Alias = "ALIAS",
-    RoomId = "ROOM_ID",
-    UserId = "USER_ID",
-    Permalink = "PERMALINK",
-    GroupId = "GROUP_ID",
-    ParseFailed = "PARSE_FAILED",
+    Alias = 'ALIAS',
+    RoomId = 'ROOM_ID',
+    UserId = 'USER_ID',
+    Permalink = 'PERMALINK',
+    GroupId = 'GROUP_ID',
+    ParseFailed = 'PARSE_FAILED',
 }
 
 export interface Alias extends LinkContent {

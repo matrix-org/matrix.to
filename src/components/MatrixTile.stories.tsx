@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React from 'react';
 
-import MatrixTile from "./MatrixTile";
+import MatrixTile from './MatrixTile';
 
-export default { title: "MatrixTile" };
+export default { title: 'MatrixTile' };
 
 export const Default: React.FC = () => <MatrixTile />;

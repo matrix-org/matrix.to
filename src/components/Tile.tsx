@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import classnames from "classnames";
+import React from 'react';
+import classnames from 'classnames';
 
-import "./Tile.scss";
+import './Tile.scss';
 
 interface IProps {
     className?: string;
@@ -26,7 +26,7 @@ interface IProps {
 
 const Tile: React.FC<IProps> = (props: IProps) => {
     return (
-        <div className={classnames("tile", props.className)}>
+        <div className={classnames('tile', props.className)}>
             {props.children}
         </div>
     );

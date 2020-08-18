@@ -14,41 +14,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+// disable camelcase check because our object keys come
+// from the matrix spec
+/* eslint-disable @typescript-eslint/camelcase */
 
-import InviteTile from "./InviteTile";
-import UserPreview, { InviterPreview } from "./UserPreview";
-import RoomPreview, { RoomPreviewWithTopic } from "./RoomPreview";
-import Clients from "../clients";
-import { LinkKind, SafeLink } from "../parser/types";
+import React from 'react';
+
+import InviteTile from './InviteTile';
+import UserPreview, { InviterPreview } from './UserPreview';
+import RoomPreview, { RoomPreviewWithTopic } from './RoomPreview';
+import Clients from '../clients';
+import { LinkKind, SafeLink } from '../parser/types';
 
 export default {
-    title: "InviteTile",
+    title: 'InviteTile',
     parameters: {
         design: {
-            type: "figma",
+            type: 'figma',
             url:
-                "https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=59%3A334",
+                'https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=59%3A334',
         },
     },
 };
 
 const userLink: SafeLink = {
     kind: LinkKind.UserId,
-    identifier: "@jorik:matrix.org",
+    identifier: '@jorik:matrix.org',
     arguments: {
         vias: [],
     },
-    originalLink: "asdfsadf",
+    originalLink: 'asdfsadf',
 };
 
 const roomLink: SafeLink = {
     kind: LinkKind.Alias,
-    identifier: "#element-dev:matrix.org",
+    identifier: '#element-dev:matrix.org',
     arguments: {
         vias: [],
     },
-    originalLink: "asdfsadf",
+    originalLink: 'asdfsadf',
 };
 
 export const withLink: React.FC<{}> = () => (
@@ -67,8 +71,8 @@ export const withUserPreview: React.FC<{}> = () => (
     <InviteTile client={Clients[0]} link={userLink}>
         <UserPreview
             user={{
-                avatar_url: "mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf",
-                displayname: "Nicholas Briteli",
+                avatar_url: 'mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf',
+                displayname: 'Nicholas Briteli',
             }}
             userId="@nicholasbritelli:matrix.org"
         />
@@ -79,13 +83,13 @@ export const withRoomPreviewAndRoomTopic: React.FC<{}> = () => (
     <InviteTile client={Clients[0]} link={roomLink}>
         <RoomPreviewWithTopic
             room={{
-                aliases: ["#murrays:cheese.bar"],
-                avatar_url: "mxc://bleeker.street/CHEDDARandBRIE",
+                aliases: ['#murrays:cheese.bar'],
+                avatar_url: 'mxc://bleeker.street/CHEDDARandBRIE',
                 guest_can_join: false,
-                name: "CHEESE",
+                name: 'CHEESE',
                 num_joined_members: 37,
-                room_id: "!ol19s:bleecker.street",
-                topic: "Tasty tasty cheese",
+                room_id: '!ol19s:bleecker.street',
+                topic: 'Tasty tasty cheese',
                 world_readable: true,
             }}
         />
@@ -96,20 +100,20 @@ export const withRoomPreviewAndInviter: React.FC<{}> = () => (
     <InviteTile client={Clients[0]} link={roomLink}>
         <InviterPreview
             user={{
-                avatar_url: "mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf",
-                displayname: "Nicholas Briteli",
+                avatar_url: 'mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf',
+                displayname: 'Nicholas Briteli',
             }}
             userId="@nicholasbritelli:matrix.org"
         />
         <RoomPreview
             room={{
-                aliases: ["#murrays:cheese.bar"],
-                avatar_url: "mxc://bleeker.street/CHEDDARandBRIE",
+                aliases: ['#murrays:cheese.bar'],
+                avatar_url: 'mxc://bleeker.street/CHEDDARandBRIE',
                 guest_can_join: false,
-                name: "CHEESE",
+                name: 'CHEESE',
                 num_joined_members: 37,
-                room_id: "!ol19s:bleecker.street",
-                topic: "Tasty tasty cheese",
+                room_id: '!ol19s:bleecker.street',
+                topic: 'Tasty tasty cheese',
                 world_readable: true,
             }}
         />

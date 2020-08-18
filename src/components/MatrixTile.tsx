@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import Tile from "./Tile";
+import React from 'react';
+import Tile from './Tile';
 
-import logo from "../imgs/matrix-logo.svg";
+import logo from '../imgs/matrix-logo.svg';
 
-import "./MatrixTile.scss";
+import './MatrixTile.scss';
 
 const MatrixTile: React.FC = () => {
     return (

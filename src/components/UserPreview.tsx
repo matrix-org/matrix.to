@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { User } from "matrix-cypher";
+import React from 'react';
+import { User } from 'matrix-cypher';
 
-import { UserAvatar } from "./Avatar";
+import { UserAvatar } from './Avatar';
 
-import "./UserPreview.scss";
+import './UserPreview.scss';
 
 interface IProps {
     user: User;

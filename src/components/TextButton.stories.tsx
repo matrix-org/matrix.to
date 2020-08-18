@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React from 'react';
 
-import TextButton from "./TextButton";
+import TextButton from './TextButton';
 
 export default {
-    title: "TextButton",
+    title: 'TextButton',
     parameters: {
         design: {
-            type: "figma",
+            type: 'figma',
             url:
-                "https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=149%3A10756",
+                'https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=149%3A10756',
         },
     },
 };

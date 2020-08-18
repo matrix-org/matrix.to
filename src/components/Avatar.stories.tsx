@@ -14,17 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+// disable camelcase check because our object keys come
+// from the matrix spec
+/* eslint-disable @typescript-eslint/camelcase */
 
-import { UserAvatar } from "./Avatar";
+import React from 'react';
+
+import { UserAvatar } from './Avatar';
 
 export default {
-    title: "Avatar",
+    title: 'Avatar',
     parameters: {
         design: {
-            type: "figma",
+            type: 'figma',
             url:
-                "https://www.figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=143%3A5853",
+                'https://www.figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=143%3A5853',
         },
     },
 };
@@ -32,8 +36,8 @@ export default {
 export const Default: React.FC<{}> = () => (
     <UserAvatar
         user={{
-            avatar_url: "mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf",
-            displayname: "Jorik Schellekens",
+            avatar_url: 'mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf',
+            displayname: 'Jorik Schellekens',
         }}
         userId="@jorik:matrix.org"
     />

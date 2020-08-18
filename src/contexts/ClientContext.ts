@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React from 'react';
 
-import { prefixFetch, Client, discoverServer } from "matrix-cypher";
+import { prefixFetch, Client, discoverServer } from 'matrix-cypher';
 
 type State = {
     clientURL: string;
@@ -25,8 +25,8 @@ type State = {
 
 // Actions are a discriminated union.
 export enum ActionTypes {
-    AddClient = "ADD_CLIENT",
-    RemoveClient = "REMOVE_CLIENT",
+    AddClient = 'ADD_CLIENT',
+    RemoveClient = 'REMOVE_CLIENT',
 }
 
 export interface AddClient {

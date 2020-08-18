@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// disable camelcase check because our object keys come
+// from the matrix spec
+/* eslint-disable @typescript-eslint/camelcase */
+
 import {
     Client,
     Room,
@@ -23,8 +27,8 @@ import {
     searchPublicRooms,
     getUserDetails,
     convertMXCtoMediaQuery,
-} from "matrix-cypher";
-import { LinkKind, Permalink } from "../parser/types";
+} from 'matrix-cypher';
+import { LinkKind, Permalink } from '../parser/types';
 
 /* This is a collection of methods for providing fallback metadata
  * for cypher queries
@@ -55,13 +59,13 @@ export const fallbackRoom = ({
     const roomAlias_ = roomAlias ? roomAlias : identifier;
     return {
         aliases: [roomAlias_],
-        topic: "Unable to find room details.",
+        topic: 'Unable to find room details.',
         canonical_alias: roomAlias_,
         name: roomAlias_,
         num_joined_members: 0,
         room_id: roomId_,
         guest_can_join: true,
-        avatar_url: "",
+        avatar_url: '',
         world_readable: false,
     };
 };
@@ -140,15 +144,15 @@ export async function getRoomFromPermalink(
  */
 export function getMediaQueryFromMCX(mxc?: string): string {
     if (!mxc) {
-        return "";
+        return '';
     }
     try {
         return convertMXCtoMediaQuery(
             // TODO: replace with correct client
-            "https://matrix.org",
+            'https://matrix.org',
             mxc
         );
     } catch {
-        return "";
+        return '';
     }
 }

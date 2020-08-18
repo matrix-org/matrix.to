@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef } from "react";
-import Tile from "./Tile";
-import Button from "./Button";
-import TextButton from "./TextButton";
-import Input from "./Input";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
+import React, { useEffect, useRef } from 'react';
+import Tile from './Tile';
+import Button from './Button';
+import TextButton from './TextButton';
+import Input from './Input';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
-import "./CreateLinkTile.scss";
+import './CreateLinkTile.scss';
 
 interface ILinkNotCreatedTileProps {
     setLink: React.Dispatch<React.SetStateAction<string>>;
@@ -39,31 +39,31 @@ const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
             </h1>
             <Formik
                 initialValues={{
-                    identifier: "",
+                    identifier: '',
                 }}
                 validationSchema={Yup.object({
                     identifier: Yup.string()
                         .test(
-                            "is-identifier",
+                            'is-identifier',
                             "That link doesn't look right. Double check the details.",
                             (link) => link
                         )
-                        .required("Required"),
+                        .required('Required'),
                 })}
                 onSubmit={(values): void => {
                     props.setLink(
                         document.location.protocol +
-                            "//" +
+                            '//' +
                             document.location.host +
-                            "/" +
+                            '/' +
                             values.identifier
                     );
                 }}
             >
                 <Form>
                     <Input
-                        name={"identifier"}
-                        type={"text"}
+                        name={'identifier'}
+                        type={'text'}
                         placeholder="#room:example.com, @user:example.com"
                     />
                     <Button type="submit">Get Link</Button>
@@ -90,12 +90,12 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
 
     return (
         <Tile className="createLinkTile">
-            <TextButton onClick={(): void => props.setLink("")}>
+            <TextButton onClick={(): void => props.setLink('')}>
                 Create another lnk
             </TextButton>
             <h1>{props.link}</h1>
             <Button
-                flashChildren={"Copied"}
+                flashChildren={'Copied'}
                 onClick={(): void => {
                     navigator.clipboard.writeText(props.link);
                 }}
@@ -108,7 +108,7 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
 };
 
 const CreateLinkTile: React.FC = () => {
-    const [link, setLink] = React.useState("");
+    const [link, setLink] = React.useState('');
     console.log(link);
     if (!link) {
         return <LinkNotCreatedTile setLink={setLink} />;

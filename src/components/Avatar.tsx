@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
-import classNames from "classnames";
-import { Room, User } from "matrix-cypher";
+import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import { Room, User } from 'matrix-cypher';
 
-import { getMediaQueryFromMCX } from "../utils/cypher-wrapper";
-import logo from "../imgs/matrix-logo.svg";
+import { getMediaQueryFromMCX } from '../utils/cypher-wrapper';
+import logo from '../imgs/matrix-logo.svg';
 
-import "./Avatar.scss";
+import './Avatar.scss';
 
 interface IProps {
     className?: string;
@@ -40,7 +40,7 @@ const Avatar: React.FC<IProps> = ({ className, avatarUrl, label }: IProps) => {
             src={src}
             onError={(): void => setSrc(logo)}
             alt={label}
-            className={classNames("avatar", className)}
+            className={classNames('avatar', className)}
         />
     );
 };

@@ -14,21 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useEffect } from "react";
-import { getEvent, client } from "matrix-cypher";
+import React, { useState, useEffect } from 'react';
+import { getEvent, client } from 'matrix-cypher';
 
-import { RoomPreviewWithTopic } from "./RoomPreview";
-import InviteTile from "./InviteTile";
-import { SafeLink, LinkKind } from "../parser/types";
-import UserPreview from "./UserPreview";
-import EventPreview from "./EventPreview";
-import Clients from "../clients";
+import { RoomPreviewWithTopic } from './RoomPreview';
+import InviteTile from './InviteTile';
+import { SafeLink, LinkKind } from '../parser/types';
+import UserPreview from './UserPreview';
+import EventPreview from './EventPreview';
+import Clients from '../clients';
 import {
     getRoomFromId,
     getRoomFromAlias,
     getRoomFromPermalink,
     getUser,
-} from "../utils/cypher-wrapper";
+} from '../utils/cypher-wrapper';
 
 interface IProps {
     link: SafeLink;
@@ -38,7 +38,7 @@ const LOADING: JSX.Element = <>Generating invite</>;
 
 const invite = async ({ link }: { link: SafeLink }): Promise<JSX.Element> => {
     // TODO: replace with client fetch
-    const defaultClient = await client("https://matrix.org");
+    const defaultClient = await client('https://matrix.org');
     switch (link.kind) {
         case LinkKind.Alias:
             return (
