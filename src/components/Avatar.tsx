@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Room, User } from "matrix-cypher";
 
-import { convertMXCtoMediaQuery } from "../utils/cypher-wrapper";
+import { getMediaQueryFromMCX } from "../utils/cypher-wrapper";
 import logo from "../imgs/matrix-logo.svg";
 
 import "./Avatar.scss";
@@ -55,15 +55,7 @@ export const UserAvatar: React.FC<IPropsUserAvatar> = ({
     userId,
 }: IPropsUserAvatar) => (
     <Avatar
-        avatarUrl={
-            user.avatar_url
-                ? convertMXCtoMediaQuery(
-                      // TODO: replace with correct client
-                      "https://matrix.org",
-                      user.avatar_url
-                  )
-                : ""
-        }
+        avatarUrl={getMediaQueryFromMCX(user.avatar_url)}
         label={user.displayname ? user.displayname : userId}
     />
 );
@@ -76,15 +68,7 @@ export const RoomAvatar: React.FC<IPropsRoomAvatar> = ({
     room,
 }: IPropsRoomAvatar) => (
     <Avatar
-        avatarUrl={
-            room.avatar_url
-                ? convertMXCtoMediaQuery(
-                      // TODO: replace with correct client
-                      "https://matrix.org",
-                      room.avatar_url
-                  )
-                : ""
-        }
+        avatarUrl={getMediaQueryFromMCX(room.avatar_url)}
         label={room.name || room.room_id}
     />
 );
