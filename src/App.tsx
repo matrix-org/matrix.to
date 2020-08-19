@@ -37,7 +37,6 @@ const App: React.FC = () => {
         if (location.hash.startsWith("#/")) {
             page = <LinkRouter link={location.hash.slice(2)} />;
         } else {
-            console.log("asdfadf");
             page = (
                 <Tile>
                     Links should be in the format {location.host}/#/{"<"}
