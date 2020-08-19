@@ -28,7 +28,9 @@ interface ILinkNotCreatedTileProps {
     setLink: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const LinkNotCreatedTile = (props: ILinkNotCreatedTileProps) => {
+const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
+    props: ILinkNotCreatedTileProps
+) => {
     return (
         <Tile className="createLinkTile">
             <h1>
@@ -48,7 +50,7 @@ const LinkNotCreatedTile = (props: ILinkNotCreatedTileProps) => {
                         )
                         .required("Required"),
                 })}
-                onSubmit={(values) => {
+                onSubmit={(values): void => {
                     props.setLink(
                         document.location.protocol +
                             "//" +
@@ -80,7 +82,7 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     // Focus button on render
-    useEffect(() => {
+    useEffect((): void => {
         if (buttonRef && buttonRef.current) {
             buttonRef.current.focus();
         }
@@ -88,13 +90,15 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
 
     return (
         <Tile className="createLinkTile">
-            <TextButton onClick={() => props.setLink("")}>
+            <TextButton onClick={(): void => props.setLink("")}>
                 Create another lnk
             </TextButton>
             <h1>{props.link}</h1>
             <Button
                 flashChildren={"Copied"}
-                onClick={() => navigator.clipboard.writeText(props.link)}
+                onClick={(): void => {
+                    navigator.clipboard.writeText(props.link);
+                }}
                 ref={buttonRef}
             >
                 Copy Link

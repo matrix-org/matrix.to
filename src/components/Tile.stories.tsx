@@ -29,7 +29,7 @@ export default {
     },
 };
 
-export const Default = () => (
+export const Default: React.FC = () => (
     <Tile>
         <h1>This is a tile</h1>
         <p>Some text</p>

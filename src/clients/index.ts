@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { action } from "@storybook/addon-actions";
-import { text } from "@storybook/addon-knobs";
+import { Client } from "./types";
 
-import Button from "./Button";
+import Element from "./Element.io";
 
-export default { title: "Button" };
+/*
+ * All the supported clients of matrix.to
+ */
+const clients: Client[] = [Element];
 
-export const WithText: React.FC = () => (
-    <Button onClick={action("clicked")}>
-        {text("label", "Hello Story Book")}
-    </Button>
-);
+/*
+ * All the supported clients of matrix.to
+ */
+export default clients;

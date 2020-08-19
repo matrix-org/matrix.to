@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "cypher/src/schemas/PublicRoomsSchema";
+import { Room } from "matrix-cypher";
 
 import { RoomAvatar } from "./Avatar";
 
@@ -30,7 +30,7 @@ const RoomPreview: React.FC<IProps> = ({ room }: IProps) => {
     return (
         <div className="roomPreview">
             <RoomAvatar room={room} />
-            <h1>{room.name}</h1>
+            <h1>{room.name ? room.name : room.room_id}</h1>
             <p>{room.num_joined_members.toLocaleString()} members</p>
             <p>{roomAlias}</p>
         </div>

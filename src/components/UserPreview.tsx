@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { User } from "cypher/src/schemas/UserSchema";
+import { User } from "matrix-cypher";
 
 import { UserAvatar } from "./Avatar";
 
@@ -28,7 +28,7 @@ interface IProps {
 
 const UserPreview: React.FC<IProps> = ({ user, userId }: IProps) => (
     <div className="userPreview">
-        <UserAvatar user={user} />
+        <UserAvatar user={user} userId={userId} />
         <h1>{user.displayname} invites you to connect</h1>
         <p>{userId}</p>
         <hr />
@@ -45,6 +45,6 @@ export const InviterPreview: React.FC<IProps> = ({ user, userId }: IProps) => (
             </h1>
             <p>{userId}</p>
         </div>
-        <UserAvatar user={user} />
+        <UserAvatar user={user} userId={userId} />
     </div>
 );

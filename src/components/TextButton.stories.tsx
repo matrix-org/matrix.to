@@ -29,4 +29,6 @@ export default {
     },
 };
 
-export const Default = () => <TextButton>This is a button?</TextButton>;
+export const Default: React.FC = () => (
+    <TextButton>This is a button?</TextButton>
+);

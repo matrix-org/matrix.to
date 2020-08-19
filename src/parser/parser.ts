@@ -20,7 +20,7 @@ export const roomVerifiers: Verifier<LinkKind.Alias | LinkKind.RoomId>[] = [
     [/^!([^/:]+?):(.+)$/, LinkKind.RoomId],
 ];
 export const verifiers: Verifier<LinkKind>[] = [
-    [/^[!#]([^/:]+?):(.+?)\/\$([^/:]+?):(.+?)$/, LinkKind.Permalink],
+    [/^[!#]([^/:]+?):(.+?)\/\$([^/:]+?)$/, LinkKind.Permalink],
     [/^@([^/:]+?):(.+)$/, LinkKind.UserId],
     [/^\+([^/:]+?):(.+)$/, LinkKind.GroupId],
     ...roomVerifiers,
@@ -56,7 +56,9 @@ export function identifyTypeFromRegex<T, F>(
  * Parses a permalink.
  * Assumes the permalink is correct.
  */
-export function parsePermalink(identifier: string): Permalink {
+export function parsePermalink(
+    identifier: string
+): Pick<Permalink, "roomKind" | "roomLink" | "eventId"> {
     const [roomLink, eventId] = identifier.split("/");
     const roomKind = identifyTypeFromRegex(
         roomLink,

@@ -35,5 +35,6 @@ export const Default: React.FC<{}> = () => (
             avatar_url: "mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf",
             displayname: "Jorik Schellekens",
         }}
+        userId="@jorik:matrix.org"
     />
 );
