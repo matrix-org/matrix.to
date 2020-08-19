@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React from 'react';
 
-import Tile from "../components/Tile";
-import LinkPreview from "../components/LinkPreview";
-import { parseHash } from "../parser/parser";
-import { LinkKind } from "../parser/types";
+import Tile from '../components/Tile';
+import LinkPreview from '../components/LinkPreview';
+import { parseHash } from '../parser/parser';
+import { LinkKind } from '../parser/types';
 
 interface IProps {
     link: string;

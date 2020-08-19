@@ -14,35 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { SafeLink } from "../parser/types";
+import { SafeLink } from '../parser/types';
 
 /*
  * A collection of descriptive tags that can be added to
  * a clients description.
  */
 export enum Tag {
-    IOS = "IOS",
-    ANDROID = "ANDROID",
-    DESKTOP = "DESKTOP",
+    IOS = 'IOS',
+    ANDROID = 'ANDROID',
+    DESKTOP = 'DESKTOP',
 }
 
 /*
  * A collection of states used for describing a clients maturity.
  */
 export enum Maturity {
-    ALPHA = "ALPHA",
-    LATE_ALPHA = "LATE ALPHA",
-    BETA = "BETA",
-    LATE_BETA = "LATE_BETA",
-    STABLE = "STABLE",
+    ALPHA = 'ALPHA',
+    LATE_ALPHA = 'LATE ALPHA',
+    BETA = 'BETA',
+    LATE_BETA = 'LATE_BETA',
+    STABLE = 'STABLE',
 }
 
 /*
  * Used for constructing the discriminated union of all client types.
  */
 export enum ClientKind {
-    LINKED_CLIENT = "LINKED_CLIENT",
-    TEXT_CLIENT = "TEXT_CLIENT",
+    LINKED_CLIENT = 'LINKED_CLIENT',
+    TEXT_CLIENT = 'TEXT_CLIENT',
 }
 
 /*

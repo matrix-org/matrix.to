@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { withDesign } from "storybook-addon-designs";
-import { Formik, Form } from "formik";
+import React from 'react';
+import { withDesign } from 'storybook-addon-designs';
+import { Formik, Form } from 'formik';
 
-import Input from "./Input";
+import Input from './Input';
 
 export default {
-    title: "Input",
+    title: 'Input',
     parameters: {
         design: {
-            type: "figma",
+            type: 'figma',
             url:
-                "https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=59%3A1",
+                'https://figma.com/file/WSXjCGc1k6FVI093qhlzOP/04-Recieving-share-link?node-id=59%3A1',
         },
     },
     decorators: [withDesign],

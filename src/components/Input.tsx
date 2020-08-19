@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import classnames from "classnames";
-import { useField } from "formik";
+import React from 'react';
+import classnames from 'classnames';
+import { useField } from 'formik';
 
-import "./Input.scss";
+import './Input.scss';
 
 interface IProps extends React.InputHTMLAttributes<Element> {
     name: string;
@@ -33,7 +33,7 @@ const Input: React.FC<IProps> = ({ className, ...props }) => {
             <div className="inputError">{meta.error}</div>
         ) : null;
 
-    const classNames = classnames("input", className, {
+    const classNames = classnames('input', className, {
         error: meta.error,
     });
 

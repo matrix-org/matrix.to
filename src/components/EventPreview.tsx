@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { Room, Event } from "matrix-cypher";
+import React from 'react';
+import { Room, Event } from 'matrix-cypher';
 
-import RoomPreview from "./RoomPreview";
+import RoomPreview from './RoomPreview';
 
 interface IProps {
     room: Room;

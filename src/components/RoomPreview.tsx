@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { Room } from "matrix-cypher";
+import React from 'react';
+import { Room } from 'matrix-cypher';
 
-import { RoomAvatar } from "./Avatar";
+import { RoomAvatar } from './Avatar';
 
-import "./RoomPreview.scss";
+import './RoomPreview.scss';
 
 interface IProps {
     room: Room;

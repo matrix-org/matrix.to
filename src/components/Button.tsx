@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import classnames from "classnames";
+import React from 'react';
+import classnames from 'classnames';
 
-import "./Button.scss";
+import './Button.scss';
 
 interface IProps extends React.ButtonHTMLAttributes<Element> {
     // Briefly display these instead of the children onClick
@@ -49,7 +49,7 @@ const Button: React.FC<
 
         const content = wasClicked && flashChildren ? flashChildren : children;
 
-        const classNames = classnames("button", className, {
+        const classNames = classnames('button', className, {
             buttonHighlight: wasClicked,
         });
 

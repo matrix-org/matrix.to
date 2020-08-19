@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React from 'react';
 
-import "./InviteTile.scss";
+import './InviteTile.scss';
 
-import Tile from "./Tile";
-import LinkButton from "./LinkButton";
-import TextButton from "./TextButton";
-import { Client, ClientKind } from "../clients/types";
-import { SafeLink } from "../parser/types";
+import Tile from './Tile';
+import LinkButton from './LinkButton';
+import TextButton from './TextButton';
+import { Client, ClientKind } from '../clients/types';
+import { SafeLink } from '../parser/types';
 
 interface IProps {
     children?: React.ReactNode;

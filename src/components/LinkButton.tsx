@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import classnames from "classnames";
+import React from 'react';
+import classnames from 'classnames';
 
-import "./Button.scss";
+import './Button.scss';
 
 interface IProps extends React.LinkHTMLAttributes<HTMLElement> {}
 
 const LinkButton: React.FC<IProps> = ({ className, ...props }: IProps) => (
-    <a className={classnames("button", className)} {...props} />
+    <a className={classnames('button', className)} {...props} />
 );
 
 export default LinkButton;

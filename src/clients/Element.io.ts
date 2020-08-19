@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { LinkedClient, Maturity, ClientKind } from "./types";
-import { LinkKind } from "../parser/types";
-import logo from "./element.svg";
+import { LinkedClient, Maturity, ClientKind } from './types';
+import { LinkKind } from '../parser/types';
+import logo from './element.svg';
 
 const Element: LinkedClient = {
     kind: ClientKind.LINKED_CLIENT,
-    name: "Element",
-    author: "Element",
+    name: 'Element',
+    author: 'Element',
     logo: logo,
-    homepage: "https://element.io",
+    homepage: 'https://element.io',
     maturity: Maturity.STABLE,
-    description: "Fully-featured Matrix client for the Web",
+    description: 'Fully-featured Matrix client for the Web',
     tags: [],
     toUrl: (link) => {
         switch (link.kind) {

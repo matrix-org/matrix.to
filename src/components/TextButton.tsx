@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import classnames from "classnames";
+import React from 'react';
+import classnames from 'classnames';
 
-import "./TextButton.scss";
+import './TextButton.scss';
 
 const TextButton: React.FC<React.ButtonHTMLAttributes<Element>> = ({
     className,
     ...props
 }) => {
     return (
-        <button className={classnames("textButton", className)} {...props} />
+        <button className={classnames('textButton', className)} {...props} />
     );
 };
 export default TextButton;

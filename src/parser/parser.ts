@@ -1,4 +1,4 @@
-import forEach from "lodash/forEach";
+import forEach from 'lodash/forEach';
 
 import {
     LinkKind,
@@ -7,7 +7,7 @@ import {
     LinkContent,
     Arguments,
     Permalink,
-} from "./types";
+} from './types';
 
 /*
  * Verifiers are regexes which will match valid
@@ -58,8 +58,8 @@ export function identifyTypeFromRegex<T, F>(
  */
 export function parsePermalink(
     identifier: string
-): Pick<Permalink, "roomKind" | "roomLink" | "eventId"> {
-    const [roomLink, eventId] = identifier.split("/");
+): Pick<Permalink, 'roomKind' | 'roomLink' | 'eventId'> {
+    const [roomLink, eventId] = identifier.split('/');
     const roomKind = identifyTypeFromRegex(
         roomLink,
         roomVerifiers,
@@ -89,9 +89,9 @@ export function parseArgs(args: string): Arguments {
     const params = new URLSearchParams(args);
 
     return {
-        vias: params.getAll("via"),
-        client: bottomExchange(params.get("client")),
-        sharer: bottomExchange(params.get("sharer")),
+        vias: params.getAll('via'),
+        client: bottomExchange(params.get('client')),
+        sharer: bottomExchange(params.get('sharer')),
     };
 }
 
@@ -101,7 +101,7 @@ export function parseArgs(args: string): Arguments {
  * be ParseFailed
  */
 export function parseHash(hash: string): Link {
-    const [identifier, args] = hash.split("?");
+    const [identifier, args] = hash.split('?');
 
     const kind = identifyTypeFromRegex(
         identifier,
@@ -150,9 +150,9 @@ export function toURL(origin: string, link: SafeLink): URL {
             forEach(link.arguments, (value, key) => {
                 if (value === undefined) {
                     // do nothing
-                } else if (key === "vias") {
+                } else if (key === 'vias') {
                     (value as string[]).forEach((via) =>
-                        params.append("via", via)
+                        params.append('via', via)
                     );
                 } else {
                     params.append(key, value.toString());

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Client } from "./types";
+import { Client } from './types';
 
-import Element from "./Element.io";
+import Element from './Element.io';
 
 /*
  * All the supported clients of matrix.to

@@ -23,11 +23,11 @@
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": [
             "eslint --fix",
-            "prettier --write --tab-width 4",
+            "prettier --write --tab-width 4 --single-quote",
             "git add"
         ],
         "src/**/*.{json,css,scss,md}": [
-            "prettier --write --tab-width 4",
+            "prettier --write --tab-width 4 --single-quote",
             "git add"
         ]
     },

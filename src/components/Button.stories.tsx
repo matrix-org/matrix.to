@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { action } from "@storybook/addon-actions";
-import { text } from "@storybook/addon-knobs";
+import React from 'react';
+import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
 
-import Button from "./Button";
+import Button from './Button';
 
-export default { title: "Button" };
+export default { title: 'Button' };
 
 export const WithText: React.FC = () => (
-    <Button onClick={action("clicked")}>
-        {text("label", "Hello Story Book")}
+    <Button onClick={action('clicked')}>
+        {text('label', 'Hello Story Book')}
     </Button>
 );
