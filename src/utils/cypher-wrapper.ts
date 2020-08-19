@@ -16,73 +16,139 @@ limitations under the License.
 
 import {
     Client,
-    getUserDetails as cGetUserDetails,
-    User,
-    getRoomDetails as cGetRoomDetails,
-    searchPublicRooms as cSearchPublicRooms,
     Room,
-    convertMXCtoMediaQuery as cConvertMXCtoMediaQuery,
-    getRoomIdFromAlias as cGetRoomIdFromAlias,
     RoomAlias,
+    User,
+    getRoomIdFromAlias,
+    searchPublicRooms,
+    getUserDetails,
+    convertMXCtoMediaQuery,
 } from "matrix-cypher";
+import { LinkKind, Permalink } from "../parser/types";
+
+/* This is a collection of methods for providing fallback metadata
+ * for cypher queries
+ */
 
 /*
- * Gets the details for a user
+ * Returns an instance of User with fallback information instead
+ * of fetched metadata
  */
-export function getUserDetails(client: Client, userId: string): Promise<User> {
-    return cGetUserDetails(client, userId).catch(() => ({
-        displayname: userId,
-    }));
-}
+export const fallbackUser = (userId: string): User => ({
+    displayname: userId,
+});
 
-function defaultRoom(roomId: string): Room {
+/*
+ * Returns an instance of Room with fallback information instead
+ * of fecthed metadata
+ */
+export const fallbackRoom = ({
+    identifier,
+    roomId,
+    roomAlias,
+}: {
+    identifier: string;
+    roomId?: string;
+    roomAlias?: string;
+}): Room => {
+    const roomId_ = roomId ? roomId : identifier;
+    const roomAlias_ = roomAlias ? roomAlias : identifier;
     return {
-        aliases: [roomId],
+        aliases: [roomAlias_],
         topic: "Unable to find room details.",
-        canonical_alias: roomId,
-        name: roomId,
+        canonical_alias: roomAlias_,
+        name: roomAlias_,
         num_joined_members: 0,
-        room_id: roomId,
+        room_id: roomId_,
         guest_can_join: true,
         avatar_url: "",
         world_readable: false,
     };
-}
+};
 
 /*
- * Gets the details of a room if that room is public
+ * Tries to fetch room details from an alias. If it fails it uses
+ * a `fallbackRoom`
  */
-export function getRoomDetails(
-    clients: Client[],
-    roomId: string
-): Promise<Room> {
-    return cGetRoomDetails(clients, roomId).catch(() => defaultRoom(roomId));
-}
-
-/*
- * Searches the public rooms of a homeserver for the metadata of a particular
- */
-export function searchPublicRooms(
+export async function getRoomFromAlias(
     client: Client,
-    roomId: string
+    roomAlias: string
 ): Promise<Room> {
-    return cSearchPublicRooms(client, roomId).catch(() => defaultRoom(roomId));
-}
-
-export function convertMXCtoMediaQuery(clientURL: string, mxc: string): string {
+    let resolvedRoomAlias: RoomAlias;
     try {
-        return cConvertMXCtoMediaQuery(clientURL, mxc);
+        resolvedRoomAlias = await getRoomIdFromAlias(client, roomAlias);
     } catch {
-        return "";
+        return fallbackRoom({ identifier: roomAlias });
+    }
+
+    try {
+        return await searchPublicRooms(client, resolvedRoomAlias.room_id);
+    } catch {
+        return fallbackRoom({
+            identifier: roomAlias,
+            roomId: resolvedRoomAlias.room_id,
+            roomAlias: roomAlias,
+        });
     }
 }
 
-export function getRoomIdFromAlias(
+/*
+ * Tries to fetch room details from a roomId. If it fails it uses
+ * a `fallbackRoom`
+ */
+export async function getRoomFromId(
     client: Client,
-    roomAlias: string
-): Promise<RoomAlias> {
-    return cGetRoomIdFromAlias(client, roomAlias).catch(() => ({
-        room_id: roomAlias,
-        servers: [],
-    }));
+    roomId: string
+): Promise<Room> {
+    try {
+        return await searchPublicRooms(client, roomId);
+    } catch {
+        return fallbackRoom({ identifier: roomId });
+    }
+}
+
+/*
+ * Tries to fetch user details. If it fails it uses a `fallbackUser`
+ */
+export async function getUser(client: Client, userId: string): Promise<User> {
+    try {
+        return await getUserDetails(client, userId);
+    } catch {
+        return fallbackUser(userId);
+    }
+}
+
+/*
+ * Tries to fetch room details from a permalink. If it fails it uses
+ * a `fallbackRoom`
+ */
+export async function getRoomFromPermalink(
+    client: Client,
+    link: Permalink
+): Promise<Room> {
+    switch (link.roomKind) {
+        case LinkKind.Alias:
+            return getRoomFromAlias(client, link.roomLink);
+        case LinkKind.RoomId:
+            return getRoomFromId(client, link.roomLink);
+    }
+}
+
+/*
+ * tries to convert an mxc to a media query. If it fails it
+ * uses the empty string
+ */
+export function getMediaQueryFromMCX(mxc?: string): string {
+    if (!mxc) {
+        return "";
+    }
+    try {
+        return convertMXCtoMediaQuery(
+            // TODO: replace with correct client
+            "https://matrix.org",
+            mxc
+        );
+    } catch {
+        return "";
+    }
 }

@@ -15,46 +15,36 @@ limitations under the License.
 */
 
 import React, { useState, useEffect } from "react";
-import { Client, getEvent, client } from "matrix-cypher";
+import { getEvent, client } from "matrix-cypher";
 
-import {
-    getRoomIdFromAlias,
-    searchPublicRooms,
-    getUserDetails,
-} from "../utils/cypher-wrapper";
 import { RoomPreviewWithTopic } from "./RoomPreview";
 import InviteTile from "./InviteTile";
-
-import { SafeLink } from "../parser/types";
-import { LinkKind } from "../parser/types";
+import { SafeLink, LinkKind } from "../parser/types";
 import UserPreview from "./UserPreview";
 import EventPreview from "./EventPreview";
 import Clients from "../clients";
+import {
+    getRoomFromId,
+    getRoomFromAlias,
+    getRoomFromPermalink,
+    getUser,
+} from "../utils/cypher-wrapper";
 
 interface IProps {
     link: SafeLink;
 }
 
-// TODO: replace with client fetch
-const defaultClient: () => Promise<Client> = () => client("https://matrix.org");
-
 const LOADING: JSX.Element = <>Generating invite</>;
 
 const invite = async ({ link }: { link: SafeLink }): Promise<JSX.Element> => {
+    // TODO: replace with client fetch
+    const defaultClient = await client("https://matrix.org");
     switch (link.kind) {
         case LinkKind.Alias:
             return (
                 <RoomPreviewWithTopic
                     room={
-                        await searchPublicRooms(
-                            await defaultClient(),
-                            (
-                                await getRoomIdFromAlias(
-                                    await defaultClient(),
-                                    link.identifier
-                                )
-                            ).room_id
-                        )
+                        await getRoomFromAlias(defaultClient, link.identifier)
                     }
                 />
             );
@@ -62,24 +52,14 @@ const invite = async ({ link }: { link: SafeLink }): Promise<JSX.Element> => {
         case LinkKind.RoomId:
             return (
                 <RoomPreviewWithTopic
-                    room={
-                        await searchPublicRooms(
-                            await defaultClient(),
-                            link.identifier
-                        )
-                    }
+                    room={await getRoomFromId(defaultClient, link.identifier)}
                 />
             );
 
         case LinkKind.UserId:
             return (
                 <UserPreview
-                    user={
-                        await getUserDetails(
-                            await defaultClient(),
-                            link.identifier
-                        )
-                    }
+                    user={await getUser(defaultClient, link.identifier)}
                     userId={link.identifier}
                 />
             );
@@ -87,15 +67,10 @@ const invite = async ({ link }: { link: SafeLink }): Promise<JSX.Element> => {
         case LinkKind.Permalink:
             return (
                 <EventPreview
-                    room={
-                        await searchPublicRooms(
-                            await defaultClient(),
-                            link.identifier
-                        )
-                    }
+                    room={await getRoomFromPermalink(defaultClient, link)}
                     event={
                         await getEvent(
-                            await defaultClient(),
+                            defaultClient,
                             link.roomLink,
                             link.eventId
                         )
