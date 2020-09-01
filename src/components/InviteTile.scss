@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 .inviteTile {
-    .button {
-        margin-top: 24px;
-    }
+    display: grid;
+    row-gap: 24px;
 
-    > .textButton {
-        margin-top: 28px;
+    .advancedPlaceholder {
+        height: 245px;
     }
 }

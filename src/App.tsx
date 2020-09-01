@@ -22,6 +22,8 @@ import MatrixTile from './components/MatrixTile';
 import Tile from './components/Tile';
 import LinkRouter from './pages/LinkRouter';
 
+import './App.scss';
+
 import GlobalContext from './contexts/GlobalContext';
 
 /* eslint-disable no-restricted-globals */
@@ -29,15 +31,15 @@ import GlobalContext from './contexts/GlobalContext';
 const App: React.FC = () => {
     let page = (
         <>
-            <CreateLinkTile /> <hr />{' '}
+            <CreateLinkTile />
+            <hr />
         </>
     );
+
     if (location.hash) {
-        console.log(location.hash);
         if (location.hash.startsWith('#/')) {
             page = <LinkRouter link={location.hash.slice(2)} />;
         } else {
-            console.log('asdfadf');
             page = (
                 <Tile>
                     Links should be in the format {location.host}/#/{'<'}

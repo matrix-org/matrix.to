@@ -26,11 +26,15 @@ interface IProps {
 }
 
 const RoomPreview: React.FC<IProps> = ({ room }: IProps) => {
-    const roomAlias = room.aliases ? room.aliases[0] : room.room_id;
+    const roomAlias = room.canonical_alias
+        ? room.canonical_alias
+        : room.aliases
+        ? room.aliases[0]
+        : room.room_id;
     return (
         <div className="roomPreview">
             <RoomAvatar room={room} />
-            <h1>{room.name ? room.name : room.room_id}</h1>
+            <h1>{room.name ? room.name : roomAlias}</h1>
             <p>{room.num_joined_members.toLocaleString()} members</p>
             <p>{roomAlias}</p>
         </div>
