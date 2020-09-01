@@ -20,7 +20,7 @@ limitations under the License.
     background-color: $app-background;
     background-image: url('./imgs/background.svg');
     background-repeat: none;
-    background-position: top center;
+    background-position: 50% top;
 }
 
 @mixin spacer {
