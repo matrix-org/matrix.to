@@ -39,7 +39,7 @@ body,
 
     color: $font;
 
-    overflow: scroll;
+    overflow: auto;
 }
 
 h1 {
@@ -47,7 +47,6 @@ h1 {
     font-size: 24px;
     line-height: 32px;
     text-align: center;
-    word-break: break-all;
 }
 
 a {

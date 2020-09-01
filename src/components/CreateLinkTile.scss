@@ -35,4 +35,8 @@ limitations under the License.
     > a {
         color: $foreground;
     }
+
+    h1 {
+        word-break: break-all;
+    }
 }
