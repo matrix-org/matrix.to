@@ -21,7 +21,6 @@ import Tile from './Tile';
 import Button from './Button';
 import TextButton from './TextButton';
 import Input from './Input';
-
 import { parseHash } from '../parser/parser';
 import { LinkKind } from '../parser/types';
 
@@ -68,7 +67,7 @@ const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
                         document.location.protocol +
                             '//' +
                             document.location.host +
-                            '/' +
+                            '/#/' +
                             values.identifier
                     );
                 }}
@@ -106,7 +105,9 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
             <TextButton onClick={(): void => props.setLink('')}>
                 Create another lnk
             </TextButton>
-            <h1>{props.link}</h1>
+            <a href={props.link}>
+                <h1>{props.link}</h1>
+            </a>
             <Button
                 flashChildren={'Copied'}
                 onClick={(): void => {
