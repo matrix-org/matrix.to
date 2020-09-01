@@ -16,12 +16,24 @@ limitations under the License.
 
 import { Client } from './types';
 
-import Element from './Element.io';
+import Element, { ElementDevelop } from './Element.io';
+import Weechat from './Weechat';
 
 /*
  * All the supported clients of matrix.to
  */
-const clients: Client[] = [Element];
+const clients: Client[] = [Element, Weechat, ElementDevelop];
+
+/*
+ * A map from sharer string to client.
+ * Configured by hand so we can change the mappings
+ * easily later.
+ */
+export const clientMap: { [key: string]: Client } = {
+    [Element.clientId]: Element,
+    [Weechat.clientId]: Weechat,
+    [ElementDevelop.clientId]: ElementDevelop,
+};
 
 /*
  * All the supported clients of matrix.to
