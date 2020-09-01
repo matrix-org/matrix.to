@@ -20,10 +20,10 @@ import { SafeLink } from '../parser/types';
  * A collection of descriptive tags that can be added to
  * a clients description.
  */
-export enum Tag {
-    IOS = 'IOS',
-    ANDROID = 'ANDROID',
-    DESKTOP = 'DESKTOP',
+export enum Platform {
+    iOS = 'iOS',
+    Android = 'ANDROID',
+    Desktop = 'DESKTOP',
 }
 
 /*
@@ -45,6 +45,12 @@ export enum ClientKind {
     TEXT_CLIENT = 'TEXT_CLIENT',
 }
 
+export enum ClientId {
+    Element = 'element.io',
+    ElementDevelop = 'develop.element.io',
+    WeeChat = 'weechat',
+}
+
 /*
  * The descriptive details of a client
  */
@@ -54,8 +60,10 @@ export interface ClientDescription {
     homepage: string;
     logo: string;
     description: string;
-    tags: Tag[];
+    platform: Platform;
     maturity: Maturity;
+    clientId: ClientId;
+    experimental: boolean;
 }
 
 /*
@@ -72,7 +80,7 @@ export interface LinkedClient extends ClientDescription {
  */
 export interface TextClient extends ClientDescription {
     kind: ClientKind.TEXT_CLIENT;
-    toInviteString(parsedLink: SafeLink): string;
+    toInviteString(parsedLink: SafeLink): JSX.Element;
 }
 
 /*
