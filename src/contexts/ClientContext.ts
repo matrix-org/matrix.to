@@ -23,7 +23,6 @@ import { persistReducer } from '../utils/localStorage';
 const STATE_SCHEMA = object({
     clientId: string().nullable(),
     showOnlyDeviceClients: boolean(),
-    rememberSelection: boolean(),
     showExperimentalClients: boolean(),
 });
 
@@ -32,7 +31,7 @@ type State = TypeOf<typeof STATE_SCHEMA>;
 // Actions are a discriminated union.
 export enum ActionType {
     SetClient = 'SET_CLIENT',
-    ToggleRememberSelection = 'TOGGLE_REMEMBER_SELECTION',
+    ClearClient = 'CLEAR_CLIENT',
     ToggleShowOnlyDeviceClients = 'TOGGLE_SHOW_ONLY_DEVICE_CLIENTS',
     ToggleShowExperimentalClients = 'TOGGLE_SHOW_EXPERIMENTAL_CLIENTS',
 }
@@ -42,8 +41,8 @@ interface SetClient {
     clientId: ClientId;
 }
 
-interface ToggleRememberSelection {
-    action: ActionType.ToggleRememberSelection;
+interface ClearClient {
+    action: ActionType.ClearClient;
 }
 
 interface ToggleShowOnlyDeviceClients {
@@ -56,13 +55,12 @@ interface ToggleShowExperimentalClients {
 
 export type Action =
     | SetClient
-    | ToggleRememberSelection
+    | ClearClient
     | ToggleShowOnlyDeviceClients
     | ToggleShowExperimentalClients;
 
 const INITIAL_STATE: State = {
     clientId: null,
-    rememberSelection: false,
     showOnlyDeviceClients: true,
     showExperimentalClients: false,
 };
@@ -78,11 +76,6 @@ export const [initialState, reducer] = persistReducer(
                     ...state,
                     clientId: action.clientId,
                 };
-            case ActionType.ToggleRememberSelection:
-                return {
-                    ...state,
-                    rememberSelection: !state.rememberSelection,
-                };
             case ActionType.ToggleShowOnlyDeviceClients:
                 return {
                     ...state,
@@ -93,8 +86,11 @@ export const [initialState, reducer] = persistReducer(
                     ...state,
                     showExperimentalClients: !state.showExperimentalClients,
                 };
-            default:
-                return state;
+            case ActionType.ClearClient:
+                return {
+                    ...state,
+                    clientId: null,
+                };
         }
     }
 );

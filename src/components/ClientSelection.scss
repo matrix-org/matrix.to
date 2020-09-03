@@ -17,14 +17,13 @@ limitations under the License.
 .advanced {
     margin: 0 5%;
 
+    display: grid;
+    row-gap: 20px;
+
     .advancedOptions {
         display: flex;
         flex-direction: column;
 
         align-items: flex-start;
-    }
-
-    .clientList {
-        margin-top: 20px;
     }
 }

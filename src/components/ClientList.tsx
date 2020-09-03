@@ -27,11 +27,12 @@ import './ClientList.scss';
 
 interface IProps {
     link: SafeLink;
+    rememberSelection: boolean;
 }
 
-const ClientList: React.FC<IProps> = ({ link }: IProps) => {
+const ClientList: React.FC<IProps> = ({ link, rememberSelection }: IProps) => {
     const [
-        { rememberSelection, showOnlyDeviceClients, showExperimentalClients },
+        { showOnlyDeviceClients, showExperimentalClients },
         clientDispatcher,
     ] = useContext(ClientContext);
     const { uaResults } = useContext(UAContext);

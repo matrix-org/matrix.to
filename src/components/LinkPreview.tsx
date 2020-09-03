@@ -92,15 +92,14 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
         (async (): Promise<void> => setContent(await invite({ link })))();
     }, [link]);
 
-    const [{ rememberSelection, clientId }] = useContext(ClientContext);
+    const [{ clientId }] = useContext(ClientContext);
 
     // Select which client to link to
-    const displayClientId =
-        rememberSelection && clientId
-            ? clientId
-            : link.arguments.client
-            ? link.arguments.client
-            : null;
+    const displayClientId = clientId
+        ? clientId
+        : link.arguments.client
+        ? link.arguments.client
+        : null;
 
     const client = displayClientId ? clientMap[displayClientId] : null;
 

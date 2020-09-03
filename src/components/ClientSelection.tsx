@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import './ClientSelection.scss';
 import { ActionType, ClientContext } from '../contexts/ClientContext';
 import ClientList from './ClientList';
 import { SafeLink } from '../parser/types';
+import Button from './Button';
 
 interface IProps {
     link: SafeLink;
@@ -27,17 +28,16 @@ interface IProps {
 
 const ClientSelection: React.FC<IProps> = ({ link }: IProps) => {
     const [clientState, clientStateDispatch] = useContext(ClientContext);
+    const [rememberSelection, setRememberSelection] = useState(false);
     const options = (
         <div className="advancedOptions">
             <label>
                 <input
                     type="checkbox"
                     onChange={(): void => {
-                        clientStateDispatch({
-                            action: ActionType.ToggleRememberSelection,
-                        });
+                        setRememberSelection(!rememberSelection);
                     }}
-                    checked={clientState.rememberSelection}
+                    checked={rememberSelection}
                 />
                 Remember my selection for future invites in this browser
             </label>
@@ -68,10 +68,24 @@ const ClientSelection: React.FC<IProps> = ({ link }: IProps) => {
         </div>
     );
 
+    const clearSelection =
+        clientState.clientId !== null ? (
+            <Button
+                onClick={(): void =>
+                    clientStateDispatch({
+                        action: ActionType.ClearClient,
+                    })
+                }
+            >
+                Clear my default client
+            </Button>
+        ) : null;
+
     return (
         <div className="advanced">
             {options}
-            <ClientList link={link} />
+            <ClientList link={link} rememberSelection={rememberSelection} />
+            {clearSelection}
         </div>
     );
 };
