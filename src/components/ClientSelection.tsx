@@ -84,6 +84,7 @@ const ClientSelection: React.FC<IProps> = ({ link }: IProps) => {
     return (
         <div className="advanced">
             {options}
+            <h4>Clients you can accept this invite with</h4>
             <ClientList link={link} rememberSelection={rememberSelection} />
             {clearSelection}
         </div>

@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import { Client, ClientKind } from '../clients/types';
 import { SafeLink } from '../parser/types';
 import Tile from './Tile';
+import Button from './Button';
 
 import './ClientTile.scss';
 
@@ -37,6 +38,12 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
     const className = classNames('clientTile', {
         clientTileLink: client.kind === ClientKind.LINKED_CLIENT,
     });
+
+    const inviteButton =
+        client.kind === ClientKind.LINKED_CLIENT ? (
+            <Button>Accept invite</Button>
+        ) : null;
+
     let clientTile = (
         <Tile className={className}>
             <img src={client.logo} alt={client.name + ' logo'} />
@@ -44,6 +51,7 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
                 <h1>{client.name}</h1>
                 <p>{client.description}</p>
                 {inviteLine}
+                {inviteButton}
             </div>
         </Tile>
     );

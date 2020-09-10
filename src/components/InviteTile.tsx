@@ -20,10 +20,12 @@ import './InviteTile.scss';
 
 import Tile from './Tile';
 import LinkButton from './LinkButton';
+import Button from './Button';
 import ClientSelection from './ClientSelection';
 import { Client, ClientKind } from '../clients/types';
 import { SafeLink } from '../parser/types';
 import TextButton from './TextButton';
+import FakeProgress from './FakeProgress';
 
 interface IProps {
     children?: React.ReactNode;
@@ -35,12 +37,15 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
     const [showAdvanced, setShowAdvanced] = useState(false);
     let invite: React.ReactNode;
     let advanced: React.ReactNode;
-    // This i s a hacky way to get a the overlapping list of client
-    // options working.
-    let advancedPlaceholder: React.ReactNode;
 
     if (client === null) {
-        invite = null;
+        invite = showAdvanced ? (
+            <FakeProgress />
+        ) : (
+            <Button onClick={() => setShowAdvanced(!showAdvanced)}>
+                Accept invite
+            </Button>
+        );
     } else {
         let inviteUseString: string;
 
@@ -60,11 +65,7 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
                 break;
         }
 
-        const advancedToggle = showAdvanced ? (
-            <TextButton onClick={(): void => setShowAdvanced(!showAdvanced)}>
-                Hide advanced options
-            </TextButton>
-        ) : (
+        const advancedToggle = (
             <p>
                 {inviteUseString}
                 <TextButton
@@ -83,9 +84,23 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
         );
     }
 
-    if (client === null || showAdvanced) {
-        advanced = <ClientSelection link={link} />;
-        advancedPlaceholder = <div className="advancedPlaceholder" />;
+    if (showAdvanced) {
+        if (client === null) {
+            advanced = (
+                <>
+                    <h4>Pick an app to accept the invite with</h4>
+                    <ClientSelection link={link} />
+                </>
+            );
+        } else {
+            advanced = (
+                <>
+                    <hr />
+                    <h4>Change app</h4>
+                    <ClientSelection link={link} />
+                </>
+            );
+        }
     }
 
     return (
@@ -93,9 +108,8 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
             <Tile className="inviteTile">
                 {children}
                 {invite}
-                {advancedPlaceholder}
+                <div className="inviteTileClientSelection">{advanced}</div>
             </Tile>
-            {advanced}
         </>
     );
 };

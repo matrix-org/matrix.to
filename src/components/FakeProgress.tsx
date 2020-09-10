@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.inviteTile {
-    display: grid;
-    row-gap: 24px;
+import React from 'react';
 
-    .inviteTileClientSelection {
-        margin: 0 5%;
-        display: grid;
+import './FakeProgress.scss';
 
-        justify-content: space-between;
-        row-gap: 20px;
-    }
-}
+const FakeProgress = () => (
+    <div className="fakeProgress">
+        <div />
+    </div>
+);
+
+export default FakeProgress;
