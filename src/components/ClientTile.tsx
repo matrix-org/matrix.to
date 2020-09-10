@@ -42,7 +42,16 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
     const inviteButton =
         client.kind === ClientKind.LINKED_CLIENT ? (
             <Button>Accept invite</Button>
-        ) : null;
+        ) : (
+            <Button
+                onClick={() =>
+                    navigator.clipboard.writeText(client.copyString(link))
+                }
+                flashChildren="Invite copied"
+            >
+                Copy invite
+            </Button>
+        );
 
     let clientTile = (
         <Tile className={className}>

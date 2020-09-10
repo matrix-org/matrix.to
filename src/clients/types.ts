@@ -81,6 +81,7 @@ export interface LinkedClient extends ClientDescription {
 export interface TextClient extends ClientDescription {
     kind: ClientKind.TEXT_CLIENT;
     toInviteString(parsedLink: SafeLink): JSX.Element;
+    copyString(parsedLink: SafeLink): string;
 }
 
 /*

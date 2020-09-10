@@ -57,6 +57,17 @@ const Weechat: TextClient = {
                 return <span>Weechat doesn't support this kind of link</span>;
         }
     },
+    copyString: (link) => {
+        switch (link.kind) {
+            case LinkKind.Alias:
+            case LinkKind.RoomId:
+                return `/join ${link.identifier}`;
+            case LinkKind.UserId:
+                return `/invite ${link.identifier}`;
+            default:
+                return '';
+        }
+    },
     description: 'Commandline Matrix interface using Weechat',
 };
 

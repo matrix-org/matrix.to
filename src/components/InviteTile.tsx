@@ -61,6 +61,7 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
             case ClientKind.TEXT_CLIENT:
                 // TODO: copy to clipboard
                 invite = <p>{client.toInviteString(link)}</p>;
+                navigator.clipboard.writeText(client.copyString(link));
                 inviteUseString = `These are instructions for ${client.name}.`;
                 break;
         }
