@@ -120,7 +120,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
 
     const hses = useHSs(link);
 
-    if (!hses) {
+    if (!hses.length) {
         content = (
             <>
                 <DefaultPreview link={link} />
