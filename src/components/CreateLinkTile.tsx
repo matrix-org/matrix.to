@@ -103,7 +103,7 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
     return (
         <Tile className="createLinkTile">
             <TextButton onClick={(): void => props.setLink('')}>
-                Create another lnk
+                Create another link
             </TextButton>
             <a href={props.link}>
                 <h1>{props.link}</h1>
