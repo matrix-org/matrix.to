@@ -22,6 +22,8 @@ import InviteTile from './InviteTile';
 import { SafeLink, LinkKind } from '../parser/types';
 import UserPreview from './UserPreview';
 import EventPreview from './EventPreview';
+import HomeserverOptions from './HomeserverOptions';
+import DefaultPreview from './DefaultPreview';
 import { clientMap } from '../clients';
 import {
     getRoomFromId,
@@ -30,16 +32,26 @@ import {
     getUser,
 } from '../utils/cypher-wrapper';
 import { ClientContext } from '../contexts/ClientContext';
+import HSContext, {
+    TempHSContext,
+    HSOptions,
+    State as HSState,
+} from '../contexts/HSContext';
+import Toggle from './Toggle';
 
 interface IProps {
     link: SafeLink;
 }
 
-const LOADING: JSX.Element = <>Generating invite</>;
-
-const invite = async ({ link }: { link: SafeLink }): Promise<JSX.Element> => {
+const invite = async ({
+    clientAddress,
+    link,
+}: {
+    clientAddress: string;
+    link: SafeLink;
+}): Promise<JSX.Element> => {
     // TODO: replace with client fetch
-    const defaultClient = await client('https://matrix.org');
+    const defaultClient = await client(clientAddress);
     switch (link.kind) {
         case LinkKind.Alias:
             return (
@@ -85,12 +97,79 @@ const invite = async ({ link }: { link: SafeLink }): Promise<JSX.Element> => {
     }
 };
 
-const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
-    const [content, setContent] = useState(LOADING);
+interface PreviewProps extends IProps {
+    client: string;
+}
 
+const Preview: React.FC<PreviewProps> = ({ link, client }: PreviewProps) => {
+    const [content, setContent] = useState(<DefaultPreview link={link} />);
+
+    // TODO: support multiple clients with vias
     useEffect(() => {
-        (async (): Promise<void> => setContent(await invite({ link })))();
-    }, [link]);
+        (async (): Promise<void> =>
+            setContent(
+                await invite({
+                    clientAddress: client,
+                    link,
+                })
+            ))();
+    }, [link, client]);
+
+    return content;
+};
+
+function selectedClient(link: SafeLink, hsOptions: HSState): string[] {
+    switch (hsOptions.option) {
+        case HSOptions.Unset:
+            return [];
+        case HSOptions.None:
+            return [];
+        case HSOptions.TrustedHSOnly:
+            return [hsOptions.hs];
+        case HSOptions.Any:
+            return [
+                'https://' + link.identifier.split(':')[1],
+                ...link.arguments.vias,
+            ];
+    }
+}
+
+const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
+    let content: JSX.Element;
+    const [showHSOptions, setShowHSOPtions] = useState(false);
+    const [hsOptions] = useContext(HSContext);
+    const [tempHSState] = useContext(TempHSContext);
+
+    if (
+        hsOptions.option === HSOptions.Unset &&
+        tempHSState.option === HSOptions.Unset
+    ) {
+        content = (
+            <>
+                <DefaultPreview link={link} />
+                <Toggle
+                    checked={showHSOptions}
+                    onChange={(): void => setShowHSOPtions(!showHSOptions)}
+                >
+                    Show more information
+                </Toggle>
+            </>
+        );
+        if (showHSOptions) {
+            content = (
+                <>
+                    {content}
+                    <HomeserverOptions />
+                </>
+            );
+        }
+    } else {
+        const clients =
+            tempHSState.option !== HSOptions.Unset
+                ? selectedClient(link, tempHSState)
+                : selectedClient(link, hsOptions);
+        content = <Preview link={link} client={clients[0]} />;
+    }
 
     const [{ clientId }] = useContext(ClientContext);
 

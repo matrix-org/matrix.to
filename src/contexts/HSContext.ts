@@ -21,12 +21,12 @@ import { persistReducer } from '../utils/localStorage';
 
 //import { prefixFetch, Client, discoverServer } from 'matrix-cypher';
 
-enum HSOptions {
+export enum HSOptions {
     // The homeserver contact policy hasn't
     // been set yet.
     Unset = 'UNSET',
     // Matrix.to should only contact a single provided homeserver
-    TrustedClientOnly = 'TRUSTED_CLIENT_ONLY',
+    TrustedHSOnly = 'TRUSTED_CLIENT_ONLY',
     // Matrix.to may contact any homeserver it requires
     Any = 'ANY',
     // Matrix.to may not contact any homeservers
@@ -44,31 +44,31 @@ const STATE_SCHEMA = union([
         option: literal(HSOptions.Any),
     }),
     object({
-        option: literal(HSOptions.TrustedClientOnly),
+        option: literal(HSOptions.TrustedHSOnly),
         hs: string(),
     }),
 ]);
 
-type State = TypeOf<typeof STATE_SCHEMA>;
+export type State = TypeOf<typeof STATE_SCHEMA>;
 
 // TODO: rename actions to something with more meaning out of context
-export enum ActionTypes {
+export enum ActionType {
     SetHS = 'SET_HS',
     SetAny = 'SET_ANY',
     SetNone = 'SET_NONE',
 }
 
 export interface SetHS {
-    action: ActionTypes.SetHS;
+    action: ActionType.SetHS;
     HSURL: string;
 }
 
 export interface SetAny {
-    action: ActionTypes.SetAny;
+    action: ActionType.SetAny;
 }
 
 export interface SetNone {
-    action: ActionTypes.SetNone;
+    action: ActionType.SetNone;
 }
 
 export type Action = SetHS | SetAny | SetNone;
@@ -77,37 +77,55 @@ export const INITIAL_STATE: State = {
     option: HSOptions.Unset,
 };
 
+export const unpersistedReducer = (state: State, action: Action): State => {
+    console.log('reducing');
+    console.log(action);
+    switch (action.action) {
+        case ActionType.SetNone:
+            return {
+                option: HSOptions.None,
+            };
+        case ActionType.SetAny:
+            return {
+                option: HSOptions.Any,
+            };
+        case ActionType.SetHS:
+            return {
+                option: HSOptions.TrustedHSOnly,
+                hs: action.HSURL,
+            };
+        default:
+            return state;
+    }
+};
+
 export const [initialState, reducer] = persistReducer(
     'home-server-options',
     INITIAL_STATE,
     STATE_SCHEMA,
-    (state: State, action: Action): State => {
-        switch (action.action) {
-            case ActionTypes.SetNone:
-                return {
-                    option: HSOptions.None,
-                };
-            case ActionTypes.SetAny:
-                return {
-                    option: HSOptions.Any,
-                };
-            case ActionTypes.SetHS:
-                return {
-                    option: HSOptions.TrustedClientOnly,
-                    hs: action.HSURL,
-                };
-            default:
-                return state;
-        }
-    }
+    unpersistedReducer
 );
 
 // The defualt reducer needs to be overwritten with the one above
 // after it's been put through react's useReducer
-const { Provider, Consumer } = React.createContext<
-    [State, React.Dispatch<Action>]
->([initialState, (): void => {}]);
+const HSContext = React.createContext<[State, React.Dispatch<Action>]>([
+    initialState,
+    (): void => {},
+]);
+
+export default HSContext;
 
 // Quick rename to make importing easier
-export const HSProvider = Provider;
-export const HSConsumer = Consumer;
+export const HSProvider = HSContext.Provider;
+export const HSConsumer = HSContext.Consumer;
+
+// The defualt reducer needs to be overwritten with the one above
+// after it's been put through react's useReducer
+// The temp reducer is for unpersisted choices with regards to GDPR
+export const TempHSContext = React.createContext<
+    [State, React.Dispatch<Action>]
+>([INITIAL_STATE, (): void => {}]);
+
+// Quick rename to make importing easier
+export const TempHSProvider = TempHSContext.Provider;
+export const TempHSConsumer = TempHSContext.Consumer;

@@ -22,6 +22,13 @@ import {
     reducer as clientReducer,
     initialState as clientInitialState,
 } from './ClientContext';
+import {
+    HSProvider,
+    reducer as HSReducer,
+    initialState as HSInitialState,
+    unpersistedReducer as HSTempReducer,
+    TempHSProvider,
+} from './HSContext';
 
 interface IProps {
     children: React.ReactNode;
@@ -30,7 +37,13 @@ interface IProps {
 export default ({ children }: IProps): JSX.Element => (
     <UserAgentProvider ua={window.navigator.userAgent}>
         <ClientProvider value={useReducer(clientReducer, clientInitialState)}>
-            {children}
+            <HSProvider value={useReducer(HSReducer, HSInitialState)}>
+                <TempHSProvider
+                    value={useReducer(HSTempReducer, HSInitialState)}
+                >
+                    {children}
+                </TempHSProvider>
+            </HSProvider>
         </ClientProvider>
     </UserAgentProvider>
 );
