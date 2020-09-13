@@ -119,7 +119,6 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
     const [showHSOptions, setShowHSOPtions] = useState(false);
 
     const hses = useHSs(link);
-    console.log(hses);
 
     if (!hses) {
         content = (

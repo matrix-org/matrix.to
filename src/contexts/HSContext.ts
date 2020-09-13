@@ -68,8 +68,6 @@ export const INITIAL_STATE: State = {
 };
 
 export const unpersistedReducer = (state: State, action: Action): State => {
-    console.log('reducing');
-    console.log(action);
     switch (action.action) {
         case ActionType.SetAny:
             return {

@@ -28,7 +28,7 @@ const Toggle: React.FC<IProps> = ({ children, ...props }: IProps) => (
     <label className="toggle">
         {children}
         <input type="checkbox" {...props} />
-        <img src={chevron} />
+        <img src={chevron} alt="" />
     </label>
 );
 
