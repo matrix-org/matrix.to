@@ -14,9 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { LinkedClient, Maturity, ClientKind } from './types';
+import {
+    LinkedClient,
+    Maturity,
+    ClientKind,
+    ClientId,
+    Platform,
+} from './types';
 import { LinkKind } from '../parser/types';
-import logo from './element.svg';
+import logo from '../imgs/element.svg';
 
 const Element: LinkedClient = {
     kind: ClientKind.LINKED_CLIENT,
@@ -26,7 +32,9 @@ const Element: LinkedClient = {
     homepage: 'https://element.io',
     maturity: Maturity.STABLE,
     description: 'Fully-featured Matrix client for the Web',
-    tags: [],
+    platform: Platform.Desktop,
+    experimental: false,
+    clientId: ClientId.Element,
     toUrl: (link) => {
         switch (link.kind) {
             case LinkKind.Alias:
@@ -50,4 +58,37 @@ const Element: LinkedClient = {
     },
 };
 
+export const ElementDevelop: LinkedClient = {
+    kind: ClientKind.LINKED_CLIENT,
+    name: 'Element Develop',
+    author: 'Element',
+    logo: logo,
+    homepage: 'https://element.io',
+    maturity: Maturity.STABLE,
+    description: 'Fully-featured Matrix client for the Web',
+    platform: Platform.Desktop,
+    experimental: true,
+    clientId: ClientId.ElementDevelop,
+    toUrl: (link) => {
+        switch (link.kind) {
+            case LinkKind.Alias:
+            case LinkKind.RoomId:
+                return new URL(
+                    `https://develop.element.io/#/room/${link.identifier}`
+                );
+            case LinkKind.UserId:
+                return new URL(
+                    `https://develop.element.io/#/user/${link.identifier}`
+                );
+            case LinkKind.Permalink:
+                return new URL(
+                    `https://develop.element.io/#/room/${link.identifier}`
+                );
+            case LinkKind.GroupId:
+                return new URL(
+                    `https://develop.element.io/#/group/${link.identifier}`
+                );
+        }
+    },
+};
 export default Element;

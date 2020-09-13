@@ -14,15 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.inviteTile {
-    display: grid;
-    row-gap: 24px;
+import React, { useReducer } from 'react';
+import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 
-    .inviteTileClientSelection {
-        margin: 0 5%;
-        display: grid;
+import {
+    ClientProvider,
+    reducer as clientReducer,
+    initialState as clientInitialState,
+} from './ClientContext';
 
-        justify-content: space-between;
-        row-gap: 20px;
-    }
+interface IProps {
+    children: React.ReactNode;
 }
+
+export default ({ children }: IProps): JSX.Element => (
+    <UserAgentProvider ua={window.navigator.userAgent}>
+        <ClientProvider value={useReducer(clientReducer, clientInitialState)}>
+            {children}
+        </ClientProvider>
+    </UserAgentProvider>
+);

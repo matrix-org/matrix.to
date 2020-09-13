@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@import '../color-scheme';
+
 .createLinkTile {
     background: none;
 
@@ -28,5 +30,13 @@ limitations under the License.
         row-gap: 24px;
         align-self: center;
         padding: 0 30px;
+    }
+
+    > a {
+        color: $foreground;
+    }
+
+    h1 {
+        word-break: break-all;
     }
 }

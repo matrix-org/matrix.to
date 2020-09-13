@@ -3,13 +3,14 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@quentin-sommer/react-useragent": "^3.1.0",
         "classnames": "^2.2.6",
         "formik": "^2.1.4",
         "matrix-cypher": "^0.1.12",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-scripts": "3.4.1",
-        "yup": "^0.29.1"
+        "zod": "^1.10.3"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -68,14 +69,12 @@
         "@types/node": "^12.0.0",
         "@types/react": "^16.9.0",
         "@types/react-dom": "^16.9.0",
-        "@types/react-router-dom": "^5.1.5",
         "@types/yup": "^0.29.3",
         "eslint-config-matrix-org": "^0.1.0",
         "husky": "^4.2.5",
         "lint-staged": "^10.2.7",
         "node-sass": "^4.14.1",
         "prettier": "^2.0.5",
-        "react-router-dom": "^5.2.0",
         "storybook-addon-designs": "^5.4.0",
         "ts-jest": "^26.1.4",
         "typescript": "~3.7.2"

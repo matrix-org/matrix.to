@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.inviteTile {
+.advanced {
     display: grid;
-    row-gap: 24px;
+    row-gap: 20px;
 
-    .inviteTileClientSelection {
-        margin: 0 5%;
-        display: grid;
+    .advancedOptions {
+        display: flex;
+        flex-direction: column;
 
-        justify-content: space-between;
-        row-gap: 20px;
+        align-items: flex-start;
     }
 }

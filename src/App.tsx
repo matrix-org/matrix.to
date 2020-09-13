@@ -14,33 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React from 'react';
 
-import SingleColumn from "./layouts/SingleColumn";
-import CreateLinkTile from "./components/CreateLinkTile";
-import MatrixTile from "./components/MatrixTile";
-import Tile from "./components/Tile";
-import LinkRouter from "./pages/LinkRouter";
+import SingleColumn from './layouts/SingleColumn';
+import CreateLinkTile from './components/CreateLinkTile';
+import MatrixTile from './components/MatrixTile';
+import Tile from './components/Tile';
+import LinkRouter from './pages/LinkRouter';
 
-import "./App.scss";
+import './App.scss';
+
+import GlobalContext from './contexts/GlobalContext';
 
 /* eslint-disable no-restricted-globals */
 
 const App: React.FC = () => {
     let page = (
         <>
-            <CreateLinkTile /> <hr />{" "}
+            <CreateLinkTile />
+            <hr />
         </>
     );
+
     if (location.hash) {
-        console.log(location.hash);
-        if (location.hash.startsWith("#/")) {
+        if (location.hash.startsWith('#/')) {
             page = <LinkRouter link={location.hash.slice(2)} />;
         } else {
             page = (
                 <Tile>
-                    Links should be in the format {location.host}/#/{"<"}
-                    matrix-resource-identifier{">"}
+                    Links should be in the format {location.host}/#/{'<'}
+                    matrix-resource-identifier{'>'}
                 </Tile>
             );
         }
@@ -49,7 +52,7 @@ const App: React.FC = () => {
     return (
         <SingleColumn>
             <div className="topSpacer" />
-            {page}
+            <GlobalContext>{page}</GlobalContext>
             <MatrixTile />
             <div className="bottomSpacer" />
         </SingleColumn>

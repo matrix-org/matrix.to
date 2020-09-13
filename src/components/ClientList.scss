@@ -14,15 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.inviteTile {
+.clientList {
     display: grid;
-    row-gap: 24px;
-
-    .inviteTileClientSelection {
-        margin: 0 5%;
-        display: grid;
-
-        justify-content: space-between;
-        row-gap: 20px;
-    }
+    row-gap: 20px;
+    list-style-type: none;
+    padding-inline-start: 0;
 }

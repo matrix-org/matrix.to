@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "color-scheme";
+@import 'color-scheme';
 
 // CSS reset
 
@@ -39,7 +39,7 @@ body,
 
     color: $font;
 
-    overflow: scroll;
+    overflow: auto;
 }
 
 h1 {
@@ -47,6 +47,11 @@ h1 {
     font-size: 24px;
     line-height: 32px;
     text-align: center;
+}
+
+h4 {
+    text-align: left;
+    width: 100%;
 }
 
 a {

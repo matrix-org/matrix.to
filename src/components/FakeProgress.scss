@@ -14,15 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.inviteTile {
-    display: grid;
-    row-gap: 24px;
+@import '../color-scheme';
 
-    .inviteTileClientSelection {
-        margin: 0 5%;
-        display: grid;
+.fakeProgress {
+    width: 100%;
+    height: 4px;
+    background-color: lighten($grey, 50%);
+    border-radius: 4px;
 
-        justify-content: space-between;
-        row-gap: 20px;
+    > div {
+        width: 60%;
+        height: 100%;
+        background-color: $foreground;
+        border-radius: 4px;
     }
 }

@@ -15,54 +15,92 @@ limitations under the License.
 */
 
 import React from 'react';
+import { object, string, boolean, TypeOf } from 'zod';
 
-import { prefixFetch, Client, discoverServer } from 'matrix-cypher';
+import { ClientId } from '../clients/types';
+import { persistReducer } from '../utils/localStorage';
 
-type State = {
-    clientURL: string;
-    client: Client;
-}[];
+const STATE_SCHEMA = object({
+    clientId: string().nullable(),
+    showOnlyDeviceClients: boolean(),
+    showExperimentalClients: boolean(),
+});
+
+type State = TypeOf<typeof STATE_SCHEMA>;
 
 // Actions are a discriminated union.
-export enum ActionTypes {
-    AddClient = 'ADD_CLIENT',
-    RemoveClient = 'REMOVE_CLIENT',
+export enum ActionType {
+    SetClient = 'SET_CLIENT',
+    ClearClient = 'CLEAR_CLIENT',
+    ToggleShowOnlyDeviceClients = 'TOGGLE_SHOW_ONLY_DEVICE_CLIENTS',
+    ToggleShowExperimentalClients = 'TOGGLE_SHOW_EXPERIMENTAL_CLIENTS',
 }
 
-export interface AddClient {
-    action: ActionTypes.AddClient;
-    clientURL: string;
+interface SetClient {
+    action: ActionType.SetClient;
+    clientId: ClientId;
 }
 
-export interface RemoveClient {
-    action: ActionTypes.RemoveClient;
-    clientURL: string;
+interface ClearClient {
+    action: ActionType.ClearClient;
 }
 
-export type Action = AddClient | RemoveClient;
+interface ToggleShowOnlyDeviceClients {
+    action: ActionType.ToggleShowOnlyDeviceClients;
+}
 
-export const INITIAL_STATE: State = [];
-export const reducer = async (state: State, action: Action): Promise<State> => {
-    switch (action.action) {
-        case ActionTypes.AddClient:
-            return state.filter((x) => x.clientURL !== action.clientURL);
+interface ToggleShowExperimentalClients {
+    action: ActionType.ToggleShowExperimentalClients;
+}
 
-        case ActionTypes.RemoveClient:
-            if (!state.filter((x) => x.clientURL === action.clientURL)) {
-                const resolvedURL = await discoverServer(action.clientURL);
-                state.push({
-                    clientURL: resolvedURL,
-                    client: prefixFetch(resolvedURL),
-                });
-            }
-    }
-    return state;
+export type Action =
+    | SetClient
+    | ClearClient
+    | ToggleShowOnlyDeviceClients
+    | ToggleShowExperimentalClients;
+
+const INITIAL_STATE: State = {
+    clientId: null,
+    showOnlyDeviceClients: true,
+    showExperimentalClients: false,
 };
 
-// The null is a hack to make the type checker happy
-// create context does not need an argument
-const { Provider, Consumer } = React.createContext<typeof reducer | null>(null);
+export const [initialState, reducer] = persistReducer(
+    'default-client',
+    INITIAL_STATE,
+    STATE_SCHEMA,
+    (state: State, action: Action): State => {
+        switch (action.action) {
+            case ActionType.SetClient:
+                return {
+                    ...state,
+                    clientId: action.clientId,
+                };
+            case ActionType.ToggleShowOnlyDeviceClients:
+                return {
+                    ...state,
+                    showOnlyDeviceClients: !state.showOnlyDeviceClients,
+                };
+            case ActionType.ToggleShowExperimentalClients:
+                return {
+                    ...state,
+                    showExperimentalClients: !state.showExperimentalClients,
+                };
+            case ActionType.ClearClient:
+                return {
+                    ...state,
+                    clientId: null,
+                };
+        }
+    }
+);
+
+// The defualt reducer needs to be overwritten with the one above
+// after it's been put through react's useReducer
+export const ClientContext = React.createContext<
+    [State, React.Dispatch<Action>]
+>([initialState, (): void => {}]);
 
 // Quick rename to make importing easier
-export const ClientProvider = Provider;
-export const ClientConsumer = Consumer;
+export const ClientProvider = ClientContext.Provider;
+export const ClientConsumer = ClientContext.Consumer;

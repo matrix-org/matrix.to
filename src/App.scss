@@ -14,10 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "./color-scheme";
+@import './color-scheme';
 
 #root {
     background-color: $app-background;
+    background-image: url('./imgs/background.svg');
+    background-repeat: no-repeat;
+    background-position: 50% -20%;
 }
 
 @mixin spacer {

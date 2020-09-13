@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getEvent, client } from 'matrix-cypher';
 
 import { RoomPreviewWithTopic } from './RoomPreview';
@@ -22,13 +22,14 @@ import InviteTile from './InviteTile';
 import { SafeLink, LinkKind } from '../parser/types';
 import UserPreview from './UserPreview';
 import EventPreview from './EventPreview';
-import Clients from '../clients';
+import { clientMap } from '../clients';
 import {
     getRoomFromId,
     getRoomFromAlias,
     getRoomFromPermalink,
     getUser,
 } from '../utils/cypher-wrapper';
+import { ClientContext } from '../contexts/ClientContext';
 
 interface IProps {
     link: SafeLink;
@@ -91,8 +92,19 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
         (async (): Promise<void> => setContent(await invite({ link })))();
     }, [link]);
 
+    const [{ clientId }] = useContext(ClientContext);
+
+    // Select which client to link to
+    const displayClientId = clientId
+        ? clientId
+        : link.arguments.client
+        ? link.arguments.client
+        : null;
+
+    const client = displayClientId ? clientMap[displayClientId] : null;
+
     return (
-        <InviteTile client={Clients[0]} link={link}>
+        <InviteTile client={client} link={link}>
             {content}
         </InviteTile>
     );

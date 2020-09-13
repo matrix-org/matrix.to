@@ -18,6 +18,7 @@ import React from 'react';
 
 import Tile from '../components/Tile';
 import LinkPreview from '../components/LinkPreview';
+import InvitingClientTile from '../components/InvitingClientTile';
 import { parseHash } from '../parser/parser';
 import { LinkKind } from '../parser/types';
 
@@ -28,9 +29,9 @@ interface IProps {
 const LinkRouter: React.FC<IProps> = ({ link }: IProps) => {
     // our room id's will be stored in the hash
     const parsedLink = parseHash(link);
-    console.log({ link });
 
     let feedback: JSX.Element;
+    let client: JSX.Element = <></>;
     switch (parsedLink.kind) {
         case LinkKind.ParseFailed:
             feedback = (
@@ -41,7 +42,21 @@ const LinkRouter: React.FC<IProps> = ({ link }: IProps) => {
             );
             break;
         default:
-            feedback = <LinkPreview link={parsedLink} />;
+            if (parsedLink.arguments.client) {
+                client = (
+                    <InvitingClientTile
+                        clientName={parsedLink.arguments.client}
+                    />
+                );
+            }
+
+            feedback = (
+                <>
+                    <LinkPreview link={parsedLink} />
+                    <hr />
+                    {client}
+                </>
+            );
     }
 
     return feedback;

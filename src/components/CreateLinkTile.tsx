@@ -15,17 +15,37 @@ limitations under the License.
 */
 
 import React, { useEffect, useRef } from 'react';
+import { Formik, Form } from 'formik';
+
 import Tile from './Tile';
 import Button from './Button';
 import TextButton from './TextButton';
 import Input from './Input';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
+import { parseHash } from '../parser/parser';
+import { LinkKind } from '../parser/types';
 
 import './CreateLinkTile.scss';
 
 interface ILinkNotCreatedTileProps {
     setLink: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface FormValues {
+    identifier: string;
+}
+
+// Hacky use of types here
+function validate(values: FormValues): Partial<FormValues> {
+    const errors: Partial<FormValues> = {};
+
+    const parse = parseHash(values.identifier);
+
+    if (parse.kind === LinkKind.ParseFailed) {
+        errors.identifier =
+            "That link doesn't look right. Double check the details.";
+    }
+
+    return errors;
 }
 
 const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
@@ -41,21 +61,13 @@ const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
                 initialValues={{
                     identifier: '',
                 }}
-                validationSchema={Yup.object({
-                    identifier: Yup.string()
-                        .test(
-                            'is-identifier',
-                            "That link doesn't look right. Double check the details.",
-                            (link) => link
-                        )
-                        .required('Required'),
-                })}
+                validate={validate}
                 onSubmit={(values): void => {
                     props.setLink(
                         document.location.protocol +
                             '//' +
                             document.location.host +
-                            '/' +
+                            '/#/' +
                             values.identifier
                     );
                 }}
@@ -91,9 +103,11 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
     return (
         <Tile className="createLinkTile">
             <TextButton onClick={(): void => props.setLink('')}>
-                Create another lnk
+                Create another link
             </TextButton>
-            <h1>{props.link}</h1>
+            <a href={props.link}>
+                <h1>{props.link}</h1>
+            </a>
             <Button
                 flashChildren={'Copied'}
                 onClick={(): void => {
@@ -109,7 +123,6 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
 
 const CreateLinkTile: React.FC = () => {
     const [link, setLink] = React.useState('');
-    console.log(link);
     if (!link) {
         return <LinkNotCreatedTile setLink={setLink} />;
     } else {

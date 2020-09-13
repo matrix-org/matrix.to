@@ -21,8 +21,14 @@ import './Button.scss';
 
 interface IProps extends React.LinkHTMLAttributes<HTMLElement> {}
 
-const LinkButton: React.FC<IProps> = ({ className, ...props }: IProps) => (
-    <a className={classnames('button', className)} {...props} />
+const LinkButton: React.FC<IProps> = ({
+    className,
+    children,
+    ...props
+}: IProps) => (
+    <a className={classnames('button', className)} {...props}>
+        {children}
+    </a>
 );
 
 export default LinkButton;

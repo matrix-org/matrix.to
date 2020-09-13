@@ -14,43 +14,104 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import './InviteTile.scss';
 
 import Tile from './Tile';
 import LinkButton from './LinkButton';
-import TextButton from './TextButton';
+import Button from './Button';
+import ClientSelection from './ClientSelection';
 import { Client, ClientKind } from '../clients/types';
 import { SafeLink } from '../parser/types';
+import TextButton from './TextButton';
+import FakeProgress from './FakeProgress';
 
 interface IProps {
     children?: React.ReactNode;
-    client: Client;
+    client: Client | null;
     link: SafeLink;
 }
 
 const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
+    const [showAdvanced, setShowAdvanced] = useState(false);
     let invite: React.ReactNode;
-    switch (client.kind) {
-        case ClientKind.LINKED_CLIENT:
-            invite = (
-                <LinkButton href={client.toUrl(link).toString()}>
-                    Accept invite
-                </LinkButton>
+    let advanced: React.ReactNode;
+
+    if (client === null) {
+        invite = showAdvanced ? (
+            <FakeProgress />
+        ) : (
+            <Button onClick={() => setShowAdvanced(!showAdvanced)}>
+                Accept invite
+            </Button>
+        );
+    } else {
+        let inviteUseString: string;
+
+        switch (client.kind) {
+            case ClientKind.LINKED_CLIENT:
+                invite = (
+                    <LinkButton href={client.toUrl(link).toString()}>
+                        Accept invite
+                    </LinkButton>
+                );
+                inviteUseString = `Accepting will open ${link.identifier} in ${client.name}.`;
+                break;
+            case ClientKind.TEXT_CLIENT:
+                // TODO: copy to clipboard
+                invite = <p>{client.toInviteString(link)}</p>;
+                navigator.clipboard.writeText(client.copyString(link));
+                inviteUseString = `These are instructions for ${client.name}.`;
+                break;
+        }
+
+        const advancedToggle = (
+            <p>
+                {inviteUseString}
+                <TextButton
+                    onClick={(): void => setShowAdvanced(!showAdvanced)}
+                >
+                    Change Client.
+                </TextButton>
+            </p>
+        );
+
+        invite = (
+            <>
+                {invite}
+                {advancedToggle}
+            </>
+        );
+    }
+
+    if (showAdvanced) {
+        if (client === null) {
+            advanced = (
+                <>
+                    <h4>Pick an app to accept the invite with</h4>
+                    <ClientSelection link={link} />
+                </>
             );
-            break;
-        case ClientKind.TEXT_CLIENT:
-            invite = <p>{client.toInviteString(link)}</p>;
-            break;
+        } else {
+            advanced = (
+                <>
+                    <hr />
+                    <h4>Change app</h4>
+                    <ClientSelection link={link} />
+                </>
+            );
+        }
     }
 
     return (
-        <Tile className="inviteTile">
-            {children}
-            {invite}
-            <TextButton>Advanced options</TextButton>
-        </Tile>
+        <>
+            <Tile className="inviteTile">
+                {children}
+                {invite}
+                <div className="inviteTileClientSelection">{advanced}</div>
+            </Tile>
+        </>
     );
 };
 
