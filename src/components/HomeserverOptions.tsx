@@ -91,7 +91,7 @@ const HomeserverOptions: React.FC<IProps> = () => {
                 checked={rememberSelection}
                 onChange={(e): void => setRemeberSelection(e.target.checked)}
             >
-                Remember my choice.
+                Remember my choice
             </StyledCheckbox>
             <Button
                 onClick={(): void => {
