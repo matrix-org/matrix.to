@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "../color-scheme";
-@import "../error";
+@import '../color-scheme';
+@import '../error';
 
 .input {
     width: 100%;
@@ -23,7 +23,8 @@ limitations under the License.
 
     background: $background;
 
-    border: 1px solid $font;
+    border: 1px solid $foreground;
+    font: lighten($grey, 60%);
     border-radius: 24px;
 
     font-size: 14px;
@@ -32,9 +33,18 @@ limitations under the License.
     &.error {
         @include error;
     }
+
+    &:focus {
+        border: 1px solid $font;
+        font: $font;
+    }
 }
 
 .inputError {
     @include error;
     text-align: center;
+}
+
+.inputMuted {
+    border-color: lighten($grey, 60%);
 }

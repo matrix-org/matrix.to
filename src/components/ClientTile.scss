@@ -19,7 +19,7 @@ limitations under the License.
 .clientTile {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
 
     min-height: 150px;
     width: 100%;
@@ -28,7 +28,10 @@ limitations under the License.
 
     > img {
         flex-shrink: 0;
-        height: 130px;
+        height: 116px;
+        width: 116px;
+        margin-right: 14px;
+        border-radius: 16px;
     }
 
     > div {
@@ -47,11 +50,10 @@ limitations under the License.
         }
 
         .button {
-            margin: 5px;
+            width: 50%;
         }
     }
 
-    border: 1px solid $borders;
     border-radius: 8px;
 
     padding: 15px;
@@ -59,8 +61,8 @@ limitations under the License.
     // For the chevron
     position: relative;
 
-    &::hover {
-        background-color: $grey;
+    &:hover {
+        background-color: $app-background;
     }
 }
 
@@ -68,12 +70,4 @@ limitations under the License.
     position: relative;
 
     width: 100%;
-
-    &::after {
-        // TODO: add chevron top right
-        position: absolute;
-        right: 10px;
-        top: 5px;
-        content: '>';
-    }
 }

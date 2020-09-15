@@ -50,6 +50,7 @@ export type State = TypeOf<typeof STATE_SCHEMA>;
 export enum ActionType {
     SetHS = 'SET_HS',
     SetAny = 'SET_ANY',
+    Clear = 'CLEAR',
 }
 
 export interface SetHS {
@@ -61,13 +62,17 @@ export interface SetAny {
     action: ActionType.SetAny;
 }
 
-export type Action = SetHS | SetAny;
+export interface Clear {
+    action: ActionType.Clear;
+}
+
+export type Action = SetHS | SetAny | Clear;
 
 export const INITIAL_STATE: State = {
     option: HSOptions.Unset,
 };
 
-export const unpersistedReducer = (state: State, action: Action): State => {
+export const unpersistedReducer = (_state: State, action: Action): State => {
     switch (action.action) {
         case ActionType.SetAny:
             return {
@@ -78,8 +83,10 @@ export const unpersistedReducer = (state: State, action: Action): State => {
                 option: HSOptions.TrustedHSOnly,
                 hs: action.HSURL,
             };
-        default:
-            return state;
+        case ActionType.Clear:
+            return {
+                option: HSOptions.Unset,
+            };
     }
 };
 

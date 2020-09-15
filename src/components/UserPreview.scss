@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "../color-scheme";
+@import '../color-scheme';
 
 .userPreview {
     width: 100%;
@@ -70,5 +70,17 @@ limitations under the License.
     .avatar {
         flex-grow: 0;
         flex-shrink: 0;
+        height: 32px;
+        width: 32px;
+    }
+
+    &.centeredMiniUserPreview {
+        h1 {
+            width: unset;
+            text-align: center;
+        }
+        img {
+            display: none;
+        }
     }
 }

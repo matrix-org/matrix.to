@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { useState, useEffect } from 'react';
 import { client, User, getUserDetails } from 'matrix-cypher';
+import classNames from 'classnames';
 import icon from '../imgs/chat-icon.svg';
 
 import Avatar, { UserAvatar } from './Avatar';
@@ -54,8 +55,12 @@ export const InviterPreview: React.FC<InviterPreviewProps> = ({
     ) : (
         <Avatar label={`Placeholder icon for ${userId}`} avatarUrl={icon} />
     );
+    const className = classNames('miniUserPreview', {
+        centeredMiniUserPreview: !user,
+    });
+
     return (
-        <div className="miniUserPreview">
+        <div className={className}>
             <div>
                 <h1>
                     Invited by <b>{user ? user.displayname : userId}</b>

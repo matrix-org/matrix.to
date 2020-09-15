@@ -21,6 +21,7 @@ import CreateLinkTile from './components/CreateLinkTile';
 import MatrixTile from './components/MatrixTile';
 import Tile from './components/Tile';
 import LinkRouter from './pages/LinkRouter';
+import Footer from './components/Footer';
 
 import './App.scss';
 
@@ -32,7 +33,6 @@ const App: React.FC = () => {
     let page = (
         <>
             <CreateLinkTile />
-            <hr />
         </>
     );
 
@@ -50,12 +50,18 @@ const App: React.FC = () => {
     }
 
     return (
-        <SingleColumn>
-            <div className="topSpacer" />
-            <GlobalContext>{page}</GlobalContext>
-            <MatrixTile />
-            <div className="bottomSpacer" />
-        </SingleColumn>
+        <GlobalContext>
+            <SingleColumn>
+                <div className="topSpacer" />
+                {page}
+                <div>
+                    <MatrixTile isLink={!!location.hash} />
+                    <br />
+                    <Footer />
+                </div>
+                <div className="bottomSpacer" />
+            </SingleColumn>
+        </GlobalContext>
     );
 };
 

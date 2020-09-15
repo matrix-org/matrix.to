@@ -101,6 +101,8 @@ export const ClientContext = React.createContext<
     [State, React.Dispatch<Action>]
 >([initialState, (): void => {}]);
 
+export default ClientContext;
+
 // Quick rename to make importing easier
 export const ClientProvider = ClientContext.Provider;
 export const ClientConsumer = ClientContext.Consumer;

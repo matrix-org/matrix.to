@@ -20,12 +20,13 @@ import { useField } from 'formik';
 
 import './Input.scss';
 
-interface IProps extends React.InputHTMLAttributes<Element> {
+interface IProps extends React.InputHTMLAttributes<HTMLElement> {
     name: string;
     type: string;
+    muted?: boolean;
 }
 
-const Input: React.FC<IProps> = ({ className, ...props }) => {
+const Input: React.FC<IProps> = ({ className, muted, ...props }) => {
     const [field, meta] = useField(props);
 
     const error =
@@ -35,6 +36,7 @@ const Input: React.FC<IProps> = ({ className, ...props }) => {
 
     const classNames = classnames('input', className, {
         error: meta.error,
+        inputMuted: !!muted,
     });
 
     return (

@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+@import '../color-scheme';
 
-import Button from './Button';
+.footer {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    column-gap: 5px;
 
-export default { title: 'Button' };
+    * {
+        color: $font;
+    }
 
-export const WithText: React.FC = () => (
-    <Button onClick={action('clicked')}>
-        {text('label', 'Hello Story Book')}
-    </Button>
-);
-
-export const Secondary: React.FC = () => (
-    <Button secondary>Secondary button</Button>
-);
+    .textButton {
+        margin: 0;
+        padding: 0;
+    }
+}

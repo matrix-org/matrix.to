@@ -21,7 +21,7 @@ import chevron from '../imgs/chevron-down.svg';
 import './Toggle.scss';
 
 interface IProps extends React.InputHTMLAttributes<Element> {
-    children?: React.ReactChild;
+    children?: React.ReactNode;
 }
 
 const Toggle: React.FC<IProps> = ({ children, ...props }: IProps) => (

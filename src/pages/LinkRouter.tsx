@@ -53,7 +53,6 @@ const LinkRouter: React.FC<IProps> = ({ link }: IProps) => {
             feedback = (
                 <>
                     <LinkPreview link={parsedLink} />
-                    <hr />
                     {client}
                 </>
             );

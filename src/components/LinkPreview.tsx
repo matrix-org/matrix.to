@@ -47,13 +47,12 @@ const invite = async ({
     link: SafeLink;
 }): Promise<JSX.Element> => {
     // TODO: replace with client fetch
-    const defaultClient = await client(clientAddress);
     switch (link.kind) {
         case LinkKind.Alias:
             return (
                 <RoomPreviewWithTopic
                     room={
-                        await getRoomFromAlias(defaultClient, link.identifier)
+                        await getRoomFromAlias(clientAddress, link.identifier)
                     }
                 />
             );
@@ -61,14 +60,14 @@ const invite = async ({
         case LinkKind.RoomId:
             return (
                 <RoomPreviewWithTopic
-                    room={await getRoomFromId(defaultClient, link.identifier)}
+                    room={await getRoomFromId(clientAddress, link.identifier)}
                 />
             );
 
         case LinkKind.UserId:
             return (
                 <UserPreview
-                    user={await getUser(defaultClient, link.identifier)}
+                    user={await getUser(clientAddress, link.identifier)}
                     userId={link.identifier}
                 />
             );
@@ -76,10 +75,10 @@ const invite = async ({
         case LinkKind.Permalink:
             return (
                 <EventPreview
-                    room={await getRoomFromPermalink(defaultClient, link)}
+                    room={await getRoomFromPermalink(clientAddress, link)}
                     event={
                         await getEvent(
-                            defaultClient,
+                            await client(clientAddress),
                             link.roomLink,
                             link.eventId
                         )
@@ -128,7 +127,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
                     checked={showHSOptions}
                     onChange={(): void => setShowHSOPtions(!showHSOptions)}
                 >
-                    Show more information
+                    About {link.identifier}
                 </Toggle>
             </>
         );
@@ -136,7 +135,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
             content = (
                 <>
                     {content}
-                    <HomeserverOptions />
+                    <HomeserverOptions link={link} />
                 </>
             );
         }
@@ -164,7 +163,9 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
                 originalLink: '',
             }}
         />
-    ) : null;
+    ) : (
+        <p style={{ margin: '0 0 10px 0' }}>You're invited to join</p>
+    );
 
     return (
         <InviteTile client={client} link={link}>
