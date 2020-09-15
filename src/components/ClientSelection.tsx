@@ -21,6 +21,7 @@ import { ActionType, ClientContext } from '../contexts/ClientContext';
 import ClientList from './ClientList';
 import { SafeLink } from '../parser/types';
 import Button from './Button';
+import StyledCheckbox from './StyledCheckbox';
 
 interface IProps {
     link: SafeLink;
@@ -31,40 +32,34 @@ const ClientSelection: React.FC<IProps> = ({ link }: IProps) => {
     const [rememberSelection, setRememberSelection] = useState(false);
     const options = (
         <div className="advancedOptions">
-            <label>
-                <input
-                    type="checkbox"
-                    onChange={(): void => {
-                        setRememberSelection(!rememberSelection);
-                    }}
-                    checked={rememberSelection}
-                />
+            <StyledCheckbox
+                onChange={(): void => {
+                    setRememberSelection(!rememberSelection);
+                }}
+                checked={rememberSelection}
+            >
                 Remember my selection for future invites in this browser
-            </label>
-            <label>
-                <input
-                    type="checkbox"
-                    onChange={(): void => {
-                        clientStateDispatch({
-                            action: ActionType.ToggleShowOnlyDeviceClients,
-                        });
-                    }}
-                    checked={clientState.showOnlyDeviceClients}
-                />
+            </StyledCheckbox>
+            <StyledCheckbox
+                onChange={(): void => {
+                    clientStateDispatch({
+                        action: ActionType.ToggleShowOnlyDeviceClients,
+                    });
+                }}
+                checked={clientState.showOnlyDeviceClients}
+            >
                 Show only clients suggested for this device
-            </label>
-            <label>
-                <input
-                    type="checkbox"
-                    onChange={(): void => {
-                        clientStateDispatch({
-                            action: ActionType.ToggleShowExperimentalClients,
-                        });
-                    }}
-                    checked={clientState.showExperimentalClients}
-                />
+            </StyledCheckbox>
+            <StyledCheckbox
+                onChange={(): void => {
+                    clientStateDispatch({
+                        action: ActionType.ToggleShowExperimentalClients,
+                    });
+                }}
+                checked={clientState.showExperimentalClients}
+            >
                 Show experimental clients
-            </label>
+            </StyledCheckbox>
         </div>
     );
 
