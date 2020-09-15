@@ -104,7 +104,7 @@ const HomeserverOptions: React.FC<IProps> = () => {
                 checked={usePrefered}
                 onChange={(): void => setUsePrefered(!usePrefered)}
             >
-                Use my prefered homeserver only
+                Use my preferred homeserver only
             </Toggle>
             {hsInput}
         </Tile>
