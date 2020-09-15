@@ -109,7 +109,7 @@ const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
                 checked={rememberSelection}
                 onChange={(e): void => setRemeberSelection(e.target.checked)}
             >
-                Remember my choice.
+                Remember my choice
             </StyledCheckbox>
             <Button
                 secondary
@@ -119,7 +119,6 @@ const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
             >
                 Use any homeserver
             </Button>
-
             {hsInput}
         </Tile>
     );
