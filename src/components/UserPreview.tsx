@@ -53,7 +53,11 @@ export const InviterPreview: React.FC<InviterPreviewProps> = ({
     const avatar = user ? (
         <UserAvatar user={user} userId={userId} />
     ) : (
-        <Avatar label={`Placeholder icon for ${userId}`} avatarUrl={icon} />
+        <Avatar
+            className="avatarNoCrop"
+            label={`Placeholder icon for ${userId}`}
+            avatarUrl={icon}
+        />
     );
     const className = classNames('miniUserPreview', {
         centeredMiniUserPreview: !user,

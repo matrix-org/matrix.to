@@ -87,8 +87,8 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
             advanced = (
                 <>
                     <hr />
-                    <h3>Almost done!</h3>
-                    <p>Pick a client to open {link.identifier}</p>
+                    <h2>Almost done!</h2>
+                    <p>Great, pick a client below to confirm and continue</p>
                     <ClientSelection link={link} />
                 </>
             );

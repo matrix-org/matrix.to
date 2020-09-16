@@ -29,13 +29,13 @@ interface IProps extends React.InputHTMLAttributes<HTMLElement> {
 const Input: React.FC<IProps> = ({ className, muted, ...props }) => {
     const [field, meta] = useField(props);
 
-    const error =
-        meta.touched && meta.error ? (
-            <div className="inputError">{meta.error}</div>
-        ) : null;
+    const errorBool = meta.touched && meta.value !== '' && meta.error;
+    const error = errorBool ? (
+        <div className="inputError">{meta.error}</div>
+    ) : null;
 
     const classNames = classnames('input', className, {
-        error: meta.error,
+        error: errorBool,
         inputMuted: !!muted,
     });
 

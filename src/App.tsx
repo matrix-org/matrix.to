@@ -36,8 +36,12 @@ const App: React.FC = () => {
         </>
     );
 
+    // Some hacky uri decoding
+    location.href = decodeURIComponent(location.href);
+
     const [hash, setHash] = useState(location.hash);
 
+    console.log(hash);
     useEffect(() => (window.onhashchange = () => setHash(location.hash)), []);
 
     if (hash) {

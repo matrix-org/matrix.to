@@ -31,11 +31,15 @@ const RoomPreview: React.FC<IProps> = ({ room }: IProps) => {
         : room.aliases
         ? room.aliases[0]
         : room.room_id;
+    const members =
+        room.num_joined_members > 0 ? (
+            <p>{room.num_joined_members.toLocaleString()} members</p>
+        ) : null;
     return (
         <div className="roomPreview">
             <RoomAvatar room={room} />
             <h1>{room.name ? room.name : roomAlias}</h1>
-            <p>{room.num_joined_members.toLocaleString()} members</p>
+            {members}
             <p>{roomAlias}</p>
         </div>
     );

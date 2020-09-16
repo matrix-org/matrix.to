@@ -41,7 +41,8 @@ function validateURL(values: FormValues): Partial<FormValues> {
     try {
         string().url().parse(values.HSUrl);
     } catch {
-        errors.HSUrl = 'This must be a valid url';
+        errors.HSUrl =
+            'This must be a valid homeserver URL, starting with https://';
     }
     return errors;
 }
@@ -74,7 +75,7 @@ const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
                         muted={!values.HSUrl}
                         type="text"
                         name="HSUrl"
-                        placeholder="https://example.com"
+                        placeholder="Preferred homeserver URL"
                     />
                     {values.HSUrl && !errors.HSUrl ? (
                         <Button secondary type="submit">
@@ -92,12 +93,9 @@ const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
                 <div>
                     <h3>About {link.identifier}</h3>
                     <p>
-                        Select a homeserver to learn more about{' '}
-                        {link.identifier}. <br />
-                        The homeserver will provide metadata about the link such
-                        as an avatar or description. Homeservers will be able to
-                        relate your IP to resources you've opened invites for in
-                        matrix.to.
+                        A homeserver will show you metadata about the link, like
+                        a description. Homeservers will be able to relate your
+                        IP to things you've opened invites for in matrix.to.
                     </p>
                 </div>
                 <img
