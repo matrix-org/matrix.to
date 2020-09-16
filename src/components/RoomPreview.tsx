@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room } from 'matrix-cypher';
+import { Room } from '../matrix-cypher';
 
 import { RoomAvatar } from './Avatar';
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useState, useEffect } from 'react';
-import { client, User, getUserDetails } from 'matrix-cypher';
+import { client, User, getUserDetails } from '../matrix-cypher';
 import classNames from 'classnames';
 import icon from '../imgs/chat-icon.svg';
 

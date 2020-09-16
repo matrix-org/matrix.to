@@ -14,22 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Room, Event } from '../matrix-cypher';
+import fetch from 'cross-fetch';
 
-import RoomPreview from './RoomPreview';
+import { ensure } from './promises';
 
-interface IProps {
-    room: Room;
-    event: Event;
+/*
+ * Wraps a fetch with a domain for easy reuse.
+ */
+export function prefixFetch(host: string) {
+    return (path: string) => fetch(
+        new URL(path, host).toString(),
+    );
 }
 
-const EventPreview: React.FC<IProps> = ({ room, event }: IProps) => (
-    <>
-        <RoomPreview room={room} />
-        <p>"{event.content}"</p>
-        <p>{event.sender}</p>
-    </>
-);
-
-export default EventPreview;
+export function parseJSON(resp: Response) {
+    return ensure(
+        resp.ok,
+        () => resp.json(),
+        `Error from Homeserver. Error code: ${resp.status}`,
+    );
+}

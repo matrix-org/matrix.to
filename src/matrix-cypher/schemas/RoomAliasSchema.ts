@@ -14,22 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Room, Event } from '../matrix-cypher';
+import { object, array, string, TypeOf } from 'zod';
 
-import RoomPreview from './RoomPreview';
+const RoomAliasSchema = object({
+  room_id: string(),
+  servers: array(string()),
+});
 
-interface IProps {
-    room: Room;
-    event: Event;
-}
+export type RoomAlias = TypeOf<typeof RoomAliasSchema>;
+export default RoomAliasSchema;
 
-const EventPreview: React.FC<IProps> = ({ room, event }: IProps) => (
-    <>
-        <RoomPreview room={room} />
-        <p>"{event.content}"</p>
-        <p>{event.sender}</p>
-    </>
-);
-
-export default EventPreview;

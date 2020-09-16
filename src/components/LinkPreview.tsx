@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useState, useEffect, useContext } from 'react';
-import { getEvent, client } from 'matrix-cypher';
+import { getEvent, client } from '../matrix-cypher';
 
 import { RoomPreviewWithTopic } from './RoomPreview';
 import InviteTile from './InviteTile';

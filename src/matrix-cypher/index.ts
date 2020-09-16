@@ -14,22 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Room, Event } from '../matrix-cypher';
-
-import RoomPreview from './RoomPreview';
-
-interface IProps {
-    room: Room;
-    event: Event;
-}
-
-const EventPreview: React.FC<IProps> = ({ room, event }: IProps) => (
-    <>
-        <RoomPreview room={room} />
-        <p>"{event.content}"</p>
-        <p>{event.sender}</p>
-    </>
-);
-
-export default EventPreview;
+export * from './matrix-cypher';
+export * from './utils';
+export * from './schemas';

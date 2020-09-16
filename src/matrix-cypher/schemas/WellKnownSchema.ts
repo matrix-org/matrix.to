@@ -14,22 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Room, Event } from '../matrix-cypher';
+import { object, string, TypeOf } from 'zod';
 
-import RoomPreview from './RoomPreview';
+const WellKnownSchema = object({
+  'm.homeserver': object({
+    'base_url': string().url(),
+  }),
+  'm.identity_server': object({
+    'base_url': string().url(),
+  }),
+});
 
-interface IProps {
-    room: Room;
-    event: Event;
-}
-
-const EventPreview: React.FC<IProps> = ({ room, event }: IProps) => (
-    <>
-        <RoomPreview room={room} />
-        <p>"{event.content}"</p>
-        <p>{event.sender}</p>
-    </>
-);
-
-export default EventPreview;
+export type WellKnown = TypeOf<typeof WellKnownSchema>;
+export default WellKnownSchema;

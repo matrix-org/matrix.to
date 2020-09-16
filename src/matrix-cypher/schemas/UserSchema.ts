@@ -14,22 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Room, Event } from '../matrix-cypher';
+import { object, string, TypeOf } from 'zod';
 
-import RoomPreview from './RoomPreview';
+const UserSchema = object({
+  avatar_url: string().optional(),
+  displayname: string().optional(),
+})
 
-interface IProps {
-    room: Room;
-    event: Event;
-}
+export type User = TypeOf<typeof UserSchema>;
+export default UserSchema;
 
-const EventPreview: React.FC<IProps> = ({ room, event }: IProps) => (
-    <>
-        <RoomPreview room={room} />
-        <p>"{event.content}"</p>
-        <p>{event.sender}</p>
-    </>
-);
-
-export default EventPreview;

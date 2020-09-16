@@ -6,7 +6,6 @@
         "@quentin-sommer/react-useragent": "^3.1.0",
         "classnames": "^2.2.6",
         "formik": "^2.1.4",
-        "matrix-cypher": "^0.1.12",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-scripts": "3.4.1",

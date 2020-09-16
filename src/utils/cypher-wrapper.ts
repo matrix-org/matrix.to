@@ -28,7 +28,7 @@ import {
     searchPublicRooms,
     getUserDetails,
     convertMXCtoMediaQuery,
-} from 'matrix-cypher';
+} from '../matrix-cypher';
 import { LinkKind, Permalink } from '../parser/types';
 
 /* This is a collection of methods for providing fallback metadata

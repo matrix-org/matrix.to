@@ -19,8 +19,6 @@ import { string, object, union, literal, TypeOf } from 'zod';
 
 import { persistReducer } from '../utils/localStorage';
 
-//import { prefixFetch, Client, discoverServer } from 'matrix-cypher';
-
 export enum HSOptions {
     // The homeserver contact policy hasn't
     // been set yet.
