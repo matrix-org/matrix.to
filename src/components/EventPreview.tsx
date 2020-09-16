@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room, Event } from 'matrix-cypher';
+import { Room, Event } from '../matrix-cypher';
 
 import RoomPreview from './RoomPreview';
 

@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "../color-scheme";
+@import '../color-scheme';
 
 .button {
     width: 100%;
 
-    padding: 1rem;
+    height: 48px;
+
     border-radius: 2rem;
     border: 0;
 
@@ -28,6 +29,31 @@ limitations under the License.
 
     font-size: 14px;
     font-weight: 500;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    position: relative;
+
+    .buttonIcon {
+        position: absolute;
+        height: 24px;
+        width: 24px;
+
+        left: 18px;
+        top: 12px;
+    }
+}
+
+.buttonSecondary {
+    background-color: $background;
+    color: $foreground;
+    border: 1px solid $foreground;
+}
+
+.errorButton:hover {
+    cursor: not-allowed;
 }
 
 .buttonHighlight {

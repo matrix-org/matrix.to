@@ -25,7 +25,6 @@ import ClientSelection from './ClientSelection';
 import { Client, ClientKind } from '../clients/types';
 import { SafeLink } from '../parser/types';
 import TextButton from './TextButton';
-import FakeProgress from './FakeProgress';
 
 interface IProps {
     children?: React.ReactNode;
@@ -39,10 +38,8 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
     let advanced: React.ReactNode;
 
     if (client === null) {
-        invite = showAdvanced ? (
-            <FakeProgress />
-        ) : (
-            <Button onClick={() => setShowAdvanced(!showAdvanced)}>
+        invite = showAdvanced ? null : (
+            <Button onClick={(): void => setShowAdvanced(!showAdvanced)}>
                 Accept invite
             </Button>
         );
@@ -89,7 +86,9 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
         if (client === null) {
             advanced = (
                 <>
-                    <h4>Pick an app to accept the invite with</h4>
+                    <hr />
+                    <h2>Almost done!</h2>
+                    <p>Great, pick a client below to confirm and continue</p>
                     <ClientSelection link={link} />
                 </>
             );
@@ -104,12 +103,15 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
         }
     }
 
+    advanced = advanced ? (
+        <div className="inviteTileClientSelection">{advanced}</div>
+    ) : null;
     return (
         <>
             <Tile className="inviteTile">
                 {children}
                 {invite}
-                <div className="inviteTileClientSelection">{advanced}</div>
+                {advanced}
             </Tile>
         </>
     );

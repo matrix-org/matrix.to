@@ -14,15 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@import '../color-scheme';
+
 .inviteTile {
     display: grid;
     row-gap: 24px;
 
     .inviteTileClientSelection {
-        margin: 0 5%;
+        margin: 0 auto;
         display: grid;
 
         justify-content: space-between;
         row-gap: 20px;
+
+        h2 + p {
+            color: $foreground;
+        }
+    }
+
+    hr {
+        width: 100%;
+        margin: 0;
     }
 }

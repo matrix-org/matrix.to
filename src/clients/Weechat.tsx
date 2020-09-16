@@ -68,6 +68,17 @@ const Weechat: TextClient = {
                 return '';
         }
     },
+    linkSupport: (link) => {
+        switch (link.kind) {
+            case LinkKind.Alias:
+            case LinkKind.RoomId:
+            case LinkKind.UserId:
+                return true;
+            default:
+                return false;
+        }
+    },
+
     description: 'Command-line Matrix interface using Weechat',
 };
 

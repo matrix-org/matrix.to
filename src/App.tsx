@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import SingleColumn from './layouts/SingleColumn';
 import CreateLinkTile from './components/CreateLinkTile';
 import MatrixTile from './components/MatrixTile';
 import Tile from './components/Tile';
 import LinkRouter from './pages/LinkRouter';
+import Footer from './components/Footer';
 
 import './App.scss';
 
@@ -32,13 +33,25 @@ const App: React.FC = () => {
     let page = (
         <>
             <CreateLinkTile />
-            <hr />
         </>
     );
 
-    if (location.hash) {
-        if (location.hash.startsWith('#/')) {
-            page = <LinkRouter link={location.hash.slice(2)} />;
+    const [hash, setHash] = useState(location.hash);
+
+    console.log(hash);
+    useEffect(() => {
+        // Some hacky uri decoding
+        if (location.href.split('/').length > 4) {
+            location.href = decodeURIComponent(location.href);
+        }
+
+        window.onhashchange = () => setHash(location.hash);
+        console.log('why');
+    }, []);
+
+    if (hash) {
+        if (hash.startsWith('#/')) {
+            page = <LinkRouter link={hash.slice(2)} />;
         } else {
             page = (
                 <Tile>
@@ -50,12 +63,18 @@ const App: React.FC = () => {
     }
 
     return (
-        <SingleColumn>
-            <div className="topSpacer" />
-            <GlobalContext>{page}</GlobalContext>
-            <MatrixTile />
-            <div className="bottomSpacer" />
-        </SingleColumn>
+        <GlobalContext>
+            <SingleColumn>
+                <div className="topSpacer" />
+                {page}
+                <div>
+                    <MatrixTile isLink={!!location.hash} />
+                    <br />
+                    <Footer />
+                </div>
+                <div className="bottomSpacer" />
+            </SingleColumn>
+        </GlobalContext>
     );
 };
 

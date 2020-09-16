@@ -23,12 +23,14 @@ import HSContext, { TempHSContext, ActionType } from '../contexts/HSContext';
 import icon from '../imgs/telecom-mast.svg';
 import Button from './Button';
 import Input from './Input';
-import Toggle from './Toggle';
 import StyledCheckbox from './StyledCheckbox';
+import { SafeLink } from '../parser/types';
 
 import './HomeserverOptions.scss';
 
-interface IProps {}
+interface IProps {
+    link: SafeLink;
+}
 
 interface FormValues {
     HSUrl: string;
@@ -39,21 +41,25 @@ function validateURL(values: FormValues): Partial<FormValues> {
     try {
         string().url().parse(values.HSUrl);
     } catch {
-        errors.HSUrl = 'This must be a valid url';
+        errors.HSUrl =
+            'This must be a valid homeserver URL, starting with https://';
     }
     return errors;
 }
 
-const HomeserverOptions: React.FC<IProps> = () => {
+const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
     const HSStateDispatcher = useContext(HSContext)[1];
     const TempHSStateDispatcher = useContext(TempHSContext)[1];
+
     const [rememberSelection, setRemeberSelection] = useState(false);
-    const [usePrefered, setUsePrefered] = useState(false);
+
+    // Select which disaptcher to use based on whether we're writing
+    // the choice to localstorage
     const dispatcher = rememberSelection
         ? HSStateDispatcher
         : TempHSStateDispatcher;
 
-    const hsInput = usePrefered ? (
+    const hsInput = (
         <Formik
             initialValues={{
                 HSUrl: '',
@@ -63,23 +69,33 @@ const HomeserverOptions: React.FC<IProps> = () => {
                 dispatcher({ action: ActionType.SetHS, HSURL: HSUrl })
             }
         >
-            <Form>
-                <Input
-                    type="text"
-                    name="HSUrl"
-                    placeholder="https://example.com"
-                />
-                <Button type="submit">Set HS</Button>
-            </Form>
+            {({ values, errors }): JSX.Element => (
+                <Form>
+                    <Input
+                        muted={!values.HSUrl}
+                        type="text"
+                        name="HSUrl"
+                        placeholder="Preferred homeserver URL"
+                    />
+                    {values.HSUrl && !errors.HSUrl ? (
+                        <Button secondary type="submit">
+                            Use {values.HSUrl}
+                        </Button>
+                    ) : null}
+                </Form>
+            )}
         </Formik>
-    ) : null;
+    );
 
     return (
         <Tile className="homeserverOptions">
             <div className="homeserverOptionsDescription">
                 <div>
+                    <h3>About {link.identifier}</h3>
                     <p>
-                        Let's locate a homeserver to show you more information.
+                        A homeserver will show you metadata about the link, like
+                        a description. Homeservers will be able to relate your
+                        IP to things you've opened invites for in matrix.to.
                     </p>
                 </div>
                 <img
@@ -94,18 +110,13 @@ const HomeserverOptions: React.FC<IProps> = () => {
                 Remember my choice
             </StyledCheckbox>
             <Button
+                secondary
                 onClick={(): void => {
                     dispatcher({ action: ActionType.SetAny });
                 }}
             >
                 Use any homeserver
             </Button>
-            <Toggle
-                checked={usePrefered}
-                onChange={(): void => setUsePrefered(!usePrefered)}
-            >
-                Use my preferred homeserver only
-            </Toggle>
             {hsInput}
         </Tile>
     );

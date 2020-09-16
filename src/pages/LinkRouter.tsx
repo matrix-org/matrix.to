@@ -22,6 +22,8 @@ import InvitingClientTile from '../components/InvitingClientTile';
 import { parseHash } from '../parser/parser';
 import { LinkKind } from '../parser/types';
 
+/* eslint-disable no-restricted-globals */
+
 interface IProps {
     link: string;
 }
@@ -36,8 +38,14 @@ const LinkRouter: React.FC<IProps> = ({ link }: IProps) => {
         case LinkKind.ParseFailed:
             feedback = (
                 <Tile>
-                    <h1>Invalid matrix.to link</h1>
-                    <p>{link}</p>
+                    <p>
+                        That URL doesn't seem right. Links should be in the
+                        format:
+                    </p>
+                    <br />
+                    <p>
+                        {location.host}/#/{'<'}matrix-resourceidentifier{'>'}
+                    </p>
                 </Tile>
             );
             break;
@@ -53,7 +61,6 @@ const LinkRouter: React.FC<IProps> = ({ link }: IProps) => {
             feedback = (
                 <>
                     <LinkPreview link={parsedLink} />
-                    <hr />
                     {client}
                 </>
             );

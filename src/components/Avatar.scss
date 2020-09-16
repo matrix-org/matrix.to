@@ -14,11 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "../color-scheme";
+@import '../color-scheme';
 
 .avatar {
     border-radius: 100%;
     border: 1px solid $borders;
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
+}
+
+.avatarNoCrop {
+    border-radius: 0;
 }

@@ -20,6 +20,7 @@ limitations under the License.
 
 import {
     Client,
+    client,
     Room,
     RoomAlias,
     User,
@@ -27,7 +28,7 @@ import {
     searchPublicRooms,
     getUserDetails,
     convertMXCtoMediaQuery,
-} from 'matrix-cypher';
+} from '../matrix-cypher';
 import { LinkKind, Permalink } from '../parser/types';
 
 /* This is a collection of methods for providing fallback metadata
@@ -59,7 +60,8 @@ export const fallbackRoom = ({
     const roomAlias_ = roomAlias ? roomAlias : identifier;
     return {
         aliases: [roomAlias_],
-        topic: 'Unable to find room details.',
+        topic:
+            'No details available.  This might be a private room.  You can still join below.',
         canonical_alias: roomAlias_,
         name: roomAlias_,
         num_joined_members: 0,
@@ -75,18 +77,24 @@ export const fallbackRoom = ({
  * a `fallbackRoom`
  */
 export async function getRoomFromAlias(
-    client: Client,
+    clientURL: string,
     roomAlias: string
 ): Promise<Room> {
     let resolvedRoomAlias: RoomAlias;
+    let resolvedClient: Client;
+
     try {
-        resolvedRoomAlias = await getRoomIdFromAlias(client, roomAlias);
+        resolvedClient = await client(clientURL);
+        resolvedRoomAlias = await getRoomIdFromAlias(resolvedClient, roomAlias);
     } catch {
         return fallbackRoom({ identifier: roomAlias });
     }
 
     try {
-        return await searchPublicRooms(client, resolvedRoomAlias.room_id);
+        return await searchPublicRooms(
+            resolvedClient,
+            resolvedRoomAlias.room_id
+        );
     } catch {
         return fallbackRoom({
             identifier: roomAlias,
@@ -101,11 +109,12 @@ export async function getRoomFromAlias(
  * a `fallbackRoom`
  */
 export async function getRoomFromId(
-    client: Client,
+    clientURL: string,
     roomId: string
 ): Promise<Room> {
     try {
-        return await searchPublicRooms(client, roomId);
+        const resolvedClient = await client(clientURL);
+        return await searchPublicRooms(resolvedClient, roomId);
     } catch {
         return fallbackRoom({ identifier: roomId });
     }
@@ -114,9 +123,13 @@ export async function getRoomFromId(
 /*
  * Tries to fetch user details. If it fails it uses a `fallbackUser`
  */
-export async function getUser(client: Client, userId: string): Promise<User> {
+export async function getUser(
+    clientURL: string,
+    userId: string
+): Promise<User> {
     try {
-        return await getUserDetails(client, userId);
+        const resolvedClient = await client(clientURL);
+        return await getUserDetails(resolvedClient, userId);
     } catch {
         return fallbackUser(userId);
     }
@@ -127,7 +140,7 @@ export async function getUser(client: Client, userId: string): Promise<User> {
  * a `fallbackRoom`
  */
 export async function getRoomFromPermalink(
-    client: Client,
+    client: string,
     link: Permalink
 ): Promise<Room> {
     switch (link.roomKind) {

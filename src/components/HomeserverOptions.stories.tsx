@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 
 import HomeserverOptions from './HomeserverOptions';
+import { LinkKind } from '../parser/types';
 
 export default {
     title: 'HomeserverOptions',
@@ -29,4 +30,13 @@ export default {
     },
 };
 
-export const Default: React.FC = () => <HomeserverOptions />;
+export const Default: React.FC = () => (
+    <HomeserverOptions
+        link={{
+            identifier: '#banter:matrix.org',
+            arguments: { vias: [] },
+            kind: LinkKind.Alias,
+            originalLink: 'This is all made up',
+        }}
+    />
+);

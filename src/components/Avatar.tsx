@@ -16,10 +16,10 @@ limitations under the License.
 
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Room, User } from 'matrix-cypher';
+import { Room, User } from '../matrix-cypher';
 
 import { getMediaQueryFromMCX } from '../utils/cypher-wrapper';
-import logo from '../imgs/matrix-logo.svg';
+import logo from '../imgs/chat-icon.svg';
 
 import './Avatar.scss';
 

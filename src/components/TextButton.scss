@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "../color-scheme";
+@import '../color-scheme';
 
 .textButton {
     background: none;
@@ -24,4 +24,8 @@ limitations under the License.
     font-weight: normal;
     font-size: 14px;
     line-height: 24px;
+
+    &:hover {
+        cursor: pointer;
+    }
 }

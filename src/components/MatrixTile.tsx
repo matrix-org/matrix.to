@@ -21,15 +21,30 @@ import logo from '../imgs/matrix-logo.svg';
 
 import './MatrixTile.scss';
 
-const MatrixTile: React.FC = () => {
+interface IProps {
+    isLink?: boolean;
+}
+
+const MatrixTile: React.FC<IProps> = ({ isLink }: IProps) => {
+    const copy = isLink ? (
+        <div>
+            This invite uses <a href="https://matrix.org">Matrix</a>, an open
+            network for secure, decentralized communication.
+        </div>
+    ) : (
+        <div>
+            Matrix.to is a stateless URL redirecting service for the{' '}
+            <a href="https://matrix.org">Matrix</a> ecosystem.
+        </div>
+    );
+
     return (
-        <Tile className="matrixTile">
-            <img src={logo} alt="matrix-logo" />
-            <div>
-                This invite uses <a href="https://matrix.org">Matrix</a>, an
-                open network for secure, decentralized communication.
-            </div>
-        </Tile>
+        <div>
+            <Tile className="matrixTile">
+                <img src={logo} alt="matrix-logo" />
+                {copy}
+            </Tile>
+        </div>
     );
 };
 

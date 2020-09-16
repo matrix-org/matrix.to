@@ -32,7 +32,7 @@ const StyledCheckbox: React.FC<IProps> = ({
         <input {...otherProps} type="checkbox" />
         {/* Using the div to center the image */}
         <div className="styledCheckboxWrapper">
-            <img src={tick} />
+            <img src={tick} alt="" />
         </div>
         {children}
     </label>

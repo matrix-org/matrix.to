@@ -22,6 +22,9 @@ import './Button.scss';
 interface IProps extends React.ButtonHTMLAttributes<Element> {
     // Briefly display these instead of the children onClick
     flashChildren?: React.ReactNode;
+    secondary?: boolean;
+    icon?: string;
+    flashIcon?: string;
 }
 
 /**
@@ -31,7 +34,16 @@ const Button: React.FC<
     IProps & React.RefAttributes<HTMLButtonElement>
 > = React.forwardRef(
     (
-        { onClick, children, flashChildren, className, ...props }: IProps,
+        {
+            onClick,
+            children,
+            flashChildren,
+            className,
+            secondary,
+            icon,
+            flashIcon,
+            ...props
+        }: IProps,
         ref: React.Ref<HTMLButtonElement>
     ) => {
         const [wasClicked, setWasClicked] = React.useState(false);
@@ -51,7 +63,14 @@ const Button: React.FC<
 
         const classNames = classnames('button', className, {
             buttonHighlight: wasClicked,
+            buttonSecondary: secondary,
         });
+
+        const iconSrc = wasClicked && flashIcon ? flashIcon : icon;
+
+        const buttonIcon = icon ? (
+            <img className="buttonIcon" src={iconSrc} alt="" />
+        ) : null;
 
         return (
             <button
@@ -60,6 +79,7 @@ const Button: React.FC<
                 ref={ref}
                 {...props}
             >
+                {buttonIcon}
                 {content}
             </button>
         );

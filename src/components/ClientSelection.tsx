@@ -38,7 +38,7 @@ const ClientSelection: React.FC<IProps> = ({ link }: IProps) => {
                 }}
                 checked={rememberSelection}
             >
-                Remember my selection for future invites in this browser
+                Remember choice for future invites in this browser
             </StyledCheckbox>
             <StyledCheckbox
                 onChange={(): void => {
@@ -79,7 +79,6 @@ const ClientSelection: React.FC<IProps> = ({ link }: IProps) => {
     return (
         <div className="advanced">
             {options}
-            <h4>Clients you can accept this invite with</h4>
             <ClientList link={link} rememberSelection={rememberSelection} />
             {clearSelection}
         </div>

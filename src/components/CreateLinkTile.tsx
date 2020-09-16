@@ -19,11 +19,13 @@ import { Formik, Form } from 'formik';
 
 import Tile from './Tile';
 import Button from './Button';
-import TextButton from './TextButton';
 import Input from './Input';
 import { parseHash } from '../parser/parser';
 import { LinkKind } from '../parser/types';
-
+import linkIcon from '../imgs/link.svg';
+import copyIcon from '../imgs/copy.svg';
+import tickIcon from '../imgs/tick.svg';
+import refreshIcon from '../imgs/refresh.svg';
 import './CreateLinkTile.scss';
 
 interface ILinkNotCreatedTileProps {
@@ -38,11 +40,16 @@ interface FormValues {
 function validate(values: FormValues): Partial<FormValues> {
     const errors: Partial<FormValues> = {};
 
+    if (values.identifier === '') {
+        errors.identifier = '';
+        return errors;
+    }
+
     const parse = parseHash(values.identifier);
 
     if (parse.kind === LinkKind.ParseFailed) {
         errors.identifier =
-            "That link doesn't look right. Double check the details.";
+            "That identifier doesn't look right. Double check the details.";
     }
 
     return errors;
@@ -71,15 +78,28 @@ const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
                             values.identifier
                     );
                 }}
+                validateOnChange={false}
             >
-                <Form>
-                    <Input
-                        name={'identifier'}
-                        type={'text'}
-                        placeholder="#room:example.com, @user:example.com"
-                    />
-                    <Button type="submit">Get Link</Button>
-                </Form>
+                {(formik): JSX.Element => (
+                    <Form>
+                        <Input
+                            name={'identifier'}
+                            type={'text'}
+                            placeholder="#room:example.com, @user:example.com"
+                            autoFocus
+                        />
+                        <Button
+                            type="submit"
+                            icon={linkIcon}
+                            disabled={!!formik.errors.identifier}
+                            className={
+                                formik.errors.identifier ? 'errorButton' : ''
+                            }
+                        >
+                            Create Link
+                        </Button>
+                    </Form>
+                )}
             </Formik>
         </Tile>
     );
@@ -102,14 +122,20 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
 
     return (
         <Tile className="createLinkTile">
-            <TextButton onClick={(): void => props.setLink('')}>
-                Create another link
-            </TextButton>
+            <button
+                className="createLinkReset"
+                onClick={(): void => props.setLink('')}
+            >
+                <div>New link</div>
+                <img src={refreshIcon} />
+            </button>
             <a href={props.link}>
                 <h1>{props.link}</h1>
             </a>
             <Button
                 flashChildren={'Copied'}
+                icon={copyIcon}
+                flashIcon={tickIcon}
                 onClick={(): void => {
                     navigator.clipboard.writeText(props.link);
                 }}

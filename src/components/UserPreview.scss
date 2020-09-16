@@ -14,18 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "../color-scheme";
+@import '../color-scheme';
 
 .userPreview {
     width: 100%;
 
     > .avatar {
-        margin-top: 20px;
-        margin-bottom: 16px;
+        margin-bottom: 8px;
     }
 
     h1 {
-        font-size: 20px;
+        font-size: 24px;
         margin-bottom: 4px;
     }
 
@@ -70,5 +69,17 @@ limitations under the License.
     .avatar {
         flex-grow: 0;
         flex-shrink: 0;
+        height: 32px;
+        width: 32px;
+    }
+
+    &.centeredMiniUserPreview {
+        h1 {
+            width: unset;
+            text-align: center;
+        }
+        img {
+            display: none;
+        }
     }
 }

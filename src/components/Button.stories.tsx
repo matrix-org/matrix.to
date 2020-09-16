@@ -27,3 +27,7 @@ export const WithText: React.FC = () => (
         {text('label', 'Hello Story Book')}
     </Button>
 );
+
+export const Secondary: React.FC = () => (
+    <Button secondary>Secondary button</Button>
+);
