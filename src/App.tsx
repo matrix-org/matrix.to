@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import SingleColumn from './layouts/SingleColumn';
 import CreateLinkTile from './components/CreateLinkTile';
@@ -36,9 +36,13 @@ const App: React.FC = () => {
         </>
     );
 
-    if (location.hash) {
-        if (location.hash.startsWith('#/')) {
-            page = <LinkRouter link={location.hash.slice(2)} />;
+    const [hash, setHash] = useState(location.hash);
+
+    useEffect(() => (window.onhashchange = () => setHash(location.hash)), []);
+
+    if (hash) {
+        if (hash.startsWith('#/')) {
+            page = <LinkRouter link={hash.slice(2)} />;
         } else {
             page = (
                 <Tile>
