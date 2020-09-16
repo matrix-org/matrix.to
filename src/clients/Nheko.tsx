@@ -20,18 +20,18 @@ import { TextClient, Maturity, ClientKind, ClientId, Platform } from './types';
 
 import { LinkKind } from '../parser/types';
 
-import logo from '../imgs/weechat.svg';
+import logo from '../imgs/nheko.svg';
 
-const Weechat: TextClient = {
+const Nheko: TextClient = {
     kind: ClientKind.TEXT_CLIENT,
-    name: 'Weechat',
+    name: 'Nheko',
     logo: logo,
-    author: 'Poljar',
-    homepage: 'https://github.com/poljar/weechat-matrix',
-    maturity: Maturity.LATE_BETA,
+    author: 'mujx, red_sky, deepbluev7, Konstantinos Sideris',
+    homepage: 'https://github.com/Nheko-Reborn/nheko',
+    maturity: Maturity.BETA,
     experimental: false,
     platform: Platform.Desktop,
-    clientId: ClientId.WeeChat,
+    clientId: ClientId.Nheko,
     toInviteString: (link) => {
         switch (link.kind) {
             case LinkKind.Alias:
@@ -54,7 +54,7 @@ const Weechat: TextClient = {
                     </span>
                 );
             default:
-                return <span>Weechat doesn't support this kind of link</span>;
+                return <span>Nheko doesn't support this kind of link</span>;
         }
     },
     copyString: (link) => {
@@ -78,8 +78,8 @@ const Weechat: TextClient = {
                 return false;
         }
     },
-
-    description: 'Command-line Matrix interface using Weechat',
+    description:
+        'A native desktop app for Matrix that feels more like a mainstream chat app.',
 };
 
-export default Weechat;
+export default Nheko;

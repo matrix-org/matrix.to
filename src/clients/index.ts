@@ -18,11 +18,13 @@ import { Client } from './types';
 
 import Element, { ElementDevelop } from './Element.io';
 import Weechat from './Weechat';
+import Nheko from './Nheko';
+import Fractal from './Fractal';
 
 /*
  * All the supported clients of matrix.to
  */
-const clients: Client[] = [Element, Weechat, ElementDevelop];
+const clients: Client[] = [Element, Weechat, Nheko, Fractal, ElementDevelop];
 
 /*
  * A map from sharer string to client.
@@ -33,6 +35,8 @@ export const clientMap: { [key: string]: Client } = {
     [Element.clientId]: Element,
     [Weechat.clientId]: Weechat,
     [ElementDevelop.clientId]: ElementDevelop,
+    [Nheko.clientId]: Nheko,
+    [Fractal.clientId]: Fractal,
 };
 
 /*

@@ -20,39 +20,24 @@ import { TextClient, Maturity, ClientKind, ClientId, Platform } from './types';
 
 import { LinkKind } from '../parser/types';
 
-import logo from '../imgs/weechat.svg';
+import logo from '../imgs/fractal.png';
 
-const Weechat: TextClient = {
+const Fractal: TextClient = {
     kind: ClientKind.TEXT_CLIENT,
-    name: 'Weechat',
+    name: 'Fractal',
     logo: logo,
-    author: 'Poljar',
+    author: 'Daniel Garcia Moreno',
     homepage: 'https://github.com/poljar/weechat-matrix',
-    maturity: Maturity.LATE_BETA,
+    maturity: Maturity.BETA,
     experimental: false,
     platform: Platform.Desktop,
-    clientId: ClientId.WeeChat,
+    clientId: ClientId.Fractal,
     toInviteString: (link) => {
         switch (link.kind) {
             case LinkKind.Alias:
             case LinkKind.RoomId:
-                return (
-                    <span>
-                        Type{' '}
-                        <code>
-                            /join <b>{link.identifier}</b>
-                        </code>
-                    </span>
-                );
             case LinkKind.UserId:
-                return (
-                    <span>
-                        Type{' '}
-                        <code>
-                            /invite <b>{link.identifier}</b>
-                        </code>
-                    </span>
-                );
+                return <span>Click the '+' button in the top right</span>;
             default:
                 return <span>Weechat doesn't support this kind of link</span>;
         }
@@ -61,9 +46,8 @@ const Weechat: TextClient = {
         switch (link.kind) {
             case LinkKind.Alias:
             case LinkKind.RoomId:
-                return `/join ${link.identifier}`;
             case LinkKind.UserId:
-                return `/invite ${link.identifier}`;
+                return `${link.identifier}`;
             default:
                 return '';
         }
@@ -82,4 +66,4 @@ const Weechat: TextClient = {
     description: 'Command-line Matrix interface using Weechat',
 };
 
-export default Weechat;
+export default Fractal;

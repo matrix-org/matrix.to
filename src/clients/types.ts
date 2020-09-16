@@ -49,6 +49,8 @@ export enum ClientId {
     Element = 'element.io',
     ElementDevelop = 'develop.element.io',
     WeeChat = 'weechat',
+    Nheko = 'nheko',
+    Fractal = 'fractal',
 }
 
 /*
@@ -64,6 +66,7 @@ export interface ClientDescription {
     maturity: Maturity;
     clientId: ClientId;
     experimental: boolean;
+    linkSupport: (link: SafeLink) => boolean;
 }
 
 /*

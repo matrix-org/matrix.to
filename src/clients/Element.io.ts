@@ -56,6 +56,7 @@ const Element: LinkedClient = {
                 );
         }
     },
+    linkSupport: () => true,
 };
 
 export const ElementDevelop: LinkedClient = {
@@ -90,5 +91,6 @@ export const ElementDevelop: LinkedClient = {
                 );
         }
     },
+    linkSupport: () => true,
 };
 export default Element;

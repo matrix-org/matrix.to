@@ -63,6 +63,10 @@ const ClientList: React.FC<IProps> = ({ link, rememberSelection }: IProps) => {
             showClient = false;
         }
 
+        if (!client.linkSupport(link)) {
+            showClient = false;
+        }
+
         return showClient;
     };
 
