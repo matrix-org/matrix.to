@@ -96,8 +96,8 @@ const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
                         {link.identifier}. <br />
                         The homeserver will provide metadata about the link such
                         as an avatar or description. Homeservers will be able to
-                        relate your ip to resources you've opened invites for in
-                        matrix.to
+                        relate your IP to resources you've opened invites for in
+                        matrix.to.
                     </p>
                 </div>
                 <img

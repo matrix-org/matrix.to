@@ -78,6 +78,7 @@ const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
                             values.identifier
                     );
                 }}
+                validateOnChange={false}
             >
                 {(formik): JSX.Element => (
                     <Form>
