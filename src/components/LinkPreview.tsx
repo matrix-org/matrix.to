@@ -22,6 +22,7 @@ import InviteTile from './InviteTile';
 import { SafeLink, LinkKind } from '../parser/types';
 import UserPreview, { WrappedInviterPreview } from './UserPreview';
 import EventPreview from './EventPreview';
+import GroupPreview from './GroupPreview';
 import HomeserverOptions from './HomeserverOptions';
 import DefaultPreview from './DefaultPreview';
 import Toggle from './Toggle';
@@ -31,6 +32,7 @@ import {
     getRoomFromAlias,
     getRoomFromPermalink,
     getUser,
+    getGroup,
 } from '../utils/cypher-wrapper';
 import { ClientContext } from '../contexts/ClientContext';
 import useHSs from '../utils/getHS';
@@ -83,6 +85,13 @@ const invite = async ({
                             link.eventId
                         )
                     }
+                />
+            );
+
+        case LinkKind.GroupId:
+            return (
+                <GroupPreview
+                    group={await getGroup(clientAddress, link.identifier)}
                 />
             );
 

@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './EventSchema';
-export * from './GroupSchema';
-export * from './PublicRoomsSchema';
-export * from './RoomAliasSchema';
-export * from './UserSchema';
-export * from './VersionSchema';
-export * from './WellKnownSchema';
-export * from './index';
+.groupPreview {
+    > .avatar {
+        margin-bottom: 8px;
+    }
+
+    > h1 {
+        font-size: 24px;
+        margin-bottom: 4px;
+    }
+}
