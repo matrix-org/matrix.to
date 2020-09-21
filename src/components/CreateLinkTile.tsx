@@ -78,7 +78,6 @@ const LinkNotCreatedTile: React.FC<ILinkNotCreatedTileProps> = (
                             values.identifier
                     );
                 }}
-                validateOnChange={false}
             >
                 {(formik): JSX.Element => (
                     <Form>
@@ -127,7 +126,7 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
                 onClick={(): void => props.setLink('')}
             >
                 <div>New link</div>
-                <img src={refreshIcon} />
+                <img src={refreshIcon} alt="Go back to matrix.to home page" />
             </button>
             <a href={props.link}>
                 <h1>{props.link}</h1>
