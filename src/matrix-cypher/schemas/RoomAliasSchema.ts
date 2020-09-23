@@ -17,10 +17,9 @@ limitations under the License.
 import { object, array, string, TypeOf } from 'zod';
 
 const RoomAliasSchema = object({
-  room_id: string(),
-  servers: array(string()),
-});
+    room_id: string(),
+    servers: array(string()),
+}).nonstrict();
 
 export type RoomAlias = TypeOf<typeof RoomAliasSchema>;
 export default RoomAliasSchema;
-
