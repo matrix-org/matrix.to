@@ -46,7 +46,6 @@ const App: React.FC = () => {
         }
 
         window.onhashchange = () => setHash(location.hash);
-        console.log('why');
     }, []);
 
     if (hash) {
