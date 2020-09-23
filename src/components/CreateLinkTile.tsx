@@ -130,7 +130,7 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
                 <img src={refreshIcon} />
             </button>
             <a href={props.link}>
-                <h1>{props.link}</h1>
+                <h1 className="linkHeader">{props.link}</h1>
             </a>
             <Button
                 flashChildren={'Copied'}
