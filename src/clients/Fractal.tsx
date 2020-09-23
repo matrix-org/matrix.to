@@ -37,9 +37,14 @@ const Fractal: TextClient = {
             case LinkKind.Alias:
             case LinkKind.RoomId:
             case LinkKind.UserId:
-                return <span>Click the '+' button in the top right</span>;
+                return (
+                    <span>
+                        Click the '+' button in the top right and paste the
+                        identifier
+                    </span>
+                );
             default:
-                return <span>Weechat doesn't support this kind of link</span>;
+                return <span>Fractal doesn't support this kind of link</span>;
         }
     },
     copyString: (link) => {
@@ -63,7 +68,7 @@ const Fractal: TextClient = {
         }
     },
 
-    description: 'Command-line Matrix interface using Weechat',
+    description: 'Fractal is a Matrix Client written in Rust',
 };
 
 export default Fractal;
