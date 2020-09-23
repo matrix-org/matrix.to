@@ -24,6 +24,8 @@ import logo from '../imgs/chat-icon.svg';
 
 import './Avatar.scss';
 
+const AVATAR_SIZE = 60;
+
 interface IProps {
     className?: string;
     avatarUrl: string;
@@ -58,12 +60,19 @@ export const UserAvatar: React.FC<IPropsUserAvatar> = ({
     user,
     userId,
 }: IPropsUserAvatar) => {
-    const [hs] = useHSs({identifier: userId});
-    return <Avatar
-        avatarUrl={getThumbnailURI(hs, 34, 34, user.avatar_url)}
-        label={user.displayname ? user.displayname : userId}
-    />;
-}
+    const [hs] = useHSs({ identifier: userId });
+    return (
+        <Avatar
+            avatarUrl={getThumbnailURI(
+                hs,
+                AVATAR_SIZE,
+                AVATAR_SIZE,
+                user.avatar_url
+            )}
+            label={user.displayname ? user.displayname : userId}
+        />
+    );
+};
 
 interface IPropsRoomAvatar {
     room: Room;
@@ -72,12 +81,19 @@ interface IPropsRoomAvatar {
 export const RoomAvatar: React.FC<IPropsRoomAvatar> = ({
     room,
 }: IPropsRoomAvatar) => {
-    const [hs] = useHSs({identifier: room.room_id});
-    return <Avatar
-        avatarUrl={getThumbnailURI(hs, 34, 34, room.avatar_url)}
-        label={room.name || room.room_id}
-    />;
-}
+    const [hs] = useHSs({ identifier: room.room_id });
+    return (
+        <Avatar
+            avatarUrl={getThumbnailURI(
+                hs,
+                AVATAR_SIZE,
+                AVATAR_SIZE,
+                room.avatar_url
+            )}
+            label={room.name || room.room_id}
+        />
+    );
+};
 
 interface IPropsGroupAvatar {
     group: Group;
@@ -88,11 +104,18 @@ export const GroupAvatar: React.FC<IPropsGroupAvatar> = ({
     group,
     groupId,
 }: IPropsGroupAvatar) => {
-    const [hs] = useHSs({identifier: groupId});
-    return <Avatar
-      avatarUrl={getThumbnailURI(hs, 34, 34, group.avatar_url)}
-        label={group.name}
-    />;
-}
+    const [hs] = useHSs({ identifier: groupId });
+    return (
+        <Avatar
+            avatarUrl={getThumbnailURI(
+                hs,
+                AVATAR_SIZE,
+                AVATAR_SIZE,
+                group.avatar_url
+            )}
+            label={group.name}
+        />
+    );
+};
 
 export default Avatar;
