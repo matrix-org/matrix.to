@@ -32,13 +32,11 @@ const GroupPreview: React.FC<IProps> = ({ group }: IProps) => {
         ? group.short_description
         : null;
 
-    const descriptionP = description ? <p>{description}</p> : null;
-
     return (
         <div className="groupPreview">
             <GroupAvatar group={group} />
             <h1>{group.name}</h1>
-            {descriptionP}
+            {description ? <p>{description}</p> : null}
         </div>
     );
 };
