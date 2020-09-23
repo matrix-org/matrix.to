@@ -23,9 +23,10 @@ import './GroupPreview.scss';
 
 interface IProps {
     group: Group;
+    groupId: string;
 }
 
-const GroupPreview: React.FC<IProps> = ({ group }: IProps) => {
+const GroupPreview: React.FC<IProps> = ({ group, groupId }: IProps) => {
     const description = group.long_description
         ? group.long_description
         : group.short_description
@@ -34,7 +35,7 @@ const GroupPreview: React.FC<IProps> = ({ group }: IProps) => {
 
     return (
         <div className="groupPreview">
-            <GroupAvatar group={group} />
+            <GroupAvatar group={group} groupId={groupId}/>
             <h1>{group.name}</h1>
             {description ? <p>{description}</p> : null}
         </div>

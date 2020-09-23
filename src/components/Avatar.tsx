@@ -16,9 +16,10 @@ limitations under the License.
 
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Group, Room, User } from '../matrix-cypher';
 
-import { getMediaQueryFromMCX } from '../utils/cypher-wrapper';
+import { Group, Room, User } from '../matrix-cypher';
+import useHSs from '../utils/getHS';
+import { getThumbnailURI } from '../utils/cypher-wrapper';
 import logo from '../imgs/chat-icon.svg';
 
 import './Avatar.scss';
@@ -56,12 +57,13 @@ interface IPropsUserAvatar {
 export const UserAvatar: React.FC<IPropsUserAvatar> = ({
     user,
     userId,
-}: IPropsUserAvatar) => (
-    <Avatar
-        avatarUrl={getMediaQueryFromMCX(user.avatar_url)}
+}: IPropsUserAvatar) => {
+    const [hs] = useHSs({identifier: userId});
+    return <Avatar
+        avatarUrl={getThumbnailURI(hs, 34, 34, user.avatar_url)}
         label={user.displayname ? user.displayname : userId}
-    />
-);
+    />;
+}
 
 interface IPropsRoomAvatar {
     room: Room;
@@ -69,24 +71,28 @@ interface IPropsRoomAvatar {
 
 export const RoomAvatar: React.FC<IPropsRoomAvatar> = ({
     room,
-}: IPropsRoomAvatar) => (
-    <Avatar
-        avatarUrl={getMediaQueryFromMCX(room.avatar_url)}
+}: IPropsRoomAvatar) => {
+    const [hs] = useHSs({identifier: room.room_id});
+    return <Avatar
+        avatarUrl={getThumbnailURI(hs, 34, 34, room.avatar_url)}
         label={room.name || room.room_id}
-    />
-);
+    />;
+}
 
 interface IPropsGroupAvatar {
     group: Group;
+    groupId: string;
 }
 
 export const GroupAvatar: React.FC<IPropsGroupAvatar> = ({
     group,
-}: IPropsGroupAvatar) => (
-    <Avatar
-        avatarUrl={getMediaQueryFromMCX(group.avatar_url)}
+    groupId,
+}: IPropsGroupAvatar) => {
+    const [hs] = useHSs({identifier: groupId});
+    return <Avatar
+      avatarUrl={getThumbnailURI(hs, 34, 34, group.avatar_url)}
         label={group.name}
-    />
-);
+    />;
+}
 
 export default Avatar;
