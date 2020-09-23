@@ -17,13 +17,13 @@ limitations under the License.
 import { object, string, TypeOf } from 'zod';
 
 const WellKnownSchema = object({
-  'm.homeserver': object({
-    'base_url': string().url(),
-  }),
-  'm.identity_server': object({
-    'base_url': string().url(),
-  }),
-});
+    'm.homeserver': object({
+        base_url: string().url(),
+    }),
+    'm.identity_server': object({
+        base_url: string().url(),
+    }).optional(),
+}).nonstrict();
 
 export type WellKnown = TypeOf<typeof WellKnownSchema>;
 export default WellKnownSchema;
