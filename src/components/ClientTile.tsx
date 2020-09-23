@@ -39,19 +39,22 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
         clientTileLink: client.kind === ClientKind.LINKED_CLIENT,
     });
 
-    const inviteButton =
-        client.kind === ClientKind.LINKED_CLIENT ? (
-            <Button>Accept invite</Button>
-        ) : (
-            <Button
-                onClick={() =>
-                    navigator.clipboard.writeText(client.copyString(link))
-                }
-                flashChildren="Invite copied"
-            >
-                Copy invite
-            </Button>
-        );
+    let inviteButton: JSX.Element = <></>;
+    if (client.kind === ClientKind.LINKED_CLIENT) {
+        inviteButton = <Button>Accept invite</Button>;
+    } else {
+        const copyString = client.copyString(link);
+        if (copyString !== '') {
+            inviteButton = (
+                <Button
+                    onClick={() => navigator.clipboard.writeText(copyString)}
+                    flashChildren="Invite copied"
+                >
+                    Copy invite
+                </Button>
+            );
+        }
+    }
 
     let clientTile = (
         <Tile className={className}>
