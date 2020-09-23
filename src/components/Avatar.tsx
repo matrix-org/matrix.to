@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Room, User } from '../matrix-cypher';
+import { Group, Room, User } from '../matrix-cypher';
 
 import { getMediaQueryFromMCX } from '../utils/cypher-wrapper';
 import logo from '../imgs/chat-icon.svg';
@@ -35,12 +35,15 @@ const Avatar: React.FC<IProps> = ({ className, avatarUrl, label }: IProps) => {
         setSrc(avatarUrl);
     }, [avatarUrl]);
 
+    const _className = classNames('avatar', className, {
+        avatarNoCrop: src === logo,
+    });
     return (
         <img
             src={src}
             onError={(): void => setSrc(logo)}
             alt={label}
-            className={classNames('avatar', className)}
+            className={_className}
         />
     );
 };
@@ -70,6 +73,19 @@ export const RoomAvatar: React.FC<IPropsRoomAvatar> = ({
     <Avatar
         avatarUrl={getMediaQueryFromMCX(room.avatar_url)}
         label={room.name || room.room_id}
+    />
+);
+
+interface IPropsGroupAvatar {
+    group: Group;
+}
+
+export const GroupAvatar: React.FC<IPropsGroupAvatar> = ({
+    group,
+}: IPropsGroupAvatar) => (
+    <Avatar
+        avatarUrl={getMediaQueryFromMCX(group.avatar_url)}
+        label={group.name}
     />
 );
 

@@ -24,10 +24,12 @@ import {
     Room,
     RoomAlias,
     User,
+    Group,
     getRoomIdFromAlias,
     searchPublicRooms,
     getUserDetails,
     convertMXCtoMediaQuery,
+    getGroupDetails,
 } from '../matrix-cypher';
 import { LinkKind, Permalink } from '../parser/types';
 
@@ -71,6 +73,11 @@ export const fallbackRoom = ({
         world_readable: false,
     };
 };
+
+export const fallbackGroup = (groupId: string): Group => ({
+    name: groupId,
+    short_description: `The ${groupId} group`,
+});
 
 /*
  * Tries to fetch room details from an alias. If it fails it uses
@@ -167,5 +174,17 @@ export function getMediaQueryFromMCX(mxc?: string): string {
         );
     } catch {
         return '';
+    }
+}
+
+export async function getGroup(
+    clientURL: string,
+    groupId: string
+): Promise<Group> {
+    try {
+        const resolvedClient = await client(clientURL);
+        return await getGroupDetails(resolvedClient, groupId);
+    } catch {
+        return fallbackGroup(groupId);
     }
 }

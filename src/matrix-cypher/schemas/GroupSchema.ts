@@ -14,11 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './EventSchema';
-export * from './GroupSchema';
-export * from './PublicRoomsSchema';
-export * from './RoomAliasSchema';
-export * from './UserSchema';
-export * from './VersionSchema';
-export * from './WellKnownSchema';
-export * from './index';
+import { object, string, TypeOf } from 'zod';
+
+const GroupSchema = object({
+    name: string(),
+    avatar_url: string().optional(),
+    short_description: string().optional(),
+    long_description: string().optional(),
+});
+
+export type Group = TypeOf<typeof GroupSchema>;
+export default GroupSchema;
