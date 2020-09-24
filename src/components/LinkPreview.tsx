@@ -127,7 +127,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
     let content: JSX.Element;
     const [showHSOptions, setShowHSOPtions] = useState(false);
 
-    const hses = useHSs({link});
+    const hses = useHSs({ link });
 
     if (!hses.length) {
         content = (
@@ -169,7 +169,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
             link={{
                 kind: LinkKind.UserId,
                 identifier: link.arguments.sharer,
-                arguments: { vias: [] },
+                arguments: { vias: [], originalParams: new URLSearchParams() },
                 originalLink: '',
             }}
         />

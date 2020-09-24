@@ -42,6 +42,7 @@ const userLink: SafeLink = {
     identifier: '@jorik:matrix.org',
     arguments: {
         vias: [],
+        originalParams: new URLSearchParams(),
     },
     originalLink: 'asdfsadf',
 };
@@ -51,6 +52,7 @@ const roomLink: SafeLink = {
     identifier: '#element-dev:matrix.org',
     arguments: {
         vias: [],
+        originalParams: new URLSearchParams(),
     },
     originalLink: 'asdfsadf',
 };

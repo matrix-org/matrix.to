@@ -36,23 +36,25 @@ const Element: LinkedClient = {
     experimental: false,
     clientId: ClientId.Element,
     toUrl: (link) => {
+        const params = link.arguments.originalParams.toString();
+        const prefixedParams = params ? `?${params}` : '';
         switch (link.kind) {
             case LinkKind.Alias:
             case LinkKind.RoomId:
                 return new URL(
-                    `https://app.element.io/#/room/${link.identifier}`
+                    `https://app.element.io/#/room/${link.identifier}${prefixedParams}`
                 );
             case LinkKind.UserId:
                 return new URL(
-                    `https://app.element.io/#/user/${link.identifier}`
+                    `https://app.element.io/#/user/${link.identifier}${prefixedParams}`
                 );
             case LinkKind.Permalink:
                 return new URL(
-                    `https://app.element.io/#/room/${link.identifier}`
+                    `https://app.element.io/#/room/${link.identifier}${prefixedParams}`
                 );
             case LinkKind.GroupId:
                 return new URL(
-                    `https://app.element.io/#/group/${link.identifier}`
+                    `https://app.element.io/#/group/${link.identifier}${prefixedParams}`
                 );
         }
     },

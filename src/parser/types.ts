@@ -4,6 +4,8 @@ export interface Arguments {
     client?: string;
     // MXID
     sharer?: string;
+    // Original params
+    originalParams: URLSearchParams;
 }
 
 export interface LinkContent {
