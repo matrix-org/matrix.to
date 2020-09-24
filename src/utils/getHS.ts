@@ -22,7 +22,34 @@ import HSContext, {
 } from '../contexts/HSContext';
 import { SafeLink } from '../parser/types';
 
-function selectedClient(link: SafeLink, hsOptions: State): string[] {
+function selectedClient({ link, identifier, hsOptions }: {
+  link?: SafeLink,
+  identifier?: string;
+  hsOptions: State
+}): string[] {
+    const linkHSs = link ? [
+        ...link.identifier
+            .split('/')
+            .map((i) => 'https://' + i.split(':')[1]),
+        ...link.arguments.vias,
+    ] : [];
+    const identifierHS: string[] = [];
+
+    try {
+      if (identifier) {
+        const match = identifier.match(/^.*:(?<server>.*)$/);
+        if (match && match.groups) {
+          const server = match.groups.server;
+          if (server) {
+            identifierHS.push(server);
+          }
+        }
+      }
+    } catch (e) {
+      console.error(`Could parse user identifier: ${identifier}`);
+      console.error(e);
+    }
+
     switch (hsOptions.option) {
         case HSOptions.Unset:
             return [];
@@ -30,22 +57,31 @@ function selectedClient(link: SafeLink, hsOptions: State): string[] {
             return [hsOptions.hs];
         case HSOptions.Any:
             return [
-                ...link.identifier
-                    .split('/')
-                    .map((i) => 'https://' + i.split(':')[1]),
-                ...link.arguments.vias,
+              ...linkHSs,
+              ...identifierHS,
             ];
     }
 }
 
-export default function useHSs(link: SafeLink): string[] {
+export default function useHSs({ link, identifier }: {
+  link?: SafeLink,
+  identifier?: string,
+}): string[] {
     const [HSState] = useContext(HSContext);
     const [TempHSState] = useContext(TempHSContext);
 
     if (HSState.option !== HSOptions.Unset) {
-        return selectedClient(link, HSState);
+        return selectedClient({
+          link, 
+          identifier,
+          hsOptions: HSState
+        });
     } else if (TempHSState.option !== HSOptions.Unset) {
-        return selectedClient(link, TempHSState);
+        return selectedClient({
+          link,
+          identifier,
+          hsOptions: TempHSState
+        });
     } else {
         return [];
     }

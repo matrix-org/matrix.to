@@ -84,7 +84,7 @@ export const WrappedInviterPreview: React.FC<WrappedInviterProps> = ({
     link,
 }: WrappedInviterProps) => {
     const [user, setUser] = useState<User | undefined>(undefined);
-    const hss = useHSs(link);
+    const hss = useHSs({link});
     useEffect(() => {
         if (hss.length) {
             client(hss[0])

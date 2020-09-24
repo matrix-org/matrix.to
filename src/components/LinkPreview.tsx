@@ -92,6 +92,7 @@ const invite = async ({
             return (
                 <GroupPreview
                     group={await getGroup(clientAddress, link.identifier)}
+                    groupId={link.identifier}
                 />
             );
 
@@ -126,7 +127,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
     let content: JSX.Element;
     const [showHSOptions, setShowHSOPtions] = useState(false);
 
-    const hses = useHSs(link);
+    const hses = useHSs({link});
 
     if (!hses.length) {
         content = (

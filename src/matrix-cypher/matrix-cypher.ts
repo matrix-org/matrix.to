@@ -182,6 +182,21 @@ export async function getGroupDetails(
         .then(GroupSchema.parse);
 }
 
+export function getThumbnailURI(
+  clientURL: string,
+  mxcId: string,
+  height: number,
+  width: number,
+): string {
+    const mxcParse = mxcId.match(/mxc:\/\/(?<server>.+)\/(?<mediaId>.+)/);
+    if (!mxcParse || !mxcParse.groups) {
+      throw new Error(`mxc invalid. mxc: ${mxcId}`); 
+    }
+    // eslint-disable-next-line max-len
+    return `https://${clientURL}/_matrix/media/r0/thumbnail/${mxcParse.groups.server}/${mxcParse.groups.mediaId}?height=${height}&width=${width}&method=crop`;
+}
+
+
 /*
  * Gets an mxc resource
  */

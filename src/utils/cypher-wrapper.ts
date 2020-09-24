@@ -30,6 +30,7 @@ import {
     getUserDetails,
     convertMXCtoMediaQuery,
     getGroupDetails,
+    getThumbnailURI as cypherGetThumbnailURI,
 } from '../matrix-cypher';
 import { LinkKind, Permalink } from '../parser/types';
 
@@ -175,6 +176,24 @@ export function getMediaQueryFromMCX(mxc?: string): string {
     } catch {
         return '';
     }
+}
+
+export function getThumbnailURI(
+  clientURL: string,
+  height: number,
+  width: number,
+  mxcId?: string,
+): string {
+  if (!mxcId) {
+    return '';
+  }
+
+  try {
+    return cypherGetThumbnailURI(clientURL, mxcId, height, width);
+  } catch (e){
+    console.error(e);
+    return '';
+  }
 }
 
 export async function getGroup(
