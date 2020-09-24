@@ -24,7 +24,7 @@ import logo from '../imgs/chat-icon.svg';
 
 import './Avatar.scss';
 
-const AVATAR_SIZE = 60;
+const AVATAR_SIZE = 96;
 
 interface IProps {
     className?: string;
