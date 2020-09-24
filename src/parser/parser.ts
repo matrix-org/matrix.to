@@ -16,13 +16,13 @@ import {
  */
 type Verifier<A> = [RegExp, A];
 export const roomVerifiers: Verifier<LinkKind.Alias | LinkKind.RoomId>[] = [
-    [/^#([^/:]+?):(.+)$/, LinkKind.Alias],
-    [/^!([^/:]+?):(.+)$/, LinkKind.RoomId],
+    [/^#([^:]*):(.+)$/, LinkKind.Alias],
+    [/^!([^:]*):(.+)$/, LinkKind.RoomId],
 ];
 export const verifiers: Verifier<LinkKind>[] = [
-    [/^[!#]([^/:]+?):(.+?)\/\$([^/:]+?)$/, LinkKind.Permalink],
-    [/^@([^/:]+?):(.+)$/, LinkKind.UserId],
-    [/^\+([^/:]+?):(.+)$/, LinkKind.GroupId],
+    [/^[!#]([^:]*):(.+)\/\$([^:]+):(.+)$/, LinkKind.Permalink],
+    [/^@([^:]+):(.+)$/, LinkKind.UserId],
+    [/^\+([^:]+):(.+)$/, LinkKind.GroupId],
     ...roomVerifiers,
 ];
 
