@@ -38,7 +38,8 @@ const App: React.FC = () => {
 
     const [hash, setHash] = useState(location.hash);
 
-    console.log(hash);
+    console.log(`Link for ${hash}`);
+
     useEffect(() => {
         // Some hacky uri decoding
         if (location.href.split('/').length > 4) {
@@ -46,7 +47,6 @@ const App: React.FC = () => {
         }
 
         window.onhashchange = () => setHash(location.hash);
-        console.log('why');
     }, []);
 
     if (hash) {
