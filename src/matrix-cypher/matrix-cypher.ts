@@ -193,7 +193,7 @@ export function getThumbnailURI(
       throw new Error(`mxc invalid. mxc: ${mxcId}`); 
     }
     // eslint-disable-next-line max-len
-    return `https://${clientURL}/_matrix/media/r0/thumbnail/${mxcParse.groups.server}/${mxcParse.groups.mediaId}?height=${height}&width=${width}`;
+    return `https://${clientURL}/_matrix/media/r0/thumbnail/${mxcParse.groups.server}/${mxcParse.groups.mediaId}?height=${height}&width=${width}&method=crop`;
 }
 
 
