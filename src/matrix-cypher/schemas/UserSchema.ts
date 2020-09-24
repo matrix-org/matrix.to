@@ -17,10 +17,9 @@ limitations under the License.
 import { object, string, TypeOf } from 'zod';
 
 const UserSchema = object({
-  avatar_url: string().optional(),
-  displayname: string().optional(),
-})
+    avatar_url: string().optional(),
+    displayname: string().optional(),
+}).nonstrict();
 
 export type User = TypeOf<typeof UserSchema>;
 export default UserSchema;
-

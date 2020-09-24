@@ -17,14 +17,14 @@ limitations under the License.
 import { object, string, TypeOf } from 'zod';
 
 const EventSchema = object({
-  content: object({}).nonstrict(),
-  type: string(),
-  event_id: string(),
-  sender: string(),
-  origin_server_ts: string(),
-  unsigned: object({}).nonstrict().optional(),
-  room_id: string(),
-});
+    content: object({}).nonstrict(),
+    type: string(),
+    event_id: string(),
+    sender: string(),
+    origin_server_ts: string(),
+    unsigned: object({}).nonstrict().optional(),
+    room_id: string(),
+}).nonstrict();
 
 export type Event = TypeOf<typeof EventSchema>;
 export default EventSchema;
