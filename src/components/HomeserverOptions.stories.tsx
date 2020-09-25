@@ -34,7 +34,7 @@ export const Default: React.FC = () => (
     <HomeserverOptions
         link={{
             identifier: '#banter:matrix.org',
-            arguments: { vias: [] },
+            arguments: { vias: [], originalParams: new URLSearchParams() },
             kind: LinkKind.Alias,
             originalLink: 'This is all made up',
         }}

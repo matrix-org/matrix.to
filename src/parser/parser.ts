@@ -92,6 +92,7 @@ export function parseArgs(args: string): Arguments {
         vias: params.getAll('via'),
         client: bottomExchange(params.get('client')),
         sharer: bottomExchange(params.get('sharer')),
+        originalParams: params,
     };
 }
 
