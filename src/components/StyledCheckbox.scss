@@ -23,9 +23,7 @@ limitations under the License.
     align-items: center;
 
     input[type='checkbox'] {
-        appearance: none;
-        margin: 0;
-        padding: 0;
+        display: none;
 
         &:checked + div {
             background: $foreground;
