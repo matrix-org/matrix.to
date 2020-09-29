@@ -134,7 +134,7 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
                 icon={copyIcon}
                 flashIcon={tickIcon}
                 onClick={(): void => {
-                    navigator.clipboard.writeText(props.link);
+                    navigator.clipboard?.writeText(props.link);
                 }}
                 ref={buttonRef}
             >

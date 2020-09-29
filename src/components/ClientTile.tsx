@@ -47,7 +47,7 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
         if (copyString !== '') {
             inviteButton = (
                 <Button
-                    onClick={() => navigator.clipboard.writeText(copyString)}
+                    onClick={() => navigator.clipboard?.writeText(copyString)}
                     flashChildren="Invite copied"
                 >
                     Copy invite
