@@ -69,7 +69,7 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
                 <TextButton
                     onClick={(): void => setShowAdvanced(!showAdvanced)}
                 >
-                    Change Client.
+                    Change client
                 </TextButton>
             </p>
         );
