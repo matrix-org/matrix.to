@@ -30,7 +30,7 @@ const Fractal: TextClient = {
     homepage: 'https://github.com/poljar/weechat-matrix',
     maturity: Maturity.BETA,
     experimental: false,
-    platform: Platform.Desktop,
+    platforms: [Platform.Desktop],
     clientId: ClientId.Fractal,
     toInviteString: (link) => {
         switch (link.kind) {

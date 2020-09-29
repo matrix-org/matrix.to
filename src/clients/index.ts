@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Client } from './types';
 
-import Element, { ElementDevelop } from './Element';
+import { Element, ElementDevelop } from './Element';
 import Weechat from './Weechat';
 import Nheko from './Nheko';
 import Fractal from './Fractal';

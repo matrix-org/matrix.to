@@ -47,16 +47,18 @@ const ClientList: React.FC<IProps> = ({ link, rememberSelection }: IProps) => {
             showClient = true;
         }
 
-        switch (client.platform) {
-            case Platform.Desktop:
-                showClient = showClient || !(uaResults as any).mobile;
-                break;
-            case Platform.iOS:
-                showClient = showClient || (uaResults as any).ios;
-                break;
-            case Platform.Android:
-                showClient = showClient || (uaResults as any).android;
-                break;
+        for (const platform of client.platforms) {
+            switch (platform) {
+                case Platform.Desktop:
+                    showClient = showClient || !(uaResults as any).mobile;
+                    break;
+                case Platform.iOS:
+                    showClient = showClient || (uaResults as any).ios;
+                    break;
+                case Platform.Android:
+                    showClient = showClient || (uaResults as any).android;
+                    break;
+            }
         }
 
         if (!showExperimentalClients && client.experimental) {

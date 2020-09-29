@@ -30,7 +30,7 @@ const Nheko: TextClient = {
     homepage: 'https://github.com/Nheko-Reborn/nheko',
     maturity: Maturity.BETA,
     experimental: false,
-    platform: Platform.Desktop,
+    platforms: [Platform.Desktop],
     clientId: ClientId.Nheko,
     toInviteString: (link) => {
         switch (link.kind) {

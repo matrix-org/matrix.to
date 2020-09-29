@@ -62,7 +62,7 @@ export interface ClientDescription {
     homepage: string;
     logo: string;
     description: string;
-    platform: Platform;
+    platforms: Platform[];
     maturity: Maturity;
     clientId: ClientId;
     experimental: boolean;
