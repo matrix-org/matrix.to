@@ -40,7 +40,10 @@ const Nheko: TextClient = {
                     <span>
                         Type{' '}
                         <code>
-                            /join <b>{link.identifier}</b>
+                            /join{' '}
+                            <b className="matrixIdentifier">
+                                {link.identifier}
+                            </b>
                         </code>
                     </span>
                 );
@@ -49,7 +52,10 @@ const Nheko: TextClient = {
                     <span>
                         Type{' '}
                         <code>
-                            /invite <b>{link.identifier}</b>
+                            /invite{' '}
+                            <b className="matrixIdentifier">
+                                {link.identifier}
+                            </b>
                         </code>
                     </span>
                 );

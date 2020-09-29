@@ -53,7 +53,7 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
                         Accept invite
                     </LinkButton>
                 );
-                inviteUseString = `Accepting will open ${link.identifier} in ${client.name}.`;
+                inviteUseString = `Accepting will open this link in ${client.name}.`;
                 break;
             case ClientKind.TEXT_CLIENT:
                 // TODO: copy to clipboard
