@@ -35,7 +35,7 @@ interface IProps {
 const Avatar: React.FC<IProps> = ({ className, avatarUrl, label }: IProps) => {
     const [src, setSrc] = useState(avatarUrl);
     useEffect(() => {
-        setSrc(avatarUrl);
+        setSrc(avatarUrl ? avatarUrl : logo);
     }, [avatarUrl]);
 
     const _className = classNames('avatar', className, {
