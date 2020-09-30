@@ -91,7 +91,12 @@ const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
         <Tile className="homeserverOptions">
             <div className="homeserverOptionsDescription">
                 <div>
-                    <h3>About {link.identifier}</h3>
+                    <h3>
+                        About&nbsp;
+                        <span className="matrixIdentifier">
+                            {link.identifier}
+                        </span>
+                    </h3>
                     <p>
                         A homeserver will show you metadata about the link, like
                         a description. Homeservers will be able to relate your

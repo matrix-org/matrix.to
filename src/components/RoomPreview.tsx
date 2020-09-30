@@ -38,9 +38,11 @@ const RoomPreview: React.FC<IProps> = ({ room }: IProps) => {
     return (
         <div className="roomPreview">
             <RoomAvatar room={room} />
-            <h1>{room.name ? room.name : roomAlias}</h1>
+            <h1 className="matrixIdentifier">
+                {room.name ? room.name : roomAlias}
+            </h1>
             {members}
-            <p>{roomAlias}</p>
+            <p className="matrixIdentifier">{roomAlias}</p>
         </div>
     );
 };

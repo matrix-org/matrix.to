@@ -24,7 +24,7 @@ import {
 import { LinkKind } from '../parser/types';
 import logo from '../imgs/element.svg';
 
-const Element: LinkedClient = {
+export const Element: LinkedClient = {
     kind: ClientKind.LINKED_CLIENT,
     name: 'Element',
     author: 'Element',
@@ -32,7 +32,7 @@ const Element: LinkedClient = {
     homepage: 'https://element.io',
     maturity: Maturity.STABLE,
     description: 'Fully-featured Matrix client for the Web',
-    platform: Platform.Desktop,
+    platforms: [Platform.Desktop, Platform.Android, Platform.iOS],
     experimental: false,
     clientId: ClientId.Element,
     toUrl: (link) => {
@@ -69,7 +69,7 @@ export const ElementDevelop: LinkedClient = {
     homepage: 'https://element.io',
     maturity: Maturity.STABLE,
     description: 'Fully-featured Matrix client for the Web',
-    platform: Platform.Desktop,
+    platforms: [Platform.Desktop],
     experimental: true,
     clientId: ClientId.ElementDevelop,
     toUrl: (link) => {
@@ -95,4 +95,3 @@ export const ElementDevelop: LinkedClient = {
     },
     linkSupport: () => true,
 };
-export default Element;

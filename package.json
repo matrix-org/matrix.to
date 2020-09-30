@@ -25,12 +25,10 @@
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": [
             "eslint --fix",
-            "prettier --write --tab-width 4 --single-quote",
-            "git add"
+            "prettier --write --tab-width 4 --single-quote"
         ],
         "src/**/*.{json,css,scss,md}": [
-            "prettier --write --tab-width 4 --single-quote",
-            "git add"
+            "prettier --write --tab-width 4 --single-quote"
         ]
     },
     "husky": {

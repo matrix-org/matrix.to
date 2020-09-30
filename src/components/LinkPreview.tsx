@@ -137,7 +137,12 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
                     checked={showHSOptions}
                     onChange={(): void => setShowHSOPtions(!showHSOptions)}
                 >
-                    About {link.identifier}
+                    <span>
+                        About&nbsp;
+                        <span className="matrixIdentifier">
+                            {link.identifier}
+                        </span>
+                    </span>
                 </Toggle>
             </>
         );

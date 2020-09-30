@@ -34,7 +34,7 @@ const DefaultPreview: React.FC<IProps> = ({ link }: IProps) => {
                 avatarUrl={genericRoomPreview}
                 label={`Generic icon representing ${link.identifier}`}
             />
-            <h1>{link.identifier}</h1>
+            <h1 className="matrixIdentifier">{link.identifier}</h1>
         </div>
     );
 };

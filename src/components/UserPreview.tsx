@@ -67,9 +67,12 @@ export const InviterPreview: React.FC<InviterPreviewProps> = ({
         <div className={className}>
             <div>
                 <h1>
-                    Invited by <b>{user ? user.displayname : userId}</b>
+                    Invited by{' '}
+                    <b className="matrixIdentifier">
+                        {user ? user.displayname : userId}
+                    </b>
                 </h1>
-                {user ? <p>{userId}</p> : null}
+                {user ? <p className="matrixIdentifier">{userId}</p> : null}
             </div>
             {avatar}
         </div>
@@ -84,7 +87,7 @@ export const WrappedInviterPreview: React.FC<WrappedInviterProps> = ({
     link,
 }: WrappedInviterProps) => {
     const [user, setUser] = useState<User | undefined>(undefined);
-    const hss = useHSs({link});
+    const hss = useHSs({ link });
     useEffect(() => {
         if (hss.length) {
             client(hss[0])

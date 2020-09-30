@@ -128,13 +128,13 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
                 <div>New link</div>
                 <img src={refreshIcon} alt="Go back to matrix.to home page" />
             </button>
-            <h1 className="linkHeader">{props.link}</h1>
+            <h1 className="linkHeader matrixIdentifier">{props.link}</h1>
             <Button
                 flashChildren={'Copied'}
                 icon={copyIcon}
                 flashIcon={tickIcon}
                 onClick={(): void => {
-                    navigator.clipboard.writeText(props.link);
+                    navigator.clipboard?.writeText(props.link);
                 }}
                 ref={buttonRef}
             >

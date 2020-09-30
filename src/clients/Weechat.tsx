@@ -30,7 +30,7 @@ const Weechat: TextClient = {
     homepage: 'https://github.com/poljar/weechat-matrix',
     maturity: Maturity.LATE_BETA,
     experimental: false,
-    platform: Platform.Desktop,
+    platforms: [Platform.Desktop],
     clientId: ClientId.WeeChat,
     toInviteString: (link) => {
         switch (link.kind) {
@@ -40,7 +40,10 @@ const Weechat: TextClient = {
                     <span>
                         Type{' '}
                         <code>
-                            /join <b>{link.identifier}</b>
+                            /join{' '}
+                            <b className="matrixIdentifier">
+                                {link.identifier}
+                            </b>
                         </code>
                     </span>
                 );
@@ -49,7 +52,10 @@ const Weechat: TextClient = {
                     <span>
                         Type{' '}
                         <code>
-                            /invite <b>{link.identifier}</b>
+                            /invite{' '}
+                            <b className="matrixIdentifier">
+                                {link.identifier}
+                            </b>
                         </code>
                     </span>
                 );
