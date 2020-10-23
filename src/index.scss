@@ -65,6 +65,11 @@ hr {
     margin: 0 40px;
 }
 
+// Suppress focus ring on form controls for mouse users
+[data-whatintent='mouse'] *:focus {
+    outline: none;
+}
+
 .matrixIdentifier {
     word-break: break-all;
 }

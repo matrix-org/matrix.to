@@ -11,6 +11,7 @@
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-scripts": "3.4.1",
+        "what-input": "^5.2.10",
         "zod": "^1.10.3"
     },
     "scripts": {
