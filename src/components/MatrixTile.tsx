@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import Tile from './Tile';
+import Footer from './Footer';
 
 import logo from '../imgs/matrix-logo.svg';
 
@@ -43,6 +44,7 @@ const MatrixTile: React.FC<IProps> = ({ isLink }: IProps) => {
             <Tile className="matrixTile">
                 <img src={logo} alt="matrix-logo" />
                 {copy}
+                <Footer />
             </Tile>
         </div>
     );

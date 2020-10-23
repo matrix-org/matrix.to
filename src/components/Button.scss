@@ -21,13 +21,13 @@ limitations under the License.
 
     height: 48px;
 
-    border-radius: 2rem;
+    border-radius: 16px;
     border: 0;
 
-    background-color: $foreground;
+    background-color: $accent;
     color: $background;
 
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
 
     &:hover {

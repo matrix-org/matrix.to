@@ -16,7 +16,9 @@ limitations under the License.
 
 .matrixTile {
     background: none;
-    row-gap: 8px;
-
+    box-shadow: none;
+    row-gap: 16px;
     padding: 0 40px;
+    justify-items: left;
+    text-align: left;
 }

@@ -52,10 +52,10 @@ const Footer: React.FC = () => {
 
     return (
         <div className="footer">
-            <a href="https://github.com/matrix-org/matrix.to">GitHub</a>
+            <a href="https://github.com/matrix-org/matrix.to">GitHub project</a>
             {' · '}
             <a href="https://github.com/matrix-org/matrix.to/tree/main/src/clients">
-                Add your client
+                Add your app
             </a>
             {clear}
         </div>
