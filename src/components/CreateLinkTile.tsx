@@ -128,7 +128,9 @@ const LinkCreatedTile: React.FC<ILinkCreatedTileProps> = (props) => {
                 <div>New link</div>
                 <img src={refreshIcon} alt="Go back to matrix.to home page" />
             </button>
-            <h1 className="linkHeader matrixIdentifier">{props.link}</h1>
+            <a className="matrixIdentifier" href={props.link}>
+                {props.link}
+            </a>
             <Button
                 flashChildren={'Copied'}
                 icon={copyIcon}

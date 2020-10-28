@@ -31,6 +31,11 @@ limitations under the License.
 
     > a {
         color: $foreground;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 32px;
+        text-align: left;
+        text-decoration: underline;
     }
 
     .createLinkReset {
