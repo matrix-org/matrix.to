@@ -14,33 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '../mixins';
+import React from 'react';
 
-.toggle {
-    display: flex;
+import chevron from '../imgs/chevron-down.svg';
 
-    > :first-child {
-        min-width: 100%;
-    }
+import './Details.scss';
 
-    > input[type='checkbox'] {
-        // Remove the OS's representation
-        display: none;
-
-        &.focus-visible {
-            & + img {
-                @include unreal-focus;
-            }
-        }
-
-        &:checked {
-            & + img {
-                transform: rotate(180deg);
-            }
-        }
-    }
-
-    &:hover {
-        cursor: pointer;
-    }
+interface IProps extends React.InputHTMLAttributes<Element> {
+    children?: React.ReactNode;
 }
+
+const Details: React.FC<IProps> = ({ children, ...props }: IProps) => (
+    <label className="details">
+        {children}
+        <input type="checkbox" {...props} />
+        <img src={chevron} alt="" />
+    </label>
+);
+
+export default Details;

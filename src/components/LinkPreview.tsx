@@ -25,7 +25,7 @@ import EventPreview from './EventPreview';
 import GroupPreview from './GroupPreview';
 import HomeserverOptions from './HomeserverOptions';
 import DefaultPreview from './DefaultPreview';
-import Toggle from './Toggle';
+import Details from './Details';
 import { clientMap } from '../clients';
 import {
     getRoomFromId,
@@ -133,7 +133,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
         content = (
             <>
                 <DefaultPreview link={link} />
-                <Toggle
+                <Details
                     checked={showHSOptions}
                     onChange={(): void => setShowHSOPtions(!showHSOptions)}
                 >
@@ -143,7 +143,7 @@ const LinkPreview: React.FC<IProps> = ({ link }: IProps) => {
                             {link.identifier}
                         </span>
                     </span>
-                </Toggle>
+                </Details>
             </>
         );
         if (showHSOptions) {
