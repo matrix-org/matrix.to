@@ -30,6 +30,10 @@ limitations under the License.
     font-size: 15px;
     font-weight: 500;
 
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
     &:hover {
         cursor: pointer;
     }
