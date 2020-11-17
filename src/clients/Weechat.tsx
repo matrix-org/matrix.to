@@ -86,6 +86,7 @@ const Weechat: TextClient = {
     },
 
     description: 'Command-line Matrix interface using Weechat',
+    installLinks: [],
 };
 
 export default Weechat;

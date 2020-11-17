@@ -53,6 +53,29 @@ export enum ClientId {
     Fractal = 'fractal',
 }
 
+/**
+ * Define a native distribution channel for a client.
+ * E.g App store for apple, PlayStore or F-Droid for Android
+ */
+export class StoreDistribution {
+    public name: string;
+    public platform: Platform;
+    public download: string;
+    public supportReferrer: boolean;
+
+    constructor(
+        name: string,
+        platform: Platform,
+        download: string,
+        supportReferrer: boolean
+    ) {
+        this.name = name;
+        this.platform = platform;
+        this.download = download;
+        this.supportReferrer = supportReferrer;
+    }
+}
+
 /*
  * The descriptive details of a client
  */
@@ -67,6 +90,7 @@ export interface ClientDescription {
     clientId: ClientId;
     experimental: boolean;
     linkSupport: (link: SafeLink) => boolean;
+    installLinks: StoreDistribution[];
 }
 
 /*

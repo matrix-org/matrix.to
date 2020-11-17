@@ -20,6 +20,7 @@ import {
     ClientKind,
     ClientId,
     Platform,
+    StoreDistribution,
 } from './types';
 import { LinkKind } from '../parser/types';
 import logo from '../imgs/element.svg';
@@ -31,7 +32,7 @@ export const Element: LinkedClient = {
     logo: logo,
     homepage: 'https://element.io',
     maturity: Maturity.STABLE,
-    description: 'Fully-featured Matrix client for the Web',
+    description: 'Cross platfom fully-featured Matrix client',
     platforms: [Platform.Desktop, Platform.Android, Platform.iOS],
     experimental: false,
     clientId: ClientId.Element,
@@ -59,6 +60,27 @@ export const Element: LinkedClient = {
         }
     },
     linkSupport: () => true,
+    installLinks: [
+        new StoreDistribution(
+            'App Store',
+            Platform.iOS,
+            'https://apps.apple.com/app/vector/id1083446067',
+            false
+        ),
+        new StoreDistribution(
+            'Google Play',
+            Platform.Android,
+            'https://play.google.com/store/apps/details?id=im.vector.app',
+            true
+        ),
+        new StoreDistribution(
+            'F-Droid',
+            Platform.Android,
+            'https://f-droid.org/fr/packages/im.vector.app/',
+            false
+        ),
+        // TODO desktop clients?
+    ],
 };
 
 export const ElementDevelop: LinkedClient = {
@@ -94,4 +116,5 @@ export const ElementDevelop: LinkedClient = {
         }
     },
     linkSupport: () => true,
+    installLinks: [],
 };

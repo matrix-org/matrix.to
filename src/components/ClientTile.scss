@@ -51,7 +51,8 @@ limitations under the License.
 
         .button {
             height: 40px;
-            width: 130px;
+            min-width: 130px;
+            max-width: 165px;
             margin-top: 16px;
         }
     }
