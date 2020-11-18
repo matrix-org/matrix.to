@@ -17,6 +17,16 @@ limitations under the License.
 @import '../color-scheme';
 
 .homeserverOptions {
+    .actions {
+        display: flex;
+        width: 100%;
+        margin-top: 2em;
+
+        > * {
+            flex: 1;
+        }
+    }
+
     display: grid;
     row-gap: 20px;
 

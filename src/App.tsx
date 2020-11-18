@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { useState, useEffect } from 'react';
 
+import GlobalContext from './contexts/GlobalContext';
 import SingleColumn from './layouts/SingleColumn';
 import CreateLinkTile from './components/CreateLinkTile';
 import MatrixTile from './components/MatrixTile';
@@ -23,8 +24,6 @@ import Tile from './components/Tile';
 import LinkRouter from './pages/LinkRouter';
 
 import './App.scss';
-
-import GlobalContext from './contexts/GlobalContext';
 
 /* eslint-disable no-restricted-globals */
 

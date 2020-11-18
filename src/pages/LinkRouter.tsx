@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
+import HSContext, { HSOptions } from '../contexts/HSContext';
 import Tile from '../components/Tile';
 import LinkPreview from '../components/LinkPreview';
 import InvitingClientTile from '../components/InvitingClientTile';
 import { parseHash } from '../parser/parser';
 import { LinkKind } from '../parser/types';
+import HomeserverOptions from '../components/HomeserverOptions';
 
 /* eslint-disable no-restricted-globals */
 
@@ -31,42 +33,39 @@ interface IProps {
 const LinkRouter: React.FC<IProps> = ({ link }: IProps) => {
     // our room id's will be stored in the hash
     const parsedLink = parseHash(link);
+    const [hsState] = useContext(HSContext);
 
-    let feedback: JSX.Element;
-    let client: JSX.Element = <></>;
-    switch (parsedLink.kind) {
-        case LinkKind.ParseFailed:
-            feedback = (
-                <Tile>
-                    <p>
-                        That URL doesn't seem right. Links should be in the
-                        format:
-                    </p>
-                    <br />
-                    <p>
-                        {location.host}/#/{'<'}matrix-resourceidentifier{'>'}
-                    </p>
-                </Tile>
-            );
-            break;
-        default:
-            if (parsedLink.arguments.client) {
-                client = (
-                    <InvitingClientTile
-                        clientName={parsedLink.arguments.client}
-                    />
-                );
-            }
-
-            feedback = (
-                <>
-                    <LinkPreview link={parsedLink} />
-                    {client}
-                </>
-            );
+    if (parsedLink.kind === LinkKind.ParseFailed) {
+        return (
+            <Tile>
+                <p>
+                    That URL doesn't seem right. Links should be in the format:
+                </p>
+                <br />
+                <p>
+                    {location.host}/#/{'<'}matrix-resourceidentifier{'>'}
+                </p>
+            </Tile>
+        );
     }
 
-    return feedback;
+    if (hsState.option === HSOptions.Unset) {
+        return <HomeserverOptions link={parsedLink} />;
+    }
+
+    let client: JSX.Element = <></>;
+    if (parsedLink.arguments.client) {
+        client = (
+            <InvitingClientTile clientName={parsedLink.arguments.client} />
+        );
+    }
+
+    return (
+        <>
+            <LinkPreview link={parsedLink} />
+            {client}
+        </>
+    );
 };
 
 export default LinkRouter;

@@ -89,6 +89,14 @@ const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
 
     return (
         <Tile className="homeserverOptions">
+            <div>
+                View this link using matrix.org to preview content, or you can
+                use another server or continue without a preview.
+            </div>
+            <div className="actions">
+                <StyledCheckbox>Ask every time</StyledCheckbox>
+                <Button>Continue</Button>
+            </div>
             <div className="homeserverOptionsDescription">
                 <div>
                     <h3>
