@@ -57,22 +57,73 @@ export enum ClientId {
  * Define a native distribution channel for a client.
  * E.g App store for apple, PlayStore or F-Droid for Android
  */
-export class StoreDistribution {
-    public name: string;
-    public platform: Platform;
-    public download: string;
-    public supportReferrer: boolean;
+export interface InstallLink {
+    createInstallURL(deepLink: SafeLink) : string;
+    //get buttonCSSClass(): string;
+    platform: Platform;
+    // in AppleStoreLink, we can set the cookie here
+    // onInstallChosen(deepLink: SafeLink);
+    channelId: string;
+    description: string;
+}
 
-    constructor(
-        name: string,
-        platform: Platform,
-        download: string,
-        supportReferrer: boolean
-    ) {
-        this.name = name;
-        this.platform = platform;
-        this.download = download;
-        this.supportReferrer = supportReferrer;
+export class AppleStoreLink implements InstallLink {
+    constructor(private org: string, private appId: string) {}
+
+    createInstallURL(deepLink: SafeLink) : string {
+        return `https://apps.apple.com/app/${encodeURIComponent(this.org)}/${encodeURIComponent(this.appId)}`;
+    }
+
+    get platform() : Platform {
+        return Platform.iOS;
+    }
+    
+    get channelId(): string {
+        return "apple-app-store";
+    }
+
+    get description() {
+        return "Download on the App Store";
+    }
+}
+
+export class PlayStoreLink implements InstallLink {
+    constructor(private appId: string) {}
+
+    createInstallURL(deepLink: SafeLink) : string {
+        return `https://play.google.com/store/apps/details?id=${encodeURIComponent(this.appId)}&referrer=${encodeURIComponent(deepLink.originalLink)}`;
+    }
+
+    get platform() : Platform {
+        return Platform.Android;
+    }
+      
+    get channelId(): string {
+        return "play-store";
+    }
+
+    get description() {
+        return "Get it on Google Play";
+    }
+}
+
+export class FDroidLink implements InstallLink {
+    constructor(private appId: string) {}
+
+    createInstallURL(deepLink: SafeLink) : string {
+        return `https://f-droid.org/packages/${encodeURIComponent(this.appId)}`;
+    }
+
+    get platform() : Platform {
+        return Platform.Android;
+    }
+
+    get channelId(): string {
+        return "fdroid";
+    }
+
+    get description() {
+        return "Get it on F-Droid";
     }
 }
 
@@ -90,7 +141,7 @@ export interface ClientDescription {
     clientId: ClientId;
     experimental: boolean;
     linkSupport: (link: SafeLink) => boolean;
-    installLinks: StoreDistribution[];
+    installLinks: InstallLink[];
 }
 
 /*

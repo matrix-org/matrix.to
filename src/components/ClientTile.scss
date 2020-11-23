@@ -67,6 +67,15 @@ limitations under the License.
     &:hover {
         background-color: $app-background;
     }
+
+    .installLink {
+        display: inline-block;
+        height: 40px;
+        margin: 8px 16px 8px 0;
+        img {
+            height: 100%;
+        }
+    }
 }
 
 .clientTileLink {

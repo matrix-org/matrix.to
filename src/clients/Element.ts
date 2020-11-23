@@ -20,7 +20,9 @@ import {
     ClientKind,
     ClientId,
     Platform,
-    StoreDistribution,
+    AppleStoreLink,
+    PlayStoreLink,
+    FDroidLink
 } from './types';
 import { LinkKind } from '../parser/types';
 import logo from '../imgs/element.svg';
@@ -61,25 +63,9 @@ export const Element: LinkedClient = {
     },
     linkSupport: () => true,
     installLinks: [
-        new StoreDistribution(
-            'App Store',
-            Platform.iOS,
-            'https://apps.apple.com/app/vector/id1083446067',
-            false
-        ),
-        new StoreDistribution(
-            'Google Play',
-            Platform.Android,
-            'https://play.google.com/store/apps/details?id=im.vector.app',
-            true
-        ),
-        new StoreDistribution(
-            'F-Droid',
-            Platform.Android,
-            'https://f-droid.org/fr/packages/im.vector.app/',
-            false
-        ),
-        // TODO desktop clients?
+        new AppleStoreLink("vector", "id1083446067"),
+        new PlayStoreLink("im.vector.app"),
+        new FDroidLink("im.vector.app"),
     ],
 };
 

@@ -23,12 +23,26 @@ import { SafeLink } from '../parser/types';
 import Tile from './Tile';
 import Button from './Button';
 
+import appStoreBadge from '../imgs/app-store-us-alt.svg';
+import playStoreBadge from '../imgs/google-play-us.svg';
+import fdroidBadge from '../imgs/fdroid-badge.png';
+
 import './ClientTile.scss';
 
 interface IProps {
     client: Client;
     link: SafeLink;
 }
+
+interface IInstallBadgeImages {
+    [index: string]: string;
+}
+
+const installBadgeImages : IInstallBadgeImages = {
+    "fdroid": fdroidBadge,
+    "apple-app-store": appStoreBadge,
+    "play-store": playStoreBadge
+};
 
 const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
     const inviteLine =
@@ -43,47 +57,32 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
     });
 
     let inviteButton: JSX.Element = <></>;
-    let hasNativeClient = false;
-    let installButton = undefined;
-    if (client.kind === ClientKind.LINKED_CLIENT) {
-        const availableClients = client.installLinks.filter((distrib) => {
-            if ((uaResults as any).ios) {
-                return distrib.platform == Platform.iOS;
-            } else if ((uaResults as any).android) {
-                return distrib.platform == Platform.Android;
-            } else {
-                return false;
-            }
-        });
-        hasNativeClient = availableClients.length > 0;
-        if (hasNativeClient) {
-            inviteButton = (
-                <Button
-                    onClick={() => window.open('matrix://' + link.originalLink)}
-                >
-                    Accept invite
-                </Button>
-            );
+    const matchingInstallLinks = client.installLinks.filter((installLink) => {
+        if ((uaResults as any).ios) {
+            return installLink.platform === Platform.iOS;
+        } else if ((uaResults as any).android) {
+            return installLink.platform === Platform.Android;
         } else {
-            inviteButton = <Button>Accept invite</Button>;
+            return false;
         }
+    });
+    const hasNativeClient = matchingInstallLinks.length > 0;
+    let installButtons = undefined;
+    if (matchingInstallLinks.length) {
+        installButtons = <p>{matchingInstallLinks.map((installLink) => {
+            return <a
+                rel="noopener noreferrer"
+                key={installLink.channelId}
+                href={installLink.createInstallURL(link)}
+                className="installLink"
+                target="_blank">
+                <img src={installBadgeImages[installLink.channelId]} alt={installLink.description} />
+            </a>;
+        })}</p>;
+    }
 
-        installButton = availableClients.map((distrib) => (
-            <Button
-                onClick={() =>
-                    window.open(
-                        distrib.supportReferrer
-                            ? distrib.download +
-                                  '&referrer=' +
-                                  link.originalLink
-                            : distrib.download,
-                        '_blank'
-                    )
-                }
-            >
-                Get it on {distrib.name}
-            </Button>
-        ));
+    if (client.kind === ClientKind.LINKED_CLIENT) {
+        inviteButton = <Button>Accept invite</Button>;
     } else {
         const copyString = client.copyString(link);
         if (copyString !== '') {
@@ -104,8 +103,8 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
             <div>
                 <h1>{client.name}</h1>
                 <p>{client.description}</p>
+                {installButtons}
                 {inviteLine}
-                {hasNativeClient && installButton}
                 {inviteButton}
             </div>
         </Tile>
