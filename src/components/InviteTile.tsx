@@ -63,7 +63,7 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
                 break;
         }
 
-        const advancedToggle = (
+        const advancedButton = (
             <p>
                 {inviteUseString}
                 <TextButton
@@ -77,7 +77,7 @@ const InviteTile: React.FC<IProps> = ({ children, client, link }: IProps) => {
         invite = (
             <>
                 {invite}
-                {advancedToggle}
+                {advancedButton}
             </>
         );
     }
