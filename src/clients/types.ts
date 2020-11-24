@@ -53,6 +53,79 @@ export enum ClientId {
     Fractal = 'fractal',
 }
 
+/**
+ * Define a native distribution channel for a client.
+ * E.g App store for apple, PlayStore or F-Droid for Android
+ */
+export interface InstallLink {
+    createInstallURL(deepLink: SafeLink) : string;
+    // in AppleStoreLink, we can set the cookie here for deeplinking
+    // onInstallChosen(deepLink: SafeLink);
+    platform: Platform;
+    channelId: string;
+    description: string;
+}
+
+export class AppleStoreLink implements InstallLink {
+    constructor(private org: string, private appId: string) {}
+
+    createInstallURL(deepLink: SafeLink) : string {
+        return `https://apps.apple.com/app/${encodeURIComponent(this.org)}/${encodeURIComponent(this.appId)}`;
+    }
+
+    get platform() : Platform {
+        return Platform.iOS;
+    }
+    
+    get channelId(): string {
+        return "apple-app-store";
+    }
+
+    get description() {
+        return "Download on the App Store";
+    }
+}
+
+export class PlayStoreLink implements InstallLink {
+    constructor(private appId: string) {}
+
+    createInstallURL(deepLink: SafeLink) : string {
+        return `https://play.google.com/store/apps/details?id=${encodeURIComponent(this.appId)}&referrer=${encodeURIComponent(deepLink.originalLink)}`;
+    }
+
+    get platform() : Platform {
+        return Platform.Android;
+    }
+      
+    get channelId(): string {
+        return "play-store";
+    }
+
+    get description() {
+        return "Get it on Google Play";
+    }
+}
+
+export class FDroidLink implements InstallLink {
+    constructor(private appId: string) {}
+
+    createInstallURL(deepLink: SafeLink) : string {
+        return `https://f-droid.org/packages/${encodeURIComponent(this.appId)}`;
+    }
+
+    get platform() : Platform {
+        return Platform.Android;
+    }
+
+    get channelId(): string {
+        return "fdroid";
+    }
+
+    get description() {
+        return "Get it on F-Droid";
+    }
+}
+
 /*
  * The descriptive details of a client
  */
@@ -67,6 +140,7 @@ export interface ClientDescription {
     clientId: ClientId;
     experimental: boolean;
     linkSupport: (link: SafeLink) => boolean;
+    installLinks: InstallLink[];
 }
 
 /*

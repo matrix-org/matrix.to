@@ -86,6 +86,7 @@ const Nheko: TextClient = {
     },
     description:
         'A native desktop app for Matrix that feels more like a mainstream chat app.',
+    installLinks: [],
 };
 
 export default Nheko;

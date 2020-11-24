@@ -69,6 +69,7 @@ const Fractal: TextClient = {
     },
 
     description: 'Fractal is a Matrix Client written in Rust',
+    installLinks: [],
 };
 
 export default Fractal;

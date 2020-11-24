@@ -51,7 +51,8 @@ limitations under the License.
 
         .button {
             height: 40px;
-            width: 130px;
+            min-width: 130px;
+            max-width: 165px;
             margin-top: 16px;
         }
     }
@@ -65,6 +66,15 @@ limitations under the License.
 
     &:hover {
         background-color: $app-background;
+    }
+
+    .installLink {
+        display: inline-block;
+        height: 40px;
+        margin: 8px 16px 8px 0;
+        img {
+            height: 100%;
+        }
     }
 }
 

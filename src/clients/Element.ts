@@ -20,6 +20,9 @@ import {
     ClientKind,
     ClientId,
     Platform,
+    AppleStoreLink,
+    PlayStoreLink,
+    FDroidLink,
 } from './types';
 import { LinkKind } from '../parser/types';
 import logo from '../imgs/element.svg';
@@ -31,7 +34,7 @@ export const Element: LinkedClient = {
     logo: logo,
     homepage: 'https://element.io',
     maturity: Maturity.STABLE,
-    description: 'Fully-featured Matrix client for the Web',
+    description: 'Fully-featured Matrix client',
     platforms: [Platform.Desktop, Platform.Android, Platform.iOS],
     experimental: false,
     clientId: ClientId.Element,
@@ -59,6 +62,11 @@ export const Element: LinkedClient = {
         }
     },
     linkSupport: () => true,
+    installLinks: [
+        new AppleStoreLink('vector', 'id1083446067'),
+        new PlayStoreLink('im.vector.app'),
+        new FDroidLink('im.vector.app'),
+    ],
 };
 
 export const ElementDevelop: LinkedClient = {
@@ -94,4 +102,5 @@ export const ElementDevelop: LinkedClient = {
         }
     },
     linkSupport: () => true,
+    installLinks: [],
 };
