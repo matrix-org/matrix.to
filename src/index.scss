@@ -30,17 +30,20 @@ body,
 #root {
     height: 100%;
     width: 100%;
-
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-style: normal;
-
     font-size: 14px;
     line-height: 24px;
-
     color: $font;
-
     overflow: auto;
 }
+
+html,
+body,
+#root,
+button.textButton {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-style: normal;
+}
+
 
 h1 {
     font-weight: bold;

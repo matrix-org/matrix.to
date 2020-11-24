@@ -22,8 +22,9 @@ limitations under the License.
     color: $link;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 24px;
+    font-size: inherit;
+    padding: 8px 0;
+    margin: -8px 0;
 
     &:hover {
         cursor: pointer;
