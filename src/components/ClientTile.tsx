@@ -72,6 +72,7 @@ const ClientTile: React.FC<IProps> = ({ client, link }: IProps) => {
         installButtons = <p>{matchingInstallLinks.map((installLink) => {
             return <a
                 rel="noopener noreferrer"
+                aria-label={installLink.description}
                 key={installLink.channelId}
                 href={installLink.createInstallURL(link)}
                 className="installLink"
