@@ -59,10 +59,9 @@ export enum ClientId {
  */
 export interface InstallLink {
     createInstallURL(deepLink: SafeLink) : string;
-    //get buttonCSSClass(): string;
-    platform: Platform;
-    // in AppleStoreLink, we can set the cookie here
+    // in AppleStoreLink, we can set the cookie here for deeplinking
     // onInstallChosen(deepLink: SafeLink);
+    platform: Platform;
     channelId: string;
     description: string;
 }
