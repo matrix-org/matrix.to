@@ -22,6 +22,19 @@ import HSContext, {
 } from '../contexts/HSContext';
 import { SafeLink } from '../parser/types';
 
+export function getHSFromIdentifier(identifier: string) {
+  try {
+    const match = identifier.match(/^.*:(?<server>.*)$/);
+    if (match && match.groups) {
+      return match.groups.server;
+    }
+  } catch (e) {
+    console.error(`Could parse user identifier: ${identifier}`);
+    console.error(e);
+  }
+  return;
+}
+
 function selectedClient({ link, identifier, hsOptions }: {
   link?: SafeLink,
   identifier?: string;
@@ -35,23 +48,16 @@ function selectedClient({ link, identifier, hsOptions }: {
     ] : [];
     const identifierHS: string[] = [];
 
-    try {
-      if (identifier) {
-        const match = identifier.match(/^.*:(?<server>.*)$/);
-        if (match && match.groups) {
-          const server = match.groups.server;
-          if (server) {
-            identifierHS.push(server);
-          }
-        }
+    if (identifier) {
+      const server = getHSFromIdentifier(identifier);
+      if (server) {
+        identifierHS.push(server);
       }
-    } catch (e) {
-      console.error(`Could parse user identifier: ${identifier}`);
-      console.error(e);
     }
 
     switch (hsOptions.option) {
         case HSOptions.Unset:
+        case HSOptions.None:
             return [];
         case HSOptions.TrustedHSOnly:
             return [hsOptions.hs];

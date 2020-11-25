@@ -23,6 +23,7 @@ import './Input.scss';
 interface IProps extends React.InputHTMLAttributes<HTMLElement> {
     name: string;
     type: string;
+    required?: boolean;
     muted?: boolean;
 }
 

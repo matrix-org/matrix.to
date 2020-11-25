@@ -25,6 +25,8 @@ export enum HSOptions {
     Unset = 'UNSET',
     // Matrix.to should only contact a single provided homeserver
     TrustedHSOnly = 'TRUSTED_CLIENT_ONLY',
+    // Matrix.to may not contact any homeserver
+    None = 'NONE',
     // Matrix.to may contact any homeserver it requires
     Any = 'ANY',
 }
@@ -32,6 +34,9 @@ export enum HSOptions {
 const STATE_SCHEMA = union([
     object({
         option: literal(HSOptions.Unset),
+    }),
+    object({
+        option: literal(HSOptions.None),
     }),
     object({
         option: literal(HSOptions.Any),
@@ -48,12 +53,17 @@ export type State = TypeOf<typeof STATE_SCHEMA>;
 export enum ActionType {
     SetHS = 'SET_HS',
     SetAny = 'SET_ANY',
+    SetNone = 'SET_NONE',
     Clear = 'CLEAR',
 }
 
 export interface SetHS {
     action: ActionType.SetHS;
     HSURL: string;
+}
+
+export interface SetNone {
+    action: ActionType.SetNone;
 }
 
 export interface SetAny {
@@ -64,7 +74,7 @@ export interface Clear {
     action: ActionType.Clear;
 }
 
-export type Action = SetHS | SetAny | Clear;
+export type Action = SetHS | SetAny | SetNone | Clear;
 
 export const INITIAL_STATE: State = {
     option: HSOptions.Unset,
@@ -75,6 +85,10 @@ export const unpersistedReducer = (_state: State, action: Action): State => {
         case ActionType.SetAny:
             return {
                 option: HSOptions.Any,
+            };
+        case ActionType.SetNone:
+            return {
+                option: HSOptions.None,
             };
         case ActionType.SetHS:
             return {

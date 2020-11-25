@@ -15,16 +15,18 @@ limitations under the License.
 */
 
 import React, { useContext, useState } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { string } from 'zod';
 
 import Tile from './Tile';
 import HSContext, { TempHSContext, ActionType } from '../contexts/HSContext';
 import icon from '../imgs/telecom-mast.svg';
 import Button from './Button';
+import TextButton from './TextButton';
 import Input from './Input';
 import StyledCheckbox from './StyledCheckbox';
 import { SafeLink } from '../parser/types';
+import { getHSFromIdentifier } from "../utils/getHS";
 
 import './HomeserverOptions.scss';
 
@@ -34,103 +36,119 @@ interface IProps {
 
 interface FormValues {
     HSUrl: string;
+    HSOtherUrl: string;
+}
+
+interface SubmitEvent extends Event {
+    submitter: HTMLFormElement;
 }
 
 function validateURL(values: FormValues): Partial<FormValues> {
     const errors: Partial<FormValues> = {};
-    try {
-        string().url().parse(values.HSUrl);
-    } catch {
-        errors.HSUrl =
-            'This must be a valid homeserver URL, starting with https://';
+    if (values.HSUrl === "other") {
+        try {
+            string().url().parse(hsToURL(values.HSOtherUrl));
+        } catch {
+            errors.HSOtherUrl =
+                'This must be a valid homeserver URL';
+        }
     }
     return errors;
+}
+
+function hsToURL(hs: string): string {
+    if (!hs.startsWith("http://") && !hs.startsWith("https://")) {
+        return "https://" + hs;
+    }
+    return hs;
+}
+
+function getChosenHS(values: FormValues) {
+    return values.HSUrl === "other" ? values.HSOtherUrl : values.HSUrl;
+}
+
+function getHSDomain(hs: string) {
+    try {
+        // TODO: take port as well
+        return new URL(hsToURL(hs)).hostname;
+    } catch (err) {
+        return;
+    }
 }
 
 const HomeserverOptions: React.FC<IProps> = ({ link }: IProps) => {
     const HSStateDispatcher = useContext(HSContext)[1];
     const TempHSStateDispatcher = useContext(TempHSContext)[1];
 
-    const [rememberSelection, setRemeberSelection] = useState(false);
+    const [askEveryTime, setAskEveryTime] = useState(false);
+    const [showHSPicker, setShowHSPicker] = useState(false);
 
     // Select which disaptcher to use based on whether we're writing
     // the choice to localstorage
-    const dispatcher = rememberSelection
-        ? HSStateDispatcher
-        : TempHSStateDispatcher;
+    const dispatcher = askEveryTime
+        ? TempHSStateDispatcher
+        : HSStateDispatcher;
 
-    const hsInput = (
-        <Formik
-            initialValues={{
-                HSUrl: '',
-            }}
-            validate={validateURL}
-            onSubmit={({ HSUrl }): void =>
-                dispatcher({ action: ActionType.SetHS, HSURL: HSUrl })
-            }
-        >
-            {({ values, errors }): JSX.Element => (
-                <Form>
-                    <Input
-                        muted={!values.HSUrl}
-                        type="text"
-                        name="HSUrl"
-                        placeholder="Preferred homeserver URL"
-                    />
-                    {values.HSUrl && !errors.HSUrl ? (
-                        <Button secondary type="submit">
-                            Use {values.HSUrl}
-                        </Button>
-                    ) : null}
-                </Form>
-            )}
-        </Formik>
-    );
+    let topSection;
+    const identifierHS = getHSFromIdentifier(link.identifier) || "";
+    const homeservers = [identifierHS, ... link.arguments.vias];
+
+    const chosenHS = "home.server";
+    const continueWithout = <TextButton onClick={(e): void => dispatcher({ action: ActionType.SetNone})}>continue without a preview</TextButton>;
+    let instructions;
+    if (showHSPicker) {
+        instructions = <p>View this link using {chosenHS} to preview content or {continueWithout}.</p>
+    } else {
+        const useAnotherServer = <TextButton onClick={(e): void => setShowHSPicker(true)}>use another server</TextButton>;
+        instructions = <p>View this link using {chosenHS} to preview content, or you can {useAnotherServer} or {continueWithout}.</p>
+    }
 
     return (
         <Tile className="homeserverOptions">
-            <div>
-                View this link using matrix.org to preview content, or you can
-                use another server or continue without a preview.
-            </div>
-            <div className="actions">
-                <StyledCheckbox>Ask every time</StyledCheckbox>
-                <Button>Continue</Button>
-            </div>
-            <div className="homeserverOptionsDescription">
-                <div>
-                    <h3>
-                        About&nbsp;
-                        <span className="matrixIdentifier">
-                            {link.identifier}
-                        </span>
-                    </h3>
-                    <p>
-                        A homeserver will show you metadata about the link, like
-                        a description. Homeservers will be able to relate your
-                        IP to things you've opened invites for in matrix.to.
-                    </p>
-                </div>
-                <img
-                    src={icon}
-                    alt="Icon making it clear that connections may be made with external services"
-                />
-            </div>
-            <StyledCheckbox
-                checked={rememberSelection}
-                onChange={(e): void => setRemeberSelection(e.target.checked)}
-            >
-                Remember my choice
-            </StyledCheckbox>
-            <Button
-                secondary
-                onClick={(): void => {
-                    dispatcher({ action: ActionType.SetAny });
+            {instructions}
+            <Formik
+                initialValues={{
+                    HSUrl: identifierHS,
+                    HSOtherUrl: '',
                 }}
-            >
-                Use any homeserver
-            </Button>
-            {hsInput}
+                validate={validateURL}
+                onSubmit={(values): void => {
+                    dispatcher({ action: ActionType.SetHS, HSURL: getHSDomain(getChosenHS(values)) || "" });
+                }}>
+                {({ values, errors }): JSX.Element => {
+                    let hsOptions;
+                    if (showHSPicker) {
+                        const radios = homeservers.map(hs => {
+                            return <label key={hs}><Field
+                                type="radio"
+                                name="HSUrl"
+                                value={hs}
+                            />{hs}</label>;
+                        });
+                        const otherHSField = values.HSUrl === "other" ?
+                            <Input
+                                required={true}
+                                type="text"
+                                name="HSOtherUrl"
+                                placeholder="Preferred homeserver URL"
+                            /> : undefined;
+                        hsOptions = <div role="group" className="serverChoices">
+                                {radios}
+                                <label><Field type="radio" name="HSUrl" value="other" />Other {otherHSField}</label>
+                            </div>;
+                    }
+                    return <Form>
+                        {hsOptions}
+                        <div className="actions">
+                            <StyledCheckbox
+                                checked={askEveryTime}
+                                onChange={(e): void => setAskEveryTime(e.target.checked)}
+                            >Ask every time</StyledCheckbox>
+                            <Button type="submit">Continue</Button>
+                        </div>
+                    </Form>;
+                }}
+            </Formik>;
         </Tile>
     );
 };

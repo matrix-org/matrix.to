@@ -60,8 +60,16 @@ limitations under the License.
         }
     }
 
-    form {
-        display: grid;
-        row-gap: 25px;
+
+    .serverChoices {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .serverChoices label {
+        display: flex;
+        gap: 10px;
+        margin: 8px 0;
+        align-items: center;
     }
 }
