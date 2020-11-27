@@ -24,7 +24,7 @@ const EVENT_WITH_ROOMALIAS_PATTERN = /^[#]([^:]*):(.+)\/\$([^:]+):(.+)$/;
 const USERID_PATTERN = /^@([^:]+):(.+)$/;
 const GROUPID_PATTERN = /^\+([^:]+):(.+)$/;
 
-export const IdentifierKind = createEnum(
+const IdentifierKind = createEnum(
 	"RoomId",
 	"RoomAlias",
 	"UserId",
@@ -60,6 +60,9 @@ function orderedUnique(array) {
 
 export class Link {
 	static parseFragment(fragment) {
+		if (!fragment) {
+			return null;
+		}
 		let [identifier, queryParams] = fragment.split("?");
 
 		let viaServers = [];
@@ -117,7 +120,7 @@ export class Link {
 			const localPart = matches[1];
 			return new Link(viaServers, IdentifierKind.GroupId, localPart, server);
 		}
-		return;
+		return null;
 	}
 
 	constructor(viaServers, identifierKind, localPart, server, messageLocalPart = null, messageServer = null) {

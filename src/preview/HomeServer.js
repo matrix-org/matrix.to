@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export async function validateHomeServer(request, baseURL) {
+export async function resolveServer(request, baseURL) {
 	if (!baseURL.startsWith("http://") && !baseURL.startsWith("https://")) {
 		baseURL = `https://${baseURL}`;
 	}
