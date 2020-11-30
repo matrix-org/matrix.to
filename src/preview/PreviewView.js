@@ -19,11 +19,15 @@ import {TemplateView} from "../utils/TemplateView.js";
 export class PreviewView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "PreviewView"}, [
-			t.p(t.img({src: vm => vm.avatarUrl})),
-			t.p(vm => vm.name),
-			t.p(vm => vm.identifier),
-			t.p(["Can preview from ", vm => vm._consentedServers.join(", ")]),
-			t.p(["loading: ", vm => vm.loading])
+			t.h2({className: {hidden: vm => !vm.loading}}, "Loading preview…"),
+			t.div({className: {preview: true, hidden: vm => vm.loading}}, [
+				t.p(t.img({className: "avatar", src: vm => vm.avatarUrl})),
+				t.div({className: "profileInfo"}, [
+					t.h2(vm => vm.name),
+					t.p(vm => vm.identifier),
+					t.p(["Preview from ", vm => vm.previewDomain]),
+				])
+			])
 		]);
 	}
 }

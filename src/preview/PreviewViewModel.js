@@ -27,6 +27,7 @@ export class PreviewViewModel extends ViewModel {
 		this.loading = false;
 		this.name = null;
 		this.avatarUrl = null;
+		this.previewDomain = null;
 	}
 
 	async load() {
@@ -40,6 +41,7 @@ export class PreviewViewModel extends ViewModel {
 						await this._loadUserPreview(homeserver, this._link.identifier);
 				}
 				// assume we're done if nothing threw
+				this.previewDomain = server;
 				break;
 			} catch (err) {
 				continue;
