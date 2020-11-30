@@ -19,11 +19,8 @@ import {PreviewView} from "./preview/PreviewView.js";
 
 export class RootView extends TemplateView {
 	render(t, vm) {
-		return t.div({className: "RootView"}, t.mapView(vm => vm.activeSection, activeSection => {
-			switch (activeSection) {
-				case "preview": return new PreviewView(vm.previewViewModel);
-				default: return null;
-			}
-		}));
+		return t.div({className: "RootView"}, [
+			t.mapView(vm => vm.previewViewModel, vm => vm ? new PreviewView(vm) : null),
+		]);
 	}
 }

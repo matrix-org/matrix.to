@@ -21,6 +21,8 @@ export class PreviewView extends TemplateView {
 		return t.div({className: "PreviewView"}, [
 			t.p(t.img({src: vm => vm.avatarUrl})),
 			t.p(vm => vm.name),
+			t.p(vm => vm.identifier),
+			t.p(["Can preview from ", vm => vm._consentedServers.join(", ")]),
 			t.p(["loading: ", vm => vm.loading])
 		]);
 	}

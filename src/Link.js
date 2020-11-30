@@ -150,4 +150,11 @@ export class Link {
 				return null;
 		}
 	}
+
+	equals(link) {
+		return link &&
+			link.identifier === this.identifier &&
+			this.servers.length === link.servers.length &&
+			this.servers.every((s, i) => link.servers[i] === s);
+	}
 }

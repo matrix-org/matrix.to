@@ -15,25 +15,35 @@ limitations under the License.
 */
 
 import {Link} from "./Link.js";
-import {ViewModel} from "./ViewModel.js";
+import {ViewModel} from "./utils/ViewModel.js";
 import {PreviewViewModel} from "./preview/PreviewViewModel.js";
 
 export class RootViewModel extends ViewModel {
-	constructor(request, hash) {
+	constructor(request) {
 		super({request});
-		this.link = Link.parseFragment(hash);
+		this.link = null;
 		this.previewViewModel = null;
 	}
 
-	load() {
+	_updateChildVMs(oldLink) {
 		if (this.link) {
-			this.previewViewModel = new PreviewViewModel(this.childOptions({
-				link: this.link,
-				consentedServers: this.link.servers
-			}));
-			this.emitChange();
-			this.previewViewModel.load();
+			if (!oldLink || !oldLink.equals(this.link)) {
+				this.previewViewModel = new PreviewViewModel(this.childOptions({
+					link: this.link,
+					consentedServers: this.link.servers
+				}));
+				this.previewViewModel.load();
+			}
+		} else {
+			this.previewViewModel = null;
 		}
+		this.emitChange();
+	}
+
+	updateHash(hash) {
+		const oldLink = this.link;
+		this.link = Link.parseFragment(hash);
+		this._updateChildVMs(oldLink);
 	}
 
 	get activeSection() {

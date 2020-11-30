@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import {LinkKind} from "../Link.js";
-import {ViewModel} from "../ViewModel.js";
+import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
 
 export class PreviewViewModel extends ViewModel {
@@ -55,5 +55,9 @@ export class PreviewViewModel extends ViewModel {
 		this.avatarUrl = profile.avatar_url ?
 			homeserver.mxcUrlThumbnail(profile.avatar_url, 64, 64, "crop") :
 			null;
+	}
+
+	get identifier() {
+		return this._link.identifier;
 	}
 }
