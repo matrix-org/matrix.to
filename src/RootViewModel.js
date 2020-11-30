@@ -19,8 +19,8 @@ import {ViewModel} from "./utils/ViewModel.js";
 import {PreviewViewModel} from "./preview/PreviewViewModel.js";
 
 export class RootViewModel extends ViewModel {
-	constructor(request) {
-		super({request});
+	constructor(options) {
+		super(options);
 		this.link = null;
 		this.previewViewModel = null;
 	}

@@ -3,7 +3,7 @@ import {RootViewModel} from "./RootViewModel.js";
 import {RootView} from "./RootView.js";
 
 export async function main(container) {
-	const vm = new RootViewModel(xhrRequest);
+	const vm = new RootViewModel({request: xhrRequest});
 	vm.updateHash(location.hash);
 	window.__rootvm = vm;
 	const view = new RootView(vm);
