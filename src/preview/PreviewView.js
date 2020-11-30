@@ -18,7 +18,7 @@ import {TemplateView} from "../utils/TemplateView.js";
 
 export class PreviewView extends TemplateView {
 	render(t, vm) {
-		return t.div({className: "PreviewView"}, [
+		return t.div({className: "PreviewView card"}, [
 			t.h2({className: {hidden: vm => !vm.loading}}, "Loading preview…"),
 			t.div({className: {preview: true, hidden: vm => vm.loading}}, [
 				t.p(t.img({className: "avatar", src: vm => vm.avatarUrl})),

@@ -60,10 +60,13 @@ textarea {
 	width: 100%;
 }
 
-.PreviewView {
+.card {
 	background-color: var(--background);
     border-radius: 16px;
     box-shadow: 0px 18px 24px rgba(0, 0, 0, 0.06);
+}
+
+.card, .footer {
     padding: 2rem;
 }
 
@@ -82,4 +85,41 @@ textarea {
 
 .hidden {
 	display: none !important;
+}
+
+
+@media screen and (max-width: 480px) {
+    body {
+    	background-image: none;
+    	background-color: var(--background);
+    	padding: 0;
+    }
+
+    .card {
+    	border-radius: unset;
+    	box-shadow: unset;
+    }
+}
+
+.footer .links li:not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.footer .links li:not(:first-child)::before {
+    content: "·";
+    margin-right: 0.5em;
+}
+
+.footer .links li {
+    display: inline-block;
+}
+
+.footer .links {
+    font-size: 0.8em;
+    list-style: none;
+    padding: 0;
+}
+
+a {
+	color: var(--link);
 }

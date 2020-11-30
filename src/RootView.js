@@ -21,6 +21,18 @@ export class RootView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "RootView"}, [
 			t.mapView(vm => vm.previewViewModel, vm => vm ? new PreviewView(vm) : null),
+			t.div({className: "footer"}, [
+				t.p(t.img({src: "images/matrix-logo.svg"})),
+				t.p(["This invite uses ", externalLink(t, "https://matrix.org", "Matrix"), ", an open network for secure, decentralized communication."]),
+				t.ul({className: "links"}, [
+					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to", "GitHub project")),
+					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to/tree/main/src/clients", "Add your app")),
+				])
+			])
 		]);
 	}
+}
+
+function externalLink(t, href, label) {
+	return t.a({href, target: "_blank", rel: "noopener noreferrer"}, label);
 }
