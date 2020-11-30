@@ -17,6 +17,7 @@ limitations under the License.
 import {Link} from "./Link.js";
 import {ViewModel} from "./utils/ViewModel.js";
 import {PreviewViewModel} from "./preview/PreviewViewModel.js";
+import {Element} from "./client/clients/Element.js";
 
 export class RootViewModel extends ViewModel {
 	constructor(options) {
@@ -28,9 +29,13 @@ export class RootViewModel extends ViewModel {
 	_updateChildVMs(oldLink) {
 		if (this.link) {
 			if (!oldLink || !oldLink.equals(this.link)) {
+				const element = new Element();
 				this.previewViewModel = new PreviewViewModel(this.childOptions({
 					link: this.link,
-					consentedServers: this.link.servers
+					consentedServers: this.link.servers,
+					// preferredClient: element,
+					// preferredPlatform: this.platforms[0],
+					clients: [element]
 				}));
 				this.previewViewModel.load();
 			}

@@ -15,18 +15,23 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
+import {ClientListView} from "../client/ClientListView.js";
 
 export class PreviewView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "PreviewView card"}, [
 			t.h2({className: {hidden: vm => !vm.loading}}, "Loading preview…"),
-			t.div({className: {preview: true, hidden: vm => vm.loading}}, [
-				t.p(t.img({className: "avatar", src: vm => vm.avatarUrl})),
-				t.div({className: "profileInfo"}, [
-					t.h2(vm => vm.name),
-					t.p(vm => vm.identifier),
-					t.p(["Preview from ", vm => vm.previewDomain]),
-				])
+			t.div({className: {hidden: vm => vm.loading}}, [
+				t.div({className: "preview"}, [
+					t.p(t.img({className: "avatar", src: vm => vm.avatarUrl})),
+					t.div({className: "profileInfo"}, [
+						t.h2(vm => vm.name),
+						t.p(vm => vm.identifier),
+						t.p(["Preview from ", vm => vm.previewDomain]),
+					]),
+				]),
+				t.p({hidden: vm => !!vm.clientsViewModel}, t.button({onClick: () => vm.accept()}, vm => vm.acceptLabel)),
+				t.mapView(vm => vm.clientsViewModel, vm => vm ? new ClientListView(vm) : null)
 			])
 		]);
 	}

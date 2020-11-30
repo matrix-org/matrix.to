@@ -17,17 +17,28 @@ limitations under the License.
 import {LinkKind} from "../Link.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
+import {ClientListViewModel} from "../client/ClientListViewModel.js";
 
 export class PreviewViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
-		const {link, consentedServers} = options;
+		const {
+			link, consentedServers,
+			preferredClient, preferredPlatform, clients
+		} = options;
 		this._link = link;
 		this._consentedServers = consentedServers;
+		this._preferredClient = preferredClient;
+		// used to differentiate web from native if a client supports both
+		this._preferredPlatform = preferredPlatform;
+		this._clients = clients;
+
 		this.loading = false;
 		this.name = null;
 		this.avatarUrl = null;
 		this.previewDomain = null;
+		this.clientsViewModel = null;
+		this.acceptInstructions = null;
 	}
 
 	async load() {
@@ -61,5 +72,29 @@ export class PreviewViewModel extends ViewModel {
 
 	get identifier() {
 		return this._link.identifier;
+	}
+
+	get acceptLabel() {
+		if (this._preferredClient) {
+			return `Open in ${this._preferredClient.getName(this._preferredPlatform)}`;
+		} else {
+			return "Choose app";
+		}
+	}
+
+	accept() {
+		if (this._preferredClient) {
+			if (this._preferredClient.getLinkSupport(this._preferredPlatform, this._link)) {
+				const deepLink = this._preferredClient.getDeepLink(this._preferredPlatform, this._link);
+				this.openLink(deepLink);
+				// show "looks like you don't have the native app installed"
+			} else {
+				this.acceptInstructions = this._preferredClient.getLinkInstructions(this._preferredPlatform, this._link);
+			}
+		} else {
+			this.clientsViewModel = new ClientListViewModel(this.childOptions({clients: this._clients, link: this._link}));
+			// show client list
+		}
+		this.emitChange();
 	}
 }
