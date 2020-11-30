@@ -20,17 +20,26 @@ import {PreviewViewModel} from "./preview/PreviewViewModel.js";
 
 export class RootViewModel extends ViewModel {
 	constructor(request, hash) {
-		super();
-		this._request = request;
+		super({request});
 		this.link = Link.parseFragment(hash);
 		this.previewViewModel = null;
 	}
 
 	load() {
 		if (this.link) {
-			this.previewViewModel = new PreviewViewModel(this._request, this.link);
+			this.previewViewModel = new PreviewViewModel(this.childOptions({
+				link: this.link,
+				consentedServers: this.link.servers
+			}));
 			this.emitChange();
 			this.previewViewModel.load();
 		}
+	}
+
+	get activeSection() {
+		if (this.previewViewModel) {
+			return "preview";
+		}
+		return "";
 	}
 }

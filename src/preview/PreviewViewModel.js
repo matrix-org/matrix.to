@@ -19,21 +19,22 @@ import {ViewModel} from "../ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
 
 export class PreviewViewModel extends ViewModel {
-	constructor(request, link) {
-		super();
+	constructor(options) {
+		super(options);
+		const {link, consentedServers} = options;
 		this._link = link;
-		this._request = request;
+		this._consentedServers = consentedServers;
 		this.loading = false;
 		this.name = null;
-		this.avatarURL = null;
+		this.avatarUrl = null;
 	}
 
 	async load() {
 		this.loading = true;
 		this.emitChange();
-		for (const server of this._link.servers) {
+		for (const server of this._consentedServers) {
 			try {
-				const homeserver = await resolveServer(this._request, server);
+				const homeserver = await resolveServer(this.request, server);
 				switch (this._link.kind) {
 					case LinkKind.User:
 						await this._loadUserPreview(homeserver, this._link.identifier);
@@ -51,7 +52,7 @@ export class PreviewViewModel extends ViewModel {
 	async _loadUserPreview(homeserver, userId) {
 		const profile = await homeserver.getUserProfile(userId);
 		this.name = profile.displayname || userId;
-		this.avatarURL = profile.avatar_url ?
+		this.avatarUrl = profile.avatar_url ?
 			homeserver.mxcUrlThumbnail(profile.avatar_url, 64, 64, "crop") :
 			null;
 	}

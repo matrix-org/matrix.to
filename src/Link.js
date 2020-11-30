@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 import {createEnum} from "./utils/enum.js";
 
 const ROOMALIAS_PATTERN = /^#([^:]*):(.+)$/;

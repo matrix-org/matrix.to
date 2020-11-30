@@ -31,7 +31,6 @@ class EventEmitter {
     on(name, callback) {
         let handlers = this._handlersByName[name];
         if (!handlers) {
-            this.onFirstSubscriptionAdded(name);
             this._handlersByName[name] = handlers = new Set();
         }
         handlers.add(callback);
@@ -46,14 +45,26 @@ class EventEmitter {
             handlers.delete(callback);
             if (handlers.length === 0) {
                 delete this._handlersByName[name];
-                this.onLastSubscriptionRemoved(name);
             }
         }
     }
 }
 
 export class ViewModel extends EventEmitter {
+    constructor(options) {
+        super();
+        this._options = options;
+    }
+
     emitChange() {
         this.emit("change");
+    }
+
+    get request() {
+        return this._options.request;
+    }
+
+    childOptions(options = {}) {
+        return Object.assign({request: this.request}, options);
     }
 }
