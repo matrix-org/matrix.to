@@ -22,6 +22,6 @@ export class ClientListViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
 		const {clients, link} = options;
-		this.clients = clients.map(client => new ClientViewModel(this.childOptions({client, link})));
+		this.clients = clients.map(client => new ClientViewModel(this.childOptions({client, link, showAcceptAnyway: true})));
 	}
 }

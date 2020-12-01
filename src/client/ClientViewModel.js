@@ -40,7 +40,8 @@ export class ClientViewModel extends ViewModel {
 					label: installLink.description,
 					url: installLink.createInstallURL(link),
 					kind: installLink.channelId,
-					activated() {},
+					primary: true,
+					activated: () => this.preferences.setClient(client.id, nativePlatform),
 				};
 			});
 			actions.push(...nativeActions);
@@ -50,7 +51,7 @@ export class ClientViewModel extends ViewModel {
 				label: `Or open in ${client.getName(webPlatform)}`,
 				url: client.getDeepLink(webPlatform, link),
 				kind: "open-in-web",
-				activated() {},
+				activated: () => this.preferences.setClient(client.id, webPlatform),
 			});
 		}
 		return actions;

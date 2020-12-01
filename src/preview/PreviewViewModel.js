@@ -88,6 +88,11 @@ export class PreviewViewModel extends ViewModel {
 				const deepLink = this._preferredClient.getDeepLink(this._preferredPlatform, this._link);
 				this.openLink(deepLink);
 				// show "looks like you don't have the native app installed"
+				const protocol = new URL(deepLink).protocol;
+				const isWebProtocol = protocol === "http:" || protocol === "https:";
+				if (!isWebProtocol) {
+					this.missingClientViewModel = new ClientViewModel(this.childOptions({client: this._preferredClient, link: this._link}));
+				}
 			} else {
 				this.acceptInstructions = this._preferredClient.getLinkInstructions(this._preferredPlatform, this._link);
 			}

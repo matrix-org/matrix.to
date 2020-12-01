@@ -22,7 +22,7 @@ export class ClientListView extends TemplateView {
 		const clients = vm.clients.map(clientViewModel => t.view(new ClientView(clientViewModel)));
 		return t.div({className: "ClientListView"}, [
 			t.h3("You need an app to continue"),
-			t.ul({className: "ClientListView"}, clients)
+			t.div({className: "ClientListView"}, clients)
 		]);
 	}
 }

@@ -16,6 +16,7 @@ limitations under the License.
 
 import {TemplateView} from "../utils/TemplateView.js";
 import {ClientListView} from "../client/ClientListView.js";
+import {ClientView} from "../client/ClientView.js";
 
 export class PreviewView extends TemplateView {
 	render(t, vm) {
@@ -31,8 +32,18 @@ export class PreviewView extends TemplateView {
 					]),
 				]),
 				t.p({hidden: vm => !!vm.clientsViewModel}, t.button({onClick: () => vm.accept()}, vm => vm.acceptLabel)),
-				t.mapView(vm => vm.clientsViewModel, vm => vm ? new ClientListView(vm) : null)
+				t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
+				t.mapView(vm => vm.missingClientViewModel, childVM => childVM ? new MissingClientView(childVM) : null),
 			])
+		]);
+	}
+}
+
+class MissingClientView extends TemplateView {
+	render(t, vm) {
+		return t.div({className: "MissingClientView"}, [
+			t.h3(`It looks like you don't have ${vm.name} installed.`),
+			t.view(new ClientView(vm)),
 		]);
 	}
 }

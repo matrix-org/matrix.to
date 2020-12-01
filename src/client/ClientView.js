@@ -18,7 +18,7 @@ import {TemplateView} from "../utils/TemplateView.js";
 
 export class ClientView extends TemplateView {
 	render(t, vm) {
-		return t.li({className: "ClientView"}, [
+		return t.div({className: "ClientView"}, [
 			t.div({className: "header"}, [
 				t.div({className: "description"}, [
 					t.h3(vm.name),
@@ -27,7 +27,23 @@ export class ClientView extends TemplateView {
 				t.div({className: `icon ${vm.clientId}`})
 			]),
 			t.div({className: "actions"}, vm.actions.map(a => {
-				return t.a({href: a.url, className: a.kind, rel: "noopener noreferrer", onClick: () => a.activated()}, a.label);
+				let badgeUrl;
+				switch (a.kind) {
+					case "play-store": badgeUrl = "images/google-play-us.svg"; break;
+					case "fdroid": badgeUrl = "images/fdroid-badge.png"; break;
+					case "apple-app-store": badgeUrl = "images/app-store-us-alt.svg"; break;
+				}
+				return t.a({
+					href: a.url,
+					className: {
+						primary: a.primary && !badgeUrl,
+						secondary: !a.primary && !badgeUrl,
+						badge: !!badgeUrl,
+					},
+					rel: "noopener noreferrer",
+					["aria-label"]: a.label, 
+					onClick: () => a.activated()
+				}, badgeUrl ? t.img({src: badgeUrl}) : a.label);
 			}))
 		]);
 	}

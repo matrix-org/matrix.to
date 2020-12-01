@@ -120,8 +120,23 @@ textarea {
     padding: 0;
 }
 
-a {
+a, button.text {
 	color: var(--link);
+    text-decoration: underline;
+}
+
+button.text {
+    background: none;
+    border: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: inherit;
+    padding: 8px 0;
+    margin: -8px 0;
+}
+
+button.text:hover {
+    cursor: pointer;
 }
 
 .ClientListView ul {
@@ -152,4 +167,29 @@ a {
 
 .ClientView .icon.element-io {
     background-image: url('../images/client-icons/element.svg');
+}
+
+button.primary, a.primary {
+    background: var(--link);
+    color: var(--background);
+    border-radius: 32px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ClientView .actions a {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    margin: 8px;
+}
+
+.ClientView .actions a.badge {
+     display: inline-block;
+    height: 40px;
+    margin: 8px 16px 8px 0;
+}
+
+.ClientView .actions img {
+    height: 100%;
 }
