@@ -18,6 +18,7 @@ import {Link} from "./Link.js";
 import {ViewModel} from "./utils/ViewModel.js";
 import {PreviewViewModel} from "./preview/PreviewViewModel.js";
 import {Element} from "./client/clients/Element.js";
+import {Weechat} from "./client/clients/Weechat.js";
 import {Platform} from "./client/Platform.js";
 
 export class RootViewModel extends ViewModel {
@@ -30,11 +31,10 @@ export class RootViewModel extends ViewModel {
 	_updateChildVMs(oldLink) {
 		if (this.link) {
 			if (!oldLink || !oldLink.equals(this.link)) {
-				const element = new Element();
 				this.previewViewModel = new PreviewViewModel(this.childOptions({
 					link: this.link,
 					consentedServers: this.link.servers,
-					clients: [element]
+					clients: [new Element(), new Weechat()]
 				}));
 				this.previewViewModel.load();
 			}

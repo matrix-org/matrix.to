@@ -169,6 +169,9 @@ button.text:hover {
     background-image: url('../images/client-icons/element.svg');
 }
 
+.ClientView .icon.weechat {
+    background-image: url('../images/client-icons/weechat.svg');
+}
 
 button.primary, a.primary, button.secondary, a.secondary {
     text-decoration: none;
