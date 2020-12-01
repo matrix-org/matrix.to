@@ -31,19 +31,14 @@ export class PreviewView extends TemplateView {
 						t.p(["Preview from ", vm => vm.previewDomain]),
 					]),
 				]),
-				t.p({hidden: vm => !!vm.clientsViewModel}, t.button({onClick: () => vm.accept()}, vm => vm.acceptLabel)),
+				t.p({className: {hidden: vm => !vm.canShowClients}}, t.button({
+					className: "primary",
+					onClick: () => vm.showClients()
+				}, vm => vm.showClientsLabel)),
 				t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
-				t.mapView(vm => vm.missingClientViewModel, childVM => childVM ? new MissingClientView(childVM) : null),
+				t.mapView(vm => vm.preferredClientViewModel, childVM => childVM ? new ClientView(childVM) : null),
+				t.p({className: {hidden: vm => !vm.preferredClientViewModel}}, vm => `This will open in ${vm.preferredClientViewModel?.name}`),
 			])
-		]);
-	}
-}
-
-class MissingClientView extends TemplateView {
-	render(t, vm) {
-		return t.div({className: "MissingClientView"}, [
-			t.h3(`It looks like you don't have ${vm.name} installed.`),
-			t.view(new ClientView(vm)),
 		]);
 	}
 }

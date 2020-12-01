@@ -29,6 +29,7 @@ export const Platform = createEnum(
 export function guessApplicablePlatforms(userAgent) {
 	// use https://github.com/faisalman/ua-parser-js to guess, and pass as RootVM options
 	return [Platform.DesktopWeb, Platform.Linux];
+	//return [Platform.MobileWeb, Platform.iOS];
 }
 
 export function isWebPlatform(p) {

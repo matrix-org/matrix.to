@@ -40,6 +40,15 @@ function asPrefix(identifierKind) {
 	}
 }
 
+export function getLabelForLinkKind(kind) {
+	switch (kind) {
+		case LinkKind.User: return "Start chat";
+		case LinkKind.Room: return "View room";
+		case LinkKind.Group: return "View community";
+		case LinkKind.Event: return "View message";
+	}
+}
+
 export const LinkKind = createEnum(
 	"Room",
 	"User",

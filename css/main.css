@@ -144,19 +144,19 @@ button.text:hover {
     padding: 0;
 }
 
-.ClientView .header {
+.ListedClientView .header {
     display: flex;
 }
 
-.ClientView .description {
+.ListedClientView .description {
     flex: 1;
 }
 
-.ClientView h3 {
+.ListedClientView h3 {
     margin-top: 0;
 }
 
-.ClientView .icon {
+.ListedClientView .icon {
     border-radius: 8px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -165,27 +165,43 @@ button.text:hover {
 }
 
 
-.ClientView .icon.element-io {
+.ListedClientView .icon.element-io {
     background-image: url('../images/client-icons/element.svg');
+}
+
+
+button.primary, a.primary, button.secondary, a.secondary {
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px;
+    margin: 8px 0;
+    line-height: 24px;
+}
+
+button.secondary, a.secondary {
+    background: var(--background);
+    color: var(--link);
 }
 
 button.primary, a.primary {
     background: var(--link);
     color: var(--background);
     border-radius: 32px;
-    text-decoration: none;
-    font-weight: bold;
 }
 
-.ClientView .actions a {
+button.primary, button.secondary {
+    border: none;
+    width: 100%;
+    font-size: inherit;
+}
+
+.PreviewView .primary, .PreviewView .secondary {
     display: block;
-    text-align: center;
-    padding: 8px;
-    margin: 8px;
 }
 
 .ClientView .actions a.badge {
-     display: inline-block;
+    display: inline-block;
     height: 40px;
     margin: 8px 16px 8px 0;
 }

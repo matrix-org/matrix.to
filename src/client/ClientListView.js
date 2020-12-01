@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
-import {ClientView} from "./ClientView.js";
+import {ListedClientView} from "./ClientView.js";
 
 export class ClientListView extends TemplateView {
 	render(t, vm) {
-		const clients = vm.clients.map(clientViewModel => t.view(new ClientView(clientViewModel)));
+		const clients = vm.clients.map(clientViewModel => t.view(new ListedClientView(clientViewModel)));
 		return t.div({className: "ClientListView"}, [
 			t.h3("You need an app to continue"),
 			t.div({className: "ClientListView"}, clients)

@@ -78,4 +78,8 @@ export class Element {
 			default: return [new WebsiteLink("https://element.io/get-started")];
 		}
 	}
+
+	canInterceptMatrixToLinks(platform) {
+		return platform === Platform.iOS || platform === Platform.Android;
+	}
 }

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {LinkKind} from "../Link.js";
+import {LinkKind, getLabelForLinkKind} from "../Link.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
 import {ClientListViewModel} from "../client/ClientListViewModel.js";
@@ -35,7 +35,10 @@ export class PreviewViewModel extends ViewModel {
 		this.previewDomain = null;
 		this.clientsViewModel = null;
 		this.acceptInstructions = null;
-		this.missingClientViewModel = null;
+		this.preferredClientViewModel = this._preferredClient ? new ClientViewModel(this.childOptions({
+			client: this._preferredClient,
+			link: this._link
+		})) : null;
 	}
 
 	async load() {
@@ -71,31 +74,18 @@ export class PreviewViewModel extends ViewModel {
 		return this._link.identifier;
 	}
 
-	get acceptLabel() {
-		if (this._preferredClient) {
-			return `Open in ${this._preferredClient.getName(this.preferences.platform)}`;
-		} else {
-			return "Choose app";
-		}
+	get canShowClients() {
+		return !(this.preferredClientViewModel || this.clientsViewModel);
 	}
 
-	accept() {
-		if (this._preferredClient) {
-			if (this._preferredClient.getLinkSupport(this.preferences.platform, this._link)) {
-				const deepLink = this._preferredClient.getDeepLink(this.preferences.platform, this._link);
-				this.openLink(deepLink);
-				const protocol = new URL(deepLink).protocol;
-				const isWebProtocol = protocol === "http:" || protocol === "https:";
-				if (!isWebProtocol) {
-					this.missingClientViewModel = new ClientViewModel(this.childOptions({client: this._preferredClient, link: this._link}));
-				}
-			} else {
-				this.acceptInstructions = this._preferredClient.getLinkInstructions(this.preferences.platform, this._link);
-			}
-		} else {
+	get showClientsLabel() {
+		return getLabelForLinkKind(this._link.kind);
+	}
+
+	showClients() {
+		if (!this._preferredClient) {
 			this.clientsViewModel = new ClientListViewModel(this.childOptions({clients: this._clients, link: this._link}));
-			// show client list
+			this.emitChange();
 		}
-		this.emitChange();
 	}
 }

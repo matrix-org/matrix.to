@@ -16,9 +16,9 @@ limitations under the License.
 
 import {TemplateView} from "../utils/TemplateView.js";
 
-export class ClientView extends TemplateView {
+export class ListedClientView extends TemplateView {
 	render(t, vm) {
-		return t.div({className: "ClientView"}, [
+		return t.div({className: "ListedClientView"}, [
 			t.div({className: "header"}, [
 				t.div({className: "description"}, [
 					t.h3(vm.name),
@@ -26,6 +26,41 @@ export class ClientView extends TemplateView {
 				]),
 				t.div({className: `icon ${vm.clientId}`})
 			]),
+			t.view(new ClientView(vm))
+		]);
+	}
+}
+
+export class ClientView extends TemplateView {
+	render(t, vm) {
+		return t.div({className: "ClientView"}, [
+			t.mapView(vm => vm.stage, stage => {
+				switch (stage) {
+					case "open": return new OpenClientView(vm);
+					case "install": return new InstallClientView(vm);
+				}
+			}),
+		]);
+	}
+}
+
+class OpenClientView extends TemplateView {
+	render(t, vm) {
+		return t.div({className: "OpenClientView"}, [
+			t.a({
+				className: "primary",
+				href: vm.deepLink,
+				rel: "noopener noreferrer",
+				onClick: () => vm.deepLinkActivated(),
+			}, vm.deepLinkLabel)
+		]);
+	}
+}
+
+class InstallClientView extends TemplateView {
+	render(t, vm) {
+		return t.div({className: "InstallClientView"}, [
+			t.h3(`Looks like you don't have ${vm.name} installed.`),
 			t.div({className: "actions"}, vm.actions.map(a => {
 				let badgeUrl;
 				switch (a.kind) {
