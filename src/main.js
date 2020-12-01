@@ -1,6 +1,7 @@
 import {xhrRequest} from "./utils/xhr.js";
 import {RootViewModel} from "./RootViewModel.js";
 import {RootView} from "./RootView.js";
+import {Preferences} from "./Preferences.js";
 import {guessApplicablePlatforms} from "./client/Platform.js";
 
 export async function main(container) {
@@ -8,6 +9,7 @@ export async function main(container) {
 		request: xhrRequest,
 		openLink: url => location.href = url,
 		platforms: guessApplicablePlatforms(navigator.userAgent),
+		preferences: new Preferences(window.localStorage),
 	});
 	vm.updateHash(location.hash);
 	window.__rootvm = vm;

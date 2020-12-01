@@ -18,20 +18,16 @@ import {LinkKind} from "../Link.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
 import {ClientListViewModel} from "../client/ClientListViewModel.js";
+import {ClientViewModel} from "../client/ClientViewModel.js";
 
 export class PreviewViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
-		const {
-			link, consentedServers,
-			preferredClient, preferredPlatform, clients
-		} = options;
+		const { link, consentedServers, clients } = options;
 		this._link = link;
 		this._consentedServers = consentedServers;
-		this._preferredClient = preferredClient;
-		// used to differentiate web from native if a client supports both
-		this._preferredPlatform = preferredPlatform;
 		this._clients = clients;
+		this._preferredClient = this.preferences.clientId ? clients.find(c => c.id === this.preferences.clientId) : null;
 
 		this.loading = false;
 		this.name = null;
@@ -39,6 +35,7 @@ export class PreviewViewModel extends ViewModel {
 		this.previewDomain = null;
 		this.clientsViewModel = null;
 		this.acceptInstructions = null;
+		this.missingClientViewModel = null;
 	}
 
 	async load() {
@@ -76,7 +73,7 @@ export class PreviewViewModel extends ViewModel {
 
 	get acceptLabel() {
 		if (this._preferredClient) {
-			return `Open in ${this._preferredClient.getName(this._preferredPlatform)}`;
+			return `Open in ${this._preferredClient.getName(this.preferences.platform)}`;
 		} else {
 			return "Choose app";
 		}
@@ -84,17 +81,16 @@ export class PreviewViewModel extends ViewModel {
 
 	accept() {
 		if (this._preferredClient) {
-			if (this._preferredClient.getLinkSupport(this._preferredPlatform, this._link)) {
-				const deepLink = this._preferredClient.getDeepLink(this._preferredPlatform, this._link);
+			if (this._preferredClient.getLinkSupport(this.preferences.platform, this._link)) {
+				const deepLink = this._preferredClient.getDeepLink(this.preferences.platform, this._link);
 				this.openLink(deepLink);
-				// show "looks like you don't have the native app installed"
 				const protocol = new URL(deepLink).protocol;
 				const isWebProtocol = protocol === "http:" || protocol === "https:";
 				if (!isWebProtocol) {
 					this.missingClientViewModel = new ClientViewModel(this.childOptions({client: this._preferredClient, link: this._link}));
 				}
 			} else {
-				this.acceptInstructions = this._preferredClient.getLinkInstructions(this._preferredPlatform, this._link);
+				this.acceptInstructions = this._preferredClient.getLinkInstructions(this.preferences.platform, this._link);
 			}
 		} else {
 			this.clientsViewModel = new ClientListViewModel(this.childOptions({clients: this._clients, link: this._link}));

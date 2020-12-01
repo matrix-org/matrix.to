@@ -63,12 +63,14 @@ export class ViewModel extends EventEmitter {
     get request() { return this._options.request; }
     get openLink() { return this._options.openLink; }
     get platforms() { return this._options.platforms; }
+    get preferences() { return this._options.preferences; }
 
     childOptions(options = {}) {
         return Object.assign({
             request: this.request,
             openLink: this.openLink,
             platforms: this.platforms,
+            preferences: this.preferences,
         }, options);
     }
 }

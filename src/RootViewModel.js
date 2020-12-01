@@ -18,6 +18,7 @@ import {Link} from "./Link.js";
 import {ViewModel} from "./utils/ViewModel.js";
 import {PreviewViewModel} from "./preview/PreviewViewModel.js";
 import {Element} from "./client/clients/Element.js";
+import {Platform} from "./client/Platform.js";
 
 export class RootViewModel extends ViewModel {
 	constructor(options) {
@@ -33,8 +34,6 @@ export class RootViewModel extends ViewModel {
 				this.previewViewModel = new PreviewViewModel(this.childOptions({
 					link: this.link,
 					consentedServers: this.link.servers,
-					// preferredClient: element,
-					// preferredPlatform: this.platforms[0],
 					clients: [element]
 				}));
 				this.previewViewModel.load();
@@ -56,5 +55,14 @@ export class RootViewModel extends ViewModel {
 			return "preview";
 		}
 		return "";
+	}
+
+	clearPreferences() {
+		this.preferences.clear();
+		this._updateChildVMs();
+	}
+
+	get hasPreferences() {
+		return this.preferences.canClear;
 	}
 }
