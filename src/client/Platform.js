@@ -35,3 +35,8 @@ export function guessApplicablePlatforms(userAgent) {
 export function isWebPlatform(p) {
 	return p === Platform.DesktopWeb || p === Platform.MobileWeb;
 }
+
+
+export function isDesktopPlatform(p) {
+	return p === Platform.Linux || p === Platform.Windows || p === Platform.macOS;
+}

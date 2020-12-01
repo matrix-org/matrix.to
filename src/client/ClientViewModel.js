@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {isWebPlatform, Platform} from "./Platform.js";
+import {isWebPlatform, isDesktopPlatform, Platform} from "./Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
 
 export class ClientViewModel extends ViewModel {
@@ -83,6 +83,28 @@ export class ClientViewModel extends ViewModel {
 
 	get textInstructions() {
 		return this._client.getLinkInstructions(this._proposedPlatform, this._link);
+	}
+
+	get platforms() {
+		const platforms = this._client.platforms;
+		const textPlatforms = [];
+		const hasWebPlatform = platforms.some(p => isWebPlatform(p));
+		if (hasWebPlatform) {
+			textPlatforms.push("Web");
+		}
+		const desktopPlatforms = platforms.filter(p => isDesktopPlatform(p));
+		if (desktopPlatforms.length === 1) {
+			textPlatforms.push(desktopPlatforms[0]);
+		} else {
+			textPlatforms.push("Desktop");
+		}
+		if (platforms.includes(Platform.Android)) {
+			textPlatforms.push("Android");
+		}
+		if (platforms.includes(Platform.iOS)) {
+			textPlatforms.push("iOS");
+		}
+		return textPlatforms;
 	}
 	
 	deepLinkActivated() {

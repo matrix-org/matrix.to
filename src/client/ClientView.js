@@ -16,13 +16,23 @@ limitations under the License.
 
 import {TemplateView} from "../utils/TemplateView.js";
 
+function formatPlatforms(platforms) {
+	return platforms.reduce((str, p, i) => {
+		const first = i === 0;
+		const last = i === platforms.length - 1;
+		return str + (first ? "" : last ? " & " : ", ") + p;
+	}, "");
+}
+
 export class ClientView extends TemplateView {
+
 	render(t, vm) {
 		return t.div({className: "ClientView"}, [
 			t.div({className: "header"}, [
 				t.div({className: "description"}, [
 					t.h3(vm.name),
 					t.p(vm.description),
+					t.p(formatPlatforms(vm.platforms)),
 				]),
 				t.div({className: `icon ${vm.clientId}`})
 			]),
