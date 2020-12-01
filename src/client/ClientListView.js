@@ -15,14 +15,38 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
-import {ListedClientView} from "./ClientView.js";
+import {ClientView} from "./ClientView.js";
 
 export class ClientListView extends TemplateView {
 	render(t, vm) {
-		const clients = vm.clients.map(clientViewModel => t.view(new ListedClientView(clientViewModel)));
+		return t.mapView(vm => vm.clientViewModel, () => {
+			if (vm.clientViewModel) {
+				return new ContinueWithClientView(vm);
+			} else {
+				return new AllClientsView(vm);
+			}
+		});
+	}
+}
+
+class AllClientsView extends TemplateView {
+	render(t, vm) {
+		const clients = vm.clientList.map(clientViewModel => t.view(new ClientView(clientViewModel)));
 		return t.div({className: "ClientListView"}, [
-			t.h3("You need an app to continue"),
-			t.div({className: "ClientListView"}, clients)
+			t.h2("Choose an app to continue"),
+			t.div({className: "list"}, clients)
+		]);
+	}
+}
+
+class ContinueWithClientView extends TemplateView {
+	render(t, vm) {
+		return t.div({className: "ClientListView"}, [
+			t.h2([
+				`Continue with ${vm.clientViewModel.name} `,
+				t.button({onClick: () => vm.showAll()}, "Back")
+			]),
+			t.div({className: "list"}, t.view(new ClientView(vm.clientViewModel)))
 		]);
 	}
 }

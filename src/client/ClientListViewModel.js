@@ -21,7 +21,25 @@ import {ViewModel} from "../utils/ViewModel.js";
 export class ClientListViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
-		const {clients, link} = options;
-		this.clients = clients.map(client => new ClientViewModel(this.childOptions({client, link, showAcceptAnyway: true})));
+		const {clients, client, link} = options;
+		this.clientList = clients.map(client => new ClientViewModel(this.childOptions({
+			client,
+			link,
+			pickClient: client => this._pickClient(client)
+		})));
+		this.clientViewModel = null;
+		if (client) {
+			this._pickClient(client);
+		}
+	}
+
+	_pickClient(client) {
+		this.clientViewModel = this.clientList.find(vm => vm.clientId === client.id);
+		this.emitChange();
+	}
+
+	showAll() {
+		this.clientViewModel = null;
+		this.emitChange();
 	}
 }

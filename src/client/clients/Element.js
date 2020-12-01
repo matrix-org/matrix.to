@@ -32,11 +32,9 @@ export class Element {
 		];
 	}
 
-	get description() { return 'Fully-featured Matrix client'; }
+	get description() { return 'Fully-featured Matrix client, used by millions.'; }
 
 	getMaturity(platform) { return Maturity.Stable; }
-
-	getLinkSupport(platform, link) { return true; }
 
 	getDeepLink(platform, link) {
 		let fragmentPath;

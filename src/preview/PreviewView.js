@@ -21,23 +21,19 @@ import {ClientView} from "../client/ClientView.js";
 export class PreviewView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "PreviewView card"}, [
-			t.h2({className: {hidden: vm => !vm.loading}}, "Loading preview…"),
+			t.h1({className: {hidden: vm => !vm.loading}}, "Loading preview…"),
 			t.div({className: {hidden: vm => vm.loading}}, [
 				t.div({className: "preview"}, [
 					t.p(t.img({className: "avatar", src: vm => vm.avatarUrl})),
-					t.div({className: "profileInfo"}, [
-						t.h2(vm => vm.name),
-						t.p(vm => vm.identifier),
-						t.p(["Preview from ", vm => vm.previewDomain]),
-					]),
+					t.h1(vm => vm.name),
+					t.p(vm => vm.identifier),
 				]),
-				t.p({className: {hidden: vm => !vm.canShowClients}}, t.button({
-					className: "primary",
+				t.p({className: {hidden: vm => vm.clientsViewModel}}, t.button({
+					className: "primary fullwidth",
 					onClick: () => vm.showClients()
 				}, vm => vm.showClientsLabel)),
 				t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
-				t.mapView(vm => vm.preferredClientViewModel, childVM => childVM ? new ClientView(childVM) : null),
-				t.p({className: {hidden: vm => !vm.preferredClientViewModel}}, vm => `This will open in ${vm.preferredClientViewModel?.name}`),
+				t.p(["Preview provided by ", vm => vm.previewDomain]),
 			])
 		]);
 	}

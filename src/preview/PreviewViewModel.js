@@ -35,9 +35,10 @@ export class PreviewViewModel extends ViewModel {
 		this.previewDomain = null;
 		this.clientsViewModel = null;
 		this.acceptInstructions = null;
-		this.preferredClientViewModel = this._preferredClient ? new ClientViewModel(this.childOptions({
+		this.clientsViewModel = this._preferredClient ? new ClientListViewModel(this.childOptions({
+			clients: this._clients,
 			client: this._preferredClient,
-			link: this._link
+			link: this._link,
 		})) : null;
 	}
 
@@ -74,16 +75,12 @@ export class PreviewViewModel extends ViewModel {
 		return this._link.identifier;
 	}
 
-	get canShowClients() {
-		return !(this.preferredClientViewModel || this.clientsViewModel);
-	}
-
 	get showClientsLabel() {
 		return getLabelForLinkKind(this._link.kind);
 	}
 
 	showClients() {
-		if (!this._preferredClient) {
+		if (!this.clientsViewModel) {
 			this.clientsViewModel = new ClientListViewModel(this.childOptions({clients: this._clients, link: this._link}));
 			this.emitChange();
 		}

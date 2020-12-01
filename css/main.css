@@ -70,17 +70,12 @@ textarea {
     padding: 2rem;
 }
 
+.PreviewView .preview {
+    text-align: center;
+}
+
 .PreviewView .avatar {
 	border-radius: 100%;
-}
-
-.PreviewView .preview {
-	display: flex;
-}
-
-.PreviewView .profileInfo {
-	flex: 1;
-	margin-left: 12px;
 }
 
 .hidden {
@@ -139,24 +134,30 @@ button.text:hover {
     cursor: pointer;
 }
 
-.ClientListView ul {
-    list-style: none;
-    padding: 0;
+.ClientListView .list {
+    padding: 16px 0;
 }
 
-.ListedClientView .header {
+.ClientView {
+    border: 1px solid #E6E6E6;
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 16px;
+}
+
+.ClientView .header {
     display: flex;
 }
 
-.ListedClientView .description {
+.ClientView .description {
     flex: 1;
 }
 
-.ListedClientView h3 {
+.ClientView h3 {
     margin-top: 0;
 }
 
-.ListedClientView .icon {
+.ClientView .icon {
     border-radius: 8px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -164,8 +165,7 @@ button.text:hover {
     height: 60px;
 }
 
-
-.ListedClientView .icon.element-io {
+.ClientView .icon.element-io {
     background-image: url('../images/client-icons/element.svg');
 }
 
@@ -195,12 +195,13 @@ button.primary, a.primary {
 
 button.primary, button.secondary {
     border: none;
-    width: 100%;
     font-size: inherit;
 }
 
-.PreviewView .primary, .PreviewView .secondary {
+.fullwidth {
     display: block;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .ClientView .actions a.badge {

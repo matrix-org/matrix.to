@@ -16,28 +16,28 @@ limitations under the License.
 
 import {isWebPlatform, Platform} from "./Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
-import {getLabelForLinkKind} from "../Link.js";
 
 export class ClientViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
-		const {client, link} = options;
+		const {client, link, pickClient} = options;
 		this._client = client;
 		this._link = link;
+		this._pickClient = pickClient;
 
 		const supportedPlatforms = client.platforms;
 		const matchingPlatforms = this.platforms.filter(p => {
 			return supportedPlatforms.includes(p);
 		});
 		const nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
-		const webPlatform = this.platforms.find(p => isWebPlatform(p));
+		const webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
 		
-		this._showOpen = nativePlatform && !client.canInterceptMatrixToLinks(nativePlatform);
 		this._proposedPlatform = this.preferences.platform || nativePlatform || webPlatform;
 		
 		this.actions = this._createActions(client, link, nativePlatform, webPlatform);
 		this.name = this._client.getName(this._proposedPlatform);
 		this.deepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
+		this._showOpen = this.deepLink && nativePlatform && !client.canInterceptMatrixToLinks(nativePlatform);
 	}
 
 	_createActions(client, link, nativePlatform, webPlatform) {
@@ -65,6 +65,10 @@ export class ClientViewModel extends ViewModel {
 		return actions;
 	}
 
+	get identifier() {
+		return this._link.identifier;
+	}
+
 	get description() {
 		return this._client.description;
 	}
@@ -77,11 +81,12 @@ export class ClientViewModel extends ViewModel {
 		return this._showOpen ? "open" : "install";
 	}
 
-	get deepLinkLabel() {
-		return getLabelForLinkKind(this._link.kind);
+	get textInstructions() {
+		return this._client.getLinkInstructions(this._proposedPlatform, this._link);
 	}
 	
 	deepLinkActivated() {
+		this._pickClient(this._client);
 		this.preferences.setClient(this._client.id, this._proposedPlatform);
 		if (this._showOpen) {
 			this._showOpen = false;

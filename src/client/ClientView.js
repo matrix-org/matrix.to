@@ -16,9 +16,9 @@ limitations under the License.
 
 import {TemplateView} from "../utils/TemplateView.js";
 
-export class ListedClientView extends TemplateView {
+export class ClientView extends TemplateView {
 	render(t, vm) {
-		return t.div({className: "ListedClientView"}, [
+		return t.div({className: "ClientView"}, [
 			t.div({className: "header"}, [
 				t.div({className: "description"}, [
 					t.h3(vm.name),
@@ -26,14 +26,6 @@ export class ListedClientView extends TemplateView {
 				]),
 				t.div({className: `icon ${vm.clientId}`})
 			]),
-			t.view(new ClientView(vm))
-		]);
-	}
-}
-
-export class ClientView extends TemplateView {
-	render(t, vm) {
-		return t.div({className: "ClientView"}, [
 			t.mapView(vm => vm.stage, stage => {
 				switch (stage) {
 					case "open": return new OpenClientView(vm);
@@ -48,38 +40,51 @@ class OpenClientView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "OpenClientView"}, [
 			t.a({
-				className: "primary",
+				className: "primary fullwidth",
 				href: vm.deepLink,
 				rel: "noopener noreferrer",
 				onClick: () => vm.deepLinkActivated(),
-			}, vm.deepLinkLabel)
+			}, "Continue")
 		]);
 	}
 }
 
 class InstallClientView extends TemplateView {
+
+	copyToClipboard() {
+
+	}
+
 	render(t, vm) {
-		return t.div({className: "InstallClientView"}, [
-			t.h3(`Looks like you don't have ${vm.name} installed.`),
-			t.div({className: "actions"}, vm.actions.map(a => {
-				let badgeUrl;
-				switch (a.kind) {
-					case "play-store": badgeUrl = "images/google-play-us.svg"; break;
-					case "fdroid": badgeUrl = "images/fdroid-badge.png"; break;
-					case "apple-app-store": badgeUrl = "images/app-store-us-alt.svg"; break;
-				}
-				return t.a({
-					href: a.url,
-					className: {
-						primary: a.primary && !badgeUrl,
-						secondary: !a.primary && !badgeUrl,
-						badge: !!badgeUrl,
-					},
-					rel: "noopener noreferrer",
-					["aria-label"]: a.label, 
-					onClick: () => a.activated()
-				}, badgeUrl ? t.img({src: badgeUrl}) : a.label);
-			}))
-		]);
+		const children = [];
+
+		if (vm.textInstructions) {
+			const copy = t.button({className: "primary", onClick: evt => this.copyToClipboard(evt)}, "Copy");
+			children.push(t.p([vm.textInstructions, copy]));
+		}
+
+		const actions = t.div({className: "actions"}, vm.actions.map(a => {
+			let badgeUrl;
+			switch (a.kind) {
+				case "play-store": badgeUrl = "images/google-play-us.svg"; break;
+				case "fdroid": badgeUrl = "images/fdroid-badge.png"; break;
+				case "apple-app-store": badgeUrl = "images/app-store-us-alt.svg"; break;
+			}
+			return t.a({
+				href: a.url,
+				className: {
+					fullwidth: true,
+					primary: a.primary && !badgeUrl,
+					secondary: !a.primary && !badgeUrl,
+					badge: !!badgeUrl,
+				},
+				rel: "noopener noreferrer",
+				["aria-label"]: a.label, 
+				onClick: () => a.activated()
+			}, badgeUrl ? t.img({src: badgeUrl}) : a.label);
+		}));
+		children.push(actions);
+
+		return t.div({className: "InstallClientView"}, children);
 	}
 }
