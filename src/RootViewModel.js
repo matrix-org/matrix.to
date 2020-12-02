@@ -16,27 +16,29 @@ limitations under the License.
 
 import {Link} from "./Link.js";
 import {ViewModel} from "./utils/ViewModel.js";
-import {PreviewViewModel} from "./preview/PreviewViewModel.js";
-import {Element} from "./client/clients/Element.js";
-import {Weechat} from "./client/clients/Weechat.js";
-import {Platform} from "./client/Platform.js";
+import {OpenLinkViewModel} from "./open/OpenLinkViewModel.js";
+import {createClients} from "./open/clients/index.js";
+import {CreateLinkViewModel} from "./create/CreateLinkViewModel.js";
+import {Platform} from "./Platform.js";
 
 export class RootViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
 		this.link = null;
-		this.previewViewModel = null;
+		this.openLinkViewModel = null;
+		this.createLinkViewModel = null;
 	}
 
 	_updateChildVMs(oldLink) {
 		if (this.link) {
+			this.createLinkViewModel = null;
 			if (!oldLink || !oldLink.equals(this.link)) {
-				this.previewViewModel = new PreviewViewModel(this.childOptions({
+				this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
 					link: this.link,
 					consentedServers: this.link.servers,
-					clients: [new Element(), new Weechat()]
+					clients: createClients()
 				}));
-				this.previewViewModel.load();
+				this.openLinkViewModel.load();
 			}
 		} else {
 			this.previewViewModel = null;
@@ -48,13 +50,6 @@ export class RootViewModel extends ViewModel {
 		const oldLink = this.link;
 		this.link = Link.parseFragment(hash);
 		this._updateChildVMs(oldLink);
-	}
-
-	get activeSection() {
-		if (this.previewViewModel) {
-			return "preview";
-		}
-		return "";
 	}
 
 	clearPreferences() {

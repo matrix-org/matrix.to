@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Platform} from "./client/Platform.js";
+import {Platform} from "./Platform.js";
 
 export class Preferences {
 	constructor(localStorage) {

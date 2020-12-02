@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {createEnum} from "../utils/enum.js";
+import {createEnum} from "./utils/enum.js";
 
 export const Platform = createEnum(
 	"DesktopWeb",
@@ -29,7 +29,7 @@ export const Platform = createEnum(
 export function guessApplicablePlatforms(userAgent) {
 	// use https://github.com/faisalman/ua-parser-js to guess, and pass as RootVM options
 	return [Platform.DesktopWeb, Platform.Linux];
-	//return [Platform.MobileWeb, Platform.iOS];
+	// return [Platform.MobileWeb, Platform.Android];
 }
 
 export function isWebPlatform(p) {

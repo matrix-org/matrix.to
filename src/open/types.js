@@ -17,7 +17,7 @@ limitations under the License.
 import {createEnum} from "../utils/enum.js";
 export const Maturity = createEnum("Alpha", "Beta", "Stable");
 export {LinkKind} from "../Link.js";
-export {Platform} from "./Platform.js";
+export {Platform} from "../Platform.js";
 
 export class AppleStoreLink {
     constructor(org, appId) {

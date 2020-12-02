@@ -14,21 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {LinkKind, IdentifierKind, getLabelForLinkKind} from "../Link.js";
+import {LinkKind, IdentifierKind} from "../Link.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
-import {ClientListViewModel} from "../client/ClientListViewModel.js";
-import {ClientViewModel} from "../client/ClientViewModel.js";
+import {ClientListViewModel} from "../open/ClientListViewModel.js";
+import {ClientViewModel} from "../open/ClientViewModel.js";
 
 export class PreviewViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
-		const { link, consentedServers, clients } = options;
+		const { link, consentedServers } = options;
 		this._link = link;
 		this._consentedServers = consentedServers;
-		this._clients = clients;
-		this._preferredClient = this.preferences.clientId ? clients.find(c => c.id === this.preferences.clientId) : null;
-
 		this.loading = false;
 		this.name = null;
 		this.avatarUrl = null;
@@ -36,13 +33,6 @@ export class PreviewViewModel extends ViewModel {
 		this.memberCount = null;
 		this.topic = null;
 		this.previewDomain = null;
-		this.clientsViewModel = null;
-		this.acceptInstructions = null;
-		this.clientsViewModel = this._preferredClient ? new ClientListViewModel(this.childOptions({
-			clients: this._clients,
-			client: this._preferredClient,
-			link: this._link,
-		})) : null;
 	}
 
 	async load() {
@@ -96,16 +86,5 @@ export class PreviewViewModel extends ViewModel {
 		this.memberCount = publicRoom?.num_joined_members;
 		this.topic = publicRoom?.topic;
 		this.identifier = publicRoom?.canonical_alias || link.identifier;
-	}
-
-	get showClientsLabel() {
-		return getLabelForLinkKind(this._link.kind);
-	}
-
-	showClients() {
-		if (!this.clientsViewModel) {
-			this.clientsViewModel = new ClientListViewModel(this.childOptions({clients: this._clients, link: this._link}));
-			this.emitChange();
-		}
 	}
 }

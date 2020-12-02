@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
-import {ClientListView} from "../client/ClientListView.js";
-import {ClientView} from "../client/ClientView.js";
+import {ClientListView} from "../open/ClientListView.js";
+import {ClientView} from "../open/ClientView.js";
 
 export class PreviewView extends TemplateView {
 	render(t, vm) {
-		return t.div({className: "PreviewView card"}, [
+		return t.div({className: "PreviewView"}, [
 			t.h1({className: {hidden: vm => !vm.loading}}, "Loading preview…"),
 			t.div({className: {hidden: vm => vm.loading}}, [
 				t.div({className: "preview"}, [
@@ -30,12 +30,6 @@ export class PreviewView extends TemplateView {
 					t.p({className: {memberCount: true, hidden: vm => !vm.memberCount}}, [vm => vm.memberCount, " members"]),
 					t.p({className: {topic: true, hidden: vm => !vm.topic}}, [vm => vm.topic]),
 				]),
-				t.p({className: {hidden: vm => vm.clientsViewModel}}, t.button({
-					className: "primary fullwidth",
-					onClick: () => vm.showClients()
-				}, vm => vm.showClientsLabel)),
-				t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
-				t.p(["Preview provided by ", vm => vm.previewDomain]),
 			])
 		]);
 	}

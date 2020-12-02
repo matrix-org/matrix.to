@@ -28,7 +28,7 @@ export class Element {
 		return [
 			Platform.Android, Platform.iOS,
 			Platform.Windows, Platform.macOS, Platform.Linux,
-			Platform.DesktopWeb, Platform.MobileWeb
+			Platform.DesktopWeb
 		];
 	}
 

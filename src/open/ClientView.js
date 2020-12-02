@@ -99,6 +99,7 @@ class InstallClientView extends TemplateView {
 			const deepLink = t.a({
 				rel: "noopener noreferrer",
 				href: vm.deepLink,
+				onClick: () => vm.deepLinkActivated(),
 			}, "open it here");
 			children.push(t.p([`If you already have ${vm.name} installed, you can `, deepLink, "."]))
 		}

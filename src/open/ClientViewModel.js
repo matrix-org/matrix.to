@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {isWebPlatform, isDesktopPlatform, Platform} from "./Platform.js";
+import {isWebPlatform, isDesktopPlatform, Platform} from "../Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
 
 export class ClientViewModel extends ViewModel {
@@ -44,7 +44,7 @@ export class ClientViewModel extends ViewModel {
 	_createActions(client, link, nativePlatform, webPlatform) {
 		let actions = [];
 		if (nativePlatform) {
-			const nativeActions = client.getInstallLinks(nativePlatform).map(installLink => {
+			const nativeActions = (client.getInstallLinks(nativePlatform) || []).map(installLink => {
 				return {
 					label: installLink.description,
 					url: installLink.createInstallURL(link),
@@ -56,12 +56,15 @@ export class ClientViewModel extends ViewModel {
 			actions.push(...nativeActions);
 		}
 		if (webPlatform) {
-			actions.push({
-				label: `Or open in ${client.getName(webPlatform)}`,
-				url: client.getDeepLink(webPlatform, link),
-				kind: "open-in-web",
-				activated: () => this.preferences.setClient(client.id, webPlatform),
-			});
+			const webDeepLink = client.getDeepLink(webPlatform, link);
+			if (webDeepLink) {
+				actions.push({
+					label: `Or open in ${client.getName(webPlatform)}`,
+					url: webDeepLink,
+					kind: "open-in-web",
+					activated: () => this.preferences.setClient(client.id, webPlatform),
+				});
+			}
 		}
 		if (actions.length === 0) {
 			actions.push({

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {isWebPlatform, Platform} from "./Platform.js";
+import {isWebPlatform, Platform} from "../Platform.js";
 import {Maturity} from "./types.js";
 import {ClientViewModel} from "./ClientViewModel.js";
 import {ViewModel} from "../utils/ViewModel.js";
