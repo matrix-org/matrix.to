@@ -85,7 +85,7 @@ export class ClientViewModel extends ViewModel {
 		return this._client.getLinkInstructions(this._proposedPlatform, this._link);
 	}
 
-	get platforms() {
+	get availableOnPlatformNames() {
 		const platforms = this._client.platforms;
 		const textPlatforms = [];
 		const hasWebPlatform = platforms.some(p => isWebPlatform(p));

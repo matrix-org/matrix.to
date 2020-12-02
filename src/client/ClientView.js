@@ -32,7 +32,7 @@ export class ClientView extends TemplateView {
 				t.div({className: "description"}, [
 					t.h3(vm.name),
 					t.p(vm.description),
-					t.p(formatPlatforms(vm.platforms)),
+					t.p(formatPlatforms(vm.availableOnPlatformNames)),
 				]),
 				t.div({className: `icon ${vm.clientId}`})
 			]),
