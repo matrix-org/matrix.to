@@ -41,11 +41,19 @@ class AllClientsView extends TemplateView {
 				});
 			}),
 			t.div(t.label([
-				t.input({type: "checkbox", checked: vm.showUnsupportedPlatforms, onChange: evt => vm.showUnsupportedPlatforms = evt.target.checked}),
+				t.input({
+					type: "checkbox",
+					checked: vm.showUnsupportedPlatforms,
+					onChange: evt => vm.showUnsupportedPlatforms = evt.target.checked,
+				}),
 				"Show apps not available on my platform"
 			])),
 			t.div(t.label([
-				t.input({type: "checkbox", checked: vm.showExperimental, onChange: evt => vm.showExperimental = evt.target.checked}),
+				t.input({
+					type: "checkbox",
+					checked: vm.showExperimental,
+					onChange: evt => vm.showExperimental = evt.target.checked,
+				}),
 				"Show experimental apps"
 			])),
 		]);
