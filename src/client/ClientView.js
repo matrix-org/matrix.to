@@ -83,7 +83,7 @@ class InstallClientView extends TemplateView {
 			return t.a({
 				href: a.url,
 				className: {
-					fullwidth: true,
+					fullwidth: !badgeUrl,
 					primary: a.primary && !badgeUrl,
 					secondary: !a.primary && !badgeUrl,
 					badge: !!badgeUrl,
