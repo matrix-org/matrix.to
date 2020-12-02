@@ -95,6 +95,14 @@ class InstallClientView extends TemplateView {
 		}));
 		children.push(actions);
 
+		if (vm.showDeepLinkInInstall) {
+			const deepLink = t.a({
+				rel: "noopener noreferrer",
+				href: vm.deepLink,
+			}, "open it here");
+			children.push(t.p([`If you already have ${vm.name} installed, you can `, deepLink, "."]))
+		}
+
 		return t.div({className: "InstallClientView"}, children);
 	}
 }

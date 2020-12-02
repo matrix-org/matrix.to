@@ -37,7 +37,8 @@ export class ClientViewModel extends ViewModel {
 		this.actions = this._createActions(client, link, nativePlatform, webPlatform);
 		this.name = this._client.getName(this._proposedPlatform);
 		this.deepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
-		this._showOpen = this.deepLink && nativePlatform && !client.canInterceptMatrixToLinks(nativePlatform);
+		this._clientCanIntercept = !!(nativePlatform && client.canInterceptMatrixToLinks(nativePlatform));
+		this._showOpen = this.deepLink && !this._clientCanIntercept;
 	}
 
 	_createActions(client, link, nativePlatform, webPlatform) {
@@ -92,6 +93,10 @@ export class ClientViewModel extends ViewModel {
 
 	get textInstructions() {
 		return this._client.getLinkInstructions(this._proposedPlatform, this._link);
+	}
+
+	get showDeepLinkInInstall() {
+		return this._clientCanIntercept && this.deepLink;
 	}
 
 	get availableOnPlatformNames() {
