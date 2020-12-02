@@ -67,7 +67,7 @@ function orderedUnique(array) {
 }
 
 export class Link {
-	static parseFragment(fragment) {
+	static parse(fragment) {
 		if (!fragment) {
 			return null;
 		}

@@ -173,7 +173,7 @@ button.text:hover {
     background-image: url('../images/client-icons/weechat.svg');
 }
 
-button.primary, a.primary, button.secondary, a.secondary {
+.primary, .secondary {
     text-decoration: none;
     font-weight: bold;
     text-align: center;
@@ -182,20 +182,30 @@ button.primary, a.primary, button.secondary, a.secondary {
     line-height: 24px;
 }
 
-button.secondary, a.secondary {
+.secondary {
     background: var(--background);
     color: var(--link);
 }
 
-button.primary, a.primary {
+.primary {
     background: var(--link);
     color: var(--background);
     border-radius: 32px;
 }
 
-button.primary, button.secondary {
+button.primary, input[type='submit'].primary, button.secondary, input[type='submit'].secondary {
     border: none;
     font-size: inherit;
+}
+
+input[type='text'].large {
+    width: 100%;
+    padding: 12px;
+    background: var(--background);
+    border: 1px solid var(--foreground);
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 24px;
 }
 
 .fullwidth {
@@ -212,4 +222,10 @@ button.primary, button.secondary {
 
 .ClientView .actions img {
     height: 100%;
+}
+
+.CreateLinkView h2 {
+    padding: 0 40px;
+    word-break: break-all;
+    text-align: center;
 }

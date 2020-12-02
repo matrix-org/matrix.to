@@ -25,7 +25,7 @@ export class CreateLinkViewModel extends ViewModel {
 	}
 
     async createLink(identifier) {
-        this._link = Link.parseFragment(identifier);
+        this._link = Link.parse(identifier);
         if (this._link) {
         	// TODO: abort previous load
         	this.previewViewModel = new PreviewViewModel(this.childOptions({
@@ -34,6 +34,8 @@ export class CreateLinkViewModel extends ViewModel {
         	}));
         	this.emitChange();
         	await this.previewViewModel.load();
+        } else {
+        	this.previewViewModel = null;
         }
         this.emitChange();
     }

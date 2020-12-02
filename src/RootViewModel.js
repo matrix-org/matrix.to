@@ -49,7 +49,7 @@ export class RootViewModel extends ViewModel {
 
 	updateHash(hash) {
 		const oldLink = this.link;
-		this.link = Link.parseFragment(hash);
+		this.link = Link.parse(hash);
 		this._updateChildVMs(oldLink);
 	}
 

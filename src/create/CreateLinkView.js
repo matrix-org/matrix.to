@@ -20,14 +20,28 @@ import {PreviewView} from "../preview/PreviewView.js";
 export class CreateLinkView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "CreateLinkView card"}, [
+			t.h1(
+				{className: {hidden: vm => vm.previewViewModel}},
+				"Create shareable links to Matrix rooms, users or messages without being tied to any app"
+			),
 			t.mapView(vm => vm.previewViewModel, childVM => childVM ? new PreviewView(childVM) : null),
 			t.h2({className: {hidden: vm => !vm.linkUrl}}, t.a({href: vm => vm.linkUrl}, vm => vm.linkUrl)),
-			t.div(t.input({
-				className: "fullwidth",
-				type: "text",
-				onChange: evt => vm.createLink(evt.target.value),
-				placeholder: "#room:example.com, @user:example.com"
-			})),
+			t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
+				t.div(t.input({
+					className: "fullwidth large",
+					type: "text",
+					name: "identifier",
+					placeholder: "#room:example.com, @user:example.com"
+				})),
+				t.div(t.input({className: "primary fullwidth", type: "submit", value: "Create link"}))
+			]),
 		]);
+	}
+
+	_onSubmit(evt) {
+		evt.preventDefault();
+		const form = evt.target;
+		const identifier = form.elements.identifier.value;
+		this.value.createLink(identifier);
 	}
 }
