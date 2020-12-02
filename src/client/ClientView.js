@@ -17,9 +17,9 @@ limitations under the License.
 import {TemplateView} from "../utils/TemplateView.js";
 
 function formatPlatforms(platforms) {
-	return platforms.reduce((str, p, i) => {
+	return platforms.reduce((str, p, i, all) => {
 		const first = i === 0;
-		const last = i === platforms.length - 1;
+		const last = i === all.length - 1;
 		return str + (first ? "" : last ? " & " : ", ") + p;
 	}, "");
 }
