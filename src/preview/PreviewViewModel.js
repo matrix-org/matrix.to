@@ -33,6 +33,8 @@ export class PreviewViewModel extends ViewModel {
 		this.name = null;
 		this.avatarUrl = null;
 		this.identifier = null;
+		this.memberCount = null;
+		this.topic = null;
 		this.previewDomain = null;
 		this.clientsViewModel = null;
 		this.acceptInstructions = null;
@@ -91,7 +93,9 @@ export class PreviewViewModel extends ViewModel {
 		this.avatarUrl = publicRoom?.avatar_url ? 
 			homeserver.mxcUrlThumbnail(publicRoom.avatar_url, 64, 64, "crop") :
 			null;
-		this.identifier = `${publicRoom?.canonical_alias || link.identifier} | ${publicRoom?.num_joined_members} members`;
+		this.memberCount = publicRoom?.num_joined_members;
+		this.topic = publicRoom?.topic;
+		this.identifier = publicRoom?.canonical_alias || link.identifier;
 	}
 
 	get showClientsLabel() {

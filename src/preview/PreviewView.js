@@ -27,6 +27,8 @@ export class PreviewView extends TemplateView {
 					t.p(t.img({className: "avatar", src: vm => vm.avatarUrl})),
 					t.h1(vm => vm.name),
 					t.p(vm => vm.identifier),
+					t.p({className: {hidden: vm => !vm.memberCount}}, [vm => vm.memberCount, " members"]),
+					t.p({className: {hidden: vm => !vm.topic}}, [vm => vm.topic]),
 				]),
 				t.p({className: {hidden: vm => vm.clientsViewModel}}, t.button({
 					className: "primary fullwidth",
