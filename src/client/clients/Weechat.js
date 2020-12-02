@@ -23,6 +23,8 @@ export class Weechat {
 	/* should only contain alphanumerical and -_, no dots (needs to be usable as css class) */
 	get id() { return "weechat"; }
 	getName(platform) { return "Weechat"; }
+    get author() { return "Poljar"; }
+    get homepage() { return "https://github.com/poljar/weechat-matrix"; }
 	get platforms() { return [Platform.Windows, Platform.macOS, Platform.Linux]; }
 	get description() { return 'Command-line Matrix interface using Weechat'; }
 	getMaturity(platform) { return Maturity.Beta; }
@@ -36,7 +38,5 @@ export class Weechat {
 		}
 	}
 
-	getInstallLinks(platform) {
-		return [new WebsiteLink("https://github.com/poljar/weechat-matrix")];
-	}
+	getInstallLinks(platform) {}
 }

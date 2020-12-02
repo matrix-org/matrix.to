@@ -62,6 +62,15 @@ export class ClientViewModel extends ViewModel {
 				activated: () => this.preferences.setClient(client.id, webPlatform),
 			});
 		}
+		if (actions.length === 0) {
+			actions.push({
+				label: `Visit app homepage`,
+				url: client.homepage,
+				primary: true,
+				kind: "homepage",
+				activated: () => {},
+			});
+		}
 		return actions;
 	}
 

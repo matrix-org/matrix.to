@@ -34,6 +34,9 @@ export class Element {
 
 	get description() { return 'Fully-featured Matrix client, used by millions.'; }
 
+	get homepage() { return "https://element.io"; }
+	get author() { return "https://element.io"; }
+
 	getMaturity(platform) { return Maturity.Stable; }
 
 	getDeepLink(platform, link) {
