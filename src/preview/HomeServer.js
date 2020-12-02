@@ -43,7 +43,7 @@ export class HomeServer {
 	}
 
 	async getUserProfile(userId) {
-		const {body} = await this._request(`${this.baseURL}/_matrix/client/r0/profile/${userId}`, {method: "GET"}).response();
+		const {body} = await this._request(`${this.baseURL}/_matrix/client/r0/profile/${encodeURIComponent(userId)}`).response();
 		return body;
 	}
 
@@ -51,8 +51,28 @@ export class HomeServer {
 		//`/_matrix/client/r0/groups/${groupId}/profile`
 	}
 
-	getPublicRooms() {
+	async findPublicRoomById(roomId) {
+		const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/directory/list/room/${encodeURIComponent(roomId)}`).response();
+		if (status !== 200 || body.visibility !== "public") {
+			return;
+		}
+		let nextBatch;
+		do {
+			const queryParams = encodeQueryParams({limit: 10000, since: nextBatch});
+			const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/publicRooms?${queryParams}`).response();
+			nextBatch = body.next_batch;
+			const publicRoom = body.chunk.find(c => c.room_id === roomId);
+			if (publicRoom) {
+				return publicRoom;
+			}
+		} while (nextBatch);
+	}
 
+	async getRoomIdFromAlias(alias) {
+		const {status, body}  = await this._request(`${this.baseURL}/_matrix/client/r0/directory/room/${encodeURIComponent(alias)}`).response();
+		if (status === 200) {
+			return body.room_id;
+		}
 	}
 
 	mxcUrlThumbnail(url, width, height, method) {
@@ -73,4 +93,16 @@ function parseMxcUrl(url) {
     } else {
         return null;
     }
+}
+
+function encodeQueryParams(queryParams) {
+    return Object.entries(queryParams || {})
+        .filter(([, value]) => value !== undefined)
+        .map(([name, value]) => {
+            if (typeof value === "object") {
+                value = JSON.stringify(value);
+            }
+            return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+        })
+        .join("&");
 }

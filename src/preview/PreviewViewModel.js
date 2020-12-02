@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {LinkKind, getLabelForLinkKind} from "../Link.js";
+import {LinkKind, IdentifierKind, getLabelForLinkKind} from "../Link.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
 import {ClientListViewModel} from "../client/ClientListViewModel.js";
@@ -32,6 +32,7 @@ export class PreviewViewModel extends ViewModel {
 		this.loading = false;
 		this.name = null;
 		this.avatarUrl = null;
+		this.identifier = null;
 		this.previewDomain = null;
 		this.clientsViewModel = null;
 		this.acceptInstructions = null;
@@ -51,6 +52,10 @@ export class PreviewViewModel extends ViewModel {
 				switch (this._link.kind) {
 					case LinkKind.User:
 						await this._loadUserPreview(homeserver, this._link.identifier);
+						break;
+					case LinkKind.Room:
+						await this._loadRoomPreview(homeserver, this._link);
+						break;
 				}
 				// assume we're done if nothing threw
 				this.previewDomain = server;
@@ -69,10 +74,24 @@ export class PreviewViewModel extends ViewModel {
 		this.avatarUrl = profile.avatar_url ?
 			homeserver.mxcUrlThumbnail(profile.avatar_url, 64, 64, "crop") :
 			null;
+		this.identifier = userId;
 	}
 
-	get identifier() {
-		return this._link.identifier;
+	async _loadRoomPreview(homeserver, link) {
+		let publicRoom;
+		if (link.identifierKind === IdentifierKind.RoomId) {
+			publicRoom = await homeserver.findPublicRoomById(link.identifier);
+		} else if (link.identifierKind === IdentifierKind.RoomAlias) {
+			const roomId = await homeserver.getRoomIdFromAlias(link.identifier);
+			if (roomId) {
+				publicRoom = await homeserver.findPublicRoomById(roomId);
+			}
+		}
+		this.name = publicRoom?.name || publicRoom?.canonical_alias || link.identifier;
+		this.avatarUrl = publicRoom?.avatar_url ? 
+			homeserver.mxcUrlThumbnail(publicRoom.avatar_url, 64, 64, "crop") :
+			null;
+		this.identifier = `${publicRoom?.canonical_alias || link.identifier} | ${publicRoom?.num_joined_members} members`;
 	}
 
 	get showClientsLabel() {

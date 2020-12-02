@@ -79,7 +79,10 @@ function xhrAsPromise(xhr, method, url) {
     });
 }
 
-export function xhrRequest(url, options) {
+export function xhrRequest(url, options = {}) {
+    if (!options.method) {
+        options.method = "GET";
+    }
     let {cache, body, method} = options;
     if (!cache) {
         url = addCacheBuster(url);

@@ -23,7 +23,7 @@ const EVENT_WITH_ROOMALIAS_PATTERN = /^[#]([^:]*):(.+)\/\$([^:]+):(.+)$/;
 const USERID_PATTERN = /^@([^:]+):(.+)$/;
 const GROUPID_PATTERN = /^\+([^:]+):(.+)$/;
 
-const IdentifierKind = createEnum(
+export const IdentifierKind = createEnum(
 	"RoomId",
 	"RoomAlias",
 	"UserId",
