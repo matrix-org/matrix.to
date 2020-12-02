@@ -166,4 +166,12 @@ export class Link {
 			this.servers.length === link.servers.length &&
 			this.servers.every((s, i) => link.servers[i] === s);
 	}
+
+	toFragment() {
+		if (this.eventId) {
+			return `/${this.identifier}/${this.eventId}`;
+		} else {
+			return `/${this.identifier}`;
+		}
+	}
 }

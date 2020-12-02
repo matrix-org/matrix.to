@@ -14,13 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {ViewModel} from "../utils/ViewModel.js";
+import {PreviewViewModel} from "../preview/PreviewViewModel.js";
+import {Link} from "../Link.js";
+
 export class CreateLinkViewModel extends ViewModel {
-    createLink(identifier) {
-        this._link = Link.fromIdentifier(identifier);
+	constructor(options) {
+		super(options);
+		this.previewViewModel = null;
+	}
+
+    async createLink(identifier) {
+        this._link = Link.parseFragment(identifier);
+        if (this._link) {
+        	// TODO: abort previous load
+        	this.previewViewModel = new PreviewViewModel(this.childOptions({
+        		link: this._link,
+        		consentedServers: this._link.servers,
+        	}));
+        	this.emitChange();
+        	await this.previewViewModel.load();
+        }
         this.emitChange();
     }
 
-    get link() {
-        this._link.toURL();
+    get linkUrl() {
+    	if (this._link) {
+        	return `${this.origin}/#${this._link.toFragment()}`;
+    	}
     }
 }

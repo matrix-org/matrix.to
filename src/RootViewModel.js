@@ -41,7 +41,8 @@ export class RootViewModel extends ViewModel {
 				this.openLinkViewModel.load();
 			}
 		} else {
-			this.previewViewModel = null;
+			this.openLinkViewModel = null;
+			this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
 		}
 		this.emitChange();
 	}
