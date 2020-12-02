@@ -31,10 +31,23 @@ export class ClientListView extends TemplateView {
 
 class AllClientsView extends TemplateView {
 	render(t, vm) {
-		const clients = vm.clientList.map(clientViewModel => t.view(new ClientView(clientViewModel)));
 		return t.div({className: "ClientListView"}, [
 			t.h2("Choose an app to continue"),
-			t.div({className: "list"}, clients)
+			t.mapView(vm => vm.clientList, () => {
+				return new TemplateView(vm, t => {
+					return t.div({className: "list"}, vm.clientList.map(clientViewModel => {
+						return t.view(new ClientView(clientViewModel));
+					}));
+				});
+			}),
+			t.div(t.label([
+				t.input({type: "checkbox", checked: vm.showUnsupportedPlatforms, onChange: evt => vm.showUnsupportedPlatforms = evt.target.checked}),
+				"Show apps not available on my platform"
+			])),
+			t.div(t.label([
+				t.input({type: "checkbox", checked: vm.showExperimental, onChange: evt => vm.showExperimental = evt.target.checked}),
+				"Show experimental apps"
+			])),
 		]);
 	}
 }

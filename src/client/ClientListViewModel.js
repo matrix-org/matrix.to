@@ -26,8 +26,8 @@ export class ClientListViewModel extends ViewModel {
 		this._clients = clients;
 		this._link = link;
 		this.clientList = null;
-		this._showExperimental = true;
-		this._showUnsupportedPlatform = true;
+		this._showExperimental = false;
+		this._showUnsupportedPlatforms = false;
 		this._filterClients();
 		this.clientViewModel = null;
 		if (client) {
@@ -35,12 +35,32 @@ export class ClientListViewModel extends ViewModel {
 		}
 	}
 
+	get showUnsupportedPlatforms() {
+		return this._showUnsupportedPlatforms;
+	}
+
+	get showExperimental() {
+		return this._showExperimental;
+	}
+
+	set showUnsupportedPlatforms(enabled) {
+		this._showUnsupportedPlatforms = enabled;
+		this._filterClients();
+	}
+
+	set showExperimental(enabled) {
+		this._showExperimental = enabled;
+		this._filterClients();
+	}
+
 	_filterClients() {
 		this.clientList = this._clients.filter(client => {
-			if (!this._showExperimental && !this.platforms.map(p => client.getMaturity(p)).includes(Maturity.Stable)) {
+			const isStable = this.platforms.map(p => client.getMaturity(p)).includes(Maturity.Stable);
+			const isSupported = client.platforms.some(p => this.platforms.includes(p));
+			if (!this._showExperimental && !isStable) {
 				return false;
 			}
-			if (!this._showUnsupportedPlatform && !client.platforms.some(p => this.platforms.includes(p))) {
+			if (!this._showUnsupportedPlatforms && !isSupported) {
 				return false;
 			}
 			return true;
