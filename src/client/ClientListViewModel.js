@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import {isWebPlatform, Platform} from "./Platform.js";
+import {Maturity} from "./types.js";
 import {ClientViewModel} from "./ClientViewModel.js";
 import {ViewModel} from "../utils/ViewModel.js";
 
@@ -22,15 +23,33 @@ export class ClientListViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
 		const {clients, client, link} = options;
-		this.clientList = clients.map(client => new ClientViewModel(this.childOptions({
-			client,
-			link,
-			pickClient: client => this._pickClient(client)
-		})));
+		this._clients = clients;
+		this._link = link;
+		this.clientList = null;
+		this._showExperimental = true;
+		this._showUnsupportedPlatform = true;
+		this._filterClients();
 		this.clientViewModel = null;
 		if (client) {
 			this._pickClient(client);
 		}
+	}
+
+	_filterClients() {
+		this.clientList = this._clients.filter(client => {
+			if (!this._showExperimental && !this.platforms.map(p => client.getMaturity(p)).includes(Maturity.Stable)) {
+				return false;
+			}
+			if (!this._showUnsupportedPlatform && !client.platforms.some(p => this.platforms.includes(p))) {
+				return false;
+			}
+			return true;
+		}).map(client => new ClientViewModel(this.childOptions({
+			client,
+			link: this._link,
+			pickClient: client => this._pickClient(client)
+		})));
+		this.emitChange();
 	}
 
 	_pickClient(client) {
