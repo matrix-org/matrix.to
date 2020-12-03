@@ -32,6 +32,8 @@ export class Element {
 		];
 	}
 
+    get appleAssociatedAppId() { return "7J4U792NQT.im.vector.app"; }
+
 	get description() { return 'Fully-featured Matrix client, used by millions.'; }
 
 	get homepage() { return "https://element.io"; }

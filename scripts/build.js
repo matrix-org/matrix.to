@@ -15,32 +15,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const cheerio = require("cheerio");
-const fsRoot = require("fs");
-const fs = fsRoot.promises;
-const path = require("path");
-const xxhash = require('xxhashjs');
-const { rollup } = require('rollup');
-const postcss = require("postcss");
-const postcssImport = require("postcss-import");
+import cheerio from "cheerio";
+import fs from "fs/promises";
+import path from "path";
+import xxhash from 'xxhashjs';
+import { rollup } from 'rollup';
+import postcss from "postcss";
+import postcssImport from "postcss-import";
 // needed for legacy bundle
-const babel = require('@rollup/plugin-babel');
+import babel from '@rollup/plugin-babel';
 // needed to find the polyfill modules in the main-legacy.js bundle
-const { nodeResolve } = require('@rollup/plugin-node-resolve');
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 // needed because some of the polyfills are written as commonjs modules
-const commonjs = require('@rollup/plugin-commonjs');
+import commonjs from '@rollup/plugin-commonjs';
 // multi-entry plugin so we can add polyfill file to main
-const multi = require('@rollup/plugin-multi-entry');
-const { terser } = require("rollup-plugin-terser");
-const replace = require("@rollup/plugin-replace");
+import multi from '@rollup/plugin-multi-entry';
+import { terser } from "rollup-plugin-terser";
+import replace from "@rollup/plugin-replace";
 // replace urls of asset names with content hashed version
-const postcssUrl = require("postcss-url");
+import postcssUrl from "postcss-url";
+import cssvariables from "postcss-css-variables";
+import autoprefixer from "autoprefixer";
+import flexbugsFixes from "postcss-flexbugs-fixes";
 
-const cssvariables = require("postcss-css-variables");
-const autoprefixer = require("autoprefixer");
-const flexbugsFixes = require("postcss-flexbugs-fixes");
+import {createClients} from "../src/open/clients/index.js";
 
-const projectDir = path.join(__dirname, "../");
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const projectDir = path.join(dirname(fileURLToPath(import.meta.url)), "../");
 
 async function build() {
     // get version number
@@ -56,6 +58,8 @@ async function build() {
     await assets.write(`bundle-esm.js`, await buildJs("src/main.js", assets));
     await assets.write(`bundle-legacy.js`, await buildJsLegacy("src/main.js", assets, ["src/polyfill.js"]));
     await assets.write(`bundle.css`, await buildCss("css/main.css", assets));
+    await assets.writeUnhashed("apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
+
     const globalHash = assets.hashForAll();
 
     await buildHtml(assets);
@@ -130,6 +134,24 @@ async function buildJsLegacy(mainFile, assets, extraFiles = []) {
     });
     const code = output[0].code;
     return code;
+}
+
+function buildAppleAssociatedAppsFile(clients) {
+    const appIds = clients.map(c => c.appleAssociatedAppId).filter(id => !!id);
+    return JSON.stringify({
+        "applinks": {
+            "apps": [],
+            "details": appIds.map(id => {
+                return {
+                    "appID": id,
+                    "paths": ["*"]
+                };
+            }),
+        },
+        "webcredentials": {
+            "apps": appIds
+        }
+    });
 }
 
 async function buildCss(entryPath, assets) {

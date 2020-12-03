@@ -1,5 +1,9 @@
 {
   "version": "0.0.1",
+  "type": "module",
+  "engines": {
+    "node": ">= 14.0.0"
+  },
   "scripts": {
     "start": "node scripts/serve-local.js",
     "build": "node scripts/build.js"

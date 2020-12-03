@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const finalhandler = require('finalhandler')
-const http = require('http')
-const serveStatic = require('serve-static')
-const path = require('path');
+import finalhandler from "finalhandler"
+import http from "http"
+import serveStatic from "serve-static"
+import path from "path"
+import { fileURLToPath } from "url";
+const projectDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../");
 
 // Serve up parent directory with cache disabled
 const serve = serveStatic(
-	path.resolve(__dirname, "../"),
+	projectDir,
 	{
 		etag: false,
 		setHeaders: res => {
