@@ -57,9 +57,11 @@ export class Element {
 		}
 		if (platform === Platform.DesktopWeb || platform === Platform.MobileWeb || platform === Platform.iOS) {
 			return `https://app.element.io/#/${fragmentPath}`;
+		} else if (platform === Platform.Linux || platform === Platform.Windows || platform === Platform.macOS) {
+			return `element://vector/webapp/#/${fragmentPath}`;
 		} else {
-			return `element://${fragmentPath}`;
-		}
+            return `element://${fragmentPath}`;
+        }
 	}
 
 	getLinkInstructions(platform, link) {}
