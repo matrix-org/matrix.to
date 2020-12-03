@@ -78,12 +78,12 @@
 .PreviewView .topic {
     font-size: 12px;
     color: var(--grey);
-    margin: 32px;
+    margin: 32px 0;
 }
 
 .PreviewView .topic.loading {
     display: block;
-    margin: 24px 32px;
+    margin: 24px 12px;
     padding: 4px 0;
 }
 
