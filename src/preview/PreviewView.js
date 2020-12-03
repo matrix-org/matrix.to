@@ -28,7 +28,7 @@ class LoadingPreviewView extends TemplateView {
     render(t, vm) {
         return t.div({className: "PreviewView"}, [
             t.div({className: "avatarContainer"}, t.div({className: "avatar loading"}, t.div({className: "spinner"}))),
-            t.h1(vm => vm.identifier),
+            t.h1(vm => vm.name),
             t.p({className: "identifier placeholder"}),
             t.div({className: {memberCount: true, loading: true, hidden: !vm.hasMemberCount}}, t.p({className: "placeholder"})),
             t.p({className: {topic: true, loading: true, hidden: !vm.hasTopic}}, [

@@ -50,29 +50,28 @@
     margin: 8px 0;
 }
 
-.PreviewView .memberCount p {
-}
 
 .PreviewView .memberCount.loading {
     margin: 16px 0;
 }
 
 .PreviewView .memberCount p {
+    font-size: 12px;
+    margin: 0;
+}
+
+.PreviewView .memberCount p:not(.placeholder) {
+    padding: 0 4px 0 24px;
+    border-radius: 8px;
     background-image: url(../images/member-icon.svg);
     background-repeat: no-repeat;
     background-position: 2px center;
-    padding: 0 4px 0 24px;
     background-color: var(--lightgrey);
-    border-radius: 8px;
-    font-size: 12px;
-    margin: 0;
 }
 
 .PreviewView .memberCount p.placeholder {
     height: 1.5em;
     width: 100px;
-    background-image: none;
-    padding: 0;
 }
 
 .PreviewView .topic {

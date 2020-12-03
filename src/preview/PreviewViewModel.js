@@ -27,9 +27,9 @@ export class PreviewViewModel extends ViewModel {
 		this._link = link;
 		this._consentedServers = consentedServers;
 		this.loading = false;
-		this.name = null;
+		this.name = this._link.identifier;
 		this.avatarUrl = null;
-		this.identifier = this._link.identifier;
+		this.identifier = null;
 		this.memberCount = null;
 		this.topic = null;
 		this.previewDomain = null;
