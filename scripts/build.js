@@ -52,13 +52,14 @@ async function build() {
     await removeDirIfExists(targetDir);
     await fs.mkdir(targetDir);
     await fs.mkdir(path.join(targetDir, "images"));
+    await fs.mkdir(path.join(targetDir, ".well-known"));
     const assets = new AssetMap(targetDir);
     const imageAssets = await copyFolder(path.join(projectDir, "images"), path.join(targetDir, "images"));
     assets.addSubMap(imageAssets);
     await assets.write(`bundle-esm.js`, await buildJs("src/main.js", assets));
     await assets.write(`bundle-legacy.js`, await buildJsLegacy("src/main.js", assets, ["src/polyfill.js"]));
     await assets.write(`bundle.css`, await buildCss("css/main.css", assets));
-    await assets.writeUnhashed("apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
+    await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
 
     const globalHash = assets.hashForAll();
 
@@ -141,12 +142,14 @@ function buildAppleAssociatedAppsFile(clients) {
     return JSON.stringify({
         "applinks": {
             "apps": [],
-            "details": appIds.map(id => {
-                return {
-                    "appID": id,
-                    "paths": ["*"]
-                };
-            }),
+            "details": {
+                appIDs: appIds,
+                components: [
+                    {
+                        "#": "/*",  // only open urls with a fragment, so you can still create links
+                    }
+                ]
+            },
         },
         "webcredentials": {
             "apps": appIds
