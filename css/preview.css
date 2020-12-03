@@ -50,11 +50,7 @@
     margin: 8px 0;
 }
 
-.PreviewView .memberCount p:not(.placeholder) {
-    background-image: url(../images/member-icon.svg);
-    background-repeat: no-repeat;
-    background-position: 2px center;
-    padding: 0 4px 0 24px;
+.PreviewView .memberCount p {
 }
 
 .PreviewView .memberCount.loading {
@@ -62,8 +58,11 @@
 }
 
 .PreviewView .memberCount p {
+    background-image: url(../images/member-icon.svg);
+    background-repeat: no-repeat;
+    background-position: 2px center;
+    padding: 0 4px 0 24px;
     background-color: var(--lightgrey);
-    padding: 0 4px;
     border-radius: 8px;
     font-size: 12px;
     margin: 0;
@@ -71,7 +70,9 @@
 
 .PreviewView .memberCount p.placeholder {
     height: 1.5em;
-    width: 80px;
+    width: 100px;
+    background-image: none;
+    padding: 0;
 }
 
 .PreviewView .topic {
@@ -82,6 +83,8 @@
 
 .PreviewView .topic.loading {
     display: block;
+    margin: 24px 32px;
+    padding: 4px 0;
 }
 
 .PreviewView .topic.loading .placeholder {
