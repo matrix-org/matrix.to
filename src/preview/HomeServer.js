@@ -75,6 +75,24 @@ export class HomeServer {
 		}
 	}
 
+    async getPrivacyPolicyUrl(lang = "en") {
+        const headers = new Map();
+        headers.set("Content-Type", "application/json");
+        const options = {method: "POST", body: "{}", headers};
+        const {status, body}  = await this._request(`${this.baseURL}/_matrix/client/r0/register`, options).response();
+        if (status === 401 && body) {   // Unauthorized
+            const stages = body.flows?.stages;
+            if (Array.isArray(stages) && stages.includes("m.login.terms")) {
+                const privacyPolicy = body.params?.["m.login.terms"]?.policies?.privacy_policy;
+                if (privacyPolicy) {
+                    const firstLang = Object.keys(privacyPolicy).find(k => k !== "version");
+                    let languagePolicy = privacyPolicy[lang] || privacyPolicy[firstLang];
+                    return languagePolicy?.url;
+                }
+            }
+        }
+    }
+
 	mxcUrlThumbnail(url, width, height, method) {
         const parts = parseMxcUrl(url);
         if (parts) {
