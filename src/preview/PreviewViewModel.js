@@ -29,7 +29,7 @@ export class PreviewViewModel extends ViewModel {
 		this.loading = false;
 		this.name = null;
 		this.avatarUrl = null;
-		this.identifier = null;
+		this.identifier = this._link.identifier;
 		this.memberCount = null;
 		this.topic = null;
 		this.previewDomain = null;
@@ -38,6 +38,7 @@ export class PreviewViewModel extends ViewModel {
 	async load() {
 		this.loading = true;
 		this.emitChange();
+        // await new Promise(r => setTimeout(r, 5000));
 		for (const server of this._consentedServers) {
 			try {
 				const homeserver = await resolveServer(this.request, server);
@@ -51,14 +52,20 @@ export class PreviewViewModel extends ViewModel {
 				}
 				// assume we're done if nothing threw
 				this.previewDomain = server;
-				break;
+                this.loading = false;
+        		this.emitChange();
+                return;
 			} catch (err) {
 				continue;
 			}
 		}
-		this.loading = false;
-		this.emitChange();
+		this._setNoPreview(this._link);
+        this.loading = false;
+        this.emitChange();
 	}
+
+    get hasTopic() { return this._link.kind === LinkKind.Room; }
+    get hasMemberCount() { return this.hasTopic; }
 
 	async _loadUserPreview(homeserver, userId) {
 		const profile = await homeserver.getUserProfile(userId);
@@ -87,4 +94,10 @@ export class PreviewViewModel extends ViewModel {
 		this.topic = publicRoom?.topic;
 		this.identifier = publicRoom?.canonical_alias || link.identifier;
 	}
+
+    _setNoPreview(link) {
+        this.name = link.identifier;
+        this.identifier = null;
+        this.avatarUrl = "images/chat-icon.svg";
+    }
 }

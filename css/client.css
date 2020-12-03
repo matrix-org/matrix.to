@@ -1,0 +1,48 @@
+.ClientListView .list {
+    padding: 16px 0;
+}
+
+.ClientView {
+    border: 1px solid #E6E6E6;
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 16px;
+}
+
+.ClientView .header {
+    display: flex;
+}
+
+.ClientView .description {
+    flex: 1;
+}
+
+.ClientView h3 {
+    margin-top: 0;
+}
+
+.ClientView .icon {
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+}
+
+.ClientView .icon.element-io {
+    background-image: url('../images/client-icons/element.svg');
+}
+
+.ClientView .icon.weechat {
+    background-image: url('../images/client-icons/weechat.svg');
+}
+
+.ClientView .actions a.badge {
+    display: inline-block;
+    height: 40px;
+    margin: 8px 16px 8px 0;
+}
+
+.ClientView .actions img {
+    height: 100%;
+}

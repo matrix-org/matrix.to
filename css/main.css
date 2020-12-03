@@ -14,6 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@import url('spinner.css');
+@import url('client.css');
+@import url('preview.css');
+@import url('create.css');
+
 :root {
 	--app-background: #f4f4f4;
 	--background: #ffffff;
@@ -24,6 +29,8 @@ limitations under the License.
 	--error: #d6001c;
 	--link: #0098d4;
 	--borders: #f4f4f4;
+    --lightgrey: #E6E6E6;
+    --spinner-stroke-size: 2px;
 }
 
 html {
@@ -68,14 +75,6 @@ textarea {
 
 .card, .footer {
     padding: 2rem;
-}
-
-.PreviewView .preview {
-    text-align: center;
-}
-
-.PreviewView .avatar {
-	border-radius: 100%;
 }
 
 .hidden {
@@ -134,45 +133,6 @@ button.text:hover {
     cursor: pointer;
 }
 
-.ClientListView .list {
-    padding: 16px 0;
-}
-
-.ClientView {
-    border: 1px solid #E6E6E6;
-    border-radius: 8px;
-    margin: 16px 0;
-    padding: 16px;
-}
-
-.ClientView .header {
-    display: flex;
-}
-
-.ClientView .description {
-    flex: 1;
-}
-
-.ClientView h3 {
-    margin-top: 0;
-}
-
-.ClientView .icon {
-    border-radius: 8px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 60px;
-    height: 60px;
-}
-
-.ClientView .icon.element-io {
-    background-image: url('../images/client-icons/element.svg');
-}
-
-.ClientView .icon.weechat {
-    background-image: url('../images/client-icons/weechat.svg');
-}
-
 .primary, .secondary {
     text-decoration: none;
     font-weight: bold;
@@ -212,20 +172,4 @@ input[type='text'].large {
     display: block;
     width: 100%;
     box-sizing: border-box;
-}
-
-.ClientView .actions a.badge {
-    display: inline-block;
-    height: 40px;
-    margin: 8px 16px 8px 0;
-}
-
-.ClientView .actions img {
-    height: 100%;
-}
-
-.CreateLinkView h2 {
-    padding: 0 40px;
-    word-break: break-all;
-    text-align: center;
 }

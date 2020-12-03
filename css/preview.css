@@ -1,0 +1,117 @@
+.PreviewView {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.PreviewView h1 {
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 8px;
+}
+
+.PreviewView .avatarContainer {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.PreviewView .avatar {
+    border-radius: 100%;
+    width: 64px;
+    height: 64px;
+}
+
+.PreviewView .spinner {
+    width: 32px;
+    height: 32px;
+}
+
+.PreviewView .avatar.loading {
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PreviewView .identifier {
+    color: var(--grey);
+    font-size: 12px;
+    margin: 8px 0;
+}
+
+.PreviewView .identifier.placeholder {
+    height: 1em;
+    margin: 16px 30%;
+}
+
+.PreviewView .memberCount {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+}
+
+.PreviewView .memberCount p:not(.placeholder) {
+    background-image: url(../images/member-icon.svg);
+    background-repeat: no-repeat;
+    background-position: 2px center;
+    padding: 0 4px 0 24px;
+}
+
+.PreviewView .memberCount.loading {
+    margin: 16px 0;
+}
+
+.PreviewView .memberCount p {
+    background-color: var(--lightgrey);
+    padding: 0 4px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin: 0;
+}
+
+.PreviewView .memberCount p.placeholder {
+    height: 1.5em;
+    width: 80px;
+}
+
+.PreviewView .topic {
+    font-size: 12px;
+    color: var(--grey);
+    margin: 32px;
+}
+
+.PreviewView .topic.loading {
+    display: block;
+}
+
+.PreviewView .topic.loading .placeholder {
+    height: 0.8em;
+    display: block;
+    margin: 12px 0;
+}
+
+.PreviewView .topic.loading .placeholder:nth-child(2) {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.placeholder {
+    border-radius: 1em;
+    --flash-bg: #ddd;
+    --flash-fg: #eee;
+    background: linear-gradient(120deg,
+        var(--flash-bg),
+        var(--flash-bg) 10%,
+        var(--flash-fg) calc(10% + 25px),
+        var(--flash-bg) calc(10% + 50px)
+    );
+    animation: flash 2s ease-in-out infinite;
+    background-size: 200%;
+}
+
+@keyframes flash {
+    0% { background-position-x: 0; }
+    50% { background-position-x: -80%; }
+    51% { background-position-x: 40%; }
+    100% { background-position-x: 0%; }
+}

@@ -22,14 +22,12 @@ export class OpenLinkView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "OpenLinkView card"}, [
 			t.view(new PreviewView(vm.previewViewModel)),
-			t.div({className: {hidden: vm => vm.previewLoading}}, [
-				t.p({className: {hidden: vm => vm.clientsViewModel}}, t.button({
-					className: "primary fullwidth",
-					onClick: () => vm.showClients()
-				}, vm => vm.showClientsLabel)),
-				t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
-				t.p(["Preview provided by ", vm => vm.previewDomain]),
-			])
+			t.p({className: {accept: true, hidden: vm => vm.clientsViewModel}}, t.button({
+				className: "primary fullwidth",
+				onClick: () => vm.showClients()
+			}, vm => vm.showClientsLabel)),
+			t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
+			t.p({className: {hidden: vm => !vm.previewDomain}}, ["Preview provided by ", vm => vm.previewDomain]),
 		]);
 	}
 }
