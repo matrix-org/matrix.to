@@ -60,10 +60,8 @@ async function build() {
     await assets.write(`bundle-legacy.js`, await buildJsLegacy("src/main.js", assets, ["src/polyfill.js"]));
     await assets.write(`bundle.css`, await buildCss("css/main.css", assets));
     await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
-
+    await assets.writeUnhashed("index.html", await buildHtml(assets));
     const globalHash = assets.hashForAll();
-
-    await buildHtml(assets);
     console.log(`built matrix.to ${version} (${globalHash}) successfully with ${assets.size} files`);
 }
 
@@ -77,10 +75,7 @@ async function buildHtml(assets) {
         `<script type="text/javascript" nomodule>bundle.main(document.body);</script>`
     ];
     doc("script#main").replaceWith(mainScripts.join(""));
-    const html = doc.html();
-    // include in the global hash, even not hashed itself
-    assets.addToHashForAll("index.html", html);
-    await assets.writeUnhashed("index.html", html);
+    return doc.html();
 }
 
 function createReplaceUrlPlugin(assets) {
