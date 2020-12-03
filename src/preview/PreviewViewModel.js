@@ -93,6 +93,9 @@ export class PreviewViewModel extends ViewModel {
 		this.memberCount = publicRoom?.num_joined_members;
 		this.topic = publicRoom?.topic;
 		this.identifier = publicRoom?.canonical_alias || link.identifier;
+        if (this.identifier === this.name) {
+            this.identifier = null;
+        }
 	}
 
     _setNoPreview(link) {
