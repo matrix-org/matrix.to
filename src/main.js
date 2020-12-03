@@ -24,7 +24,7 @@ export async function main(container) {
 	const vm = new RootViewModel({
 		request: xhrRequest,
 		openLink: url => location.href = url,
-		platforms: guessApplicablePlatforms(navigator.userAgent),
+		platforms: guessApplicablePlatforms(navigator.userAgent, navigator.platform),
 		preferences: new Preferences(window.localStorage),
 		origin: location.origin,
 	});
