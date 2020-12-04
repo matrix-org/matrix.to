@@ -2,6 +2,25 @@
     padding: 16px 0;
 }
 
+.ClientListView > h2 {
+    display: flex;
+    align-items: center;
+}
+
+.ClientListView > h2 .back {
+    background: url('../images/chevron-left.svg');
+    background-color: none;
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    width: 24px;
+    height: 24px;
+    padding: 16px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
 .ClientView {
     border: 1px solid #E6E6E6;
     border-radius: 8px;
@@ -29,6 +48,7 @@
     height: 60px;
     overflow: hidden;
     display: block;
+    margin-left: 8px;
 }
 
 .ClientView .actions a.badge {
