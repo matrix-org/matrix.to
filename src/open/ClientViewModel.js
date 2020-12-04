@@ -67,15 +67,13 @@ export class ClientViewModel extends ViewModel {
 				});
 			}
 		}
-		if (actions.length === 0) {
-			actions.push({
-				label: `Visit app homepage`,
-				url: client.homepage,
-				primary: true,
-				kind: "homepage",
-				activated: () => {},
-			});
-		}
+		actions.push({
+			label: `Visit app homepage`,
+			url: client.homepage,
+			primary: true,
+			kind: "homepage",
+			activated: () => {},
+		});
 		return actions;
 	}
 

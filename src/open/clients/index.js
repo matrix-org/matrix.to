@@ -16,10 +16,14 @@ limitations under the License.
 
 import {Element} from "./Element.js";
 import {Weechat} from "./Weechat.js";
+import {Nheko} from "./Nheko.js";
+import {Fractal} from "./Fractal.js";
 
 export function createClients() {
 	return [
 		new Element(),
 		new Weechat(),
+        new Nheko(),
+        new Fractal(),
 	];
 }

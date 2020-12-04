@@ -60,3 +60,24 @@
 .ClientView .actions img {
     height: 100%;
 }
+
+.InstallClientView .instructions button {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: var(--link);
+    padding: 4px;
+    border-radius: 4px;
+    border: none;
+    width: 24px;
+    height: 24px;
+    margin: 8px;
+    vertical-align: middle;
+}
+
+.InstallClientView .instructions button.copy {
+    background-image: url('../images/copy.svg');
+}
+
+.InstallClientView .instructions button.tick {
+    background-image: url('../images/tick.svg');
+}

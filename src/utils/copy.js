@@ -22,15 +22,20 @@ function selectNode(node) {
     selection.addRange(range);
 }
 
+export function copy(text, parent) {
+    const span = document.createElement("span");
+    span.innerText = text;
+    parent.appendChild(span);
+    selectNode(span);
+    const result = document.execCommand("copy");
+    parent.removeChild(span);
+    return result;
+}
+
 export function copyButton(t, getCopyText, label, classNames) {
     return t.button({className: `${classNames} icon copy`, onClick: evt => {
         const button = evt.target;
-        const text = getCopyText();
-        const span = document.createElement("span");
-        span.innerText = text;
-        button.parentElement.appendChild(span);
-        selectNode(span);
-        if (document.execCommand("copy")) {
+        if (copy(getCopyText(), button)) {
             button.innerText = "Copied!";
             button.classList.remove("copy");
             button.classList.add("tick");
@@ -40,6 +45,5 @@ export function copyButton(t, getCopyText, label, classNames) {
                 button.innerText = label;
             }, 2000);
         }
-        span.parentElement.removeChild(span);
     }}, label);
 }

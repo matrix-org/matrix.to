@@ -55,7 +55,8 @@ export class ClientListViewModel extends ViewModel {
 
 	_filterClients() {
 		this.clientList = this._clients.filter(client => {
-			const isStable = this.platforms.map(p => client.getMaturity(p)).includes(Maturity.Stable);
+            const platformMaturities = this.platforms.map(p => client.getMaturity(p));
+			const isStable = platformMaturities.includes(Maturity.Stable) || platformMaturities.includes(Maturity.Beta);
 			const isSupported = client.platforms.some(p => this.platforms.includes(p));
 			if (!this._showExperimental && !isStable) {
 				return false;

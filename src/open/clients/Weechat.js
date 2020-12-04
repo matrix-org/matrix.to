@@ -20,7 +20,6 @@ import {Maturity, Platform, LinkKind, WebsiteLink} from "../types.js";
  * Information on how to deep link to a given matrix client.
  */
 export class Weechat {
-	/* should only contain alphanumerical and -_, no dots (needs to be usable as css class) */
 	get id() { return "weechat"; }
 	getName(platform) { return "Weechat"; }
     get icon() { return "images/client-icons/weechat.svg"; }

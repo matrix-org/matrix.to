@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
-import {copyButton} from "../utils/copy.js";
+import {copy} from "../utils/copy.js";
 import {text} from "../utils/html.js";
 
 function formatPlatforms(platforms) {
@@ -66,10 +66,18 @@ class InstallClientView extends TemplateView {
 		const children = [];
 
 		if (vm.textInstructions) {
-			children.push(t.p({}, vm.textInstructions));
-            if (vm.copyString) {
-                children.push(t.p(copyButton(t, () => vm.copyString, "Copy invite", "fullwidth primary")));
-            }
+            const copyButton = t.button({
+                className: "copy",
+                onClick: evt => {
+                    if (copy(vm.copyString, copyButton.parentElement)) {
+                        copyButton.className = "tick";
+                        setTimeout(() => {
+                            copyButton.className = "copy";
+                        }, 2000);
+                    }
+                }
+            });
+			children.push(t.p({className: "instructions"}, [vm.textInstructions, copyButton]));
 		}
 
 		const actions = t.div({className: "actions"}, vm.actions.map(a => {
@@ -78,6 +86,7 @@ class InstallClientView extends TemplateView {
 				case "play-store": badgeUrl = "images/google-play-us.svg"; break;
 				case "fdroid": badgeUrl = "images/fdroid-badge.png"; break;
 				case "apple-app-store": badgeUrl = "images/app-store-us-alt.svg"; break;
+                case "flathub": badgeUrl = "images/flathub-badge.svg"; break;
 			}
 			return t.a({
 				href: a.url,
