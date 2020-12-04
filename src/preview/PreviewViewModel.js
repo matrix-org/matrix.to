@@ -32,13 +32,13 @@ export class PreviewViewModel extends ViewModel {
 		this.identifier = null;
 		this.memberCount = null;
 		this.topic = null;
-		this.previewDomain = null;
+		this.domain = null;
+        this.failed = false;
 	}
 
 	async load() {
 		this.loading = true;
 		this.emitChange();
-        // await new Promise(r => setTimeout(r, 5000));
 		for (const server of this._consentedServers) {
 			try {
 				const homeserver = await resolveServer(this.request, server);
@@ -51,7 +51,7 @@ export class PreviewViewModel extends ViewModel {
 						break;
 				}
 				// assume we're done if nothing threw
-				this.previewDomain = server;
+				this.domain = server;
                 this.loading = false;
         		this.emitChange();
                 return;
@@ -59,8 +59,13 @@ export class PreviewViewModel extends ViewModel {
 				continue;
 			}
 		}
+
 		this._setNoPreview(this._link);
         this.loading = false;
+        if (this._consentedServers.length) {
+            this.domain = this._consentedServers[this._consentedServers.length - 1];
+            this.failed = true;
+        }
         this.emitChange();
 	}
 

@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import {Platform} from "./Platform.js";
+import {EventEmitter} from "./utils/ViewModel.js";
 
-export class Preferences {
+export class Preferences extends EventEmitter {
 	constructor(localStorage) {
+        super();
 		this._localStorage = localStorage;
 		this.clientId = null;
 		// used to differentiate web from native if a client supports both
@@ -41,11 +43,15 @@ export class Preferences {
 		platform = Platform[platform];
 		this.platform = platform;
 		this._localStorage.setItem("preferred_client", JSON.stringify({id, platform}));
+        this.emit("canClear")
 	}
 
-	setHomeservers(homeservers) {
+	setHomeservers(homeservers, persist) {
         this.homeservers = homeservers;
-        this._localStorage.setItem("consented_servers", JSON.stringify(homeservers));
+        if (persist) {
+            this._localStorage.setItem("consented_servers", JSON.stringify(homeservers));
+            this.emit("canClear");
+        }
 	}
 
 	clear() {

@@ -19,6 +19,7 @@ import {ClientListViewModel} from "./ClientListViewModel.js";
 import {ClientViewModel} from "./ClientViewModel.js";
 import {PreviewViewModel} from "../preview/PreviewViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
+import {orderedUnique} from "../utils/unique.js";
 
 export class ServerConsentViewModel extends ViewModel {
 	constructor(options) {
@@ -47,7 +48,7 @@ export class ServerConsentViewModel extends ViewModel {
         try {
             const domain = new URL(urlStr).hostname;
             if (/((?:[0-9a-zA-Z][0-9a-zA-Z-]{1,61}\.)+)(xn--[a-z0-9]+|[a-z]+)/.test(domain) || domain === "localhost") {
-                this.selectServer(urlStr);
+                this.selectServer(domainOrUrl);
                 return true;
             }
         } catch (err) {}
@@ -55,11 +56,11 @@ export class ServerConsentViewModel extends ViewModel {
         return false;
     }
 
-    continueWithSelection() {
+    continueWithSelection(askEveryTime) {
         // keep previously consented servers
         const homeservers = this.preferences.homeservers || [];
         homeservers.unshift(this.selectedServer);
-        this.preferences.setHomeservers(homeservers);
+        this.preferences.setHomeservers(orderedUnique(homeservers), !askEveryTime);
         this.done();
     }
 

@@ -50,7 +50,7 @@ export class ServerConsentView extends TemplateView {
             t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
                 t.mapView(vm => vm.showSelectServer, show => show ? new ServerOptions(vm) : null),
                 t.div({className: "actions"}, [
-                    t.label([t.input({type: "checkbox", name: "persist"}), "Ask every time"]),
+                    t.label([t.input({type: "checkbox", name: "askEveryTime"}), "Ask every time"]),
                     t.input({type: "submit", value: "Continue", className: "primary fullwidth"})
                 ])
             ])
@@ -59,7 +59,8 @@ export class ServerConsentView extends TemplateView {
 
     _onSubmit(evt) {
         evt.preventDefault();
-        this.value.continueWithSelection();
+        const {askEveryTime} = evt.target.elements;
+        this.value.continueWithSelection(askEveryTime.checked);
     }
 }
 

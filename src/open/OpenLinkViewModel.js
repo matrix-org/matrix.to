@@ -32,17 +32,21 @@ export class OpenLinkViewModel extends ViewModel {
         this.clientsViewModel = null;
 		this.previewLoading = false;
         if (this.preferences.homeservers === null) {
-            this.serverConsentViewModel = new ServerConsentViewModel(this.childOptions({
-                servers: this._link.servers,
-                done: () => {
-                    this.serverConsentViewModel = null;
-                    this._showLink();
-                }
-            }));
+            this._showServerConsent();
         } else {
             this._showLink();
         }
 	}
+
+    _showServerConsent() {
+        this.serverConsentViewModel = new ServerConsentViewModel(this.childOptions({
+            servers: this._link.servers,
+            done: () => {
+                this.serverConsentViewModel = null;
+                this._showLink();
+            }
+        }));
+    }
 
     async _showLink() {
         const preferredClient = this.preferences.clientId ? this._clients.find(c => c.id === this.preferences.clientId) : null;
@@ -63,12 +67,23 @@ export class OpenLinkViewModel extends ViewModel {
     }
 
 	get previewDomain() {
-		return this.previewViewModel.previewDomain;
+		return this.previewViewModel?.domain;
 	}
+
+    get previewFailed() {
+        return this.previewViewModel?.failed;
+    }
 
 	get showClientsLabel() {
 		return getLabelForLinkKind(this._link.kind);
 	}
+
+    changeServer() {
+        this.previewViewModel = null;
+        this.clientsViewModel = null;
+        this._showServerConsent();
+        this.emitChange();
+    }
 
 	showClients() {
 		if (!this.clientsViewModel) {

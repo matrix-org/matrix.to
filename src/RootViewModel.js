@@ -29,6 +29,9 @@ export class RootViewModel extends ViewModel {
 		this.openLinkViewModel = null;
 		this.createLinkViewModel = null;
         this.loadServerPolicyViewModel = null;
+        this.preferences.on("canClear", () => {
+            this.emitChange();
+        });
 	}
 
 	_updateChildVMs(oldLink) {
@@ -37,7 +40,7 @@ export class RootViewModel extends ViewModel {
 			if (!oldLink || !oldLink.equals(this.link)) {
 				this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
 					link: this.link,
-					clients: createClients()
+					clients: createClients(),
 				}));
 			}
 		} else {

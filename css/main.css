@@ -179,6 +179,11 @@ input[type='text'].large {
     box-sizing: border-box;
 }
 
+.OpenLinkView .previewSource {
+    color: var(--grey);
+    font-size: 12px;
+}
+
 .ServerConsentView .actions {
     margin-top: 24px;
     display: flex;
