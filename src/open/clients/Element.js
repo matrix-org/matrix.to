@@ -21,8 +21,7 @@ import {Maturity, Platform, LinkKind,
  * Information on how to deep link to a given matrix client.
  */
 export class Element {
-	/* should only contain alphanumerical and -_, no dots (needs to be usable as css class) */
-	get id() { return "element-io"; }
+	get id() { return "element.io"; }
 
 	get platforms() {
 		return [
@@ -31,6 +30,10 @@ export class Element {
 			Platform.DesktopWeb
 		];
 	}
+
+    get icon() {
+        return "images/client-icons/element.svg";
+    }
 
     get appleAssociatedAppId() { return "7J4U792NQT.im.vector.app"; }
 

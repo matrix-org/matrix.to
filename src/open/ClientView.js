@@ -34,7 +34,7 @@ export class ClientView extends TemplateView {
 					t.p(vm.description),
 					t.p(formatPlatforms(vm.availableOnPlatformNames)),
 				]),
-				t.div({className: `icon ${vm.clientId}`})
+				t.img({className: "clientIcon", src: vm.iconUrl})
 			]),
 			t.mapView(vm => vm.stage, stage => {
 				switch (stage) {

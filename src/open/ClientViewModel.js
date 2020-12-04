@@ -90,6 +90,10 @@ export class ClientViewModel extends ViewModel {
 		return this._client.id;
 	}
 
+    get iconUrl() {
+        return this._client.icon;
+    }
+
 	get stage() {
 		return this._showOpen ? "open" : "install";
 	}

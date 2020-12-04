@@ -23,6 +23,7 @@ export class Weechat {
 	/* should only contain alphanumerical and -_, no dots (needs to be usable as css class) */
 	get id() { return "weechat"; }
 	getName(platform) { return "Weechat"; }
+    get icon() { return "images/client-icons/weechat.svg"; }
     get author() { return "Poljar"; }
     get homepage() { return "https://github.com/poljar/weechat-matrix"; }
 	get platforms() { return [Platform.Windows, Platform.macOS, Platform.Linux]; }

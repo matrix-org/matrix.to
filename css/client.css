@@ -21,20 +21,14 @@
     margin-top: 0;
 }
 
-.ClientView .icon {
+.ClientView .clientIcon {
     border-radius: 8px;
     background-repeat: no-repeat;
     background-size: cover;
     width: 60px;
     height: 60px;
-}
-
-.ClientView .icon.element-io {
-    background-image: url('../images/client-icons/element.svg');
-}
-
-.ClientView .icon.weechat {
-    background-image: url('../images/client-icons/weechat.svg');
+    overflow: hidden;
+    display: block;
 }
 
 .ClientView .actions a.badge {
