@@ -61,6 +61,10 @@ textarea {
     font-style: normal;
 }
 
+button {
+    cursor: pointer;
+}
+
 button, input {
     font-size: inherit;
     font-weight: inherit;
