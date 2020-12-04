@@ -18,6 +18,7 @@ limitations under the License.
 @import url('client.css');
 @import url('preview.css');
 @import url('create.css');
+@import url('open.css');
 
 :root {
 	--app-background: #f4f4f4;
@@ -156,22 +157,14 @@ button.text:hover {
     border-radius: 32px;
 }
 
-.primary.icon {
+.primary.icon, .secondary.icon {
     background-repeat: no-repeat;
     background-position: 12px center;
 }
 
-.icon.link {
-    background-image: url('../images/link.svg');
-}
-
-.icon.tick {
-    background-image: url('../images/tick.svg');
-}
-
-.icon.copy {
-    background-image: url('../images/copy.svg');
-}
+.icon.link { background-image: url('../images/link.svg'); }
+.icon.tick { background-image: url('../images/tick.svg'); }
+.icon.copy { background-image: url('../images/copy.svg'); }
 
 button.primary, input[type='submit'].primary, button.secondary, input[type='submit'].secondary {
     border: none;
@@ -193,44 +186,6 @@ input[type='text'].large {
     width: 100%;
     box-sizing: border-box;
 }
-
-.OpenLinkView .previewSource {
-    color: var(--grey);
-    font-size: 12px;
-}
-
-.ServerConsentView .actions {
-    margin-top: 24px;
-    display: flex;
-    align-items: center;
-}
-
-.ServerConsentView input[type=submit] {
-    flex: 1;
-    margin-left: 12px;
-}
-
-.ServerOptions div {
-    margin: 8px 0;
-}
-
-.ServerOptions label {
-    display: flex;
-    align-items: center;
-}
-
-.ServerOptions label > span,
-.ServerOptions label > .line {
-    margin-left: 8px;
-}
-
-.ServerOptions label > .line {
-    flex: 1;
-    border: none;
-    border-bottom: 1px solid var(--grey);
-    padding: 4px 0;
-}
-
 
 .LoadServerPolicyView {
     display: flex;
