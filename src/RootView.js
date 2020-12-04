@@ -17,12 +17,14 @@ limitations under the License.
 import {TemplateView} from "./utils/TemplateView.js";
 import {OpenLinkView} from "./open/OpenLinkView.js";
 import {CreateLinkView} from "./create/CreateLinkView.js";
+import {LoadServerPolicyView} from "./policy/LoadServerPolicyView.js";
 
 export class RootView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "RootView"}, [
 			t.mapView(vm => vm.openLinkViewModel, vm => vm ? new OpenLinkView(vm) : null),
 			t.mapView(vm => vm.createLinkViewModel, vm => vm ? new CreateLinkView(vm) : null),
+            t.mapView(vm => vm.loadServerPolicyViewModel, vm => vm ? new LoadServerPolicyView(vm) : null),
 			t.div({className: "footer"}, [
 				t.p(t.img({src: "images/matrix-logo.svg"})),
 				t.p(["This invite uses ", externalLink(t, "https://matrix.org", "Matrix"), ", an open network for secure, decentralized communication."]),

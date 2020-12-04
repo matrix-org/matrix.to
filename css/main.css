@@ -173,3 +173,17 @@ input[type='text'].large {
     width: 100%;
     box-sizing: border-box;
 }
+
+.LoadServerPolicyView {
+    display: flex;
+}
+
+.LoadServerPolicyView .spinner {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+}
+
+.LoadServerPolicyView h2 {
+    margin-top: 0;
+}

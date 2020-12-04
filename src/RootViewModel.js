@@ -19,6 +19,7 @@ import {ViewModel} from "./utils/ViewModel.js";
 import {OpenLinkViewModel} from "./open/OpenLinkViewModel.js";
 import {createClients} from "./open/clients/index.js";
 import {CreateLinkViewModel} from "./create/CreateLinkViewModel.js";
+import {LoadServerPolicyViewModel} from "./policy/LoadServerPolicyViewModel.js";
 import {Platform} from "./Platform.js";
 
 export class RootViewModel extends ViewModel {
@@ -27,6 +28,7 @@ export class RootViewModel extends ViewModel {
 		this.link = null;
 		this.openLinkViewModel = null;
 		this.createLinkViewModel = null;
+        this.loadServerPolicyViewModel = null;
 	}
 
 	_updateChildVMs(oldLink) {
@@ -48,9 +50,15 @@ export class RootViewModel extends ViewModel {
 	}
 
 	updateHash(hash) {
-		const oldLink = this.link;
-		this.link = Link.parse(hash);
-		this._updateChildVMs(oldLink);
+        if (hash.startsWith("#/policy/")) {
+            const server = hash.substr(9);
+            this.loadServerPolicyViewModel = new LoadServerPolicyViewModel(this.childOptions({server}));
+            this.loadServerPolicyViewModel.load();
+        } else {
+    		const oldLink = this.link;
+    		this.link = Link.parse(hash);
+    		this._updateChildVMs(oldLink);
+        }
 	}
 
 	clearPreferences() {
