@@ -21,7 +21,7 @@ function selectNode(node) {
     let selection = window.getSelection();
     selection.removeAllRanges();
     let range = document.createRange();
-    range.selectNode(copyNode);
+    range.selectNode(node);
     selection.addRange(range);
 }
 
