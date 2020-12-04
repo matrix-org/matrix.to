@@ -37,32 +37,37 @@ export class PreviewViewModel extends ViewModel {
 	}
 
 	async load() {
-		this.loading = true;
-		this.emitChange();
-		for (const server of this._consentedServers) {
-			try {
-				const homeserver = await resolveServer(this.request, server);
-				switch (this._link.kind) {
-					case LinkKind.User:
-						await this._loadUserPreview(homeserver, this._link.identifier);
-						break;
-					case LinkKind.Room:
-						await this._loadRoomPreview(homeserver, this._link);
-						break;
-				}
-				// assume we're done if nothing threw
-				this.domain = server;
-                this.loading = false;
-        		this.emitChange();
-                return;
-			} catch (err) {
-				continue;
-			}
-		}
+        const {kind} = this._link; 
+        const supportsPreview = kind === LinkKind.User || kind === LinkKind.Room || kind === LinkKind.Event;
+        if (supportsPreview) {
+    		this.loading = true;
+    		this.emitChange();
+    		for (const server of this._consentedServers) {
+    			try {
+    				const homeserver = await resolveServer(this.request, server);
+    				switch (this._link.kind) {
+    					case LinkKind.User:
+    						await this._loadUserPreview(homeserver, this._link.identifier);
+    						break;
+    					case LinkKind.Room:
+                        case LinkKind.Event:
+    						await this._loadRoomPreview(homeserver, this._link);
+    						break;
+    				}
+    				// assume we're done if nothing threw
+    				this.domain = server;
+                    this.loading = false;
+            		this.emitChange();
+                    return;
+    			} catch (err) {
+    				continue;
+    			}
+    		}
+        }
 
-		this._setNoPreview(this._link);
         this.loading = false;
-        if (this._consentedServers.length) {
+		this._setNoPreview(this._link);
+        if (this._consentedServers.length && supportsPreview) {
             this.domain = this._consentedServers[this._consentedServers.length - 1];
             this.failed = true;
         }

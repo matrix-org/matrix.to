@@ -47,10 +47,6 @@ export class HomeServer {
 		return body;
 	}
 
-	getGroupProfile(groupId) {
-		//`/_matrix/client/r0/groups/${groupId}/profile`
-	}
-
 	async findPublicRoomById(roomId) {
 		const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/directory/list/room/${encodeURIComponent(roomId)}`).response();
 		if (status !== 200 || body.visibility !== "public") {

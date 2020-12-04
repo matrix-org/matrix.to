@@ -19,9 +19,8 @@ import {orderedUnique} from "./utils/unique.js";
 
 const ROOMALIAS_PATTERN = /^#([^:]*):(.+)$/;
 const ROOMID_PATTERN = /^!([^:]*):(.+)$/;
-const EVENT_WITH_ROOMID_PATTERN = /^[!]([^:]*):(.+)\/\$([^:]+):(.+)$/;
-const EVENT_WITH_ROOMALIAS_PATTERN = /^[#]([^:]*):(.+)\/\$([^:]+):(.+)$/;
 const USERID_PATTERN = /^@([^:]+):(.+)$/;
+const EVENTID_PATTERN = /^$([^:]+):(.+)$/;
 const GROUPID_PATTERN = /^\+([^:]+):(.+)$/;
 
 export const IdentifierKind = createEnum(
@@ -71,7 +70,7 @@ export class Link {
 		if (!fragment) {
 			return null;
 		}
-		let [identifier, queryParams] = fragment.split("?");
+		let [linkStr, queryParams] = fragment.split("?");
 
 		let viaServers = [];
 		if (queryParams) {
@@ -81,29 +80,13 @@ export class Link {
 				.map(([,value]) => value);
 		}
 
-		if (identifier.startsWith("#/")) {
-			identifier = identifier.substr(2);
+		if (linkStr.startsWith("#/")) {
+			linkStr = linkStr.substr(2);
 		}
 
-		let kind;
+        const [identifier, eventId] = linkStr.split("/");
+
 		let matches;
-		// longest first, so they dont get caught by ROOMALIAS_PATTERN and ROOMID_PATTERN
-		matches = EVENT_WITH_ROOMID_PATTERN.exec(identifier);
-		if (matches) {
-			const roomServer = matches[2];
-			const messageServer = matches[4];
-			const roomLocalPart = matches[1];
-			const messageLocalPart = matches[3];
-			return new Link(viaServers, IdentifierKind.RoomId, roomLocalPart, roomServer, messageLocalPart, messageServer);
-		}
-		matches = EVENT_WITH_ROOMALIAS_PATTERN.exec(identifier);
-		if (matches) {
-			const roomServer = matches[2];
-			const messageServer = matches[4];
-			const roomLocalPart = matches[1];
-			const messageLocalPart = matches[3];
-			return new Link(viaServers, IdentifierKind.RoomAlias, roomLocalPart, roomServer, messageLocalPart, messageServer);
-		}
 		matches = USERID_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
@@ -114,13 +97,13 @@ export class Link {
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(viaServers, IdentifierKind.RoomAlias, localPart, server);
+			return new Link(viaServers, IdentifierKind.RoomAlias, localPart, server, eventId);
 		}
 		matches = ROOMID_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(viaServers, IdentifierKind.RoomId, localPart, server);
+			return new Link(viaServers, IdentifierKind.RoomId, localPart, server, eventId);
 		}
 		matches = GROUPID_PATTERN.exec(identifier);
 		if (matches) {
@@ -131,16 +114,13 @@ export class Link {
 		return null;
 	}
 
-	constructor(viaServers, identifierKind, localPart, server, messageLocalPart = null, messageServer = null) {
+	constructor(viaServers, identifierKind, localPart, server, eventId) {
 		const servers = [server];
-		if (messageServer) {
-			servers.push(messageServer);
-		}
 		servers.push(...viaServers);
 		this.servers = orderedUnique(servers);
 		this.identifierKind = identifierKind;
 		this.identifier = `${asPrefix(identifierKind)}${localPart}:${server}`;
-		this.eventId = messageLocalPart ? `$${messageLocalPart}:${messageServer}` : null;
+		this.eventId = eventId;
 	}
 
 	get kind() {
