@@ -21,6 +21,7 @@ import {Link} from "../Link.js";
 export class CreateLinkViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
+        this._link = null;
 		this.previewViewModel = null;
 	}
 
@@ -48,5 +49,11 @@ export class CreateLinkViewModel extends ViewModel {
     	if (this._link) {
         	return `${this.origin}/#${this._link.toFragment()}`;
     	}
+    }
+
+    clear() {
+        this._link = null;
+        this.previewViewModel = null;
+        this.emitChange();
     }
 }

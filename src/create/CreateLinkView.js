@@ -54,12 +54,14 @@ export class CreateLinkView extends TemplateView {
             t.div({className: {hidden: vm => !vm.linkUrl}}, [
                 t.h2(link),
                 t.div(copyButton(t, link, "Copy link", "fullwidth primary")),
+                t.div(t.button({className: "secondary fullwidth", onClick: () => this._clear()}, "Or create another link")),
             ]),
 			t.form({action: "#", onSubmit: evt => this._onSubmit(evt), className: {hidden: vm => vm.linkUrl}}, [
 				t.div(t.input({
 					className: "fullwidth large",
 					type: "text",
 					name: "identifier",
+                    required: true,
 					placeholder: "#room:example.com, @user:example.com",
                     onChange: evt => this._onIdentifierChange(evt)
 				})),
@@ -71,8 +73,10 @@ export class CreateLinkView extends TemplateView {
 	_onSubmit(evt) {
 		evt.preventDefault();
 		const form = evt.target;
-		const identifier = form.elements.identifier.value;
-		this.value.createLink(identifier);
+		const {identifier} = form.elements;
+		this.value.createLink(identifier.value);
+        identifier.value = "";
+
 	}
 
     _onIdentifierChange(evt) {
@@ -82,5 +86,11 @@ export class CreateLinkView extends TemplateView {
         } else {
             inputField.setCustomValidity("");
         }
+    }
+
+    _clear() {
+        this.value.clear();
+        const textField = this.root().querySelector("input[name=identifier]");
+        textField.focus();
     }
 }
