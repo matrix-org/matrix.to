@@ -40,7 +40,7 @@ class ShowLinkView extends TemplateView {
             }, vm => vm.showClientsLabel)),
             t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
             t.p({className: {previewSource: true, hidden: vm => !vm.previewDomain}}, [
-                vm => vm.previewFailed ? `${vm.previewDomain} did not return a preview.` : `Preview provided by ${vm.previewDomain}.`,
+                vm => vm.previewFailed ? `${vm.previewDomain} has not returned a preview.` : `Preview provided by ${vm.previewDomain}.`,
                 " ",
                 t.button({className: "text", onClick: () => vm.changeServer()}, "Change"),
             ]),
