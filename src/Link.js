@@ -58,6 +58,15 @@ export const LinkKind = createEnum(
 )
 
 export class Link {
+    static validateIdentifier(identifier) {
+        return !!(
+            USERID_PATTERN.exec(identifier) ||
+            ROOMALIAS_PATTERN.exec(identifier) || 
+            ROOMID_PATTERN.exec(identifier) ||
+            GROUPID_PATTERN.exec(identifier)
+        );
+    }
+
 	static parse(fragment) {
 		if (!fragment) {
 			return null;

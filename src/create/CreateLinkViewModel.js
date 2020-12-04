@@ -24,6 +24,10 @@ export class CreateLinkViewModel extends ViewModel {
 		this.previewViewModel = null;
 	}
 
+    validateIdentifier(identifier) {
+        return Link.validateIdentifier(identifier);
+    }
+
     async createLink(identifier) {
         this._link = Link.parse(identifier);
         if (this._link) {

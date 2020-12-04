@@ -17,23 +17,53 @@ limitations under the License.
 import {TemplateView} from "../utils/TemplateView.js";
 import {PreviewView} from "../preview/PreviewView.js";
 
+function selectNode(node) {
+    let selection = window.getSelection();
+    selection.removeAllRanges();
+    let range = document.createRange();
+    range.selectNode(copyNode);
+    selection.addRange(range);
+}
+
+function copyButton(t, copyNode, label, classNames) {
+    return t.button({className: `${classNames} icon copy`, onClick: evt => {
+        const button = evt.target;
+        selectNode(copyNode);
+        if (document.execCommand("copy")) {
+            button.innerText = "Copied!";
+            button.classList.remove("copy");
+            button.classList.add("tick");
+            setTimeout(() => {
+                button.classList.remove("tick");
+                button.classList.add("copy");
+                button.innerText = label;
+            }, 2000);
+        }
+    }}, label);
+}
+
 export class CreateLinkView extends TemplateView {
 	render(t, vm) {
+        const link = t.a({href: vm => vm.linkUrl}, vm => vm.linkUrl);
 		return t.div({className: "CreateLinkView card"}, [
 			t.h1(
 				{className: {hidden: vm => vm.previewViewModel}},
 				"Create shareable links to Matrix rooms, users or messages without being tied to any app"
 			),
 			t.mapView(vm => vm.previewViewModel, childVM => childVM ? new PreviewView(childVM) : null),
-			t.h2({className: {hidden: vm => !vm.linkUrl}}, t.a({href: vm => vm.linkUrl}, vm => vm.linkUrl)),
-			t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
+            t.div({className: {hidden: vm => !vm.linkUrl}}, [
+                t.h2(link),
+                t.div(copyButton(t, link, "Copy link", "fullwidth primary")),
+            ]),
+			t.form({action: "#", onSubmit: evt => this._onSubmit(evt), className: {hidden: vm => vm.linkUrl}}, [
 				t.div(t.input({
 					className: "fullwidth large",
 					type: "text",
 					name: "identifier",
-					placeholder: "#room:example.com, @user:example.com"
+					placeholder: "#room:example.com, @user:example.com",
+                    onChange: evt => this._onIdentifierChange(evt)
 				})),
-				t.div(t.input({className: "primary fullwidth", type: "submit", value: "Create link"}))
+				t.div(t.input({className: "primary fullwidth icon link", type: "submit", value: "Create link"}))
 			]),
 		]);
 	}
@@ -44,4 +74,13 @@ export class CreateLinkView extends TemplateView {
 		const identifier = form.elements.identifier.value;
 		this.value.createLink(identifier);
 	}
+
+    _onIdentifierChange(evt) {
+        const inputField = evt.target;
+        if (!this.value.validateIdentifier(inputField.value)) {
+            inputField.setCustomValidity("That doesn't seem valid. Try #room:example.com, @user:example.com or +group:example.com.");
+        } else {
+            inputField.setCustomValidity("");
+        }
+    }
 }

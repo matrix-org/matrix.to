@@ -47,7 +47,6 @@ body {
     height: 100%;
     width: 100%;
     font-size: 14px;
-    line-height: 24px;
     color: var(--font);
     padding: 120px 0 0 0;
     margin: 0;
@@ -142,9 +141,8 @@ button.text:hover {
     text-decoration: none;
     font-weight: bold;
     text-align: center;
-    padding: 8px;
+    padding: 12px 8px;
     margin: 8px 0;
-    line-height: 24px;
 }
 
 .secondary {
@@ -156,6 +154,23 @@ button.text:hover {
     background: var(--link);
     color: var(--background);
     border-radius: 32px;
+}
+
+.primary.icon {
+    background-repeat: no-repeat;
+    background-position: 12px center;
+}
+
+.icon.link {
+    background-image: url('../images/link.svg');
+}
+
+.icon.tick {
+    background-image: url('../images/tick.svg');
+}
+
+.icon.copy {
+    background-image: url('../images/copy.svg');
 }
 
 button.primary, input[type='submit'].primary, button.secondary, input[type='submit'].secondary {
