@@ -61,7 +61,7 @@
 }
 
 .PreviewView .memberCount p:not(.placeholder) {
-    padding: 0 4px 0 24px;
+    padding: 4px 4px 4px 24px;
     border-radius: 8px;
     background-image: url(../images/member-icon.svg);
     background-repeat: no-repeat;
