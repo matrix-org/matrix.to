@@ -74,6 +74,23 @@ export class FDroidLink {
     }
 }
 
+export class FlathubLink {
+    constructor(appId) {
+        this._appId = appId;
+    }
+
+    createInstallURL(link) {
+        return `https://flathub.org/apps/details/${encodeURIComponent(this._appId)}`;
+    }
+
+    get channelId() {
+        return "flathub";
+    }
+
+    get description() {
+        return "Get it on Flathub";
+    }
+}
 
 export class WebsiteLink {
     constructor(url) {
