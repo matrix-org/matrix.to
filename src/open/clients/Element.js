@@ -37,7 +37,7 @@ export class Element {
 	get description() { return 'Fully-featured Matrix client, used by millions.'; }
 
 	get homepage() { return "https://element.io"; }
-	get author() { return "https://element.io"; }
+	get author() { return "Element"; }
 
 	getMaturity(platform) { return Maturity.Stable; }
 
