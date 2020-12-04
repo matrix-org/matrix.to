@@ -18,31 +18,49 @@ import {ViewModel} from "../utils/ViewModel.js";
 import {ClientListViewModel} from "./ClientListViewModel.js";
 import {ClientViewModel} from "./ClientViewModel.js";
 import {PreviewViewModel} from "../preview/PreviewViewModel.js";
+import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
 
 export class OpenLinkViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
-		const {clients, link, consentedServers} = options;
+		const {clients, link} = options;
 		this._link = link;
 		this._clients = clients;
-		this.previewViewModel = new PreviewViewModel(this.childOptions({link, consentedServers}));
+        this.serverConsentViewModel = null;
+		this.previewViewModel = null;
+        this.clientsViewModel = null;
 		this.previewLoading = false;
-		const preferredClient = this.preferences.clientId ? clients.find(c => c.id === this.preferences.clientId) : null;
-		this.clientsViewModel = preferredClient ? new ClientListViewModel(this.childOptions({
-			clients,
-			link,
-			client: preferredClient,
-		})) : null;
+        if (this.preferences.homeservers === null) {
+            this.serverConsentViewModel = new ServerConsentViewModel(this.childOptions({
+                servers: this._link.servers,
+                done: () => {
+                    this.serverConsentViewModel = null;
+                    this._showLink();
+                }
+            }));
+        } else {
+            this._showLink();
+        }
 	}
 
-	async load() {
+    async _showLink() {
+        const preferredClient = this.preferences.clientId ? this._clients.find(c => c.id === this.preferences.clientId) : null;
+        this.clientsViewModel = preferredClient ? new ClientListViewModel(this.childOptions({
+            clients: this._clients,
+            link: this._link,
+            client: preferredClient,
+        })) : null;
+        this.previewViewModel = new PreviewViewModel(this.childOptions({
+            link: this._link,
+            consentedServers: this.preferences.homeservers
+        }));
 		this.previewLoading = true;	
 		this.emitChange();
 		await this.previewViewModel.load();
 		this.previewLoading = false;
 		this.emitChange();
-	}
+    }
 
 	get previewDomain() {
 		return this.previewViewModel.previewDomain;

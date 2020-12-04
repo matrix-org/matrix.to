@@ -37,10 +37,8 @@ export class RootViewModel extends ViewModel {
 			if (!oldLink || !oldLink.equals(this.link)) {
 				this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
 					link: this.link,
-					consentedServers: this.link.servers,
 					clients: createClients()
 				}));
-				this.openLinkViewModel.load();
 			}
 		} else {
 			this.openLinkViewModel = null;

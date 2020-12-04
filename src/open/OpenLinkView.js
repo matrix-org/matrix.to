@@ -17,17 +17,29 @@ limitations under the License.
 import {TemplateView} from "../utils/TemplateView.js";
 import {ClientListView} from "./ClientListView.js";
 import {PreviewView} from "../preview/PreviewView.js";
+import {ServerConsentView} from "./ServerConsentView.js";
 
 export class OpenLinkView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "OpenLinkView card"}, [
-			t.view(new PreviewView(vm.previewViewModel)),
-			t.p({className: {accept: true, hidden: vm => vm.clientsViewModel}}, t.button({
-				className: "primary fullwidth",
-				onClick: () => vm.showClients()
-			}, vm => vm.showClientsLabel)),
-			t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
-			t.p({className: {hidden: vm => !vm.previewDomain}}, ["Preview provided by ", vm => vm.previewDomain]),
+			t.mapView(vm => vm.previewViewModel, previewVM => previewVM ?
+                new ShowLinkView(vm) :
+                new ServerConsentView(vm.serverConsentViewModel)
+            ),
 		]);
 	}
+}
+
+class ShowLinkView extends TemplateView {
+    render(t, vm) {
+        return t.div([
+            t.view(new PreviewView(vm.previewViewModel)),
+            t.p({className: {accept: true, hidden: vm => vm.clientsViewModel}}, t.button({
+                className: "primary fullwidth",
+                onClick: () => vm.showClients()
+            }, vm => vm.showClientsLabel)),
+            t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
+            t.p({className: {hidden: vm => !vm.previewDomain}}, ["Preview provided by ", vm => vm.previewDomain]),
+        ]);
+    }
 }

@@ -22,7 +22,7 @@ export class Preferences {
 		this.clientId = null;
 		// used to differentiate web from native if a client supports both
 		this.platform = null;
-		this.homeservers = [];
+		this.homeservers = null;
 
 		const prefsStr = localStorage.getItem("preferred_client");
 		if (prefsStr) {
@@ -30,6 +30,10 @@ export class Preferences {
 			this.clientId = id;
 			this.platform = Platform[platform];
 		}
+        const serversStr = localStorage.getItem("consented_servers");
+        if (serversStr) {
+            this.homeservers = JSON.parse(serversStr);
+        }
 	}
 
 	setClient(id, platform) {
@@ -40,16 +44,19 @@ export class Preferences {
 	}
 
 	setHomeservers(homeservers) {
-
+        this.homeservers = homeservers;
+        this._localStorage.setItem("consented_servers", JSON.stringify(homeservers));
 	}
 
 	clear() {
 		this._localStorage.removeItem("preferred_client");
+        this._localStorage.removeItem("consented_servers");
 		this.clientId = null;
 		this.platform = null;
+        this.homeservers = null;
 	}
 
 	get canClear() {
-		return !!this.clientId || !!this.platform; 
+		return !!this.clientId || !!this.platform || !!this.homeservers; 
 	}
 }

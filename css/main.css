@@ -61,6 +61,11 @@ textarea {
     font-style: normal;
 }
 
+button, input {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
 .RootView {
     margin: 0 auto;
 	max-width: 480px;
@@ -173,6 +178,39 @@ input[type='text'].large {
     width: 100%;
     box-sizing: border-box;
 }
+
+.ServerConsentView .actions {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.ServerConsentView input[type=submit] {
+    flex: 1;
+    margin-left: 12px;
+}
+
+.ServerOptions div {
+    margin: 8px 0;
+}
+
+.ServerOptions label {
+    display: flex;
+    align-items: center;
+}
+
+.ServerOptions label > span,
+.ServerOptions label > .line {
+    margin-left: 8px;
+}
+
+.ServerOptions label > .line {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid var(--grey);
+    padding: 4px 0;
+}
+
 
 .LoadServerPolicyView {
     display: flex;
