@@ -48,7 +48,7 @@ async function build() {
     // get version number
     const version = JSON.parse(await fs.readFile(path.join(projectDir, "package.json"), "utf8")).version;
     // clear target dir
-    const targetDir = path.join(projectDir, "target/");
+    const targetDir = path.join(projectDir, "build/");
     await removeDirIfExists(targetDir);
     await fs.mkdir(targetDir);
     await fs.mkdir(path.join(targetDir, "images"));
@@ -58,7 +58,7 @@ async function build() {
     assets.addSubMap(imageAssets);
     await assets.write(`bundle-esm.js`, await buildJs("src/main.js", assets));
     await assets.write(`bundle-legacy.js`, await buildJsLegacy("src/main.js", assets, ["src/polyfill.js"]));
-    await assets.write(`bundle.css`, await buildCss("css/main.css", assets));
+    await assets.write(`bundle.css`, await buildCss("css/main.css", targetDir, assets));
     await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
     await assets.writeUnhashed("index.html", await buildHtml(assets));
     const globalHash = assets.hashForAll();
@@ -152,11 +152,11 @@ function buildAppleAssociatedAppsFile(clients) {
     });
 }
 
-async function buildCss(entryPath, assets) {
+async function buildCss(entryPath, targetDir, assets) {
     entryPath = path.join(projectDir, entryPath);
     const assetUrlMapper = ({absolutePath}) => {
         const relPath = absolutePath.substr(projectDir.length);
-        return assets.resolve(path.join(projectDir, "target", relPath));
+        return assets.resolve(path.join(targetDir, relPath));
     };
 
     const preCss = await fs.readFile(entryPath, "utf8");
