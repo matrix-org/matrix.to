@@ -16,6 +16,7 @@ limitations under the License.
 
 import {isWebPlatform, isDesktopPlatform, Platform} from "../Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
+import {IdentifierKind} from "../Link.js";
 
 export class ClientViewModel extends ViewModel {
 	constructor(options) {
@@ -102,6 +103,10 @@ export class ClientViewModel extends ViewModel {
 		return this._client.getLinkInstructions(this._proposedPlatform, this._link);
 	}
 
+    get copyString() {
+        return this._client.getCopyString(this._proposedPlatform, this._link);
+    }
+
 	get showDeepLinkInInstall() {
 		return this._clientCanIntercept && this.deepLink;
 	}
@@ -137,17 +142,3 @@ export class ClientViewModel extends ViewModel {
 		}
 	}
 }
-
-/*
-if (this._preferredClient.getLinkSupport(this.preferences.platform, this._link)) {
-				const deepLink = this._preferredClient.getDeepLink(this.preferences.platform, this._link);
-				this.openLink(deepLink);
-				const protocol = new URL(deepLink).protocol;
-				const isWebProtocol = protocol === "http:" || protocol === "https:";
-				if (!isWebProtocol) {
-					this.missingClientViewModel = new ClientViewModel(this.childOptions({client: this._preferredClient, link: this._link}));
-				}
-			} else {
-				this.acceptInstructions = this._preferredClient.getLinkInstructions(this.preferences.platform, this._link);
-			}
- */

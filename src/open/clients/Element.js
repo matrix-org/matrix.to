@@ -70,6 +70,7 @@ export class Element {
 	}
 
 	getLinkInstructions(platform, link) {}
+    getCopyString(platform, link) {}
 
 	getName(platform) {
 		if (platform === Platform.DesktopWeb || platform === Platform.MobileWeb) {

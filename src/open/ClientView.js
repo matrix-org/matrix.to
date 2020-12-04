@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
+import {copyButton} from "../utils/copy.js";
+import {text} from "../utils/html.js";
 
 function formatPlatforms(platforms) {
 	return platforms.reduce((str, p, i, all) => {
@@ -60,17 +62,14 @@ class OpenClientView extends TemplateView {
 }
 
 class InstallClientView extends TemplateView {
-
-	copyToClipboard() {
-
-	}
-
 	render(t, vm) {
 		const children = [];
 
 		if (vm.textInstructions) {
-			const copy = t.button({className: "primary", onClick: evt => this.copyToClipboard(evt)}, "Copy");
-			children.push(t.p([vm.textInstructions, copy]));
+			children.push(t.p({}, vm.textInstructions));
+            if (vm.copyString) {
+                children.push(t.p(copyButton(t, () => vm.copyString, "Copy invite", "fullwidth primary")));
+            }
 		}
 
 		const actions = t.div({className: "actions"}, vm.actions.map(a => {

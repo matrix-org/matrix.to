@@ -16,31 +16,7 @@ limitations under the License.
 
 import {TemplateView} from "../utils/TemplateView.js";
 import {PreviewView} from "../preview/PreviewView.js";
-
-function selectNode(node) {
-    let selection = window.getSelection();
-    selection.removeAllRanges();
-    let range = document.createRange();
-    range.selectNode(node);
-    selection.addRange(range);
-}
-
-function copyButton(t, copyNode, label, classNames) {
-    return t.button({className: `${classNames} icon copy`, onClick: evt => {
-        const button = evt.target;
-        selectNode(copyNode);
-        if (document.execCommand("copy")) {
-            button.innerText = "Copied!";
-            button.classList.remove("copy");
-            button.classList.add("tick");
-            setTimeout(() => {
-                button.classList.remove("tick");
-                button.classList.add("copy");
-                button.innerText = label;
-            }, 2000);
-        }
-    }}, label);
-}
+import {copyButton} from "../utils/copy.js";
 
 export class CreateLinkView extends TemplateView {
 	render(t, vm) {
@@ -53,7 +29,7 @@ export class CreateLinkView extends TemplateView {
 			t.mapView(vm => vm.previewViewModel, childVM => childVM ? new PreviewView(childVM) : null),
             t.div({className: {hidden: vm => !vm.linkUrl}}, [
                 t.h2(link),
-                t.div(copyButton(t, link, "Copy link", "fullwidth primary")),
+                t.div(copyButton(t, () => vm.linkUrl, "Copy link", "fullwidth primary")),
                 t.div(t.button({className: "secondary fullwidth", onClick: () => this._clear()}, "Or create another link")),
             ]),
 			t.form({action: "#", onSubmit: evt => this._onSubmit(evt), className: {hidden: vm => vm.linkUrl}}, [

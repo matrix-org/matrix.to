@@ -39,5 +39,12 @@ export class Weechat {
 		}
 	}
 
+    getCopyString(platform, link) {
+        switch (link.kind) {
+            case LinkKind.User: return `/invite ${link.identifier}`;
+            case LinkKind.Room: return `/join ${link.identifier}`;
+        }
+    }
+
 	getInstallLinks(platform) {}
 }
