@@ -20,13 +20,15 @@ import {ClientView} from "../open/ClientView.js";
 
 export class PreviewView extends TemplateView {
     render(t, vm) {
-        return t.mapView(vm => vm.loading, loading => loading ? new LoadingPreviewView(vm) : new LoadedPreviewView(vm));
+        return t.div({className: "PreviewView"}, t.mapView(vm => vm.loading, loading => {
+            return loading ? new LoadingPreviewView(vm) : new LoadedPreviewView(vm);
+        }));
     }
 }
 
 class LoadingPreviewView extends TemplateView {
     render(t, vm) {
-        return t.div({className: "PreviewView"}, [
+        return t.div([
             t.div({className: "avatarContainer"}, t.div({className: "avatar loading"}, t.div({className: "spinner"}))),
             t.h1(vm => vm.name),
             t.p({className: "identifier placeholder"}),
@@ -42,7 +44,7 @@ class LoadingPreviewView extends TemplateView {
 
 class LoadedPreviewView extends TemplateView {
 	render(t, vm) {
-		return t.div({className: "PreviewView"}, [
+		return t.div([
 			t.div({className: "avatarContainer"}, t.img({className: "avatar", src: vm => vm.avatarUrl})),
 			t.h1(vm => vm.name),
 			t.p({className: {identifier: true, hidden: vm => !vm.identifier}}, vm => vm.identifier),

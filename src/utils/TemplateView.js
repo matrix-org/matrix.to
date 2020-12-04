@@ -238,6 +238,8 @@ class TemplateBuilder {
                 const newNode = renderNode(node);
                 if (node.parentNode) {
                     node.parentNode.replaceChild(newNode, node);
+                } else {
+                    console.warn("Could not update parent of node binding");
                 }
                 node = newNode;
             }
