@@ -75,7 +75,6 @@ class ServerOptions extends TemplateView {
                 className: "line",
                 placeholder: "Other",
                 name: "otherServer",
-                pattern: "((?:[0-9a-zA-Z][0-9a-zA-Z-]{1,61}\\.)*)(xn--[a-z0-9]+|[a-z]+)",
                 onClick: evt => this._onClickOther(evt),
             })
         ])));
@@ -98,9 +97,13 @@ class ServerOptions extends TemplateView {
         let {name, value} = evt.target;
         if (name === "selectedServer") {
             this._onChangeServerRadio(evt.target);
-            
         } else if (name === "otherServer") {
-            this.value.selectServer(value);
+            const textField = evt.target;
+            if(!this.value.selectOtherServer(value)) {
+                textField.setCustomValidity("Please enter a valid domain name");
+            } else {
+                textField.setCustomValidity("");
+            }
         }
     }
 
@@ -112,6 +115,7 @@ class ServerOptions extends TemplateView {
             value = otherServer.value;
         } else {
             otherServer.required = false;
+            otherServer.setCustomValidity("");
         }
         this.value.selectServer(value);
     }

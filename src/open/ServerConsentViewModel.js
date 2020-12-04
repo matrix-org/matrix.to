@@ -39,6 +39,22 @@ export class ServerConsentViewModel extends ViewModel {
         this.emitChange();
     }
 
+    selectOtherServer(domainOrUrl) {
+        let urlStr = domainOrUrl;
+        if (!urlStr.startsWith("http://") && !urlStr.startsWith("https://")) {
+            urlStr = `https://${domainOrUrl}`;
+        }
+        try {
+            const domain = new URL(urlStr).hostname;
+            if (/((?:[0-9a-zA-Z][0-9a-zA-Z-]{1,61}\.)+)(xn--[a-z0-9]+|[a-z]+)/.test(domain) || domain === "localhost") {
+                this.selectServer(urlStr);
+                return true;
+            }
+        } catch (err) {}
+        this.selectServer(null);
+        return false;
+    }
+
     continueWithSelection() {
         // keep previously consented servers
         const homeservers = this.preferences.homeservers || [];
