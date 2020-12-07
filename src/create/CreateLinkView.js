@@ -22,17 +22,8 @@ export class CreateLinkView extends TemplateView {
 	render(t, vm) {
         const link = t.a({href: vm => vm.linkUrl}, vm => vm.linkUrl);
 		return t.div({className: "CreateLinkView card"}, [
-			t.h1(
-				{className: {hidden: vm => vm.previewViewModel}},
-				"Create shareable links to Matrix rooms, users or messages without being tied to any app"
-			),
-			t.mapView(vm => vm.previewViewModel, childVM => childVM ? new PreviewView(childVM) : null),
-            t.div({className: {hidden: vm => !vm.linkUrl}}, [
-                t.h2(link),
-                t.div(copyButton(t, () => vm.linkUrl, "Copy link", "fullwidth primary")),
-                t.div(t.button({className: "secondary fullwidth", onClick: () => this._clear()}, "Or create another link")),
-            ]),
-			t.form({action: "#", onSubmit: evt => this._onSubmit(evt), className: {hidden: vm => vm.linkUrl}}, [
+			t.h1("Create shareable links to Matrix rooms, users or messages without being tied to any app"),
+			t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
 				t.div(t.input({
 					className: "fullwidth large",
 					type: "text",
@@ -52,7 +43,6 @@ export class CreateLinkView extends TemplateView {
 		const {identifier} = form.elements;
 		this.value.createLink(identifier.value);
         identifier.value = "";
-
 	}
 
     _onIdentifierChange(evt) {
@@ -62,11 +52,5 @@ export class CreateLinkView extends TemplateView {
         } else {
             inputField.setCustomValidity("");
         }
-    }
-
-    _clear() {
-        this.value.clear();
-        const textField = this.root().querySelector("input[name=identifier]");
-        textField.focus();
     }
 }

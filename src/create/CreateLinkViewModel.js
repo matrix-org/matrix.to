@@ -32,28 +32,7 @@ export class CreateLinkViewModel extends ViewModel {
     async createLink(identifier) {
         this._link = Link.parse(identifier);
         if (this._link) {
-        	// TODO: abort previous load
-        	this.previewViewModel = new PreviewViewModel(this.childOptions({
-        		link: this._link,
-        		consentedServers: this._link.servers,
-        	}));
-        	this.emitChange();
-        	await this.previewViewModel.load();
-        } else {
-        	this.previewViewModel = null;
+            this.openLink("#" + this._link.toFragment());
         }
-        this.emitChange();
-    }
-
-    get linkUrl() {
-    	if (this._link) {
-        	return `${this.origin}/#${this._link.toFragment()}`;
-    	}
-    }
-
-    clear() {
-        this._link = null;
-        this.previewViewModel = null;
-        this.emitChange();
     }
 }
