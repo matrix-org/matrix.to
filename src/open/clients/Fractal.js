@@ -26,7 +26,7 @@ export class Fractal {
     get author() { return "Daniel Garcia Moreno"; }
     get homepage() { return "https://gitlab.gnome.org/GNOME/fractal"; }
 	get platforms() { return [Platform.Linux]; }
-	get description() { return 'Fractal is a Matrix Client written in Rust'; }
+	get description() { return 'Fractal is a Matrix Client written in Rust.'; }
 	getMaturity(platform) { return Maturity.Beta; }
 	getDeepLink(platform, link) {}
 	canInterceptMatrixToLinks(platform) { return false; }
