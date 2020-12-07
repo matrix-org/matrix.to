@@ -117,6 +117,12 @@ class InstallClientView extends TemplateView {
 			children.push(t.p([`If you already have ${vm.name} installed, you can `, deepLink, "."]))
 		}
 
+        children.push(t.p({className: {previewSource: true, hidden: vm => !vm.showBack}}, [
+            `Continue with ${vm.name}.`,
+            " ",
+            t.button({className: "text", onClick: () => vm.back()}, "Change"),
+        ]));
+
 		return t.div({className: "InstallClientView"}, children);
 	}
 }
