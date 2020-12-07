@@ -20,6 +20,7 @@ import {ClientViewModel} from "./ClientViewModel.js";
 import {PreviewViewModel} from "../preview/PreviewViewModel.js";
 import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
+import {orderedUnique} from "../utils/unique.js";
 
 export class OpenLinkViewModel extends ViewModel {
 	constructor(options) {
@@ -39,8 +40,14 @@ export class OpenLinkViewModel extends ViewModel {
 	}
 
     _showServerConsent() {
+        let servers = [];
+        if (this.preferences.homeservers) {
+            servers.push(...this.preferences.homeservers);
+        }
+        servers.push(...this._link.servers);
+        servers = orderedUnique(servers);
         this.serverConsentViewModel = new ServerConsentViewModel(this.childOptions({
-            servers: this._link.servers,
+            servers,
             done: () => {
                 this.serverConsentViewModel = null;
                 this._showLink();
