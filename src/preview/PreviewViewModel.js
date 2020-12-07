@@ -20,8 +20,6 @@ import {resolveServer} from "./HomeServer.js";
 import {ClientListViewModel} from "../open/ClientListViewModel.js";
 import {ClientViewModel} from "../open/ClientViewModel.js";
 
-const DEFAULT_AVATAR = "images/chat-icon.svg";
-
 export class PreviewViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
@@ -84,7 +82,7 @@ export class PreviewViewModel extends ViewModel {
 		this.name = profile.displayname || userId;
 		this.avatarUrl = profile.avatar_url ?
 			homeserver.mxcUrlThumbnail(profile.avatar_url, 64, 64, "crop") :
-			DEFAULT_AVATAR;
+			null;
 		this.identifier = userId;
 	}
 
@@ -101,7 +99,7 @@ export class PreviewViewModel extends ViewModel {
 		this.name = publicRoom?.name || publicRoom?.canonical_alias || link.identifier;
 		this.avatarUrl = publicRoom?.avatar_url ? 
 			homeserver.mxcUrlThumbnail(publicRoom.avatar_url, 64, 64, "crop") :
-			DEFAULT_AVATAR;
+			null;
 		this.memberCount = publicRoom?.num_joined_members;
 		this.topic = publicRoom?.topic;
 		this.identifier = publicRoom?.canonical_alias || link.identifier;
@@ -113,6 +111,6 @@ export class PreviewViewModel extends ViewModel {
     _setNoPreview(link) {
         this.name = link.identifier;
         this.identifier = null;
-        this.avatarUrl = DEFAULT_AVATAR;
+        this.avatarUrl = null;
     }
 }

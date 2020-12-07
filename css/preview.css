@@ -21,6 +21,15 @@
     height: 64px;
 }
 
+.PreviewView .defaultAvatar {
+    width: 64px;
+    height: 64px;
+    background-image: url('../images/chat-icon.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85%;
+}
+
 .PreviewView .spinner {
     width: 32px;
     height: 32px;
