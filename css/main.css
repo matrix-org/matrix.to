@@ -153,6 +153,8 @@ button.text:hover {
 .secondary {
     background: var(--background);
     color: var(--link);
+    border: 1px solid var(--link);
+    border-radius: 32px;
 }
 
 .primary {

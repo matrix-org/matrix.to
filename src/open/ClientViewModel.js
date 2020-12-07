@@ -53,7 +53,7 @@ export class ClientViewModel extends ViewModel {
 		if (nativePlatform) {
 			const nativeActions = (client.getInstallLinks(nativePlatform) || []).map(installLink => {
 				return {
-					label: installLink.description,
+					label: installLink.getDescription(nativePlatform),
 					url: installLink.createInstallURL(link),
 					kind: installLink.channelId,
 					primary: true,
@@ -66,22 +66,13 @@ export class ClientViewModel extends ViewModel {
 			const webDeepLink = client.getDeepLink(webPlatform, link);
 			if (webDeepLink) {
 				actions.push({
-					label: `Or open in web app`,
+					label: `Continue in your browser`,
 					url: webDeepLink,
 					kind: "open-in-web",
 					activated: () => this.preferences.setClient(client.id, webPlatform),
 				});
 			}
 		}
-        if (client.homepage) {
-    		actions.push({
-    			label: `Visit app homepage`,
-    			url: client.homepage,
-    			primary: true,
-    			kind: "homepage",
-    			activated: () => {},
-    		});
-        }
 		return actions;
 	}
 

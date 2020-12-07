@@ -33,7 +33,7 @@ export class AppleStoreLink {
         return "apple-app-store";
     }
 
-    get description() {
+    getDescription() {
         return "Download on the App Store";
     }
 }
@@ -51,7 +51,7 @@ export class PlayStoreLink {
         return "play-store";
     }
 
-    get description() {
+    getDescription() {
         return "Get it on Google Play";
     }
 }
@@ -69,7 +69,7 @@ export class FDroidLink {
         return "fdroid";
     }
 
-    get description() {
+    getDescription() {
         return "Get it on F-Droid";
     }
 }
@@ -87,7 +87,7 @@ export class FlathubLink {
         return "flathub";
     }
 
-    get description() {
+    getDescription() {
         return "Get it on Flathub";
     }
 }
@@ -105,8 +105,8 @@ export class WebsiteLink {
         return "website";
     }
 
-    get description() {
-        return `Download from ${new URL(this._url).hostname}`;
+    getDescription(platform) {
+        return `Download for ${platform}`;
     }
 }
 
