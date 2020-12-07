@@ -57,11 +57,7 @@ class OpenClientView extends TemplateView {
 				rel: "noopener noreferrer",
 				onClick: () => vm.deepLinkActivated(),
 			}, "Continue"),
-            t.p({className: {previewSource: true, hidden: vm => !vm.showBack}}, [
-                `Continue with ${vm.name}.`,
-                " ",
-                t.button({className: "text", onClick: () => vm.back()}, "Change"),
-            ]),
+            showBack(t, vm),
 		]);
 	}
 }
@@ -117,12 +113,16 @@ class InstallClientView extends TemplateView {
 			children.push(t.p([`If you already have ${vm.name} installed, you can `, deepLink, "."]))
 		}
 
-        children.push(t.p({className: {previewSource: true, hidden: vm => !vm.showBack}}, [
-            `Continue with ${vm.name}.`,
-            " ",
-            t.button({className: "text", onClick: () => vm.back()}, "Change"),
-        ]));
+        children.push(showBack(t, vm));
 
 		return t.div({className: "InstallClientView"}, children);
 	}
+}
+
+function showBack(t, vm) {
+    return t.p({className: {previewSource: true, hidden: vm => !vm.showBack}}, [
+        `Continue with ${vm.name}.`,
+        " ",
+        t.button({className: "text", onClick: () => vm.back()}, "Change"),
+    ]);
 }

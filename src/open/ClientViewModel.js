@@ -163,6 +163,7 @@ export class ClientViewModel extends ViewModel {
     }
 
     get showBack() {
+        // if we're not only showing this client, don't show back (see pick())
         return !!this._clientListViewModel;
     }
 
