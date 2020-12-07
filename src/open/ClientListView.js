@@ -48,7 +48,7 @@ class AllClientsView extends TemplateView {
 				}),
 				"Show apps not available on my platform"
 			])),
-			t.div(t.label([
+			t.div(t.label({className: "filterOption"}, [
 				t.input({
 					type: "checkbox",
 					checked: vm.showExperimental,

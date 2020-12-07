@@ -79,6 +79,10 @@ button, input {
     font-weight: inherit;
 }
 
+input[type="checkbox"], input[type="radio"] {
+    margin: 0 8px 0 0;
+}
+
 .RootView {
     margin: 0 auto;
 	max-width: 480px;

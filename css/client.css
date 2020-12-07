@@ -3,6 +3,12 @@
     margin: 18px 0;
 }
 
+.ClientListView .filterOption {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
 .ClientView {
     border: 1px solid #E6E6E6;
     border-radius: 8px;
