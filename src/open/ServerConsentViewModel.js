@@ -64,8 +64,8 @@ export class ServerConsentViewModel extends ViewModel {
         this.done();
     }
 
-    continueWithoutConsent() {
-        this.preferences.setHomeservers([]);
+    continueWithoutConsent(askEveryTime) {
+        this.preferences.setHomeservers([], !askEveryTime);
         this.done();
     }
 }

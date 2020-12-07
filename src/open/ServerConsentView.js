@@ -19,13 +19,13 @@ import {ClientListView} from "./ClientListView.js";
 import {PreviewView} from "../preview/PreviewView.js";
 
 export class ServerConsentView extends TemplateView {
-	render(t, vm) {
+    render(t, vm) {
         const useAnotherServer = t.button({
             className: "text",
             onClick: () => vm.setShowServers()}, "use another server");
         const continueWithoutPreview = t.button({
             className: "text",
-            onClick: () => vm.continueWithoutConsent()
+            onClick: () => vm.continueWithoutConsent(this._askEveryTimeChecked)
         }, "continue without a preview");
 		return t.div({className: "ServerConsentView"}, [
             t.p([
@@ -48,7 +48,7 @@ export class ServerConsentView extends TemplateView {
                 continueWithoutPreview,
                 "."
             ]),
-            t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
+            t.form({action: "#", id: "serverConsentForm", onSubmit: evt => this._onSubmit(evt)}, [
                 t.mapView(vm => vm.showSelectServer, show => show ? new ServerOptions(vm) : null),
                 t.div({className: "actions"}, [
                     t.label([t.input({type: "checkbox", name: "askEveryTime"}), "Ask every time"]),
@@ -60,8 +60,13 @@ export class ServerConsentView extends TemplateView {
 
     _onSubmit(evt) {
         evt.preventDefault();
-        const {askEveryTime} = evt.target.elements;
-        this.value.continueWithSelection(askEveryTime.checked);
+        this.value.continueWithSelection(this._askEveryTimeChecked);
+    }
+
+    get _askEveryTimeChecked() {
+        const form = document.getElementById("serverConsentForm");
+        const {askEveryTime} = form.elements;
+        return askEveryTime.checked;
     }
 }
 
