@@ -40,6 +40,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .PreviewView .identifier {
@@ -50,7 +51,7 @@
 
 .PreviewView .identifier.placeholder {
     height: 1em;
-    margin: 16px 30%;
+    margin: 1em 30%;
 }
 
 .PreviewView .memberCount {
