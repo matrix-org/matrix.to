@@ -31,18 +31,12 @@ export class Element {
 		];
 	}
 
-    get icon() {
-        return "images/client-icons/element.svg";
-    }
-
+    get icon() { return "images/client-icons/element.svg"; }
     get appleAssociatedAppId() { return "7J4U792NQT.im.vector.app"; }
-
 	get name() {return "Element"; }
 	get description() { return 'Fully-featured Matrix client, used by millions.'; }
-
 	get homepage() { return "https://element.io"; }
 	get author() { return "Element"; }
-
 	getMaturity(platform) { return Maturity.Stable; }
 
 	getDeepLink(platform, link) {
