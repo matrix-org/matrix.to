@@ -68,7 +68,12 @@ export class ServerConsentView extends TemplateView {
 class ServerOptions extends TemplateView {
     render(t, vm) {
         const options = vm.servers.map(server => {
-            return t.div(t.label([t.input({type: "radio", name: "selectedServer", value: server}), t.span(server)]))
+            return t.div(t.label([t.input({
+                type: "radio",
+                name: "selectedServer",
+                value: server,
+                checked: server === vm.selectedServer
+            }), t.span(server)]))
         });
         options.push(t.div({className: "other"}, t.label([
             t.input({type: "radio", name: "selectedServer", value: "other"}),
