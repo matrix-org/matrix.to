@@ -75,6 +75,7 @@ export class ClientListViewModel extends ViewModel {
 
 	_pickClient(client) {
 		this.clientViewModel = this.clientList.find(vm => vm.clientId === client.id);
+        this.clientViewModel.pick(this);
 		this.emitChange();
 	}
 

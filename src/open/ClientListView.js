@@ -65,7 +65,6 @@ class ContinueWithClientView extends TemplateView {
         const backTitle = "Back to all clients";
 		return t.div({className: "ClientListView"}, [
 			t.h2([
-				t.button({className: "back", ["aria-label"]: backTitle, title: backTitle, onClick: () => vm.showAll()}),
 				t.span(`Continue with ${vm.clientViewModel.name}`)
 			]),
 			t.div({className: "list"}, t.view(new ClientView(vm.clientViewModel)))

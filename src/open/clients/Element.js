@@ -39,7 +39,7 @@ export class Element {
 
 	get description() { return 'Fully-featured Matrix client, used by millions.'; }
 
-	get homepage() { return "https://element.io"; }
+	get homepage() { return ; } // prevents a visit app homepage button from appearing
 	get author() { return "Element"; }
 
 	getMaturity(platform) { return Maturity.Stable; }

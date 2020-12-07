@@ -56,7 +56,12 @@ class OpenClientView extends TemplateView {
 				href: vm.deepLink,
 				rel: "noopener noreferrer",
 				onClick: () => vm.deepLinkActivated(),
-			}, "Continue")
+			}, "Continue"),
+            t.p({className: {previewSource: true, hidden: vm => !vm.showBack}}, [
+                `Continue with ${vm.name}.`,
+                " ",
+                t.button({className: "text", onClick: () => vm.back()}, "Change"),
+            ]),
 		]);
 	}
 }
@@ -77,7 +82,7 @@ class InstallClientView extends TemplateView {
                     }
                 }
             });
-			children.push(t.p({className: "instructions"}, [vm.textInstructions, copyButton]));
+			children.push(t.p({className: "instructions"}, [t.code(vm.textInstructions), copyButton]));
 		}
 
 		const actions = t.div({className: "actions"}, vm.actions.map(a => {

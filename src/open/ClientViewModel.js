@@ -18,6 +18,14 @@ import {isWebPlatform, isDesktopPlatform, Platform} from "../Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {IdentifierKind} from "../Link.js";
 
+function getMatchingPlatforms(client, supportedPlatforms) {
+    const clientPlatforms = client.platforms;
+    const matchingPlatforms = supportedPlatforms.filter(p => {
+        return clientPlatforms.includes(p);
+    });
+    return matchingPlatforms;
+}
+
 export class ClientViewModel extends ViewModel {
 	constructor(options) {
 		super(options);
@@ -25,19 +33,17 @@ export class ClientViewModel extends ViewModel {
 		this._client = client;
 		this._link = link;
 		this._pickClient = pickClient;
+        // to provide "choose other client" button after calling pick()
+        this._clientListViewModel = null;
 
-		const supportedPlatforms = client.platforms;
-		const matchingPlatforms = this.platforms.filter(p => {
-			return supportedPlatforms.includes(p);
-		});
+		const matchingPlatforms = getMatchingPlatforms(client, this.platforms);
 		const nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
 		const webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
 		
 		this._proposedPlatform = this.preferences.platform || nativePlatform || webPlatform;
-		
+		this._nativePlatform = nativePlatform || this._proposedPlatform;
+
 		this.actions = this._createActions(client, link, nativePlatform, webPlatform);
-		this.name = this._client.getName(this._proposedPlatform);
-		this.deepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
 		this._clientCanIntercept = !!(nativePlatform && client.canInterceptMatrixToLinks(nativePlatform));
 		this._showOpen = this.deepLink && !this._clientCanIntercept;
 	}
@@ -67,13 +73,15 @@ export class ClientViewModel extends ViewModel {
 				});
 			}
 		}
-		actions.push({
-			label: `Visit app homepage`,
-			url: client.homepage,
-			primary: true,
-			kind: "homepage",
-			activated: () => {},
-		});
+        if (client.homepage) {
+    		actions.push({
+    			label: `Visit app homepage`,
+    			url: client.homepage,
+    			primary: true,
+    			kind: "homepage",
+    			activated: () => {},
+    		});
+        }
 		return actions;
 	}
 
@@ -88,6 +96,10 @@ export class ClientViewModel extends ViewModel {
 	get clientId() {
 		return this._client.id;
 	}
+
+    get name() {
+        return this._client.getName(this._platform);
+    }
 
     get iconUrl() {
         return this._client.icon;
@@ -130,6 +142,14 @@ export class ClientViewModel extends ViewModel {
 		}
 		return textPlatforms;
 	}
+
+    get deepLink() {
+        return this._client.getDeepLink(this._platform, this._link);
+    }
+
+    get _platform() {
+        return this.showBack ? this._proposedPlatform : this._nativePlatform;
+    }
 	
 	deepLinkActivated() {
 		this._pickClient(this._client);
@@ -139,4 +159,22 @@ export class ClientViewModel extends ViewModel {
 			this.emitChange();
 		}
 	}
+
+    pick(clientListViewModel) {
+        this._clientListViewModel = clientListViewModel;
+        this.emitChange();
+    }
+
+    get showBack() {
+        return !!this._clientListViewModel;
+    }
+
+    back() {
+        if (this._clientListViewModel) {
+            const vm = this._clientListViewModel;
+            this._clientListViewModel = null;
+            this.emitChange();
+            vm.showAll();
+        }
+    }
 }
