@@ -19,6 +19,7 @@ import {Weechat} from "./Weechat.js";
 import {Nheko} from "./Nheko.js";
 import {Fractal} from "./Fractal.js";
 import {Quaternion} from "./Quaternion.js";
+import {Tensor} from "./Tensor.js";
 
 export function createClients() {
 	return [
@@ -26,5 +27,6 @@ export function createClients() {
 		new Weechat(),
         new Nheko(),
         new Quaternion(),
+        new Tensor(),
 	];
 }
