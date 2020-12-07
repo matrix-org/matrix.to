@@ -42,6 +42,7 @@ html {
 body {
 	background-color: var(--app-background);
 	background-image: url('../images/background.svg');
+    background-attachment: fixed;
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: center -50px;
@@ -51,6 +52,14 @@ body {
     color: var(--font);
     padding: 120px 0 0 0;
     margin: 0;
+}
+
+p {
+    line-height: 150%;
+}
+
+a {
+    text-decoration: none;
 }
 
 body,
@@ -118,14 +127,13 @@ button, input {
 }
 
 .footer .links {
-    font-size: 0.8em;
+    font-size: 12px;
     list-style: none;
     padding: 0;
 }
 
 a, button.text {
 	color: var(--link);
-    text-decoration: underline;
 }
 
 button.text {
@@ -184,7 +192,6 @@ input[type='text'].large {
     border: 1px solid var(--foreground);
     border-radius: 16px;
     font-size: 14px;
-    line-height: 24px;
 }
 
 .fullwidth {

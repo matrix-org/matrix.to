@@ -1,5 +1,6 @@
-.ClientListView .list {
-    padding: 16px 0;
+.ClientListView h2 {
+    text-align: center;
+    margin: 18px 0;
 }
 
 .ClientView {
@@ -49,12 +50,15 @@
     height: 100%;
 }
 
+.ClientView .back {
+    margin-top: 22px;
+}
+
 .InstallClientView .instructions button {
     background-repeat: no-repeat;
     background-position: center;
-    background-color: var(--link);
+    background-color: transparent;
     padding: 4px;
-    border-radius: 4px;
     border: none;
     width: 24px;
     height: 24px;
@@ -67,5 +71,6 @@
 }
 
 .InstallClientView .instructions button.tick {
-    background-image: url('../images/tick.svg');
+    background-image: url('../images/tick-dark.svg');
 }
+

@@ -76,6 +76,10 @@ export class ClientViewModel extends ViewModel {
 		return actions;
 	}
 
+    get homepage() {
+        return this._client.homepage;
+    }
+
 	get identifier() {
 		return this._link.identifier;
 	}
@@ -102,7 +106,7 @@ export class ClientViewModel extends ViewModel {
 
 	get textInstructions() {
         let instructions = this._client.getLinkInstructions(this._proposedPlatform, this._link);
-        if (!Array.isArray(instructions)) {
+        if (instructions && !Array.isArray(instructions)) {
             instructions = [instructions];
         }
 		return instructions;

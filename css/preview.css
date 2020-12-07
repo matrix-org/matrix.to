@@ -61,8 +61,8 @@
 }
 
 .PreviewView .memberCount p:not(.placeholder) {
-    padding: 4px 4px 4px 24px;
-    border-radius: 8px;
+    padding: 4px 8px 4px 24px;
+    border-radius: 14px;
     background-image: url(../images/member-icon.svg);
     background-repeat: no-repeat;
     background-position: 2px center;
@@ -107,7 +107,7 @@
         var(--flash-fg) calc(10% + 25px),
         var(--flash-bg) calc(10% + 50px)
     );
-    animation: flash 2s ease-in-out infinite;
+    animation: flash 2s linear infinite;
     background-size: 200%;
 }
 

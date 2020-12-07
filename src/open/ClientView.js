@@ -43,7 +43,11 @@ export class ClientView extends TemplateView {
 			t.div({className: "header"}, [
 				t.div({className: "description"}, [
 					t.h3(vm.name),
-					t.p(vm.description),
+					t.p([vm.description, " ", t.a({
+                        href: vm.homepage,
+                        target: "_blank",
+                        rel: "noopener noreferrer"
+                    }, "Learn more")]),
 					t.p({className: "platforms"}, formatPlatforms(vm.availableOnPlatformNames)),
 				]),
 				t.img({className: "clientIcon", src: vm.iconUrl})
@@ -80,6 +84,8 @@ class InstallClientView extends TemplateView {
 		if (textInstructions) {
             const copyButton = t.button({
                 className: "copy",
+                title: "Copy instructions",
+                "aria-label": "Copy instructions",
                 onClick: evt => {
                     if (copy(vm.copyString, copyButton.parentElement)) {
                         copyButton.className = "tick";
@@ -131,9 +137,8 @@ class InstallClientView extends TemplateView {
 }
 
 function showBack(t, vm) {
-    return t.p({className: {previewSource: true, hidden: vm => !vm.showBack}}, [
-        `Continue with ${vm.name}.`,
-        " ",
+    return t.p({className: {caption: true, "back": true, hidden: vm => !vm.showBack}}, [
+        `Continue with ${vm.name} · `,
         t.button({className: "text", onClick: () => vm.back()}, "Change"),
     ]);
 }
