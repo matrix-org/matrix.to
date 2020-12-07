@@ -60,7 +60,6 @@
     margin: 8px 0;
 }
 
-
 .PreviewView .memberCount.loading {
     margin: 16px 0;
 }
@@ -124,6 +123,6 @@
 @keyframes flash {
     0% { background-position-x: 0; }
     50% { background-position-x: -80%; }
-    51% { background-position-x: 40%; }
+    51% { background-position-x: 80%; }
     100% { background-position-x: 0%; }
 }
