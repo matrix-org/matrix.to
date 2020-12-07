@@ -32,6 +32,13 @@
     margin-left: 8px;
 }
 
+.ClientView .platforms {
+    background-image: url('../images/platform-icon.svg');
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    padding-left: 28px;
+}
+
 .ClientView .actions a.badge {
     display: inline-block;
     height: 40px;
