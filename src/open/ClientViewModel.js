@@ -66,7 +66,7 @@ export class ClientViewModel extends ViewModel {
 			const webDeepLink = client.getDeepLink(webPlatform, link);
 			if (webDeepLink) {
 				actions.push({
-					label: `Or open in ${client.getName(webPlatform)}`,
+					label: `Or open in web app`,
 					url: webDeepLink,
 					kind: "open-in-web",
 					activated: () => this.preferences.setClient(client.id, webPlatform),
@@ -98,7 +98,7 @@ export class ClientViewModel extends ViewModel {
 	}
 
     get name() {
-        return this._client.getName(this._platform);
+        return this._client.name;
     }
 
     get iconUrl() {
@@ -144,11 +144,8 @@ export class ClientViewModel extends ViewModel {
 	}
 
     get deepLink() {
-        return this._client.getDeepLink(this._platform, this._link);
-    }
-
-    get _platform() {
-        return this.showBack ? this._proposedPlatform : this._nativePlatform;
+        const platform = this.showBack ? this._proposedPlatform : this._nativePlatform;
+        return this._client.getDeepLink(platform, this._link);
     }
 	
 	deepLinkActivated() {

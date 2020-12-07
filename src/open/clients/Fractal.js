@@ -21,7 +21,7 @@ import {Maturity, Platform, LinkKind, FlathubLink} from "../types.js";
  */
 export class Fractal {
 	get id() { return "fractal"; }
-	getName(platform) { return "Fractal"; }
+	get name() { return "Fractal"; }
     get icon() { return "images/client-icons/fractal.png"; }
     get author() { return "Daniel Garcia Moreno"; }
     get homepage() { return "https://gitlab.gnome.org/GNOME/fractal"; }

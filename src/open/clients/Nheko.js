@@ -21,7 +21,7 @@ import {Maturity, Platform, LinkKind, FlathubLink} from "../types.js";
  */
 export class Nheko {
 	get id() { return "nheko"; }
-	getName(platform) { return "Nheko"; }
+	get name() { return "Nheko"; }
     get icon() { return "images/client-icons/nheko.svg"; }
     get author() { return "mujx, red_sky, deepbluev7, Konstantinos Sideris"; }
     get homepage() { return "https://github.com/Nheko-Reborn/nheko"; }

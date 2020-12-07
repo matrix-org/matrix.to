@@ -21,7 +21,7 @@ import {Maturity, Platform, LinkKind, WebsiteLink} from "../types.js";
  */
 export class Weechat {
 	get id() { return "weechat"; }
-	getName(platform) { return "Weechat"; }
+	get name() { return "Weechat"; }
     get icon() { return "images/client-icons/weechat.svg"; }
     get author() { return "Poljar"; }
     get homepage() { return "https://github.com/poljar/weechat-matrix"; }

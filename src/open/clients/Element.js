@@ -37,6 +37,7 @@ export class Element {
 
     get appleAssociatedAppId() { return "7J4U792NQT.im.vector.app"; }
 
+	get name() {return "Element"; }
 	get description() { return 'Fully-featured Matrix client, used by millions.'; }
 
 	get homepage() { return ; } // prevents a visit app homepage button from appearing
@@ -71,15 +72,6 @@ export class Element {
 
 	getLinkInstructions(platform, link) {}
     getCopyString(platform, link) {}
-
-	getName(platform) {
-		if (platform === Platform.DesktopWeb || platform === Platform.MobileWeb) {
-			return "Element Web";
-		} else {
-			return "Element";
-		}
-	}
-
 	getInstallLinks(platform) {
 		switch (platform) {
 			case Platform.iOS: return [new AppleStoreLink('vector', 'id1083446067')];
