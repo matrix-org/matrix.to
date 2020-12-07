@@ -110,7 +110,11 @@ export class ClientViewModel extends ViewModel {
 	}
 
 	get textInstructions() {
-		return this._client.getLinkInstructions(this._proposedPlatform, this._link);
+        let instructions = this._client.getLinkInstructions(this._proposedPlatform, this._link);
+        if (!Array.isArray(instructions)) {
+            instructions = [instructions];
+        }
+		return instructions;
 	}
 
     get copyString() {

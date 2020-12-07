@@ -16,7 +16,7 @@ limitations under the License.
 
 import {TemplateView} from "../utils/TemplateView.js";
 import {copy} from "../utils/copy.js";
-import {text} from "../utils/html.js";
+import {text, tag} from "../utils/html.js";
 
 function formatPlatforms(platforms) {
 	return platforms.reduce((str, p, i, all) => {
@@ -24,6 +24,16 @@ function formatPlatforms(platforms) {
 		const last = i === all.length - 1;
 		return str + (first ? "" : last ? " & " : ", ") + p;
 	}, "");
+}
+
+function renderInstructions(parts) {
+    return parts.map(p => {
+        if (p.type === "code") {
+            return tag.code(p.text);
+        } else {
+            return text(p);
+        }
+    });
 }
 
 export class ClientView extends TemplateView {
@@ -66,7 +76,8 @@ class InstallClientView extends TemplateView {
 	render(t, vm) {
 		const children = [];
 
-		if (vm.textInstructions) {
+        const textInstructions = vm.textInstructions;
+		if (textInstructions) {
             const copyButton = t.button({
                 className: "copy",
                 onClick: evt => {
@@ -78,7 +89,7 @@ class InstallClientView extends TemplateView {
                     }
                 }
             });
-			children.push(t.p({className: "instructions"}, [t.code(vm.textInstructions), copyButton]));
+			children.push(t.p({className: "instructions"}, renderInstructions(textInstructions).concat(copyButton)));
 		}
 
 		const actions = t.div({className: "actions"}, vm.actions.map(a => {

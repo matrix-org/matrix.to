@@ -109,3 +109,9 @@ export class WebsiteLink {
         return `Download from ${new URL(this._url).hostname}`;
     }
 }
+
+export const style = {
+    code(text) {
+        return {type: "code", text};
+    }
+}

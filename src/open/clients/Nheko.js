@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind, FlathubLink} from "../types.js";
+import {Maturity, Platform, LinkKind, FlathubLink, style} from "../types.js";
 
 /**
  * Information on how to deep link to a given matrix client.
@@ -33,8 +33,8 @@ export class Nheko {
 
 	getLinkInstructions(platform, link) {
 		switch (link.kind) {
-			case LinkKind.User: return `Type /invite ${link.identifier}`;
-			case LinkKind.Room: return `Type /join ${link.identifier}`;
+			case LinkKind.User: return [`Type `, style.code(`/invite ${link.identifier}`)];
+			case LinkKind.Room: return [`Type `, style.code(`/join ${link.identifier}`)];
 		}
 	}
 
