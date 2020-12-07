@@ -1,7 +1,14 @@
 module.exports = {
-    "extends": [
-        "matrix-org/ts",
-        "matrix-org/react",
-    ],
-}
-
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-console": "off"
+    }
+};

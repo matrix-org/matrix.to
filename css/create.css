@@ -1,0 +1,13 @@
+.CreateLinkView h2 {
+    padding: 0 40px;
+    word-break: break-all;
+    text-align: center;
+}
+
+.CreateLinkView form {
+    margin-top: 36px;
+}
+
+.CreateLinkView form > *:not(:first-child) {
+    margin-top: 24px;
+}
