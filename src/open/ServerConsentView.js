@@ -29,18 +29,19 @@ export class ServerConsentView extends TemplateView {
         }, "continue without a preview");
 		return t.div({className: "ServerConsentView"}, [
             t.p([
-                "View this link using ",
+                "Preview this link using the ",
                 t.strong(vm => vm.selectedServer || "…"),
+                " homeserver ",
                 t.span({className: {hidden: vm => !vm.selectedServer}}, [
                     " (",
                     t.a({
                         href: vm => `#/policy/${vm.selectedServer}`,
                         target: "_blank",
                     }, "privacy policy"),
-                    ") ",
+                    ")",
                 ]),
                 t.span({className: {hidden: vm => vm.showSelectServer}}, [
-                    " to preview content, or your can ",
+                    ", ",
                     useAnotherServer,
                 ]),
                 " or ",
