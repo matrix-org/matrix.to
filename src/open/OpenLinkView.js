@@ -34,11 +34,7 @@ class ShowLinkView extends TemplateView {
     render(t, vm) {
         return t.div([
             t.view(new PreviewView(vm.previewViewModel)),
-            t.p({className: {accept: true, hidden: vm => vm.clientsViewModel}}, t.button({
-                className: "primary fullwidth",
-                onClick: () => vm.showClients()
-            }, vm => vm.showClientsLabel)),
-            t.mapView(vm => vm.clientsViewModel, childVM => childVM ? new ClientListView(childVM) : null),
+            t.view(new ClientListView(vm.clientsViewModel)),
             t.p({className: {previewSource: true, hidden: vm => !vm.previewDomain}}, [
                 vm => vm.previewFailed ? `${vm.previewDomain} has not returned a preview.` : `Preview provided by ${vm.previewDomain}.`,
                 " ",

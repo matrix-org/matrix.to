@@ -49,12 +49,13 @@ export class OpenLinkViewModel extends ViewModel {
     }
 
     async _showLink() {
-        const preferredClient = this.preferences.clientId ? this._clients.find(c => c.id === this.preferences.clientId) : null;
-        this.clientsViewModel = preferredClient ? new ClientListViewModel(this.childOptions({
+        const clientId = this.preferences.clientId || this._link.clientId;
+        const preferredClient = clientId ? this._clients.find(c => c.id === clientId) : null;
+        this.clientsViewModel = new ClientListViewModel(this.childOptions({
             clients: this._clients,
             link: this._link,
             client: preferredClient,
-        })) : null;
+        }));
         this.previewViewModel = new PreviewViewModel(this.childOptions({
             link: this._link,
             consentedServers: this.preferences.homeservers
@@ -84,14 +85,4 @@ export class OpenLinkViewModel extends ViewModel {
         this._showServerConsent();
         this.emitChange();
     }
-
-	showClients() {
-		if (!this.clientsViewModel) {
-			this.clientsViewModel = new ClientListViewModel(this.childOptions({
-				clients: this._clients,
-				link: this._link
-			}));
-			this.emitChange();
-		}
-	}
 }

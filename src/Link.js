@@ -70,14 +70,19 @@ export class Link {
 		if (!fragment) {
 			return null;
 		}
-		let [linkStr, queryParams] = fragment.split("?");
+		let [linkStr, queryParamsStr] = fragment.split("?");
 
 		let viaServers = [];
-		if (queryParams) {
-			viaServers = queryParams.split("&")
-				.map(pair => pair.split("="))
+        let clientId = null;
+		if (queryParamsStr) {
+            const queryParams = queryParamsStr.split("&").map(pair => pair.split("="));
+			viaServers = queryParams
 				.filter(([key, value]) => key === "via")
 				.map(([,value]) => value);
+            const clientParam = queryParams.find(([key]) => key === "client");
+            if (clientParam) {
+                clientId = clientParam[1];
+            }
 		}
 
 		if (linkStr.startsWith("#/")) {
@@ -91,36 +96,37 @@ export class Link {
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(viaServers, IdentifierKind.UserId, localPart, server);
+			return new Link(clientId, viaServers, IdentifierKind.UserId, localPart, server);
 		}
 		matches = ROOMALIAS_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(viaServers, IdentifierKind.RoomAlias, localPart, server, eventId);
+			return new Link(clientId, viaServers, IdentifierKind.RoomAlias, localPart, server, eventId);
 		}
 		matches = ROOMID_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(viaServers, IdentifierKind.RoomId, localPart, server, eventId);
+			return new Link(clientId, viaServers, IdentifierKind.RoomId, localPart, server, eventId);
 		}
 		matches = GROUPID_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(viaServers, IdentifierKind.GroupId, localPart, server);
+			return new Link(clientId, viaServers, IdentifierKind.GroupId, localPart, server);
 		}
 		return null;
 	}
 
-	constructor(viaServers, identifierKind, localPart, server, eventId) {
+	constructor(clientId, viaServers, identifierKind, localPart, server, eventId) {
 		const servers = [server];
 		servers.push(...viaServers);
 		this.servers = orderedUnique(servers);
 		this.identifierKind = identifierKind;
 		this.identifier = `${asPrefix(identifierKind)}${localPart}:${server}`;
 		this.eventId = eventId;
+        this.clientId = clientId;
 	}
 
 	get kind() {
