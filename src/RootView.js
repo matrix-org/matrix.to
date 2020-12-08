@@ -30,7 +30,7 @@ export class RootView extends TemplateView {
 				t.p(["This invite uses ", externalLink(t, "https://matrix.org", "Matrix"), ", an open network for secure, decentralized communication."]),
 				t.ul({className: "links"}, [
 					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to", "GitHub project")),
-					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to/tree/main/src/clients", "Add your app")),
+					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to/tree/main/src/open/clients", "Add your app")),
 					t.li({className: {hidden: vm => !vm.hasPreferences}},
 						t.button({className: "text", onClick: () => vm.clearPreferences()}, "Clear preferences")),
 				])
