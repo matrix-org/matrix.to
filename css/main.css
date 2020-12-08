@@ -54,13 +54,12 @@ body {
     margin: 0;
 }
 
-p {
-    line-height: 150%;
-}
+p { line-height: 150%; }
+a { text-decoration: none; }
 
-a {
-    text-decoration: none;
-}
+h1 { font-size: 24px; }
+h2 { font-size: 21px; }
+h3 { font-size: 16px; }
 
 body,
 button,
