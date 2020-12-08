@@ -1,0 +1,82 @@
+.ClientListView h2 {
+    text-align: center;
+    margin: 18px 0;
+}
+
+.ClientListView .filterOption {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.ClientView {
+    border: 1px solid #E6E6E6;
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 16px;
+}
+
+.ClientView .header {
+    display: flex;
+}
+
+.ClientView .description {
+    flex: 1;
+}
+
+.ClientView h3 {
+    margin-top: 0;
+}
+
+.ClientView .clientIcon {
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    display: block;
+    margin-left: 8px;
+}
+
+.ClientView .platforms {
+    background-image: url('../images/platform-icon.svg');
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    padding-left: 28px;
+}
+
+.ClientView .actions a.badge {
+    display: inline-block;
+    height: 40px;
+    margin: 8px 16px 8px 0;
+}
+
+.ClientView .actions img {
+    height: 100%;
+}
+
+.ClientView .back {
+    margin-top: 22px;
+}
+
+.InstallClientView .instructions button {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    padding: 4px;
+    border: none;
+    width: 24px;
+    height: 24px;
+    margin: 8px;
+    vertical-align: middle;
+}
+
+.InstallClientView .instructions button.copy {
+    background-image: url('../images/copy.svg');
+}
+
+.InstallClientView .instructions button.tick {
+    background-image: url('../images/tick-dark.svg');
+}
+

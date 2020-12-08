@@ -1,0 +1,27 @@
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: var(--spinner-stroke-size) solid var(--app-background);
+    box-sizing: border-box;
+}
+
+.spinner::before {
+    content: "";
+    display: block;
+    width: inherit;
+    height: inherit;
+    border-radius: 100%;
+    border-width: var(--spinner-stroke-size);
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: var(--grey);
+    animation: rotate 0.8s linear infinite;
+    box-sizing: border-box;
+    margin: calc(-1 * var(--spinner-stroke-size));
+}
