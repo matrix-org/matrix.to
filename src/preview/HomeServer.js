@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+function noTrailingSlash(url) {
+    return url.endsWith("/") ? url.substr(0, url.length - 1) : url;
+}
+
 export async function resolveServer(request, baseURL) {
+    baseURL = noTrailingSlash(baseURL);
 	if (!baseURL.startsWith("http://") && !baseURL.startsWith("https://")) {
 		baseURL = `https://${baseURL}`;
 	}
@@ -23,7 +28,7 @@ export async function resolveServer(request, baseURL) {
 		if (status === 200) {
 			const proposedBaseURL = body?.['m.homeserver']?.base_url;
 			if (typeof proposedBaseURL === "string") {
-				baseURL = proposedBaseURL;
+				baseURL = noTrailingSlash(proposedBaseURL);
 			}
 		}
 	}
