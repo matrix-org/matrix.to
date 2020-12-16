@@ -28,11 +28,11 @@ export async function main(container) {
 		preferences: new Preferences(window.localStorage),
 		origin: location.origin,
 	});
-	vm.updateHash(location.hash);
+	vm.updateHash(decodeURIComponent(location.hash));
 	window.__rootvm = vm;
 	const view = new RootView(vm);
 	container.appendChild(view.mount());
 	window.addEventListener('hashchange', () => {
-		vm.updateHash(location.hash);
+		vm.updateHash(decodeURIComponent(location.hash));
 	});
 }
