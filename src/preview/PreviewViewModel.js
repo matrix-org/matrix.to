@@ -37,8 +37,8 @@ export class PreviewViewModel extends ViewModel {
 	}
 
 	async load() {
-        const {kind} = this._link; 
-        const supportsPreview = kind === LinkKind.User || kind === LinkKind.Room || kind === LinkKind.Event;
+        const {kind} = this._link;
+        const supportsPreview = kind === LinkKind.User || kind === LinkKind.RoomId || kind === LinkKind.RoomAlias || kind === LinkKind.Event;
         if (supportsPreview) {
     		this.loading = true;
     		this.emitChange();
@@ -49,7 +49,8 @@ export class PreviewViewModel extends ViewModel {
     					case LinkKind.User:
     						await this._loadUserPreview(homeserver, this._link.identifier);
     						break;
-    					case LinkKind.Room:
+    					case LinkKind.RoomId:
+    					case LinkKind.RoomAlias:
                         case LinkKind.Event:
     						await this._loadRoomPreview(homeserver, this._link);
     						break;
