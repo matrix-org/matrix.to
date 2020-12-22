@@ -32,7 +32,7 @@ export class Tensor {
         switch (link.kind) {
             case LinkKind.User: return [`Type `, style.code(`/invite ${link.identifier}`)];
             case LinkKind.RoomId:
-			case LinkKind.RoomAlias: return [`Type `, style.code(`/join ${link.identifier}`)];
+            case LinkKind.RoomAlias: return [`Type `, style.code(`/join ${link.identifier}`)];
         }
     }
 
@@ -40,7 +40,7 @@ export class Tensor {
         switch (link.kind) {
             case LinkKind.User: return `/invite ${link.identifier}`;
             case LinkKind.RoomId:
-			case LinkKind.RoomAlias: return `/join ${link.identifier}`;
+            case LinkKind.RoomAlias: return `/join ${link.identifier}`;
         }
     }
 

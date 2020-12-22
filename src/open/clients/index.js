@@ -23,12 +23,12 @@ import {Quaternion} from "./Quaternion.js";
 import {Tensor} from "./Tensor.js";
 
 export function createClients() {
-	return [
-		new Element(),
+    return [
+        new Element(),
         new MatrixStatic(),
-		new Weechat(),
+        new Weechat(),
         new Nheko(),
         new Quaternion(),
         new Tensor(),
-	];
+    ];
 }
