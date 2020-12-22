@@ -43,14 +43,16 @@ function asPrefix(identifierKind) {
 export function getLabelForLinkKind(kind) {
 	switch (kind) {
 		case LinkKind.User: return "Start chat";
-		case LinkKind.Room: return "View room";
+		case LinkKind.RoomId:
+        case LinkKind.RoomAlias: return "View room";
 		case LinkKind.Group: return "View community";
 		case LinkKind.Event: return "View message";
 	}
 }
 
 export const LinkKind = createEnum(
-	"Room",
+	"RoomId",
+    "RoomAlias",
 	"User",
 	"Group",
 	"Event"
@@ -135,8 +137,9 @@ export class Link {
 		}
 		switch (this.identifierKind) {
 			case IdentifierKind.RoomId:
+			    return LinkKind.RoomId
 			case IdentifierKind.RoomAlias:
-				return LinkKind.Room;
+				return LinkKind.RoomAlias;
 			case IdentifierKind.UserId:
 				return LinkKind.User;
 			case IdentifierKind.GroupId:

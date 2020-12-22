@@ -32,13 +32,13 @@ export class Fractal {
 	canInterceptMatrixToLinks(platform) { return false; }
 
 	getLinkInstructions(platform, link) {
-        if (link.kind === LinkKind.User || link.kind === LinkKind.Room) {
+        if (link.kind === LinkKind.User || link.kind === LinkKind.RoomId || link.kind === LinkKind.RoomAlias) {
             return "Click the '+' button in the top right and paste the identifier";
         }
 	}
 
     getCopyString(platform, link) {
-        if (link.kind === LinkKind.User || link.kind === LinkKind.Room) {
+        if (link.kind === LinkKind.User || link.kind === LinkKind.RoomId || link.kind === LinkKind.RoomAlias) {
             return link.identifier;
         }
     }

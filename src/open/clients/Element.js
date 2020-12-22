@@ -45,7 +45,8 @@ export class Element {
 			case LinkKind.User:
 				fragmentPath = `user/${link.identifier}`;
 				break;
-			case LinkKind.Room:
+            case LinkKind.RoomId:
+			case LinkKind.RoomAlias:
 				fragmentPath = `room/${link.identifier}`;
 				break;
 			case LinkKind.Group:

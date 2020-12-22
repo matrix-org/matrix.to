@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import {Element} from "./Element.js";
+import {MatrixStatic} from "./Matrix-Static.js";
 import {Weechat} from "./Weechat.js";
 import {Nheko} from "./Nheko.js";
 import {Fractal} from "./Fractal.js";
@@ -24,6 +25,7 @@ import {Tensor} from "./Tensor.js";
 export function createClients() {
 	return [
 		new Element(),
+        new MatrixStatic(),
 		new Weechat(),
         new Nheko(),
         new Quaternion(),

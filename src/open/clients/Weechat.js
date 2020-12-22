@@ -34,14 +34,16 @@ export class Weechat {
 	getLinkInstructions(platform, link) {
 		switch (link.kind) {
 			case LinkKind.User: return [`Type `, style.code(`/invite ${link.identifier}`)];
-			case LinkKind.Room: return [`Type `, style.code(`/join ${link.identifier}`)];
+			case LinkKind.RoomId:
+			case LinkKind.RoomAlias: return [`Type `, style.code(`/join ${link.identifier}`)];
 		}
 	}
 
     getCopyString(platform, link) {
         switch (link.kind) {
             case LinkKind.User: return `/invite ${link.identifier}`;
-            case LinkKind.Room: return `/join ${link.identifier}`;
+            case LinkKind.RoomId:
+			case LinkKind.RoomAlias: return `/join ${link.identifier}`;
         }
     }
 
