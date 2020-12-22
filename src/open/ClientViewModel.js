@@ -130,7 +130,7 @@ export class ClientViewModel extends ViewModel {
 		const desktopPlatforms = platforms.filter(p => isDesktopPlatform(p));
 		if (desktopPlatforms.length === 1) {
 			textPlatforms.push(desktopPlatforms[0]);
-		} else {
+		} else if (desktopPlatforms.length > 1) {
 			textPlatforms.push("Desktop");
 		}
 		if (platforms.includes(Platform.Android)) {
