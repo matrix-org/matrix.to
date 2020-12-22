@@ -48,11 +48,5 @@ export class MatrixStatic {
 
     getLinkInstructions(platform, link) {}
     getCopyString(platform, link) {}
-    getInstallLinks(platform) {
-        switch (platform) {
-            case Platform.iOS: return [new AppleStoreLink('vector', 'id1083446067')];
-            case Platform.Android: return [new PlayStoreLink('im.vector.app'), new FDroidLink('im.vector.app')];
-            default: return [new WebsiteLink("https://element.io/get-started")];
-        }
-    }
+    getInstallLinks(platform) {}
 }
