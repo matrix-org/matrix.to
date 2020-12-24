@@ -26,6 +26,7 @@ export function createClients() {
 		new Element(),
 		new Weechat(),
         new Nheko(),
+        new Fractal(),
         new Quaternion(),
         new Tensor(),
 	];
