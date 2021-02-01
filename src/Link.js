@@ -40,6 +40,21 @@ function asPrefix(identifierKind) {
 	}
 }
 
+function getWebInstanceMap(queryParams) {
+    const prefix = "web-instance[";
+    const postfix = "]";
+    const webInstanceParams = queryParams.filter(([key]) => key.startsWith(prefix) && key.endsWith(postfix));
+    const webInstances = webInstanceParams.map(([key, value]) => {
+        const noPrefix = key.substr(prefix.length);
+        const clientId = noPrefix.substr(0, noPrefix.length - postfix.length);
+        return [clientId, value];
+    });
+    return webInstances.reduce((map, [clientId, host]) => {
+        map[clientId] = host;
+        return map;
+    }, {});
+}
+
 export function getLabelForLinkKind(kind) {
 	switch (kind) {
 		case LinkKind.User: return "Start chat";
@@ -74,8 +89,12 @@ export class Link {
 
 		let viaServers = [];
         let clientId = null;
+        let webInstances = {};
 		if (queryParamsStr) {
-            const queryParams = queryParamsStr.split("&").map(pair => pair.split("="));
+            const queryParams = queryParamsStr.split("&").map(pair => {
+                const [key, value] = pair.split("=");
+                return [decodeURIComponent(key), decodeURIComponent(value)];
+            });
 			viaServers = queryParams
 				.filter(([key, value]) => key === "via")
 				.map(([,value]) => value);
@@ -83,6 +102,7 @@ export class Link {
             if (clientParam) {
                 clientId = clientParam[1];
             }
+            webInstances = getWebInstanceMap(queryParams);
 		}
 
 		if (linkStr.startsWith("#/")) {
@@ -96,32 +116,33 @@ export class Link {
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(clientId, viaServers, IdentifierKind.UserId, localPart, server);
+			return new Link(clientId, viaServers, IdentifierKind.UserId, localPart, server, webInstances);
 		}
 		matches = ROOMALIAS_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(clientId, viaServers, IdentifierKind.RoomAlias, localPart, server, eventId);
+			return new Link(clientId, viaServers, IdentifierKind.RoomAlias, localPart, server, webInstances, eventId);
 		}
 		matches = ROOMID_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(clientId, viaServers, IdentifierKind.RoomId, localPart, server, eventId);
+			return new Link(clientId, viaServers, IdentifierKind.RoomId, localPart, server, webInstances, eventId);
 		}
 		matches = GROUPID_PATTERN.exec(identifier);
 		if (matches) {
 			const server = matches[2];
 			const localPart = matches[1];
-			return new Link(clientId, viaServers, IdentifierKind.GroupId, localPart, server);
+			return new Link(clientId, viaServers, IdentifierKind.GroupId, localPart, server, webInstances);
 		}
 		return null;
 	}
 
-	constructor(clientId, viaServers, identifierKind, localPart, server, eventId) {
+	constructor(clientId, viaServers, identifierKind, localPart, server, webInstances, eventId) {
 		const servers = [server];
 		servers.push(...viaServers);
+        this.webInstances = webInstances;
 		this.servers = orderedUnique(servers);
 		this.identifierKind = identifierKind;
 		this.identifier = `${asPrefix(identifierKind)}${localPart}:${server}`;

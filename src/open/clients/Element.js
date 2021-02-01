@@ -17,6 +17,13 @@ limitations under the License.
 import {Maturity, Platform, LinkKind,
 	FDroidLink, AppleStoreLink, PlayStoreLink, WebsiteLink} from "../types.js";
 
+const trustedWebInstances = [
+    "app.element.io",   // first one is the default one
+    "develop.element.io",
+    "chat.fosdem.org",
+    "chat.mozilla.org",
+];
+
 /**
  * Information on how to deep link to a given matrix client.
  */
@@ -56,7 +63,11 @@ export class Element {
 				break;
 		}
 		if (platform === Platform.DesktopWeb || platform === Platform.MobileWeb || platform === Platform.iOS) {
-			return `https://app.element.io/#/${fragmentPath}`;
+            let instanceHost = trustedWebInstances[0];
+            if (trustedWebInstances.includes(link.webInstances[this.id])) {
+                instanceHost = link.webInstances[this.id];
+            }
+			return `https://${instanceHost}/#/${fragmentPath}`;
 		} else if (platform === Platform.Linux || platform === Platform.Windows || platform === Platform.macOS) {
 			return `element://vector/webapp/#/${fragmentPath}`;
 		} else {
