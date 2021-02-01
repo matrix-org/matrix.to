@@ -75,6 +75,6 @@ export class Element {
 	}
 
 	canInterceptMatrixToLinks(platform) {
-		return platform === Platform.iOS || platform === Platform.Android;
+		return platform === Platform.Android;
 	}
 }
