@@ -35,19 +35,21 @@ export class ClientViewModel extends ViewModel {
 		this._pickClient = pickClient;
         // to provide "choose other client" button after calling pick()
         this._clientListViewModel = null;
-
-		const matchingPlatforms = getMatchingPlatforms(client, this.platforms);
-		const nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
-		const webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
-		
-		this._proposedPlatform = this.preferences.platform || nativePlatform || webPlatform;
-		this._nativePlatform = nativePlatform || this._proposedPlatform;
-
-		this.actions = this._createActions(client, link, nativePlatform, webPlatform);
-		this._clientCanIntercept = !!(nativePlatform && client.canInterceptMatrixToLinks(nativePlatform));
-		this._showOpen = this.deepLink && !this._clientCanIntercept;
+        this._update();
 	}
 
+    _update() {
+		const matchingPlatforms = getMatchingPlatforms(this._client, this.platforms);
+		const webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
+		this._nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
+		this._proposedPlatform = this.preferences.platform || this._nativePlatform || webPlatform;
+
+		this.actions = this._createActions(this._client, this._link, this._nativePlatform, webPlatform);
+		this._clientCanIntercept = !!(this._nativePlatform && this._client.canInterceptMatrixToLinks(this._nativePlatform));
+		this._showOpen = this.deepLink && !this._clientCanIntercept;
+    }
+
+    // these are only shown in the install stage
 	_createActions(client, link, nativePlatform, webPlatform) {
 		let actions = [];
 		if (nativePlatform) {
@@ -117,7 +119,8 @@ export class ClientViewModel extends ViewModel {
     }
 
 	get showDeepLinkInInstall() {
-		return this._clientCanIntercept && this.deepLink;
+        // we can assume this._nativePlatform as this._clientCanIntercept already checks it
+		return this._clientCanIntercept && !!this._client.getDeepLink(this._nativePlatform, this._link);
 	}
 
 	get availableOnPlatformNames() {
@@ -142,14 +145,20 @@ export class ClientViewModel extends ViewModel {
 		return textPlatforms;
 	}
 
+    get _deepLinkPlatform() {
+        // in install stage, always show the native link in the small "open it here" link, independent of preference.
+        return this._showOpen ? this._proposedPlatform : this._nativePlatform;
+    }
+
+    // both used for big "Continue" button in open stage,
+    // and for small "open it here" link in the install stage.
     get deepLink() {
-        const platform = this.showBack ? this._proposedPlatform : this._nativePlatform;
-        return this._client.getDeepLink(platform, this._link);
+        return this._client.getDeepLink(this._deepLinkPlatform, this._link);
     }
 	
 	deepLinkActivated() {
 		this._pickClient(this._client);
-		this.preferences.setClient(this._client.id, this._proposedPlatform);
+		this.preferences.setClient(this._client.id, this._deepLinkPlatform);
 		if (this._showOpen) {
 			this._showOpen = false;
 			this.emitChange();
@@ -161,8 +170,8 @@ export class ClientViewModel extends ViewModel {
         this.emitChange();
     }
 
+    // whether or not we are only showing this client (in open or install stage)
     get showBack() {
-        // if we're not only showing this client, don't show back (see pick())
         return !!this._clientListViewModel;
     }
 
@@ -170,6 +179,11 @@ export class ClientViewModel extends ViewModel {
         if (this._clientListViewModel) {
             const vm = this._clientListViewModel;
             this._clientListViewModel = null;
+            // clear the client preference so we default back to to native link if any
+            // in the list with all clients, and also if we refresh, we get the list with
+            // all clients rather than having our "change client" click reverted.
+            this.preferences.setClient(undefined, undefined);
+            this._update();
             this.emitChange();
             vm.showAll();
         }
