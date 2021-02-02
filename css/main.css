@@ -54,6 +54,11 @@ body {
     margin: 0;
 }
 
+noscript {
+    display: block;
+    padding: 20px;
+}
+
 p { line-height: 150%; }
 a { text-decoration: none; }
 
