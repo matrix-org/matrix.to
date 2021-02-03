@@ -56,8 +56,7 @@ async function build() {
     const assets = new AssetMap(targetDir);
     const imageAssets = await copyFolder(path.join(projectDir, "images"), path.join(targetDir, "images"));
     assets.addSubMap(imageAssets);
-    await assets.write(`bundle-esm.js`, await buildJs("src/main.js", assets));
-    await assets.write(`bundle-legacy.js`, await buildJsLegacy("src/main.js", assets, ["src/polyfill.js"]));
+    await assets.write(`bundle.js`, await buildJsLegacy("src/main.js", assets, ["src/polyfill.js"]));
     await assets.write(`bundle.css`, await buildCss("css/main.css", targetDir, assets));
     await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
     await assets.writeUnhashed("index.html", await buildHtml(assets));
@@ -70,9 +69,8 @@ async function buildHtml(assets) {
     const doc = cheerio.load(devHtml);
     doc("link[rel=stylesheet]").attr("href", assets.resolve(`bundle.css`));
     const mainScripts = [
-        `<script type="module">import {main} from "./${assets.resolve(`bundle-esm.js`)}"; main(document.body);</script>`,
-        `<script type="text/javascript" nomodule src="${assets.resolve(`bundle-legacy.js`)}"></script>`,
-        `<script type="text/javascript" nomodule>bundle.main(document.body);</script>`
+        `<script type="text/javascript" src="${assets.resolve(`bundle.js`)}"></script>`,
+        `<script type="text/javascript">bundle.main(document.body);</script>`
     ];
     doc("script#main").replaceWith(mainScripts.join(""));
     return doc.html();
@@ -84,19 +82,6 @@ function createReplaceUrlPlugin(assets) {
         replacements[key] = value;
     }
     return replace(replacements);
-}
-
-async function buildJs(mainFile, assets, extraFiles = []) {
-    // create js bundle
-    const bundle = await rollup({
-        input: extraFiles.concat(mainFile),
-        plugins: [multi(), terser(), createReplaceUrlPlugin(assets)],
-    });
-    const {output} = await bundle.generate({
-        format: 'es',
-    });
-    const code = output[0].code;
-    return code;
 }
 
 async function buildJsLegacy(mainFile, assets, extraFiles = []) {
