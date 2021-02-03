@@ -1,6 +1,6 @@
 {
   "name": "matrix.to",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "type": "module",
   "license": "Apache-2.0",
   "engines": {
