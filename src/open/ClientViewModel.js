@@ -40,43 +40,107 @@ export class ClientViewModel extends ViewModel {
 
     _update() {
 		const matchingPlatforms = getMatchingPlatforms(this._client, this.platforms);
-		const webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
+		this._webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
 		this._nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
 		this._proposedPlatform = this.preferences.platform || this._nativePlatform || webPlatform;
 
-		this.actions = this._createActions(this._client, this._link, this._nativePlatform, webPlatform);
+        this.openActions = this._createOpenActions();
+		this.installActions = this._createInstallActions();
 		this._clientCanIntercept = !!(this._nativePlatform && this._client.canInterceptMatrixToLinks(this._nativePlatform));
-		this._showOpen = this.deepLink && !this._clientCanIntercept;
+		this._showOpen = this.openActions.length && !this._clientCanIntercept;
+    }
+
+    // these are only shown in the open stage
+    _createOpenActions() {
+        const hasPreferredWebInstance = this.hasPreferredWebInstance;
+        let deepLinkLabel = "Continue";
+        if (hasPreferredWebInstance) {
+            if (this._proposedPlatform === this._nativePlatform) {
+                deepLinkLabel = "Open in app";
+            } else {
+                deepLinkLabel = `Open on ${this._client.getPreferredWebInstance(this._link)}`;
+            }
+        }
+        const actions = [];
+        actions.push({
+            label: deepLinkLabel,
+            url: this._client.getDeepLink(this._proposedPlatform, this._link),
+            primary: true,
+            activated: () => {
+                this._pickClient(this._client);
+                this.preferences.setClient(this._client.id, this._proposedPlatform);
+                // only show install screen if we tried to open a native deeplink
+                if (this._showOpen && this._proposedPlatform === this._nativePlatform) {
+                    this._showOpen = false;
+                    this.emitChange();
+                }
+            },
+        });
+        // show only if there is a preferred instance, and if we don't already link to it in the first button
+        if (hasPreferredWebInstance && this._webPlatform && this._proposedPlatform !== this._webPlatform) {
+            actions.push({
+                label: `Open on ${this._client.getPreferredWebInstance(this._link)}`,
+                url: this._client.getDeepLink(this._webPlatform, this._link),
+                kind: "open-in-web",
+                activated: () => {} // don't persist this choice as we don't persist the preferred web instance, it's in the url
+            });
+        }
+        return actions;
     }
 
     // these are only shown in the install stage
-	_createActions(client, link, nativePlatform, webPlatform) {
+	_createInstallActions() {
 		let actions = [];
-		if (nativePlatform) {
-			const nativeActions = (client.getInstallLinks(nativePlatform) || []).map(installLink => {
+		if (this._nativePlatform) {
+			const nativeActions = (this._client.getInstallLinks(this._nativePlatform) || []).map(installLink => {
 				return {
-					label: installLink.getDescription(nativePlatform),
-					url: installLink.createInstallURL(link),
+					label: installLink.getDescription(this._nativePlatform),
+					url: installLink.createInstallURL(this._link),
 					kind: installLink.channelId,
 					primary: true,
-					activated: () => this.preferences.setClient(client.id, nativePlatform),
+					activated: () => this.preferences.setClient(this._client.id, this._nativePlatform),
 				};
 			});
 			actions.push(...nativeActions);
 		}
-		if (webPlatform) {
-			const webDeepLink = client.getDeepLink(webPlatform, link);
+		if (this._webPlatform) {
+			const webDeepLink = this._client.getDeepLink(this._webPlatform, this._link);
 			if (webDeepLink) {
+                const webLabel = this.hasPreferredWebInstance ?
+                    `Open on ${this._client.getPreferredWebInstance(this._link)}` :
+                    `Continue in your browser`;
 				actions.push({
-					label: `Continue in your browser`,
+					label: webLabel,
 					url: webDeepLink,
 					kind: "open-in-web",
-					activated: () => this.preferences.setClient(client.id, webPlatform),
+					activated: () => {
+                        if (!this.hasPreferredWebInstance) {
+                            this.preferences.setClient(this._client.id, this._webPlatform);
+                        }
+                    },
 				});
 			}
 		}
 		return actions;
 	}
+
+    get hasPreferredWebInstance() {
+        // also check there is a web platform that matches the platforms the user is on (mobile or desktop web)
+        return this._webPlatform && typeof this._client.getPreferredWebInstance(this._link) === "string";
+    }
+
+    get hostedByBannerLabel() {
+        const preferredWebInstance = this._client.getPreferredWebInstance(this._link);
+        if (this._webPlatform && preferredWebInstance) {
+            let label = preferredWebInstance;
+            const subDomainIdx = preferredWebInstance.lastIndexOf(".", preferredWebInstance.lastIndexOf("."));
+            if (subDomainIdx !== -1) {
+                label = preferredWebInstance.substr(preferredWebInstance.length - subDomainIdx + 1);
+            }
+            return `Hosted by ${label}`;
+        }
+        return;
+    }
 
     get homepage() {
         return this._client.homepage;
@@ -143,26 +207,6 @@ export class ClientViewModel extends ViewModel {
 			textPlatforms.push("iOS");
 		}
 		return textPlatforms;
-	}
-
-    get _deepLinkPlatform() {
-        // in install stage, always show the native link in the small "open it here" link, independent of preference.
-        return this._showOpen ? this._proposedPlatform : this._nativePlatform;
-    }
-
-    // both used for big "Continue" button in open stage,
-    // and for small "open it here" link in the install stage.
-    get deepLink() {
-        return this._client.getDeepLink(this._deepLinkPlatform, this._link);
-    }
-	
-	deepLinkActivated() {
-		this._pickClient(this._client);
-		this.preferences.setClient(this._client.id, this._deepLinkPlatform);
-		if (this._showOpen) {
-			this._showOpen = false;
-			this.emitChange();
-		}
 	}
 
     pick(clientListViewModel) {

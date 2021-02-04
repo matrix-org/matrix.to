@@ -65,12 +65,7 @@ export class ClientView extends TemplateView {
 class OpenClientView extends TemplateView {
 	render(t, vm) {
 		return t.div({className: "OpenClientView"}, [
-			t.a({
-				className: "primary fullwidth",
-				href: vm.deepLink,
-				rel: "noopener noreferrer",
-				onClick: () => vm.deepLinkActivated(),
-			}, "Continue"),
+			...vm.openActions.map(a => renderAction(t, a)),
             showBack(t, vm),
 		]);
 	}
@@ -98,34 +93,14 @@ class InstallClientView extends TemplateView {
 			children.push(t.p({className: "instructions"}, renderInstructions(textInstructions).concat(copyButton)));
 		}
 
-		const actions = t.div({className: "actions"}, vm.actions.map(a => {
-			let badgeUrl;
-			switch (a.kind) {
-				case "play-store": badgeUrl = "images/google-play-us.svg"; break;
-				case "fdroid": badgeUrl = "images/fdroid-badge.png"; break;
-				case "apple-app-store": badgeUrl = "images/app-store-us-alt.svg"; break;
-                case "flathub": badgeUrl = "images/flathub-badge.svg"; break;
-			}
-			return t.a({
-				href: a.url,
-				className: {
-					fullwidth: !badgeUrl,
-					primary: a.primary && !badgeUrl,
-					secondary: !a.primary && !badgeUrl,
-					badge: !!badgeUrl,
-				},
-				rel: "noopener noreferrer",
-				["aria-label"]: a.label, 
-				onClick: () => a.activated()
-			}, badgeUrl ? t.img({src: badgeUrl}) : a.label);
-		}));
+		const actions = t.div({className: "actions"}, vm.installActions.map(a => renderAction(t, a)));
 		children.push(actions);
 
 		if (vm.showDeepLinkInInstall) {
 			const deepLink = t.a({
 				rel: "noopener noreferrer",
-				href: vm.deepLink,
-				onClick: () => vm.deepLinkActivated(),
+				href: vm.openActions[0].url,
+				onClick: () => vm.openActions[0].activated(),
 			}, "open it here");
 			children.push(t.p([`If you already have ${vm.name} installed, you can `, deepLink, "."]))
 		}
@@ -141,4 +116,26 @@ function showBack(t, vm) {
         `Continue with ${vm.name} · `,
         t.button({className: "text", onClick: () => vm.back()}, "Change"),
     ]);
+}
+
+function renderAction(t, a) {
+    let badgeUrl;
+    switch (a.kind) {
+        case "play-store": badgeUrl = "images/google-play-us.svg"; break;
+        case "fdroid": badgeUrl = "images/fdroid-badge.png"; break;
+        case "apple-app-store": badgeUrl = "images/app-store-us-alt.svg"; break;
+        case "flathub": badgeUrl = "images/flathub-badge.svg"; break;
+    }
+    return t.a({
+        href: a.url,
+        className: {
+            fullwidth: !badgeUrl,
+            primary: a.primary && !badgeUrl,
+            secondary: !a.primary && !badgeUrl,
+            badge: !!badgeUrl,
+        },
+        rel: "noopener noreferrer",
+        ["aria-label"]: a.label, 
+        onClick: () => a.activated()
+    }, badgeUrl ? t.img({src: badgeUrl}) : a.label);
 }
