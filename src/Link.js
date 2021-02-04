@@ -171,7 +171,9 @@ export class Link {
 		return link &&
 			link.identifier === this.identifier &&
 			this.servers.length === link.servers.length &&
-			this.servers.every((s, i) => link.servers[i] === s);
+			this.servers.every((s, i) => link.servers[i] === s) &&
+            Object.keys(this.webInstances).length === Object.keys(link.webInstances).length &&
+            Object.keys(this.webInstances).every(k => this.webInstances[k] === link.webInstances[k]);
 	}
 
 	toFragment() {
