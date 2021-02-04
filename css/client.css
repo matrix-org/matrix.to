@@ -16,6 +16,11 @@
     padding: 16px;
 }
 
+.ClientView.isPreferred {
+    border: 3px solid var(--link);
+    box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.05);
+}
+
 .ClientView .hostedBanner {
     text-align: center;
     margin-bottom: 29px;
