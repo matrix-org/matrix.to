@@ -88,4 +88,9 @@ export class Element {
 	canInterceptMatrixToLinks(platform) {
 		return platform === Platform.Android;
 	}
+
+    getPreferredWebInstance(link) {
+        const idx = trustedWebInstances.indexOf(link.webInstances[this.id])
+        return idx === -1 ? undefined : trustedWebInstances[idx];
+    }
 }

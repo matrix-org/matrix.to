@@ -50,4 +50,6 @@ export class Nheko {
             return [new FlathubLink("io.github.NhekoReborn.Nheko")];
         }
     }
+
+    getPreferredWebInstance(link) {}
 }

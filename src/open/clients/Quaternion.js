@@ -47,4 +47,6 @@ export class Quaternion {
             return [new FlathubLink("com.github.quaternion")];
         }
     }
+
+    getPreferredWebInstance(link) {}
 }

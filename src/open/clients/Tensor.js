@@ -47,4 +47,6 @@ export class Tensor {
             return [new FDroidLink("io.davidar.tensor")];
         }
     }
+
+    getPreferredWebInstance(link) {}
 }

@@ -46,4 +46,6 @@ export class Weechat {
     }
 
 	getInstallLinks(platform) {}
+
+    getPreferredWebInstance(link) {}
 }

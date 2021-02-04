@@ -48,4 +48,6 @@ export class Fractal {
             return [new FlathubLink("org.gnome.Fractal")];
         }
     }
+
+    getPreferredWebInstance(link) {}
 }
