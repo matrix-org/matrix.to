@@ -56,7 +56,7 @@ async function build() {
     const assets = new AssetMap(targetDir);
     const imageAssets = await copyFolder(path.join(projectDir, "images"), path.join(targetDir, "images"));
     assets.addSubMap(imageAssets);
-    await assets.write(`bundle.js`, await buildJsLegacy("src/main.js", assets, ["src/polyfill.js"]));
+    await assets.write(`bundle.js`, await buildJs("src/main.js", assets, ["src/polyfill.js"]));
     await assets.write(`bundle.css`, await buildCss("css/main.css", targetDir, assets));
     await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
     await assets.writeUnhashed("index.html", await buildHtml(assets));
@@ -88,7 +88,7 @@ function createReplaceUrlPlugin(assets) {
     return replace(replacements);
 }
 
-async function buildJsLegacy(mainFile, assets, extraFiles = []) {
+async function buildJs(mainFile, assets, extraFiles = []) {
     // compile down to whatever IE 11 needs
     const babelPlugin = babel.babel({
         babelHelpers: 'bundled',
