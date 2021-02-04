@@ -16,6 +16,17 @@
     padding: 16px;
 }
 
+.ClientView .hostedBanner {
+    text-align: center;
+    margin-bottom: 29px;
+    padding: 4px 0;
+    line-height: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: var(--lightgrey);
+}
+
 .ClientView .header {
     display: flex;
 }

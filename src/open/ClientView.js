@@ -39,7 +39,8 @@ function renderInstructions(parts) {
 export class ClientView extends TemplateView {
 
 	render(t, vm) {
-		return t.div({className: "ClientView"}, [
+		return t.div({className: {"ClientView": true, "isPreferred": vm => vm.hasPreferredWebInstance}}, [
+            ... vm.hasPreferredWebInstance ? [t.div({className: "hostedBanner"}, vm.hostedByBannerLabel)] : [],
 			t.div({className: "header"}, [
 				t.div({className: "description"}, [
 					t.h3(vm.name),
