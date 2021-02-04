@@ -69,6 +69,10 @@ async function buildHtml(assets) {
     const doc = cheerio.load(devHtml);
     doc("link[rel=stylesheet]").attr("href", assets.resolve(`bundle.css`));
     const mainScripts = [
+        // this is needed to avoid hitting https://github.com/facebook/regenerator/issues/378
+        // which prevents the whole bundle to load, as our CSP headers don't allow unsafe-eval
+        // and I preferred this over disabling strict mode for the whole bundle
+        `<script type="text/javascript">window.regeneratorRuntime = undefined;</script>`,
         `<script type="text/javascript" src="${assets.resolve(`bundle.js`)}"></script>`,
         `<script type="text/javascript">bundle.main(document.body);</script>`
     ];
