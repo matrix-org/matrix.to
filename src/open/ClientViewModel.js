@@ -62,20 +62,23 @@ export class ClientViewModel extends ViewModel {
             }
         }
         const actions = [];
-        actions.push({
-            label: deepLinkLabel,
-            url: this._client.getDeepLink(this._proposedPlatform, this._link),
-            primary: true,
-            activated: () => {
-                this._pickClient(this._client);
-                this.preferences.setClient(this._client.id, this._proposedPlatform);
-                // only show install screen if we tried to open a native deeplink
-                if (this._showOpen && this._proposedPlatform === this._nativePlatform) {
-                    this._showOpen = false;
-                    this.emitChange();
-                }
-            },
-        });
+        const proposedDeepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
+        if (proposedDeepLink) {
+            actions.push({
+                label: deepLinkLabel,
+                url: proposedDeepLink,
+                primary: true,
+                activated: () => {
+                    this._pickClient(this._client);
+                    this.preferences.setClient(this._client.id, this._proposedPlatform);
+                    // only show install screen if we tried to open a native deeplink
+                    if (this._showOpen && this._proposedPlatform === this._nativePlatform) {
+                        this._showOpen = false;
+                        this.emitChange();
+                    }
+                },
+            });
+        }
         // show only if there is a preferred instance, and if we don't already link to it in the first button
         if (hasPreferredWebInstance && this._webPlatform && this._proposedPlatform !== this._webPlatform) {
             actions.push({
