@@ -54,7 +54,7 @@ export class ClientListViewModel extends ViewModel {
 	}
 
 	_filterClients() {
-		this.clientList = this._clients.filter(client => {
+		const clientVMs = this._clients.filter(client => {
             const platformMaturities = this.platforms.map(p => client.getMaturity(p));
 			const isStable = platformMaturities.includes(Maturity.Stable) || platformMaturities.includes(Maturity.Beta);
 			const isSupported = client.platforms.some(p => this.platforms.includes(p));
@@ -70,6 +70,9 @@ export class ClientListViewModel extends ViewModel {
 			link: this._link,
 			pickClient: client => this._pickClient(client)
 		})));
+        const preferredClientVMs = clientVMs.filter(c => c.hasPreferredWebInstance);
+        const otherClientVMs = clientVMs.filter(c => !c.hasPreferredWebInstance);
+        this.clientList = preferredClientVMs.concat(otherClientVMs);
 		this.emitChange();
 	}
 
