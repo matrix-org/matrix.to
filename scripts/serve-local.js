@@ -30,6 +30,8 @@ const serve = serveStatic(
 			res.setHeader("Pragma", "no-cache");
 			res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 			res.setHeader("Expires", "Wed, 21 Oct 2015 07:28:00 GMT");
+            // same CSP as matrix.to server is using, so local testing happens under similar environment
+            res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src * data:; connect-src *; font-src 'self'; manifest-src 'self'; form-action 'self'; navigate-to *;");
 		},
 		index: ['index.html', 'index.htm']
 	}
