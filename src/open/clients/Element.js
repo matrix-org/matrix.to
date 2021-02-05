@@ -62,9 +62,12 @@ export class Element {
 				fragmentPath = `room/${link.identifier}/${link.eventId}`;
 				break;
 		}
-		if (platform === Platform.DesktopWeb || platform === Platform.MobileWeb || platform === Platform.iOS) {
+        const isWebPlatform = platform === Platform.DesktopWeb || platform === Platform.MobileWeb;
+		if (isWebPlatform || platform === Platform.iOS) {
             let instanceHost = trustedWebInstances[0];
-            if (trustedWebInstances.includes(link.webInstances[this.id])) {
+            // we use app.element.io which iOS will intercept, but it likely won't intercept any other trusted instances
+            // so only use a preferred web instance for true web links.
+            if (isWebPlatform && trustedWebInstances.includes(link.webInstances[this.id])) {
                 instanceHost = link.webInstances[this.id];
             }
 			return `https://${instanceHost}/#/${fragmentPath}`;
