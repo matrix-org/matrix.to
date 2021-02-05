@@ -26,7 +26,7 @@ export class Weechat {
     get author() { return "Poljar"; }
     get homepage() { return "https://github.com/poljar/weechat-matrix"; }
 	get platforms() { return [Platform.Windows, Platform.macOS, Platform.Linux]; }
-	get description() { return 'Command-line Matrix interface using Weechat'; }
+	get description() { return 'Command-line Matrix interface using Weechat.'; }
 	getMaturity(platform) { return Maturity.Beta; }
 	getDeepLink(platform, link) {}
 	canInterceptMatrixToLinks(platform) { return false; }
