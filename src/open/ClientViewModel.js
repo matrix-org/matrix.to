@@ -42,7 +42,8 @@ export class ClientViewModel extends ViewModel {
 		const matchingPlatforms = getMatchingPlatforms(this._client, this.platforms);
 		this._webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
 		this._nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
-		this._proposedPlatform = this.preferences.platform || this._nativePlatform || webPlatform;
+        const preferredPlatform = matchingPlatforms.find(p => p === this.preferences.platform);
+		this._proposedPlatform = preferredPlatform || this._nativePlatform || webPlatform;
 
         this.openActions = this._createOpenActions();
 		this.installActions = this._createInstallActions();
