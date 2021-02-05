@@ -42,3 +42,12 @@ practice for legibility we bend the rules and include it verbatim)
 
 You can discuss matrix.to in
 [`#matrix.to:matrix.org`](https://matrix.to/#/#matrix.to:matrix.org)
+
+## Build Instructions
+
+1. Install [yarn](https://classic.yarnpkg.com/en/docs/install)
+1. `git clone https://github.com/matrix-org/matrix.to`
+1. `cd matrix.to`
+1. `yarn`
+1. `yarn start`
+1. Go to http://localhost:5000 in your browser
