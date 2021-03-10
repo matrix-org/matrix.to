@@ -34,7 +34,7 @@ export async function main(container) {
 	container.appendChild(view.mount());
 	window.addEventListener('hashchange', () => {
         let hash = location.hash;
-        if (!'fragmentDirective' in document) {
+        if (!('fragmentDirective' in document)) {
             // The link might have an unwanted :~: fragment directive in browsers without support for fragment directives.
             let fragmentDirectiveIndex = hash.indexOf(":~:")
             if(fragmentDirectiveIndex != -1) {
