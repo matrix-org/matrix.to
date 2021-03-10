@@ -85,13 +85,6 @@ export class Link {
 		if (!fragment) {
 			return null;
 		}
-        if (!'fragmentDirective' in document) {
-            // The link might have an unwanted :~: fragment directive in browsers without support for fragment directives.
-            let fragmentDirectiveIndex = fragment.indexOf(":~:")
-            if(fragmentDirectiveIndex != -1) {
-                fragment=fragment.slice(0, fragmentDirectiveIndex)
-            }
-        }
 		let [linkStr, queryParamsStr] = fragment.split("?");
 
 		let viaServers = [];
