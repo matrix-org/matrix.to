@@ -33,14 +33,6 @@ export async function main(container) {
 	const view = new RootView(vm);
 	container.appendChild(view.mount());
 	window.addEventListener('hashchange', () => {
-        let hash = location.hash;
-        if (!('fragmentDirective' in document)) {
-            // The link might have an unwanted :~: fragment directive in browsers without support for fragment directives.
-            let fragmentDirectiveIndex = hash.indexOf(":~:")
-            if(fragmentDirectiveIndex != -1) {
-                hash = hash.slice(0, fragmentDirectiveIndex)
-            }
-        }
-		vm.updateHash(decodeURIComponent(hash));
+		vm.updateHash(decodeURIComponent(location.hash));
 	});
 }
