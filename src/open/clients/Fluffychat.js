@@ -78,7 +78,5 @@ export class Fluffychat {
         return platform === Platform.Android;
     }
 
-    getPreferredWebInstance(link) {
-        return "fluffychat.im/web";
-    }
+    getPreferredWebInstance(link) {}
 }
