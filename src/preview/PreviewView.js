@@ -44,11 +44,11 @@ class LoadingPreviewView extends TemplateView {
 
 class LoadedPreviewView extends TemplateView {
 	render(t, vm) {
-        const avatar = t.mapView(vm => vm.avatarUrl, avatarUrl => {
+        const avatar = t.map(vm => vm.avatarUrl, (avatarUrl, t) => {
             if (avatarUrl) {
-                return new TemplateView(avatarUrl, (t, src) => t.img({className: "avatar", src}));
+                return t.img({className: "avatar", src: avatarUrl});
             } else {
-                return new TemplateView(null, t => t.div({className: "defaultAvatar"}));
+                return t.div({className: "defaultAvatar"});
             }
         });
 		return t.div([
