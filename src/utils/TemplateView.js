@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { setAttribute, text, isChildren, classNames, TAG_NAMES, HTML_NS, tag } from "./html.js";
+import { setAttribute, text, isChildren, classNames, TAG_NAMES, HTML_NS } from "./html.js";
 
 /**
     Bindable template. Renders once, and allows bindings for given nodes. If you need
@@ -33,11 +33,13 @@ import { setAttribute, text, isChildren, classNames, TAG_NAMES, HTML_NS, tag } f
 export class TemplateView {
     constructor(value, render = undefined) {
         this._value = value;
+        // TODO: can avoid this if we have a separate class for inline templates vs class template views
         this._render = render;
         this._eventListeners = null;
         this._bindings = null;
         this._subViews = null;
         this._root = null;
+        // TODO: can avoid this if we adopt the handleEvent pattern in our EventListener
         this._boundUpdateFromValue = null;
     }
 
@@ -108,6 +110,10 @@ export class TemplateView {
         return this._root;
     }
 
+    _updateFromValue(changedProps) {
+        this.update(this._value, changedProps);
+    }
+
     update(value) {
         this._value = value;
         if (this._bindings) {
@@ -115,10 +121,6 @@ export class TemplateView {
                 binding();
             }
         }
-    }
-
-    _updateFromValue(changedProps) {
-        this.update(this._value, changedProps);
     }
 
     _addEventListener(node, name, fn, useCapture = false) {
@@ -135,11 +137,18 @@ export class TemplateView {
         this._bindings.push(bindingFn);
     }
 
-    _addSubView(view) {
+    addSubView(view) {
         if (!this._subViews) {
             this._subViews = [];
         }
         this._subViews.push(view);
+    }
+
+    removeSubView(view) {
+        const idx = this._subViews.indexOf(view);
+        if (idx !== -1) {
+            this._subViews.splice(idx, 1);
+        }
     }
 }
 
@@ -238,8 +247,6 @@ class TemplateBuilder {
                 const newNode = renderNode(node);
                 if (node.parentNode) {
                     node.parentNode.replaceChild(newNode, node);
-                } else {
-                    console.warn("Could not update parent of node binding");
                 }
                 node = newNode;
             }
@@ -279,13 +286,8 @@ class TemplateBuilder {
         } catch (err) {
             return errorToDOM(err);
         }
-        this._templateView._addSubView(view);
+        this._templateView.addSubView(view);
         return root;
-    }
-
-    // sugar
-    createTemplate(render) {
-        return vm => new TemplateView(vm, render);
     }
 
     // map a value to a view, every time the value changes
@@ -308,15 +310,36 @@ class TemplateBuilder {
         });
     }
 
-    // creates a conditional subtemplate
-    if(fn, viewCreator) {
+    // Special case of mapView for a TemplateView.
+    // Always creates a TemplateView, if this is optional depending
+    // on mappedValue, use `if` or `mapView`
+    map(mapFn, renderFn) {
+        return this.mapView(mapFn, mappedValue => {
+            return new TemplateView(this._value, (t, vm) => {
+                const rootNode = renderFn(mappedValue, t, vm);
+                if (!rootNode) {
+                    // TODO: this will confuse mapView which assumes that
+                    // a comment node means there is no view to clean up
+                    return document.createComment("map placeholder");
+                }
+                return rootNode;
+            });
+        });
+    }
+
+    ifView(predicate, viewCreator) {
         return this.mapView(
-            value => !!fn(value),
+            value => !!predicate(value),
             enabled => enabled ? viewCreator(this._value) : null
         );
     }
-}
 
+    // creates a conditional subtemplate
+    // use mapView if you need to map to a different view class
+    if(predicate, renderFn) {
+        return this.ifView(predicate, vm => new TemplateView(vm, renderFn));
+    }
+}
 
 function errorToDOM(error) {
     const stack = new Error().stack;
