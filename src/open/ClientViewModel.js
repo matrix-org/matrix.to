@@ -49,15 +49,6 @@ export class ClientViewModel extends ViewModel {
 		this.installActions = this._createInstallActions();
 		this._clientCanIntercept = !!(this._nativePlatform && this._client.canInterceptMatrixToLinks(this._nativePlatform));
 		this._showOpen = this.openActions.length && !this._clientCanIntercept;
-        const proposedDeepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
-        this._openWillNavigateIfNotInstalled = false;
-        if (this._showOpen && !isWebPlatform(this._proposedPlatform)) {
-            try {
-                if (new URL(proposedDeepLink).protocol === "https:") {
-                    this._openWillNavigateIfNotInstalled = true;
-                }
-            } catch (err) {}
-        }
     }
 
     // these are only shown in the open stage
@@ -179,16 +170,8 @@ export class ClientViewModel extends ViewModel {
         return this._client.icon;
     }
 
-    get showOpen() {
-        return this._showOpen;
-    }
-
-    get showInstall() {
-        // also show install options in open screen if the deeplink is
-        // a https link that should be intercepted by the native app
-        // because if it isn't installed, you will just go to that
-        // website and never see the install options here.
-        return !this._showOpen || this._openWillNavigateIfNotInstalled;
+    get stage() {
+        return this._showOpen ? "open" : "install";
     }
 
 	get textInstructions() {
