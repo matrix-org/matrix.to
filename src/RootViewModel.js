@@ -51,13 +51,6 @@ export class RootViewModel extends ViewModel {
 	}
 
 	updateHash(hash) {
-        if (!('fragmentDirective' in document)) {
-            // The link might have an unwanted :~: fragment directive in browsers without support for fragment directives.
-            let fragmentDirectiveIndex = hash.indexOf(":~:")
-            if(fragmentDirectiveIndex != -1) {
-                hash = hash.slice(0, fragmentDirectiveIndex)
-            }
-        }
         if (hash.startsWith("#/policy/")) {
             const server = hash.substr(9);
             this.loadServerPolicyViewModel = new LoadServerPolicyViewModel(this.childOptions({server}));
