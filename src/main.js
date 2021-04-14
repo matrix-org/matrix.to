@@ -20,6 +20,17 @@ import {RootView} from "./RootView.js";
 import {Preferences} from "./Preferences.js";
 import {guessApplicablePlatforms} from "./Platform.js";
 
+function stripFragmentDirective(hash) {
+	if (!('fragmentDirective' in document)) {
+        // The link might have an unwanted :~: fragment directive in browsers without support for fragment directives.
+        let fragmentDirectiveIndex = hash.indexOf(":~:")
+        if(fragmentDirectiveIndex != -1) {
+            hash = hash.slice(0, fragmentDirectiveIndex)
+        }
+    }
+    return hash
+}
+
 export async function main(container) {
 	const vm = new RootViewModel({
 		request: xhrRequest,
@@ -28,11 +39,11 @@ export async function main(container) {
 		preferences: new Preferences(window.localStorage),
 		origin: location.origin,
 	});
-	vm.updateHash(decodeURIComponent(location.hash));
+	vm.updateHash(decodeURIComponent(stripFragmentDirective(location.hash)));
 	window.__rootvm = vm;
 	const view = new RootView(vm);
 	container.appendChild(view.mount());
 	window.addEventListener('hashchange', () => {
-		vm.updateHash(decodeURIComponent(location.hash));
+		vm.updateHash(decodeURIComponent(stripFragmentDirective(location.hash)));
 	});
 }
