@@ -16,11 +16,40 @@ limitations under the License.
 
 const dictionaries = {
     en: {
-        "create_header": "Create shareable links to Matrix rooms, users or messages without being tied to any app",
+        "create": {
+            "header": "Create shareable links to Matrix rooms, users or messages without being tied to any app",
+            "inputPlaceholder": "#room:example.com, @user:example.com",
+            "submit": "Create link",
+            "inputError": "That doesn't seem valid. Try #room:example.com, @user:example.com or +group:example.com."
+        },
+        "root": {
+            "github": "GitHub project",
+            "addClient": "Add your app",
+            "clearPreferences": "Clear preferences",
+            "matrixLinkPart1": "This invite uses",
+            "matrixLinkPart2": ", an open network for secure, decentralized communication."
+        }
     },
     de: {
-        "create_header": "Erstelle teilbare Links zu Matrix Räumen, Benutzern oder Nachrichten, ohne dabei auf eine Anwendung angewiesen zu sein.",
+        "create": {
+            "header": "Erstelle teilbare Links zu Matrix Räumen, Benutzern oder Nachrichten, ohne dabei auf eine Anwendung angewiesen zu sein.",
+            "inputPlaceholder": "#raum:example.com, @benutzer:example.com",
+            "submit": "Link erstellen",
+            "inputError": "That doesn't seem valid. Try #room:example.com, @user:example.com or +group:example.com."
+        },
+        "root": {
+            "github": "GitHub Projekt",
+            "addClient": "Füge deine Anwendung hinzu",
+            "clearPreferences": "Einstellungen zurücksetzen",
+            "matrixLinkPart1": "Deise Einladung benutz ",
+            "matrixLinkPart2": ", ein offenes Netzwerk für sichere und dezentrale Kommunikation."
+        }
     }
+}
+
+function resolve(path, obj=self, separator='.') {
+    var properties = Array.isArray(path) ? path : path.split(separator)
+    return properties.reduce((prev, curr) => prev && prev[curr], obj)
 }
 
 export class I18N {
@@ -38,10 +67,12 @@ export class I18N {
             return key;
         }
 
-        if (typeof dictionaries[this.language][key] === 'undefined') {
+        const translate = resolve(key, dictionaries[this.language]);
+
+        if (typeof translate !== 'string') {
             return key;
         }
 
-        return dictionaries[this.language][key];
+        return translate;
     }
 }

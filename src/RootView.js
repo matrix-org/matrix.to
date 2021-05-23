@@ -27,12 +27,12 @@ export class RootView extends TemplateView {
             t.mapView(vm => vm.loadServerPolicyViewModel, vm => vm ? new LoadServerPolicyView(vm) : null),
 			t.div({className: "footer"}, [
 				t.p(t.img({src: "images/matrix-logo.svg"})),
-				t.p(["This invite uses ", externalLink(t, "https://matrix.org", "Matrix"), ", an open network for secure, decentralized communication."]),
+				t.p([this._i18n.translate("root.matrixLinkPart1"), externalLink(t, "https://matrix.org", "Matrix"), this._i18n.translate("root.matrixLinkPart2")]),
 				t.ul({className: "links"}, [
-					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to", "GitHub project")),
-					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to/tree/main/src/open/clients", "Add your app")),
+					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to", this._i18n.translate('root.github'))),
+					t.li(externalLink(t, "https://github.com/matrix-org/matrix.to/tree/main/src/open/clients", this._i18n.translate('root.addClient'))),
 					t.li({className: {hidden: vm => !vm.hasPreferences}},
-						t.button({className: "text", onClick: () => vm.clearPreferences()}, "Clear preferences")),
+						 t.button({className: "text", onClick: () => vm.clearPreferences()}, this._i18n.translate("root.clearPreferences"))),
 				])
 			])
 		]);
