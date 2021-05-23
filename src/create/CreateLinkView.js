@@ -20,9 +20,10 @@ import {copyButton} from "../utils/copy.js";
 
 export class CreateLinkView extends TemplateView {
 	render(t, vm) {
+        console.dir(this);
         const link = t.a({href: vm => vm.linkUrl}, vm => vm.linkUrl);
 		return t.div({className: "CreateLinkView card"}, [
-			t.h1("Create shareable links to Matrix rooms, users or messages without being tied to any app"),
+			t.h1(this._i18n.translate('create_header')),
 			t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
 				t.div(t.input({
 					className: "fullwidth large",

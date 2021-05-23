@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import { setAttribute, text, isChildren, classNames, TAG_NAMES, HTML_NS } from "./html.js";
+import { I18N } from './i18n.js';
 
 /**
     Bindable template. Renders once, and allows bindings for given nodes. If you need
@@ -41,6 +42,7 @@ export class TemplateView {
         this._root = null;
         // TODO: can avoid this if we adopt the handleEvent pattern in our EventListener
         this._boundUpdateFromValue = null;
+        this._i18n = new I18N();
     }
 
     get value() {
