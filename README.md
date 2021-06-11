@@ -5,6 +5,27 @@ which lets users share links to matrix entities without being tied to a
 specific app.
 Stylistically it serves as a landing page for rooms and communities.
 
+## How can I put a badge on my website linking to my matrix room?
+
+You can use the badge image we've put up at https://matrix.to/img/matrix-badge.svg, and use it in a link like this:
+
+[![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#matrix.to:matrix.org)
+
+You can use this Markdown:
+```md
+[![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#matrix.to:matrix.org)
+```
+
+Or this HTML:
+
+```html
+<a href="https://matrix.to/#/#matrix.to:matrix.org" rel="noopener" target="_blank"><img src="https://matrix.to/img/matrix-badge.svg" alt="Chat on Matrix"></a>
+```
+
+to show the badge.
+
+## How does matrix.to work?
+
 Matrix.to preserves user privacy by not sharing any information about the links
 being followed with the Matrix.to server - the redirection is calculated
 entirely clientside using JavaScript, and the link details is hidden behind a
@@ -20,6 +41,8 @@ details out of the URLs and follow them manually, or change the hostname to
 point at an alternative deployment of the service.  The Matrix.to service could
 also be hosted in an immutable/signed environment such as IPFS to further
 increase its availability and avoid tampering.
+
+## URL Scheme
 
 The matrix.to URL scheme is
 
