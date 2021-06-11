@@ -52,6 +52,7 @@ async function build() {
     await removeDirIfExists(targetDir);
     await fs.mkdir(targetDir);
     await fs.mkdir(path.join(targetDir, "images"));
+    await fs.mkdir(path.join(targetDir, "img")); // contains the badge image for historical reasons, unhashed
     await fs.mkdir(path.join(targetDir, ".well-known"));
     const assets = new AssetMap(targetDir);
     const imageAssets = await copyFolder(path.join(projectDir, "images"), path.join(targetDir, "images"));
@@ -60,6 +61,7 @@ async function build() {
     await assets.write(`bundle.css`, await buildCss("css/main.css", targetDir, assets));
     await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
     await assets.writeUnhashed("index.html", await buildHtml(assets));
+    await assets.writeUnhashed("img/matrix-badge.svg", await fs.readFile(path.join(projectDir, "images-nohash/matrix-badge.svg")));
     const globalHash = assets.hashForAll();
     console.log(`built matrix.to ${version} (${globalHash}) successfully with ${assets.size} files`);
 }
