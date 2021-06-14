@@ -22,6 +22,7 @@ const trustedWebInstances = [
     "develop.element.io",
     "chat.fosdem.org",
     "chat.mozilla.org",
+    "webchat.kde.org",
 ];
 
 /**
