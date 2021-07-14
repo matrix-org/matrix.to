@@ -24,13 +24,17 @@ export async function resolveServer(request, baseURL) {
 		baseURL = `https://${baseURL}`;
 	}
 	{
-		const {status, body} = await request(`${baseURL}/.well-known/matrix/client`, {method: "GET"}).response();
-		if (status === 200) {
-			const proposedBaseURL = body?.['m.homeserver']?.base_url;
-			if (typeof proposedBaseURL === "string") {
-				baseURL = noTrailingSlash(proposedBaseURL);
-			}
-		}
+	    try {
+            const {status, body} = await request(`${baseURL}/.well-known/matrix/client`, {method: "GET"}).response();
+            if (status === 200) {
+                const proposedBaseURL = body?.['m.homeserver']?.base_url;
+                if (typeof proposedBaseURL === "string") {
+                    baseURL = noTrailingSlash(proposedBaseURL);
+                }
+            }
+        } catch (e) {
+	        console.warn("Failed to fetch ${baseURL}/.well-known/matrix/client", e);
+        }
 	}
 	{
 		const {status} = await request(`${baseURL}/_matrix/client/versions`, {method: "GET"}).response();
