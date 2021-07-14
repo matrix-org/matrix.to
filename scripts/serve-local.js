@@ -45,3 +45,4 @@ const server = http.createServer(function onRequest (req, res) {
 
 // Listen
 server.listen(5000);
+console.log("Listening on port 5000");
