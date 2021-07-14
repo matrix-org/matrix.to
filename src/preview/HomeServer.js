@@ -56,6 +56,17 @@ export class HomeServer {
 		return body;
 	}
 
+    // MSC3266 implementation
+	async getRoomSummary(roomIdOrAlias, viaServers) {
+        let query;
+        if (viaServers.length > 0) {
+            query = "?" + viaServers.map(server => `via=${encodeURIComponent(server)}`).join('&');
+        }
+        const {body, status} = await this._request(`${this.baseURL}/_matrix/client/unstable/im.nheko.summary/rooms/${encodeURIComponent(roomIdOrAlias)}/summary${query}`).response();
+        if (status !== 200) return;
+        return body;
+    }
+
 	async findPublicRoomById(roomId) {
 		const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/directory/list/room/${encodeURIComponent(roomId)}`).response();
 		if (status !== 200 || body.visibility !== "public") {

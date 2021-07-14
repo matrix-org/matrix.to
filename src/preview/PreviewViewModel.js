@@ -88,14 +88,21 @@ export class PreviewViewModel extends ViewModel {
 
 	async _loadRoomPreview(homeserver, link) {
 		let publicRoom;
-		if (link.identifierKind === IdentifierKind.RoomId) {
-			publicRoom = await homeserver.findPublicRoomById(link.identifier);
-		} else if (link.identifierKind === IdentifierKind.RoomAlias) {
-			const roomId = await homeserver.getRoomIdFromAlias(link.identifier);
-			if (roomId) {
-				publicRoom = await homeserver.findPublicRoomById(roomId);
-			}
-		}
+		if (link.identifierKind === IdentifierKind.RoomId || link.identifierKind === IdentifierKind.RoomAlias) {
+            publicRoom = await homeserver.getRoomSummary(link.identifier, link.servers);
+        }
+
+		if (!publicRoom) {
+            if (link.identifierKind === IdentifierKind.RoomId) {
+                publicRoom = await homeserver.findPublicRoomById(link.identifier);
+            } else if (link.identifierKind === IdentifierKind.RoomAlias) {
+                const roomId = await homeserver.getRoomIdFromAlias(link.identifier);
+                if (roomId) {
+                    publicRoom = await homeserver.findPublicRoomById(roomId);
+                }
+            }
+        }
+
 		this.name = publicRoom?.name || publicRoom?.canonical_alias || link.identifier;
 		this.avatarUrl = publicRoom?.avatar_url ? 
 			homeserver.mxcUrlThumbnail(publicRoom.avatar_url, 64, 64, "crop") :
