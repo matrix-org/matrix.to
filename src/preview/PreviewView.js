@@ -51,7 +51,7 @@ class LoadedPreviewView extends TemplateView {
                 return t.div({className: "defaultAvatar"});
             }
         });
-		return t.div([
+		return t.div({className: vm.isSpaceRoom ? "mxSpace" : undefined}, [
 			t.div({className: "avatarContainer"}, avatar),
 			t.h1(vm => vm.name),
 			t.p({className: {identifier: true, hidden: vm => !vm.identifier}}, vm => vm.identifier),

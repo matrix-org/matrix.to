@@ -22,6 +22,10 @@
     height: 64px;
 }
 
+.PreviewView .mxSpace .avatar {
+    border-radius: 12px;
+}
+
 .PreviewView .defaultAvatar {
     width: 64px;
     height: 64px;

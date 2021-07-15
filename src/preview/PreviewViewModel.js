@@ -34,6 +34,7 @@ export class PreviewViewModel extends ViewModel {
 		this.topic = null;
 		this.domain = null;
         this.failed = false;
+        this.isSpaceRoom = false;
 	}
 
 	async load() {
@@ -110,6 +111,7 @@ export class PreviewViewModel extends ViewModel {
 		this.memberCount = publicRoom?.num_joined_members;
 		this.topic = publicRoom?.topic;
 		this.identifier = publicRoom?.canonical_alias || link.identifier;
+		this.isSpaceRoom = publicRoom?.room_type === "m.space";
         if (this.identifier === this.name) {
             this.identifier = null;
         }
