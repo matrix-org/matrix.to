@@ -24,13 +24,17 @@ export async function resolveServer(request, baseURL) {
 		baseURL = `https://${baseURL}`;
 	}
 	{
-		const {status, body} = await request(`${baseURL}/.well-known/matrix/client`, {method: "GET"}).response();
-		if (status === 200) {
-			const proposedBaseURL = body?.['m.homeserver']?.base_url;
-			if (typeof proposedBaseURL === "string") {
-				baseURL = noTrailingSlash(proposedBaseURL);
-			}
-		}
+	    try {
+            const {status, body} = await request(`${baseURL}/.well-known/matrix/client`, {method: "GET"}).response();
+            if (status === 200) {
+                const proposedBaseURL = body?.['m.homeserver']?.base_url;
+                if (typeof proposedBaseURL === "string") {
+                    baseURL = noTrailingSlash(proposedBaseURL);
+                }
+            }
+        } catch (e) {
+	        console.warn("Failed to fetch ${baseURL}/.well-known/matrix/client", e);
+        }
 	}
 	{
 		const {status} = await request(`${baseURL}/_matrix/client/versions`, {method: "GET"}).response();
@@ -51,6 +55,17 @@ export class HomeServer {
 		const {body} = await this._request(`${this.baseURL}/_matrix/client/r0/profile/${encodeURIComponent(userId)}`).response();
 		return body;
 	}
+
+    // MSC3266 implementation
+	async getRoomSummary(roomIdOrAlias, viaServers) {
+        let query;
+        if (viaServers.length > 0) {
+            query = "?" + viaServers.map(server => `via=${encodeURIComponent(server)}`).join('&');
+        }
+        const {body, status} = await this._request(`${this.baseURL}/_matrix/client/unstable/im.nheko.summary/rooms/${encodeURIComponent(roomIdOrAlias)}/summary${query}`).response();
+        if (status !== 200) return;
+        return body;
+    }
 
 	async findPublicRoomById(roomId) {
 		const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/directory/list/room/${encodeURIComponent(roomId)}`).response();
