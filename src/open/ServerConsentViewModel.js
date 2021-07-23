@@ -22,13 +22,13 @@ import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
 
 export class ServerConsentViewModel extends ViewModel {
-	constructor(options) {
-		super(options);
+    constructor(options) {
+        super(options);
         this.servers = options.servers;
         this.done = options.done;
         this.selectedServer = this.servers[0];
         this.showSelectServer = false;
-	}
+    }
 
     setShowServers() {
         this.showSelectServer = true;

@@ -27,28 +27,28 @@ function getMatchingPlatforms(client, supportedPlatforms) {
 }
 
 export class ClientViewModel extends ViewModel {
-	constructor(options) {
-		super(options);
-		const {client, link, pickClient} = options;
-		this._client = client;
-		this._link = link;
-		this._pickClient = pickClient;
+    constructor(options) {
+        super(options);
+        const {client, link, pickClient} = options;
+        this._client = client;
+        this._link = link;
+        this._pickClient = pickClient;
         // to provide "choose other client" button after calling pick()
         this._clientListViewModel = null;
         this._update();
-	}
+    }
 
     _update() {
-		const matchingPlatforms = getMatchingPlatforms(this._client, this.platforms);
-		this._webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
-		this._nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
+        const matchingPlatforms = getMatchingPlatforms(this._client, this.platforms);
+        this._webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
+        this._nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
         const preferredPlatform = matchingPlatforms.find(p => p === this.preferences.platform);
-		this._proposedPlatform = preferredPlatform || this._nativePlatform || this._webPlatform;
+        this._proposedPlatform = preferredPlatform || this._nativePlatform || this._webPlatform;
 
         this.openActions = this._createOpenActions();
-		this.installActions = this._createInstallActions();
-		this._clientCanIntercept = !!(this._nativePlatform && this._client.canInterceptMatrixToLinks(this._nativePlatform));
-		this._showOpen = this.openActions.length && !this._clientCanIntercept;
+        this.installActions = this._createInstallActions();
+        this._clientCanIntercept = !!(this._nativePlatform && this._client.canInterceptMatrixToLinks(this._nativePlatform));
+        this._showOpen = this.openActions.length && !this._clientCanIntercept;
     }
 
     // these are only shown in the open stage
@@ -93,40 +93,40 @@ export class ClientViewModel extends ViewModel {
     }
 
     // these are only shown in the install stage
-	_createInstallActions() {
-		let actions = [];
-		if (this._nativePlatform) {
-			const nativeActions = (this._client.getInstallLinks(this._nativePlatform) || []).map(installLink => {
-				return {
-					label: installLink.getDescription(this._nativePlatform),
-					url: installLink.createInstallURL(this._link),
-					kind: installLink.channelId,
-					primary: true,
-					activated: () => this.preferences.setClient(this._client.id, this._nativePlatform),
-				};
-			});
-			actions.push(...nativeActions);
-		}
-		if (this._webPlatform) {
-			const webDeepLink = this._client.getDeepLink(this._webPlatform, this._link);
-			if (webDeepLink) {
+    _createInstallActions() {
+        let actions = [];
+        if (this._nativePlatform) {
+            const nativeActions = (this._client.getInstallLinks(this._nativePlatform) || []).map(installLink => {
+                return {
+                    label: installLink.getDescription(this._nativePlatform),
+                    url: installLink.createInstallURL(this._link),
+                    kind: installLink.channelId,
+                    primary: true,
+                    activated: () => this.preferences.setClient(this._client.id, this._nativePlatform),
+                };
+            });
+            actions.push(...nativeActions);
+        }
+        if (this._webPlatform) {
+            const webDeepLink = this._client.getDeepLink(this._webPlatform, this._link);
+            if (webDeepLink) {
                 const webLabel = this.hasPreferredWebInstance ?
                     `Open on ${this._client.getPreferredWebInstance(this._link)}` :
                     `Continue in your browser`;
-				actions.push({
-					label: webLabel,
-					url: webDeepLink,
-					kind: "open-in-web",
-					activated: () => {
+                actions.push({
+                    label: webLabel,
+                    url: webDeepLink,
+                    kind: "open-in-web",
+                    activated: () => {
                         if (!this.hasPreferredWebInstance) {
                             this.preferences.setClient(this._client.id, this._webPlatform);
                         }
                     },
-				});
-			}
-		}
-		return actions;
-	}
+                });
+            }
+        }
+        return actions;
+    }
 
     get hasPreferredWebInstance() {
         // also check there is a web platform that matches the platforms the user is on (mobile or desktop web)
@@ -150,17 +150,17 @@ export class ClientViewModel extends ViewModel {
         return this._client.homepage;
     }
 
-	get identifier() {
-		return this._link.identifier;
-	}
+    get identifier() {
+        return this._link.identifier;
+    }
 
-	get description() {
-		return this._client.description;
-	}
+    get description() {
+        return this._client.description;
+    }
 
-	get clientId() {
-		return this._client.id;
-	}
+    get clientId() {
+        return this._client.id;
+    }
 
     get name() {
         return this._client.name;
@@ -174,44 +174,44 @@ export class ClientViewModel extends ViewModel {
         return this._showOpen ? "open" : "install";
     }
 
-	get textInstructions() {
+    get textInstructions() {
         let instructions = this._client.getLinkInstructions(this._proposedPlatform, this._link);
         if (instructions && !Array.isArray(instructions)) {
             instructions = [instructions];
         }
-		return instructions;
-	}
+        return instructions;
+    }
 
     get copyString() {
         return this._client.getCopyString(this._proposedPlatform, this._link);
     }
 
-	get showDeepLinkInInstall() {
+    get showDeepLinkInInstall() {
         // we can assume this._nativePlatform as this._clientCanIntercept already checks it
-		return this._clientCanIntercept && !!this._client.getDeepLink(this._nativePlatform, this._link);
-	}
+        return this._clientCanIntercept && !!this._client.getDeepLink(this._nativePlatform, this._link);
+    }
 
-	get availableOnPlatformNames() {
-		const platforms = this._client.platforms;
-		const textPlatforms = [];
-		const hasWebPlatform = platforms.some(p => isWebPlatform(p));
-		if (hasWebPlatform) {
-			textPlatforms.push("Web");
-		}
-		const desktopPlatforms = platforms.filter(p => isDesktopPlatform(p));
-		if (desktopPlatforms.length === 1) {
-			textPlatforms.push(desktopPlatforms[0]);
-		} else {
-			textPlatforms.push("Desktop");
-		}
-		if (platforms.includes(Platform.Android)) {
-			textPlatforms.push("Android");
-		}
-		if (platforms.includes(Platform.iOS)) {
-			textPlatforms.push("iOS");
-		}
-		return textPlatforms;
-	}
+    get availableOnPlatformNames() {
+        const platforms = this._client.platforms;
+        const textPlatforms = [];
+        const hasWebPlatform = platforms.some(p => isWebPlatform(p));
+        if (hasWebPlatform) {
+            textPlatforms.push("Web");
+        }
+        const desktopPlatforms = platforms.filter(p => isDesktopPlatform(p));
+        if (desktopPlatforms.length === 1) {
+            textPlatforms.push(desktopPlatforms[0]);
+        } else {
+            textPlatforms.push("Desktop");
+        }
+        if (platforms.includes(Platform.Android)) {
+            textPlatforms.push("Android");
+        }
+        if (platforms.includes(Platform.iOS)) {
+            textPlatforms.push("iOS");
+        }
+        return textPlatforms;
+    }
 
     pick(clientListViewModel) {
         this._clientListViewModel = clientListViewModel;

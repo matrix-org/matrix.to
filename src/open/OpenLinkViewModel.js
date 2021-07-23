@@ -23,21 +23,21 @@ import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
 
 export class OpenLinkViewModel extends ViewModel {
-	constructor(options) {
-		super(options);
-		const {clients, link} = options;
-		this._link = link;
-		this._clients = clients;
+    constructor(options) {
+        super(options);
+        const {clients, link} = options;
+        this._link = link;
+        this._clients = clients;
         this.serverConsentViewModel = null;
-		this.previewViewModel = null;
+        this.previewViewModel = null;
         this.clientsViewModel = null;
-		this.previewLoading = false;
+        this.previewLoading = false;
         if (this.preferences.homeservers === null) {
             this._showServerConsent();
         } else {
             this._showLink();
         }
-	}
+    }
 
     _showServerConsent() {
         let servers = [];
@@ -67,24 +67,24 @@ export class OpenLinkViewModel extends ViewModel {
             link: this._link,
             consentedServers: this.preferences.homeservers
         }));
-		this.previewLoading = true;	
-		this.emitChange();
-		await this.previewViewModel.load();
-		this.previewLoading = false;
-		this.emitChange();
+        this.previewLoading = true;
+        this.emitChange();
+        await this.previewViewModel.load();
+        this.previewLoading = false;
+        this.emitChange();
     }
 
-	get previewDomain() {
-		return this.previewViewModel?.domain;
-	}
+    get previewDomain() {
+        return this.previewViewModel?.domain;
+    }
 
     get previewFailed() {
         return this.previewViewModel?.failed;
     }
 
-	get showClientsLabel() {
-		return getLabelForLinkKind(this._link.kind);
-	}
+    get showClientsLabel() {
+        return getLabelForLinkKind(this._link.kind);
+    }
 
     changeServer() {
         this.previewViewModel = null;

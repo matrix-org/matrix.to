@@ -23,13 +23,13 @@ import {Tensor} from "./Tensor.js";
 import {Fluffychat} from "./Fluffychat.js";
 
 export function createClients() {
-	return [
-		new Element(),
-		new Weechat(),
-		new Nheko(),
-		new Fractal(),
-		new Quaternion(),
-		new Tensor(),
-		new Fluffychat(),
-	];
+    return [
+        new Element(),
+        new Weechat(),
+        new Nheko(),
+        new Fractal(),
+        new Quaternion(),
+        new Tensor(),
+        new Fluffychat(),
+    ];
 }

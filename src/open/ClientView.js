@@ -19,11 +19,11 @@ import {copy} from "../utils/copy.js";
 import {text, tag} from "../utils/html.js";
 
 function formatPlatforms(platforms) {
-	return platforms.reduce((str, p, i, all) => {
-		const first = i === 0;
-		const last = i === all.length - 1;
-		return str + (first ? "" : last ? " & " : ", ") + p;
-	}, "");
+    return platforms.reduce((str, p, i, all) => {
+        const first = i === 0;
+        const last = i === all.length - 1;
+        return str + (first ? "" : last ? " & " : ", ") + p;
+    }, "");
 }
 
 function renderInstructions(parts) {
@@ -38,46 +38,46 @@ function renderInstructions(parts) {
 
 export class ClientView extends TemplateView {
 
-	render(t, vm) {
-		return t.div({className: {"ClientView": true, "isPreferred": vm => vm.hasPreferredWebInstance}}, [
+    render(t, vm) {
+        return t.div({className: {"ClientView": true, "isPreferred": vm => vm.hasPreferredWebInstance}}, [
             ... vm.hasPreferredWebInstance ? [t.div({className: "hostedBanner"}, vm.hostedByBannerLabel)] : [],
-			t.div({className: "header"}, [
-				t.div({className: "description"}, [
-					t.h3(vm.name),
-					t.p([vm.description, " ", t.a({
+            t.div({className: "header"}, [
+                t.div({className: "description"}, [
+                    t.h3(vm.name),
+                    t.p([vm.description, " ", t.a({
                         href: vm.homepage,
                         target: "_blank",
                         rel: "noopener noreferrer"
                     }, "Learn more")]),
-					t.p({className: "platforms"}, formatPlatforms(vm.availableOnPlatformNames)),
-				]),
-				t.img({className: "clientIcon", src: vm.iconUrl})
-			]),
+                    t.p({className: "platforms"}, formatPlatforms(vm.availableOnPlatformNames)),
+                ]),
+                t.img({className: "clientIcon", src: vm.iconUrl})
+            ]),
             t.mapView(vm => vm.stage, stage => {
                 switch (stage) {
                     case "open": return new OpenClientView(vm);
                     case "install": return new InstallClientView(vm);
                 }
             }),
-		]);
-	}
+        ]);
+    }
 }
 
 class OpenClientView extends TemplateView {
-	render(t, vm) {
-		return t.div({className: "OpenClientView"}, [
-			...vm.openActions.map(a => renderAction(t, a)),
+    render(t, vm) {
+        return t.div({className: "OpenClientView"}, [
+            ...vm.openActions.map(a => renderAction(t, a)),
             showBack(t, vm),
-		]);
-	}
+        ]);
+    }
 }
 
 class InstallClientView extends TemplateView {
-	render(t, vm) {
-		const children = [];
+    render(t, vm) {
+        const children = [];
 
         const textInstructions = vm.textInstructions;
-		if (textInstructions) {
+        if (textInstructions) {
             const copyButton = t.button({
                 className: "copy",
                 title: "Copy instructions",
@@ -91,25 +91,25 @@ class InstallClientView extends TemplateView {
                     }
                 }
             });
-			children.push(t.p({className: "instructions"}, renderInstructions(textInstructions).concat(copyButton)));
-		}
+            children.push(t.p({className: "instructions"}, renderInstructions(textInstructions).concat(copyButton)));
+        }
 
-		const actions = t.div({className: "actions"}, vm.installActions.map(a => renderAction(t, a)));
-		children.push(actions);
+        const actions = t.div({className: "actions"}, vm.installActions.map(a => renderAction(t, a)));
+        children.push(actions);
 
-		if (vm.showDeepLinkInInstall) {
-			const openItHere = t.a({
-				rel: "noopener noreferrer",
-				href: vm.openActions[0].url,
-				onClick: () => vm.openActions[0].activated(),
-			}, "open it here");
-			children.push(t.p([`If you already have ${vm.name} installed, you can `, openItHere, "."]))
-		}
+        if (vm.showDeepLinkInInstall) {
+            const openItHere = t.a({
+                rel: "noopener noreferrer",
+                href: vm.openActions[0].url,
+                onClick: () => vm.openActions[0].activated(),
+            }, "open it here");
+            children.push(t.p([`If you already have ${vm.name} installed, you can `, openItHere, "."]))
+        }
 
         children.push(showBack(t, vm));
 
-		return t.div({className: "InstallClientView"}, children);
-	}
+        return t.div({className: "InstallClientView"}, children);
+    }
 }
 
 function showBack(t, vm) {

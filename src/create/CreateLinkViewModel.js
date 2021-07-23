@@ -19,11 +19,11 @@ import {PreviewViewModel} from "../preview/PreviewViewModel.js";
 import {Link} from "../Link.js";
 
 export class CreateLinkViewModel extends ViewModel {
-	constructor(options) {
-		super(options);
+    constructor(options) {
+        super(options);
         this._link = null;
-		this.previewViewModel = null;
-	}
+        this.previewViewModel = null;
+    }
 
     validateIdentifier(identifier) {
         return Link.validateIdentifier(identifier);

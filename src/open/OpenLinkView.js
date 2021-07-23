@@ -20,14 +20,14 @@ import {PreviewView} from "../preview/PreviewView.js";
 import {ServerConsentView} from "./ServerConsentView.js";
 
 export class OpenLinkView extends TemplateView {
-	render(t, vm) {
-		return t.div({className: "OpenLinkView card"}, [
-			t.mapView(vm => vm.previewViewModel, previewVM => previewVM ?
+    render(t, vm) {
+        return t.div({className: "OpenLinkView card"}, [
+            t.mapView(vm => vm.previewViewModel, previewVM => previewVM ?
                 new ShowLinkView(vm) :
                 new ServerConsentView(vm.serverConsentViewModel)
             ),
-		]);
-	}
+        ]);
+    }
 }
 
 class ShowLinkView extends TemplateView {
