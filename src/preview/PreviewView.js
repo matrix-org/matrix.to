@@ -43,7 +43,7 @@ class LoadingPreviewView extends TemplateView {
 }
 
 class LoadedPreviewView extends TemplateView {
-	render(t, vm) {
+    render(t, vm) {
         const avatar = t.map(vm => vm.avatarUrl, (avatarUrl, t) => {
             if (avatarUrl) {
                 return t.img({className: "avatar", src: avatarUrl});
@@ -51,12 +51,12 @@ class LoadedPreviewView extends TemplateView {
                 return t.div({className: "defaultAvatar"});
             }
         });
-		return t.div([
-			t.div({className: "avatarContainer"}, avatar),
-			t.h1(vm => vm.name),
-			t.p({className: {identifier: true, hidden: vm => !vm.identifier}}, vm => vm.identifier),
-			t.div({className: {memberCount: true, hidden: vm => !vm.memberCount}}, t.p([vm => vm.memberCount, " members"])),
-			t.p({className: {topic: true, hidden: vm => !vm.topic}}, [vm => vm.topic]),
-		]);
-	}
+        return t.div({className: vm.isSpaceRoom ? "mxSpace" : undefined}, [
+            t.div({className: "avatarContainer"}, avatar),
+            t.h1(vm => vm.name),
+            t.p({className: {identifier: true, hidden: vm => !vm.identifier}}, vm => vm.identifier),
+            t.div({className: {memberCount: true, hidden: vm => !vm.memberCount}}, t.p([vm => vm.memberCount, " members"])),
+            t.p({className: {topic: true, hidden: vm => !vm.topic}}, [vm => vm.topic]),
+        ]);
+    }
 }

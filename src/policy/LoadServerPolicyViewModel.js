@@ -18,12 +18,12 @@ import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "../preview/HomeServer.js";
 
 export class LoadServerPolicyViewModel extends ViewModel {
-	constructor(options) {
-		super(options);
-		this.server = options.server;
+    constructor(options) {
+        super(options);
+        this.server = options.server;
         this.message = `Looking up ${this.server} privacy policy…`;
         this.loading = false;
-	}
+    }
 
     async load() {
         this.loading = true;

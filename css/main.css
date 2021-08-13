@@ -21,31 +21,31 @@ limitations under the License.
 @import url('open.css');
 
 :root {
-	--app-background: #f4f4f4;
-	--background: #ffffff;
-	--foreground: #000000;
-	--font: #333333;
-	--grey: #666666;
-	--accent: #0098d4;
-	--error: #d6001c;
-	--link: #0098d4;
-	--borders: #f4f4f4;
+    --app-background: #f4f4f4;
+    --background: #ffffff;
+    --foreground: #000000;
+    --font: #333333;
+    --grey: #666666;
+    --accent: #0098d4;
+    --error: #d6001c;
+    --link: #0098d4;
+    --borders: #f4f4f4;
     --lightgrey: #E6E6E6;
     --spinner-stroke-size: 2px;
 }
 
 html {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-	background-color: var(--app-background);
-	background-image: url('../images/background.svg');
+    background-color: var(--app-background);
+    background-image: url('../images/background.svg');
     background-attachment: fixed;
-	background-repeat: no-repeat;
-	background-size: auto;
-	background-position: center -50px;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center -50px;
     height: 100%;
     width: 100%;
     font-size: 14px;
@@ -89,12 +89,12 @@ input[type="checkbox"], input[type="radio"] {
 
 .RootView {
     margin: 0 auto;
-	max-width: 480px;
-	width: 100%;
+    max-width: 480px;
+    width: 100%;
 }
 
 .card {
-	background-color: var(--background);
+    background-color: var(--background);
     border-radius: 16px;
     box-shadow: 0px 18px 24px rgba(0, 0, 0, 0.06);
 }
@@ -104,20 +104,20 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 .hidden {
-	display: none !important;
+    display: none !important;
 }
 
 
 @media screen and (max-width: 480px) {
     body {
-    	background-image: none;
-    	background-color: var(--background);
-    	padding: 0;
+        background-image: none;
+        background-color: var(--background);
+        padding: 0;
     }
 
     .card {
-    	border-radius: unset;
-    	box-shadow: unset;
+        border-radius: unset;
+        box-shadow: unset;
     }
 }
 
@@ -141,7 +141,7 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 a, button.text {
-	color: var(--link);
+    color: var(--link);
 }
 
 button.text {

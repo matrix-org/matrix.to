@@ -21,8 +21,8 @@ export {Platform} from "../Platform.js";
 
 export class AppleStoreLink {
     constructor(org, appId) {
-    	this._org = org;
-    	this._appId = appId;
+        this._org = org;
+        this._appId = appId;
     }
 
     createInstallURL(link) {
@@ -40,7 +40,7 @@ export class AppleStoreLink {
 
 export class PlayStoreLink {
     constructor(appId) {
-    	this._appId = appId;
+        this._appId = appId;
     }
 
     createInstallURL(link) {
@@ -58,7 +58,7 @@ export class PlayStoreLink {
 
 export class FDroidLink {
     constructor(appId) {
-    	this._appId = appId;
+        this._appId = appId;
     }
 
     createInstallURL(link) {
@@ -94,7 +94,7 @@ export class FlathubLink {
 
 export class WebsiteLink {
     constructor(url) {
-    	this._url = url;
+        this._url = url;
     }
 
     createInstallURL(link) {

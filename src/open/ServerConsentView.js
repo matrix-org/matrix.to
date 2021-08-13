@@ -27,7 +27,7 @@ export class ServerConsentView extends TemplateView {
             className: "text",
             onClick: () => vm.continueWithoutConsent(this._askEveryTimeChecked)
         }, "continue without a preview");
-		return t.div({className: "ServerConsentView"}, [
+        return t.div({className: "ServerConsentView"}, [
             t.p([
                 "Preview this link using the ",
                 t.strong(vm => vm.selectedServer || "…"),
@@ -56,7 +56,7 @@ export class ServerConsentView extends TemplateView {
                 ])
             ])
         ]);
-	}
+    }
 
     _onSubmit(evt) {
         evt.preventDefault();

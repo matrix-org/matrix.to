@@ -20,61 +20,76 @@ function noTrailingSlash(url) {
 
 export async function resolveServer(request, baseURL) {
     baseURL = noTrailingSlash(baseURL);
-	if (!baseURL.startsWith("http://") && !baseURL.startsWith("https://")) {
-		baseURL = `https://${baseURL}`;
-	}
-	{
-		const {status, body} = await request(`${baseURL}/.well-known/matrix/client`, {method: "GET"}).response();
-		if (status === 200) {
-			const proposedBaseURL = body?.['m.homeserver']?.base_url;
-			if (typeof proposedBaseURL === "string") {
-				baseURL = noTrailingSlash(proposedBaseURL);
-			}
-		}
-	}
-	{
-		const {status} = await request(`${baseURL}/_matrix/client/versions`, {method: "GET"}).response();
-		if (status !== 200) {
-			throw new Error(`Invalid versions response from ${baseURL}`);
-		}
-	}
-	return new HomeServer(request, baseURL);
+    if (!baseURL.startsWith("http://") && !baseURL.startsWith("https://")) {
+        baseURL = `https://${baseURL}`;
+    }
+    {
+        try {
+            const {status, body} = await request(`${baseURL}/.well-known/matrix/client`, {method: "GET"}).response();
+            if (status === 200) {
+                const proposedBaseURL = body?.['m.homeserver']?.base_url;
+                if (typeof proposedBaseURL === "string") {
+                    baseURL = noTrailingSlash(proposedBaseURL);
+                }
+            }
+        } catch (e) {
+            console.warn("Failed to fetch ${baseURL}/.well-known/matrix/client", e);
+        }
+    }
+    {
+        const {status} = await request(`${baseURL}/_matrix/client/versions`, {method: "GET"}).response();
+        if (status !== 200) {
+            throw new Error(`Invalid versions response from ${baseURL}`);
+        }
+    }
+    return new HomeServer(request, baseURL);
 }
 
 export class HomeServer {
-	constructor(request, baseURL) {
-		this._request = request;
-		this.baseURL = baseURL;
-	}
+    constructor(request, baseURL) {
+        this._request = request;
+        this.baseURL = baseURL;
+    }
 
-	async getUserProfile(userId) {
-		const {body} = await this._request(`${this.baseURL}/_matrix/client/r0/profile/${encodeURIComponent(userId)}`).response();
-		return body;
-	}
+    async getUserProfile(userId) {
+        const {body} = await this._request(`${this.baseURL}/_matrix/client/r0/profile/${encodeURIComponent(userId)}`).response();
+        return body;
+    }
 
-	async findPublicRoomById(roomId) {
-		const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/directory/list/room/${encodeURIComponent(roomId)}`).response();
-		if (status !== 200 || body.visibility !== "public") {
-			return;
-		}
-		let nextBatch;
-		do {
-			const queryParams = encodeQueryParams({limit: 10000, since: nextBatch});
-			const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/publicRooms?${queryParams}`).response();
-			nextBatch = body.next_batch;
-			const publicRoom = body.chunk.find(c => c.room_id === roomId);
-			if (publicRoom) {
-				return publicRoom;
-			}
-		} while (nextBatch);
-	}
+    // MSC3266 implementation
+    async getRoomSummary(roomIdOrAlias, viaServers) {
+        let query;
+        if (viaServers.length > 0) {
+            query = "?" + viaServers.map(server => `via=${encodeURIComponent(server)}`).join('&');
+        }
+        const {body, status} = await this._request(`${this.baseURL}/_matrix/client/unstable/im.nheko.summary/rooms/${encodeURIComponent(roomIdOrAlias)}/summary${query}`).response();
+        if (status !== 200) return;
+        return body;
+    }
 
-	async getRoomIdFromAlias(alias) {
-		const {status, body}  = await this._request(`${this.baseURL}/_matrix/client/r0/directory/room/${encodeURIComponent(alias)}`).response();
-		if (status === 200) {
-			return body.room_id;
-		}
-	}
+    async findPublicRoomById(roomId) {
+        const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/directory/list/room/${encodeURIComponent(roomId)}`).response();
+        if (status !== 200 || body.visibility !== "public") {
+            return;
+        }
+        let nextBatch;
+        do {
+            const queryParams = encodeQueryParams({limit: 10000, since: nextBatch});
+            const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/publicRooms?${queryParams}`).response();
+            nextBatch = body.next_batch;
+            const publicRoom = body.chunk.find(c => c.room_id === roomId);
+            if (publicRoom) {
+                return publicRoom;
+            }
+        } while (nextBatch);
+    }
+
+    async getRoomIdFromAlias(alias) {
+        const {status, body}  = await this._request(`${this.baseURL}/_matrix/client/r0/directory/room/${encodeURIComponent(alias)}`).response();
+        if (status === 200) {
+            return body.room_id;
+        }
+    }
 
     async getPrivacyPolicyUrl(lang = "en") {
         const headers = new Map();
@@ -94,7 +109,7 @@ export class HomeServer {
         }
     }
 
-	mxcUrlThumbnail(url, width, height, method) {
+    mxcUrlThumbnail(url, width, height, method) {
         const parts = parseMxcUrl(url);
         if (parts) {
             const [serverName, mediaId] = parts;

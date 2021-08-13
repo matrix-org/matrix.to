@@ -19,31 +19,31 @@ import {PreviewView} from "../preview/PreviewView.js";
 import {copyButton} from "../utils/copy.js";
 
 export class CreateLinkView extends TemplateView {
-	render(t, vm) {
+    render(t, vm) {
         const link = t.a({href: vm => vm.linkUrl}, vm => vm.linkUrl);
-		return t.div({className: "CreateLinkView card"}, [
-			t.h1("Create shareable links to Matrix rooms, users or messages without being tied to any app"),
-			t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
-				t.div(t.input({
-					className: "fullwidth large",
-					type: "text",
-					name: "identifier",
+        return t.div({className: "CreateLinkView card"}, [
+            t.h1("Create shareable links to Matrix rooms, users or messages without being tied to any app"),
+            t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [
+                t.div(t.input({
+                    className: "fullwidth large",
+                    type: "text",
+                    name: "identifier",
                     required: true,
-					placeholder: "#room:example.com, @user:example.com",
+                    placeholder: "#room:example.com, @user:example.com",
                     onChange: evt => this._onIdentifierChange(evt)
-				})),
-				t.div(t.input({className: "primary fullwidth icon link", type: "submit", value: "Create link"}))
-			]),
-		]);
-	}
+                })),
+                t.div(t.input({className: "primary fullwidth icon link", type: "submit", value: "Create link"}))
+            ]),
+        ]);
+    }
 
-	_onSubmit(evt) {
-		evt.preventDefault();
-		const form = evt.target;
-		const {identifier} = form.elements;
-		this.value.createLink(identifier.value);
+    _onSubmit(evt) {
+        evt.preventDefault();
+        const form = evt.target;
+        const {identifier} = form.elements;
+        this.value.createLink(identifier.value);
         identifier.value = "";
-	}
+    }
 
     _onIdentifierChange(evt) {
         const inputField = evt.target;
