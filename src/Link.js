@@ -40,6 +40,16 @@ function asPrefix(identifierKind) {
     }
 }
 
+function asPath(identifierKind) {
+    switch (identifierKind) {
+        case IdentifierKind.RoomId: return "roomid";
+        case IdentifierKind.RoomAlias: return "r";
+        case IdentifierKind.GroupId: return null;
+        case IdentifierKind.UserId: return "u";
+        default: throw new Error("invalid id kind " + identifierKind);
+    }
+}
+
 function getWebInstanceMap(queryParams) {
     const prefix = "web-instance[";
     const postfix = "]";
@@ -182,5 +192,16 @@ export class Link {
         } else {
             return `/${this.identifier}`;
         }
+    }
+
+    toMatrixUrl() {
+        const prefix = asPath(this.identifierKind);
+        if (!prefix) {
+            // Some matrix.to links aren't valid matrix: links (i.e. groups)
+            return null;
+        }
+        const identifier = this.identifier.substring(1);
+        const suffix = this.eventId ? `/e/${this.eventId.substring(1)}` : "";
+        return `matrix:${prefix}/${identifier}${suffix}`;
     }
 }
