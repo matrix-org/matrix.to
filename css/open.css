@@ -54,6 +54,7 @@ limitations under the License.
 .OpeningClientView {
     display: flex;
     align-items: center;
+    text-align: center;
     flex-direction: column;
     margin: 0;
 }
