@@ -45,7 +45,7 @@ export class OpenLinkViewModel extends ViewModel {
         const matrixUrl = this._link.toMatrixUrl()
         if (matrixUrl) {
             this.tryingLink = true;
-            setTimeout(() => {
+            this.setTimeout(() => {
                 this.tryingLink = false;
                 this.emitChange();
             }, 1000);
