@@ -25,7 +25,6 @@ import {Platform} from "./Platform.js";
 export class RootViewModel extends ViewModel {
     constructor(options) {
         super(options);
-        this.hidden = false;
         this.link = null;
         this.openLinkViewModel = null;
         this.createLinkViewModel = null;
@@ -59,15 +58,6 @@ export class RootViewModel extends ViewModel {
         } else {
             const oldLink = this.link;
             this.link = Link.parse(hash);
-            const matrixUrl = this.link.toMatrixUrl()
-            if (matrixUrl) {
-                this.hidden = true;
-                setTimeout(() => {
-                    this.hidden = false;
-                    this.emitChange();
-                }, 1000);
-                this.openLink(this.link.toMatrixUrl());
-            }
             this._updateChildVMs(oldLink);
         }
     }
