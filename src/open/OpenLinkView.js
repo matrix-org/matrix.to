@@ -22,10 +22,24 @@ import {ServerConsentView} from "./ServerConsentView.js";
 export class OpenLinkView extends TemplateView {
     render(t, vm) {
         return t.div({className: "OpenLinkView card"}, [
-            t.mapView(vm => vm.previewViewModel, previewVM => previewVM ?
-                new ShowLinkView(vm) :
-                new ServerConsentView(vm.serverConsentViewModel)
+            t.map(vm => vm.tryingLink, tryingLink => tryingLink ?
+                t.view(new TryingLinkView(vm)) :
+                t.mapView(vm => vm.previewViewModel, previewVM => previewVM ?
+                    new ShowLinkView(vm) :
+                    new ServerConsentView(vm.serverConsentViewModel)
+                ),
             ),
+        ]);
+    }
+}
+
+class TryingLinkView extends TemplateView {
+    render (t, vm) {
+        return t.div({ className: "OpeningClientView" }, [
+            t.div({className: "defaultAvatar"}),
+            t.h1("Trying to open your default client..."),
+            t.span("If this doesn't work, you will be redirected shortly."),
+            t.div({className: "spinner"}),
         ]);
     }
 }

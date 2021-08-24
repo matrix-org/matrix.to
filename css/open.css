@@ -50,3 +50,23 @@ limitations under the License.
     border-bottom: 1px solid var(--grey);
     padding: 4px 0;
 }
+
+.OpeningClientView {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+}
+
+.OpeningClientView .defaultAvatar {
+    width: 64px;
+    height: 64px;
+    background-image: url('../images/chat-icon.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85%;
+}
+
+.OpeningClientView .spinner {
+    margin-top: 15px;
+}
