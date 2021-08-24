@@ -30,6 +30,10 @@ export const IdentifierKind = createEnum(
     "GroupId",
 );
 
+function idToPath(identifier) {
+    return encodeURIComponent(identifier.substring(1));
+}
+
 function asPrefix(identifierKind) {
     switch (identifierKind) {
         case IdentifierKind.RoomId: return "!";
@@ -200,8 +204,8 @@ export class Link {
             // Some matrix.to links aren't valid matrix: links (i.e. groups)
             return null;
         }
-        const identifier = this.identifier.substring(1);
-        const suffix = this.eventId ? `/e/${this.eventId.substring(1)}` : "";
+        const identifier = idToPath(this.identifier);
+        const suffix = this.eventId ? `/e/${idToPath(this.eventId)}` : "";
         return `matrix:${prefix}/${identifier}${suffix}`;
     }
 }
