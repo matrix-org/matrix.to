@@ -32,10 +32,24 @@ export class OpenLinkViewModel extends ViewModel {
         this.previewViewModel = null;
         this.clientsViewModel = null;
         this.previewLoading = false;
+        this.tryingLink = false;
+        this._tryLink();
         if (this.preferences.homeservers === null) {
             this._showServerConsent();
         } else {
             this._showLink();
+        }
+    }
+
+    _tryLink() {
+        const matrixUrl = this._link.toMatrixUrl()
+        if (matrixUrl) {
+            this.tryingLink = true;
+            setTimeout(() => {
+                this.tryingLink = false;
+                this.emitChange();
+            }, 5000);
+            this.openLink(matrixUrl);
         }
     }
 
