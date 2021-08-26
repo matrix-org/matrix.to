@@ -50,13 +50,22 @@ export class RootViewModel extends ViewModel {
         this.emitChange();
     }
 
+    _hideLinks() {
+        this.link = null;
+        this.openLinkViewModel = null;
+        this.createLinkViewModel = null;
+    }
+
     updateHash(hash) {
         if (hash.startsWith("#/policy/")) {
             const server = hash.substr(9);
+            this._hideLinks();
             this.loadServerPolicyViewModel = new LoadServerPolicyViewModel(this.childOptions({server}));
             this.loadServerPolicyViewModel.load();
+            this.emitChange();
         } else {
             const oldLink = this.link;
+            this.loadServerPolicyViewModel = null;
             this.link = Link.parse(hash);
             this._updateChildVMs(oldLink);
         }
