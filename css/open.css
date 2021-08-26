@@ -68,6 +68,21 @@ limitations under the License.
     background-size: 85%;
 }
 
+.OpeningClientView .clientIcon {
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    display: block;
+    margin-left: 16px;
+}
+
+.OpeningClientView .timeoutOptions {
+    margin-top: 15px;
+}
+
 .OpeningClientView .spinner {
     margin-top: 15px;
 }

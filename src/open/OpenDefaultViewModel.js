@@ -32,6 +32,10 @@ export class OpenDefaultViewModel extends ViewModel {
         return this._client?.name;
     }
 
+    get iconUrl() {
+        return this._client?.icon;
+    }
+
     get openingDefault() {
         return !this._client;
     }
@@ -42,7 +46,7 @@ export class OpenDefaultViewModel extends ViewModel {
     }
 
     get webDeepLink() {
-        return this._client && this._webPlatform && this._client.getDeepLink(this._webPlatform);
+        return this._client && this._webPlatform && this._client.getDeepLink(this._webPlatform, this._link);
     }
 
     close() {
@@ -50,7 +54,7 @@ export class OpenDefaultViewModel extends ViewModel {
     }
 
     tryOpenLink() {
-        this._trying = true;
+        this.trying = true;
         // TODO actually try opening link
         this.setTimeout(() => {
             if (this.autoRedirect) {
@@ -58,7 +62,7 @@ export class OpenDefaultViewModel extends ViewModel {
                 // bother with visual updates.
                 this.close();
             } else {
-                this._trying = false;
+                this.trying = false;
                 this.emitChange();
             }
         }, 1000);

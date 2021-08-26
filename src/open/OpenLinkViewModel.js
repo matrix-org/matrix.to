@@ -73,6 +73,10 @@ export class OpenLinkViewModel extends ViewModel {
 
     closeDefault() {
         this.openDefaultViewModel = null;
+        // If no client was selected, this is a no-op.
+        // Otherwise, see ClientViewModel.back for some reasons
+        // why we do this.
+        this.preferences.setClient(undefined, undefined);
         this._activeOpen();
     }
 
