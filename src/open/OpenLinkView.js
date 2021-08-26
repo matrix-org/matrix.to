@@ -22,16 +22,19 @@ import {ServerConsentView} from "./ServerConsentView.js";
 export class OpenLinkView extends TemplateView {
     render(t, vm) {
         return t.div({className: "OpenLinkView card"}, [
-            t.map(vm => vm.tryingLink, tryingLink => tryingLink ?
-                t.view(new TryingLinkView(vm)) :
-                t.mapView(vm => vm.previewViewModel, previewVM => previewVM ?
-                    new ShowLinkView(vm) :
-                    new ServerConsentView(vm.serverConsentViewModel)
-                ),
-            ),
+            t.mapView(vm => [ vm.openDefaultViewModel, vm.previewViewModel ], ([openDefaultVM, previewVM]) => {
+                if (openDefaultVM) {
+                    return new TryingLinkView(openDefaultVM)
+                } else if (previewVM) {
+                    return new ShowLinkView(vm);
+                } else {
+                    return new ServerConsentView(vm.serverConsentViewModel);
+                }
+            }),
         ]);
     }
 }
+
 
 class TryingLinkView extends TemplateView {
     render (t, vm) {
