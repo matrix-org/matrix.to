@@ -54,8 +54,10 @@ export class OpenDefaultViewModel extends ViewModel {
     }
 
     tryOpenLink() {
+        this.openLink(this._client ? 
+            this._client.getDeepLink(this._proposedPlatform, this._link) :
+            this._link.toMatrixUrl());
         this.trying = true;
-        // TODO actually try opening link
         this.setTimeout(() => {
             if (this.autoRedirect) {
                 // We're about to be closed so don't
