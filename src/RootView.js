@@ -35,8 +35,7 @@ export class RootView extends TemplateView {
                     t.li(externalLink(t, "https://github.com/matrix-org/matrix.to/tree/main/src/open/clients", "Add your app")),
                     t.li({className: {hidden: vm => !vm.hasPreferences}},
                         t.button({className: "text", onClick: () => vm.clearPreferences()}, "Clear preferences")),
-                    t.li(
-                        t.button({className: "text", onClick: () => vm.openLink("/#/disclaimer/")}, "Disclaimer")),
+                    t.li(t.a({href: "#/disclaimer/"}, "Disclaimer")),
                 ])
             ])
         ]);
