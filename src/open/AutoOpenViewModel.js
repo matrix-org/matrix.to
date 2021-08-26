@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import {ViewModel} from "../utils/ViewModel.js";
-import {getMatchingPlatforms, selectPlatforms} from "./clients/index.js";
 
-export class OpenDefaultViewModel extends ViewModel {
+export class AutoOpenViewModel extends ViewModel {
     constructor(options) {
         super(options);
         const {client, link, openLinkVM, proposedPlatform, webPlatform} = options;
@@ -50,7 +49,7 @@ export class OpenDefaultViewModel extends ViewModel {
     }
 
     close() {
-        this._openLinkVM.closeDefault();
+        this._openLinkVM.closeAutoOpen();
     }
 
     tryOpenLink() {

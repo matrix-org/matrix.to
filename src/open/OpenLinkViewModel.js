@@ -18,7 +18,7 @@ import {ViewModel} from "../utils/ViewModel.js";
 import {ClientListViewModel} from "./ClientListViewModel.js";
 import {ClientViewModel} from "./ClientViewModel.js";
 import {PreviewViewModel} from "../preview/PreviewViewModel.js";
-import {OpenDefaultViewModel} from "./OpenDefaultViewModel.js";
+import {AutoOpenViewModel} from "./AutoOpenViewModel.js";
 import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
@@ -36,12 +36,12 @@ export class OpenLinkViewModel extends ViewModel {
         this.clientsViewModel = null;
         this.previewLoading = false;
         this.tryingLink = false;
-        if (!this._tryOpenDefault()) {
+        if (!this._tryAutoOpen()) {
             this._activeOpen();
         }
     }
 
-    _tryOpenDefault() {
+    _tryAutoOpen() {
         const client = this._getPreferredClient();
         let proposedPlatform = null;
         let webPlatform = null;
@@ -60,7 +60,7 @@ export class OpenLinkViewModel extends ViewModel {
                 return false;
             }
         }
-        this.openDefaultViewModel = new OpenDefaultViewModel(this.childOptions({
+        this.openDefaultViewModel = new AutoOpenViewModel(this.childOptions({
             client,
             link: this._link,
             openLinkVM: this,
@@ -71,7 +71,7 @@ export class OpenLinkViewModel extends ViewModel {
         return true;
     }
 
-    closeDefault() {
+    closeAutoOpen() {
         this.openDefaultViewModel = null;
         // If no client was selected, this is a no-op.
         // Otherwise, see ClientViewModel.back for some reasons
