@@ -50,7 +50,7 @@ class TryingLinkView extends TemplateView {
             [];
         const timeoutOptions = t.span({ className: "timeoutOptions" }, [
             t.strong("Not working? "),
-            t.button({ className: "text", onClick: () => vm.tryOpenLink() }, "Try again"),
+            t.a({ href: vm.deepLink, onClick: () => vm.startSpinner() }, "Try again"),
             " or ",
             t.button({ className: "text", onClick: () => vm.close() }, "select another app")
         ]);

@@ -44,6 +44,12 @@ export class AutoOpenViewModel extends ViewModel {
         return this.openingDefault;
     }
 
+    get deepLink() {
+        return this._client ?
+            this._client.getDeepLink(this._proposedPlatform, this._link) :
+            this._link.toMatrixUrl()
+    }
+
     get webDeepLink() {
         return this._client && this._webPlatform && this._client.getDeepLink(this._webPlatform, this._link);
     }
@@ -52,10 +58,7 @@ export class AutoOpenViewModel extends ViewModel {
         this._openLinkVM.closeAutoOpen();
     }
 
-    tryOpenLink() {
-        this.openLink(this._client ? 
-            this._client.getDeepLink(this._proposedPlatform, this._link) :
-            this._link.toMatrixUrl());
+    startSpinner() {
         this.trying = true;
         this.setTimeout(() => {
             if (this.autoRedirect) {
@@ -68,5 +71,10 @@ export class AutoOpenViewModel extends ViewModel {
             }
         }, 1000);
         this.emitChange();
+    }
+
+    tryOpenLink() {
+        this.openLink(this.deepLink);
+        this.startSpinner();
     }
 }
