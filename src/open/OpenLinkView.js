@@ -38,9 +38,8 @@ export class OpenLinkView extends TemplateView {
 
 class TryingLinkView extends TemplateView {
     render (t, vm) {
-        const explanation = vm.autoRedirect ?
-            "If this doesn't work, you will be redirected shortly." :
-            t.span(["Click ", t.strong(`"Open ${vm.name}"`), " to launch the desktop app."]);
+        const explanation = vm.name ? t.span(["Click ", t.strong(`"Open ${vm.name}"`), " to launch the desktop app."]) : [];
+        const redirectNotice = vm.autoRedirect ? "If this doesn't work, you will be redirected shortly." : [];
         const webLink = vm.webDeepLink ?
             t.span(["You can also ", t.a({
                 href: vm.webDeepLink,
@@ -59,6 +58,7 @@ class TryingLinkView extends TemplateView {
             vm.iconUrl ? t.img({ className: "clientIcon", src: vm.iconUrl }) : t.div({className: "defaultAvatar"}),
             t.h1(vm.name ? `Opening ${vm.name}` : "Trying to open your default client..."),
             explanation,
+            redirectNotice,
             webLink,
             t.map(vm => vm.trying, trying => trying ?
                 t.div({className: "spinner"}) :
