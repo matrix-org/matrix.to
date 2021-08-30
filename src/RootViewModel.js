@@ -20,6 +20,7 @@ import {OpenLinkViewModel} from "./open/OpenLinkViewModel.js";
 import {createClients} from "./open/clients/index.js";
 import {CreateLinkViewModel} from "./create/CreateLinkViewModel.js";
 import {LoadServerPolicyViewModel} from "./policy/LoadServerPolicyViewModel.js";
+import {InvalidUrlViewModel} from "./InvalidUrlViewModel.js";
 import {Platform} from "./Platform.js";
 
 export class RootViewModel extends ViewModel {
@@ -29,8 +30,8 @@ export class RootViewModel extends ViewModel {
         this.openLinkViewModel = null;
         this.createLinkViewModel = null;
         this.loadServerPolicyViewModel = null;
+        this.invalidUrlViewModel = null;
         this.showDisclaimer = false;
-        this.invalidUrl = false;
         this.preferences.on("canClear", () => {
             this.emitChange();
         });
@@ -59,7 +60,7 @@ export class RootViewModel extends ViewModel {
         // clear them to avoid having to manually reset (n-1)/n view models in every case.
         // That just doesn't scale well when we add new views.
         const oldLink = this.link;
-        this.invalidUrl = false;
+        this.invalidUrlViewModel = null;
         this.showDisclaimer = false;
         this.loadServerPolicyViewModel = null;
         this.createLinkViewModel = null;
@@ -79,7 +80,9 @@ export class RootViewModel extends ViewModel {
             this._updateChildVMs(newLink, oldLink);
         } else {
             this._updateChildVMs(null, oldLink);
-            this.invalidUrl = true;
+            this.invalidUrlViewModel = new InvalidUrlViewModel(this.childOptions({
+                fragment: hash
+            }));
         }
         this.emitChange();
     }

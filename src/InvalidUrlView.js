@@ -15,15 +15,35 @@ limitations under the License.
 */
 
 import {TemplateView} from "./utils/TemplateView.js";
+import {LinkKind} from "./Link.js";
 
 export class InvalidUrlView extends TemplateView {
-    render(t) {
+    render(t, vm) {
         return t.div({ className: "DisclaimerView card" }, [
             t.h1("Invalid URL"),
             t.p([
                 'The link you have entered is not valid. If you like, you can ',
                 t.a({ href: "#/" }, 'return to the home page.')
             ]),
+            vm.validFixes.length ? this._renderValidFixes(t, vm.validFixes) : [],
+        ]);
+    }
+
+    _describeLinkKind(kind) {
+        switch (kind) {
+            case LinkKind.Room: return "The room ";
+            case LinkKind.User: return "The user ";
+            case LinkKind.Group: return "The group ";
+            case LinkKind.Event: return "An event in room ";
+        }
+    }
+
+    _renderValidFixes(t, validFixes) {
+        return t.p([
+            'Did you mean any of the following?',
+            t.ul(validFixes.map(fix =>
+                t.li([this._describeLinkKind(fix.link.kind), t.a({ href: fix.url }, fix.link.identifier)])
+            ))
         ]);
     }
 }

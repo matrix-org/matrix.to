@@ -71,6 +71,24 @@ export const LinkKind = createEnum(
     "Event"
 )
 
+export function tryFixUrl(fragment) {
+    const attempts = [];
+    if (fragment.startsWith('#') && !fragment.startsWith('#/')) {
+        if (!fragment.match(/^#[@$!]/)) {
+            attempts.push('#/' + fragment); // #room => #/#room
+        }
+        attempts.push('#/' + fragment.substring(1)); // #@room => #/@room
+    }
+    const validAttempts = [];
+    for (const attempt of attempts) {
+        const link = Link.parse(attempt);
+        if (link) {
+            validAttempts.push({ url: attempt, link });
+        }
+    }
+    return validAttempts;
+}
+
 export class Link {
     static validateIdentifier(identifier) {
         return !!(
