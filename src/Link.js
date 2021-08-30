@@ -105,9 +105,10 @@ export class Link {
             webInstances = getWebInstanceMap(queryParams);
         }
 
-        if (linkStr.startsWith("#/")) {
-            linkStr = linkStr.substr(2);
+        if (!linkStr.startsWith("#/")) {
+            return null;
         }
+        linkStr = linkStr.substr(2);
 
         const [identifier, eventId] = linkStr.split("/");
 
