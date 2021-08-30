@@ -18,10 +18,12 @@ import {TemplateView} from "./utils/TemplateView.js";
 import {OpenLinkView} from "./open/OpenLinkView.js";
 import {CreateLinkView} from "./create/CreateLinkView.js";
 import {LoadServerPolicyView} from "./policy/LoadServerPolicyView.js";
+import {DisclaimerView} from "./disclaimer/DisclaimerView.js";
 
 export class RootView extends TemplateView {
     render(t, vm) {
         return t.div({className: "RootView"}, [
+            t.mapView(vm => vm.showDisclaimer, disclaimer => disclaimer ? new DisclaimerView() : null),
             t.mapView(vm => vm.openLinkViewModel, vm => vm ? new OpenLinkView(vm) : null),
             t.mapView(vm => vm.createLinkViewModel, vm => vm ? new CreateLinkView(vm) : null),
             t.mapView(vm => vm.loadServerPolicyViewModel, vm => vm ? new LoadServerPolicyView(vm) : null),
@@ -33,6 +35,7 @@ export class RootView extends TemplateView {
                     t.li(externalLink(t, "https://github.com/matrix-org/matrix.to/tree/main/src/open/clients", "Add your app")),
                     t.li({className: {hidden: vm => !vm.hasPreferences}},
                         t.button({className: "text", onClick: () => vm.clearPreferences()}, "Clear preferences")),
+                    t.li(t.a({href: "#/disclaimer/"}, "Disclaimer")),
                 ])
             ])
         ]);

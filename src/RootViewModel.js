@@ -29,6 +29,7 @@ export class RootViewModel extends ViewModel {
         this.openLinkViewModel = null;
         this.createLinkViewModel = null;
         this.loadServerPolicyViewModel = null;
+        this.showDisclaimer = false;
         this.preferences.on("canClear", () => {
             this.emitChange();
         });
@@ -57,11 +58,17 @@ export class RootViewModel extends ViewModel {
     }
 
     updateHash(hash) {
+        this.showDisclaimer = false;
         if (hash.startsWith("#/policy/")) {
             const server = hash.substr(9);
             this._hideLinks();
             this.loadServerPolicyViewModel = new LoadServerPolicyViewModel(this.childOptions({server}));
             this.loadServerPolicyViewModel.load();
+            this.emitChange();
+        } else if (hash.startsWith("#/disclaimer/")) {
+            this._hideLinks();
+            this.loadServerPolicyViewModel = null;
+            this.showDisclaimer = true;
             this.emitChange();
         } else {
             const oldLink = this.link;
