@@ -30,6 +30,7 @@ export class RootViewModel extends ViewModel {
         this.createLinkViewModel = null;
         this.loadServerPolicyViewModel = null;
         this.showDisclaimer = false;
+        this.invalidUrl = false;
         this.preferences.on("canClear", () => {
             this.emitChange();
         });
@@ -58,6 +59,7 @@ export class RootViewModel extends ViewModel {
         // clear them to avoid having to manually reset (n-1)/n view models in every case.
         // That just doesn't scale well when we add new views.
         const oldLink = this.link;
+        this.invalidUrl = false;
         this.showDisclaimer = false;
         this.loadServerPolicyViewModel = null;
         this.createLinkViewModel = null;
@@ -75,6 +77,9 @@ export class RootViewModel extends ViewModel {
             this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
         } else if (newLink = Link.parse(hash)) {
             this._updateChildVMs(newLink, oldLink);
+        } else {
+            this._updateChildVMs(null, oldLink);
+            this.invalidUrl = true;
         }
         this.emitChange();
     }
