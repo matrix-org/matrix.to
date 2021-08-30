@@ -36,19 +36,12 @@ export class RootViewModel extends ViewModel {
     }
 
     _updateChildVMs(oldLink) {
-        if (this.link) {
-            this.createLinkViewModel = null;
-            if (!oldLink || !oldLink.equals(this.link)) {
-                this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
-                    link: this.link,
-                    clients: createClients(),
-                }));
-            }
-        } else {
-            this.openLinkViewModel = null;
-            this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
+        if (!oldLink || !oldLink.equals(this.link)) {
+            this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
+                link: this.link,
+                clients: createClients(),
+            }));
         }
-        this.emitChange();
     }
 
     _hideLinks() {
@@ -58,24 +51,30 @@ export class RootViewModel extends ViewModel {
     }
 
     updateHash(hash) {
+        // All view models except openLink are re-created anyway.
+        // Might as well clear them to avoid having to
+        // manually reset (n-1)/n view models in every case.
+        const oldLink = this.link;
+        this.link = null;
         this.showDisclaimer = false;
+        this.loadServerPolicyViewModel = null;
+        this.createLinkViewModel = null;
         if (hash.startsWith("#/policy/")) {
             const server = hash.substr(9);
-            this._hideLinks();
+            this.openLinkViewModel = null;
             this.loadServerPolicyViewModel = new LoadServerPolicyViewModel(this.childOptions({server}));
             this.loadServerPolicyViewModel.load();
-            this.emitChange();
         } else if (hash.startsWith("#/disclaimer/")) {
-            this._hideLinks();
-            this.loadServerPolicyViewModel = null;
+            this.openLinkViewModel = null;
             this.showDisclaimer = true;
-            this.emitChange();
-        } else {
-            const oldLink = this.link;
-            this.loadServerPolicyViewModel = null;
+        }  else if (hash === "" || hash === "#" || hash === "#/") {
+            this.openLinkViewModel = null;
+            this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
+        } else if (this.link = Link.parse(hash)) {
             this.link = Link.parse(hash);
             this._updateChildVMs(oldLink);
         }
+        this.emitChange();
     }
 
     clearPreferences() {
