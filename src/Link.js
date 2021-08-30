@@ -74,9 +74,9 @@ export const LinkKind = createEnum(
 export function tryFixUrl(fragment) {
     const attempts = [];
     const afterHash = fragment.substring(fragment.startsWith("#/") ? 2 : 1);
-    attempts.push('#/@' + afterHash); // #room => #/@room
-    attempts.push('#/#' + afterHash); // #@room => #/@room
-    attempts.push('#/!' + afterHash); // #@room => #/@room
+    attempts.push('#/@' + afterHash);
+    attempts.push('#/#' + afterHash);
+    attempts.push('#/!' + afterHash);
 
     const validAttempts = [];
     for (const attempt of [...new Set(attempts)]) {
