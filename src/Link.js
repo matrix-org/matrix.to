@@ -109,10 +109,17 @@ export class Link {
             linkStr = linkStr.substr(2);
         }
 
-        const [identifier, eventId] = linkStr.split("/");
+        const lastSlash = linkStr.lastIndexOf("/");
+        let identifier, eventId;
+        if (lastSlash !== -1) {
+            identifier = linkStr.substring(0, lastSlash);
+            eventId = linkStr.substring(lastSlash+1);
+        } else {
+            identifier = linkStr;
+        }
 
         let matches;
-        matches = USERID_PATTERN.exec(identifier);
+        matches = USERID_PATTERN.exec(identifier) || USERID_PATTERN.exec(`${identifier}/${eventId}`);
         if (matches) {
             const server = matches[2];
             const localPart = matches[1];
