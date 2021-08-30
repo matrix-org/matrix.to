@@ -73,14 +73,13 @@ export const LinkKind = createEnum(
 
 export function tryFixUrl(fragment) {
     const attempts = [];
-    if (fragment.startsWith('#') && !fragment.startsWith('#/')) {
-        if (!fragment.match(/^#[@$!]/)) {
-            attempts.push('#/' + fragment); // #room => #/#room
-        }
-        attempts.push('#/' + fragment.substring(1)); // #@room => #/@room
-    }
+    const afterHash = fragment.substring(fragment.startsWith("#/") ? 2 : 1);
+    attempts.push('#/@' + afterHash); // #room => #/@room
+    attempts.push('#/#' + afterHash); // #@room => #/@room
+    attempts.push('#/!' + afterHash); // #@room => #/@room
+
     const validAttempts = [];
-    for (const attempt of attempts) {
+    for (const attempt of [...new Set(attempts)]) {
         const link = Link.parse(attempt);
         if (link) {
             validAttempts.push({ url: attempt, link });
