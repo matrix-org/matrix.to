@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import {TemplateView} from "./utils/TemplateView.js";
-import {LinkKind} from "./Link.js";
+import {LinkKind, IdentifierKind} from "./Link.js";
 
 export class InvalidUrlView extends TemplateView {
     render(t, vm) {
@@ -29,12 +29,16 @@ export class InvalidUrlView extends TemplateView {
         ]);
     }
 
-    _describeLinkKind(kind) {
-        switch (kind) {
-            case LinkKind.Room: return "The room ";
+    _describeRoom(identifierKind) {
+        return identifierKind === IdentifierKind.RoomAlias ? "room alias" : "room";
+    }
+
+    _describeLinkKind(linkKind, identifierKind) {
+        switch (linkKind) {
+            case LinkKind.Room: return `The ${this._describeRoom(identifierKind)} `;
             case LinkKind.User: return "The user ";
             case LinkKind.Group: return "The group ";
-            case LinkKind.Event: return "An event in room ";
+            case LinkKind.Event: return `An event in ${this._describeRoom(identifierKind)} `;
         }
     }
 
@@ -42,7 +46,10 @@ export class InvalidUrlView extends TemplateView {
         return t.p([
             'Did you mean any of the following?',
             t.ul(validFixes.map(fix =>
-                t.li([this._describeLinkKind(fix.link.kind), t.a({ href: fix.url }, fix.link.identifier)])
+                t.li([
+                    this._describeLinkKind(fix.link.kind, fix.link.identifierKind),
+                    t.a({ href: fix.url }, fix.link.identifier)
+                ])
             ))
         ]);
     }
