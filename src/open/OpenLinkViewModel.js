@@ -23,6 +23,7 @@ import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
 import {getMatchingPlatforms, selectPlatforms} from "./clients/index.js";
+import {Platform} from "../Platform.js";
 
 export class OpenLinkViewModel extends ViewModel {
     constructor(options) {
@@ -57,6 +58,11 @@ export class OpenLinkViewModel extends ViewModel {
 
             if (!client.getDeepLink(proposedPlatform, this._link)) {
                 // Client doesn't support deep links. We can't open it.
+                return false;
+            }
+        } else {
+            if (this.platforms.includes(Platform.iOS)) {
+                // Do not try to auto-open links on iOS because of the scary warning.
                 return false;
             }
         }
