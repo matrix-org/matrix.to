@@ -51,7 +51,7 @@ class TryingLinkView extends TemplateView {
             t.strong("Not working? "),
             t.a({ href: vm.deepLink, onClick: () => vm.startSpinner() }, "Try again"),
             " or ",
-            t.button({ className: "text", onClick: () => vm.close() }, "select another app")
+            t.button({ className: "text", onClick: () => vm.close() }, "select another app.")
         ]);
                 
         return t.div({ className: "OpeningClientView" }, [

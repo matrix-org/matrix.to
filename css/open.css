@@ -57,6 +57,7 @@ limitations under the License.
     text-align: center;
     flex-direction: column;
     margin: 0;
+    line-height: 150%;
 }
 
 .OpeningClientView .defaultAvatar {
