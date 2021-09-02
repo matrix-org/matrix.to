@@ -38,7 +38,7 @@ export class OpenLinkView extends TemplateView {
 
 class TryingLinkView extends TemplateView {
     render (t, vm) {
-        const explanation = vm.name ? t.span(["Click ", t.strong(`"Open ${vm.name}"`), " to launch the desktop app."]) : [];
+        const explanation = vm.name ? t.span(["Select ", t.strong(`"Open ${vm.name}"`), " to launch the app."]) : [];
         const redirectNotice = vm.autoRedirect ? "If this doesn't work, you will be redirected shortly." : [];
         const webLink = vm.webDeepLink ?
             t.span(["You can also ", t.a({
