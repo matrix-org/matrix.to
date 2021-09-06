@@ -19,10 +19,12 @@ import {OpenLinkView} from "./open/OpenLinkView.js";
 import {CreateLinkView} from "./create/CreateLinkView.js";
 import {LoadServerPolicyView} from "./policy/LoadServerPolicyView.js";
 import {DisclaimerView} from "./disclaimer/DisclaimerView.js";
+import {InvalidUrlView} from "./InvalidUrlView.js";
 
 export class RootView extends TemplateView {
     render(t, vm) {
         return t.div({className: "RootView"}, [
+            t.mapView(vm => vm.invalidUrlViewModel, invalidVM => invalidVM ? new InvalidUrlView(invalidVM) : null),
             t.mapView(vm => vm.showDisclaimer, disclaimer => disclaimer ? new DisclaimerView() : null),
             t.mapView(vm => vm.openLinkViewModel, vm => vm ? new OpenLinkView(vm) : null),
             t.mapView(vm => vm.createLinkViewModel, vm => vm ? new CreateLinkView(vm) : null),

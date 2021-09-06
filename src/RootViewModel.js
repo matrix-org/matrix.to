@@ -20,6 +20,7 @@ import {OpenLinkViewModel} from "./open/OpenLinkViewModel.js";
 import {createClients} from "./open/clients/index.js";
 import {CreateLinkViewModel} from "./create/CreateLinkViewModel.js";
 import {LoadServerPolicyViewModel} from "./policy/LoadServerPolicyViewModel.js";
+import {InvalidUrlViewModel} from "./InvalidUrlViewModel.js";
 import {Platform} from "./Platform.js";
 
 export class RootViewModel extends ViewModel {
@@ -29,26 +30,23 @@ export class RootViewModel extends ViewModel {
         this.openLinkViewModel = null;
         this.createLinkViewModel = null;
         this.loadServerPolicyViewModel = null;
+        this.invalidUrlViewModel = null;
         this.showDisclaimer = false;
         this.preferences.on("canClear", () => {
             this.emitChange();
         });
     }
 
-    _updateChildVMs(oldLink) {
-        if (this.link) {
-            this.createLinkViewModel = null;
-            if (!oldLink || !oldLink.equals(this.link)) {
-                this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
-                    link: this.link,
-                    clients: createClients(),
-                }));
-            }
-        } else {
+    _updateChildVMs(newLink, oldLink) {
+        this.link = newLink;
+        if (!newLink) {
             this.openLinkViewModel = null;
-            this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
+        } else if (!oldLink || !oldLink.equals(newLink)) {
+            this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
+                link: newLink,
+                clients: createClients(),
+            }));
         }
-        this.emitChange();
     }
 
     _hideLinks() {
@@ -58,24 +56,35 @@ export class RootViewModel extends ViewModel {
     }
 
     updateHash(hash) {
+        // All view models except openLink are re-created anyway. Might as well
+        // clear them to avoid having to manually reset (n-1)/n view models in every case.
+        // That just doesn't scale well when we add new views.
+        const oldLink = this.link;
+        this.invalidUrlViewModel = null;
         this.showDisclaimer = false;
+        this.loadServerPolicyViewModel = null;
+        this.createLinkViewModel = null;
+        let newLink;
         if (hash.startsWith("#/policy/")) {
             const server = hash.substr(9);
-            this._hideLinks();
+            this._updateChildVMs(null, oldLink);
             this.loadServerPolicyViewModel = new LoadServerPolicyViewModel(this.childOptions({server}));
             this.loadServerPolicyViewModel.load();
-            this.emitChange();
         } else if (hash.startsWith("#/disclaimer/")) {
-            this._hideLinks();
-            this.loadServerPolicyViewModel = null;
+            this._updateChildVMs(null, oldLink);
             this.showDisclaimer = true;
-            this.emitChange();
+        }  else if (hash === "" || hash === "#" || hash === "#/") {
+            this._updateChildVMs(null, oldLink);
+            this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
+        } else if (newLink = Link.parse(hash)) {
+            this._updateChildVMs(newLink, oldLink);
         } else {
-            const oldLink = this.link;
-            this.loadServerPolicyViewModel = null;
-            this.link = Link.parse(hash);
-            this._updateChildVMs(oldLink);
+            this._updateChildVMs(null, oldLink);
+            this.invalidUrlViewModel = new InvalidUrlViewModel(this.childOptions({
+                fragment: hash
+            }));
         }
+        this.emitChange();
     }
 
     clearPreferences() {
