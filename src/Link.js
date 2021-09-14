@@ -80,7 +80,7 @@ export function tryFixUrl(fragment) {
 
     const validAttempts = [];
     for (const attempt of [...new Set(attempts)]) {
-        const link = Link.parse(attempt);
+        const link = Link.parseFragment(attempt);
         if (link) {
             validAttempts.push({ url: attempt, link });
         }
@@ -98,11 +98,20 @@ export class Link {
         );
     }
 
-    static parse(fragment) {
+    static parseIdentifier(identifier) {
+        return Link._parse(identifier);
+    }
+
+    static parseFragment(fragment) {
         if (!fragment) {
             return null;
         }
         let [linkStr, queryParamsStr] = fragment.split("?");
+        if (!linkStr.startsWith("#/")) {
+            return null;
+        }
+        linkStr = linkStr.substr(2);
+        const [identifier, eventId] = linkStr.split("/");
 
         let viaServers = [];
         let clientId = null;
@@ -121,14 +130,13 @@ export class Link {
             }
             webInstances = getWebInstanceMap(queryParams);
         }
+        return Link._parse(identifier, eventId, clientId, viaServers, webInstances);
+    }
 
-        if (!linkStr.startsWith("#/")) {
+    static _parse(identifier, eventId = undefined, clientId = null, viaServers = [], webInstances = {}) {
+        if (!identifier) {
             return null;
         }
-        linkStr = linkStr.substr(2);
-
-        const [identifier, eventId] = linkStr.split("/");
-
         let matches;
         matches = USERID_PATTERN.exec(identifier);
         if (matches) {
