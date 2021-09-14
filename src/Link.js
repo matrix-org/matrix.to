@@ -103,6 +103,9 @@ export class Link {
     }
 
     static parseFragment(fragment) {
+        if (!fragment) {
+            return null;
+        }
         let [linkStr, queryParamsStr] = fragment.split("?");
         if (!linkStr.startsWith("#/")) {
             return null;
