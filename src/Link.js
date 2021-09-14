@@ -131,6 +131,9 @@ export class Link {
     }
 
     static _parse(identifier, eventId = undefined, clientId = null, viaServers = [], webInstances = {}) {
+        if (!identifier) {
+            return null;
+        }
         let matches;
         matches = USERID_PATTERN.exec(identifier);
         if (matches) {
