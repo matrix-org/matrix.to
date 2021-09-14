@@ -30,7 +30,7 @@ export class CreateLinkViewModel extends ViewModel {
     }
 
     async createLink(identifier) {
-        this._link = Link.parse(identifier);
+        this._link = Link.parseIdentifier(identifier);
         if (this._link) {
             this.openLink("#" + this._link.toFragment());
         }

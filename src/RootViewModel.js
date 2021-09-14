@@ -76,7 +76,7 @@ export class RootViewModel extends ViewModel {
         }  else if (hash === "" || hash === "#" || hash === "#/") {
             this._updateChildVMs(null, oldLink);
             this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
-        } else if (newLink = Link.parse(hash)) {
+        } else if (newLink = Link.parseFragment(hash)) {
             this._updateChildVMs(newLink, oldLink);
         } else {
             this._updateChildVMs(null, oldLink);
