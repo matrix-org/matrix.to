@@ -38,33 +38,37 @@ export class OpenLinkView extends TemplateView {
 
 class TryingLinkView extends TemplateView {
     render (t, vm) {
-        const explanation = vm.name ? t.span(["Select ", t.strong(`"Open ${vm.name}"`), " to launch the app."]) : [];
-        const redirectNotice = vm.autoRedirect ? "If this doesn't work, you will be redirected shortly." : [];
-        const webLink = vm.webDeepLink ?
-            t.span(["You can also ", t.a({
+        const children = [
+            vm.iconUrl ? t.img({ className: "clientIcon", src: vm.iconUrl }) : t.div({className: "defaultAvatar"}),
+            t.h1(vm.name ? `Opening ${vm.name}` : "Trying to open your default client..."),
+        ]
+        if (vm.name) {
+            children.push(t.span(["Select ", t.strong(`"Open ${vm.name}"`), " to launch the app."]));
+        }
+        if (vm.autoRedirect) {
+            children.push("If this doesn't work, you will be redirected shortly.");
+        }
+        if (vm.webDeepLink) {
+            children.push(t.span(["You can also ", t.a({
                 href: vm.webDeepLink,
                 target: "_blank",
                 rel: "noopener noreferrer",
-            }, `open ${vm.name} in your browser.`)]) :
-            [];
+            }, `open ${vm.name} in your browser.`)]));
+        }
         const timeoutOptions = t.span({ className: "timeoutOptions" }, [
             t.strong("Not working? "),
             t.a({ href: vm.deepLink, onClick: () => vm.startSpinner() }, "Try again"),
             " or ",
             t.button({ className: "text", onClick: () => vm.close() }, "select another app.")
         ]);
-                
-        return t.div({ className: "OpeningClientView" }, [
-            vm.iconUrl ? t.img({ className: "clientIcon", src: vm.iconUrl }) : t.div({className: "defaultAvatar"}),
-            t.h1(vm.name ? `Opening ${vm.name}` : "Trying to open your default client..."),
-            explanation,
-            redirectNotice,
-            webLink,
+        children.push(
             t.map(vm => vm.trying, trying => trying ?
                 t.div({className: "spinner"}) :
                 timeoutOptions
             ),
-        ]);
+        );
+                
+        return t.div({ className: "OpeningClientView" }, children);
     }
 }
 
