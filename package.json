@@ -7,7 +7,7 @@
     "node": ">= 14.0.0"
   },
   "scripts": {
-    "start": "node scripts/serve-local.js",
+    "start": "vite",
     "build": "node scripts/build.js"
   },
   "devDependencies": {
@@ -35,6 +35,7 @@
     "xxhashjs": "^0.2.2"
   },
   "dependencies": {
-    "matrix-uri-parser": "https://github.com/matrix-org/matrix-uri-parser-js"
+    "matrix-uri-parser": "https://github.com/matrix-org/matrix-uri-parser-js",
+    "vite": "^2.5.10"
   }
 }
