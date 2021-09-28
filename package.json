@@ -33,5 +33,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "serve-static": "^1.14.1",
     "xxhashjs": "^0.2.2"
+  },
+  "dependencies": {
+    "matrix-uri-parser": "https://github.com/matrix-org/matrix-uri-parser-js"
   }
 }

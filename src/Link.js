@@ -16,6 +16,7 @@ limitations under the License.
 
 import {createEnum} from "./utils/enum.js";
 import {orderedUnique} from "./utils/unique.js";
+import {MatrixURL} from "matrix-uri-parser";
 
 const ROOMALIAS_PATTERN = /^#([^:]*):(.+)$/;
 const ROOMID_PATTERN = /^!([^:]*):(.+)$/;
@@ -111,6 +112,29 @@ export class Link {
             return null;
         }
         linkStr = linkStr.substr(2);
+
+        const linkStrMatrixUrl = fragment.substr(2).startsWith("matrix:") ? fragment.substr(2) : "matrix:"+fragment.substr(2);
+
+        try {
+            const parsedUrl = new MatrixURL(linkStrMatrixUrl); // Try to parse URL as matrix-URL
+
+            let [localPart, server] = parsedUrl.id.split(":"); // Split ID into local and server part
+
+            if(!server) server = parsedUrl.authority;          // If no server part is present, try to use authority
+            if(!server) return null;                           // Reject if we can't figure out the server
+
+            const webInstances = getWebInstanceMap(parsedUrl.unknownParams);
+
+            let clientId;
+
+            const clientParam = parsedUrl.unknownParams.find(([key]) => key === "client");
+            if(clientParam) clientId = clientParam[1];
+
+            const link = new Link(clientId, parsedUrl.via, parsedUrl.kind, localPart, server, webInstances, parsedUrl.eventId);
+
+            return link;
+        } catch(e) {} // The fragment was no matrix-URL.
+
         const [identifier, eventId] = linkStr.split("/");
 
         let viaServers = [];

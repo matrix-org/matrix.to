@@ -1418,6 +1418,10 @@ matched@^5.0.0:
     glob "^7.1.6"
     picomatch "^2.2.1"
 
+"matrix-uri-parser@https://github.com/matrix-org/matrix-uri-parser-js":
+  version "0.1.0"
+  resolved "https://github.com/matrix-org/matrix-uri-parser-js#506c2545dae5e0d05633bc905a937731a1e69104"
+
 mdn-polyfills@^5.20.0:
   version "5.20.0"
   resolved "https://registry.yarnpkg.com/mdn-polyfills/-/mdn-polyfills-5.20.0.tgz#ca8247edf20a4f60dec6804372229812b348260b"
