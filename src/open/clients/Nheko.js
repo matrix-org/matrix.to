@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind, FlathubLink, style} from "../types.js";
+import {Maturity, Platform, LinkKind, FlathubLink, WebsiteLink, style} from "../types.js";
 
 /**
  * Information on how to deep link to a given matrix client.
@@ -72,8 +72,9 @@ export class Nheko {
     }
 
     getInstallLinks(platform) {
-        if (platform === Platform.Linux) {
-            return [new FlathubLink("io.github.NhekoReborn.Nheko")];
+        switch (platform) {
+            case Platform.Linux: return [new FlathubLink("io.github.NhekoReborn.Nheko")];
+            default: return [new WebsiteLink("https://github.com/Nheko-Reborn/nheko/releases/latest")];
         }
     }
 
