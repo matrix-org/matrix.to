@@ -75,8 +75,8 @@ export class Fluffychat {
 
     getDeepLink(platform, link) {
         switch (platform) {
-            case Platform.Android: return `im.fluffychat://${link.identifier}`;
-            case Platform.iOS: return `im.fluffychat://${link.identifier}`;
+            case Platform.Android: return `im.fluffychat://chat/${link.identifier}`;
+            case Platform.iOS: return `im.fluffychat://chat/${link.identifier}`;
             default: break;
         }
     }
