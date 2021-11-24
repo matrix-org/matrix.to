@@ -63,6 +63,14 @@ visitors.
 (Technically the # and @ in the URL fragment should probably be escaped, but in
 practice for legibility we bend the rules and include it verbatim)
 
+### Optional parameters
+
+https://matrix.to/#/#matrix:matrix.org?web-instance[element.io]=chat.mozilla.org
+
+- `client`, e.g. `client=im.fluffychat`, `client=element.io`
+- `web-instance[]`, e.g. `web-instance[element.io]=chat.mozilla.org`
+-  `via`, e.g. `via=mozilla.org`
+
 You can discuss matrix.to in
 [`#matrix.to:matrix.org`](https://matrix.to/#/#matrix.to:matrix.org)
 
