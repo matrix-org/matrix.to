@@ -44,7 +44,10 @@ export class Quaternion {
 
     getInstallLinks(platform) {
         switch (platform) {
-            case Platform.Linux: return [new FlathubLink("com.github.quaternion")];
+            case Platform.Linux: return [
+                new FlathubLink("com.github.quaternion"),
+                new WebsiteLink("https://github.com/quotient-im/Quaternion/releases/latest"),
+            ];
             default: return [new WebsiteLink("https://github.com/quotient-im/Quaternion/releases/latest")];
         }
     }

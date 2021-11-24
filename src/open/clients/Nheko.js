@@ -73,7 +73,10 @@ export class Nheko {
 
     getInstallLinks(platform) {
         switch (platform) {
-            case Platform.Linux: return [new FlathubLink("io.github.NhekoReborn.Nheko")];
+            case Platform.Linux: return [
+                new FlathubLink("io.github.NhekoReborn.Nheko"),
+                new WebsiteLink("https://github.com/Nheko-Reborn/nheko/releases/latest"),
+            ];
             default: return [new WebsiteLink("https://github.com/Nheko-Reborn/nheko/releases/latest")];
         }
     }
