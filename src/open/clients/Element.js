@@ -72,7 +72,7 @@ export class Element {
             if (isWebPlatform && trustedWebInstances.includes(link.webInstances[this.id])) {
                 instanceHost = link.webInstances[this.id];
             }
-            return `https://${instanceHost}/#/${fragmentPath}`;
+            return `https://${instanceHost}/#/${encodeURIComponent(fragmentPath)}`;
         } else if (platform === Platform.Linux || platform === Platform.Windows || platform === Platform.macOS) {
             return `element://vector/webapp/#/${encodeURIComponent(fragmentPath)}`;
         } else {
