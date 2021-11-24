@@ -73,7 +73,13 @@ export class Fluffychat {
         }
     }
 
-    getDeepLink(platform, link) { }
+    getDeepLink(platform, link) {
+        switch (platform) {
+            case Platform.Android: return `im.fluffychat://chat/${link.identifier}`;
+            case Platform.iOS: return `im.fluffychat://chat/${link.identifier}`;
+            default: break;
+        }
+    }
     canInterceptMatrixToLinks(platform) {
         return platform === Platform.Android;
     }
