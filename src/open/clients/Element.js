@@ -74,9 +74,9 @@ export class Element {
             }
             return `https://${instanceHost}/#/${fragmentPath}`;
         } else if (platform === Platform.Linux || platform === Platform.Windows || platform === Platform.macOS) {
-            return `element://vector/webapp/#/${fragmentPath}`;
+            return `element://vector/webapp/#/${encodeURIComponent(fragmentPath)}`;
         } else {
-            return `element://${fragmentPath}`;
+            return `element://${encodeURIComponent(fragmentPath)}`;
         }
     }
 
