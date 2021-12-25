@@ -20,8 +20,8 @@ export class Quaternion {
     get id() { return "quaternion"; }
     get name() { return "Quaternion"; }
     get icon() { return "images/client-icons/quaternion.svg"; }
-    get author() { return "Felix Rohrbach"; }
-    get homepage() { return "https://github.com/Fxrh/Quaternion"; }
+    get author() { return "Felix Rohrbach and Alexey Rusakov "; }
+    get homepage() { return "https://github.com/quotient-im/Quaternion"; }
     get platforms() { return [Platform.Windows, Platform.macOS, Platform.Linux]; }
     get description() { return 'Qt5 and C++ cross-platform desktop Matrix client.'; }
     getMaturity(platform) { return Maturity.Beta; }
