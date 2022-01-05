@@ -50,7 +50,6 @@ export class Cinny {
         }
         if (link.kind === LinkKind.Room) {
             switch (platform) {
-                case Platform.Android: return "Cinny doesn't support Android devices.";
                 case Platform.DesktopWeb: return "Open the web app at https://cinny.in/ and log in to your account. Click on 'Public Rooms' and paste the room address (name:homeserver).";
                 default: return "Open the app on your device. Click on 'Public Rooms' and paste the room address (name:homeserver).";
             }
