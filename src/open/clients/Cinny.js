@@ -62,16 +62,6 @@ export class Cinny {
         }
     }
 
-    getDeepLink(platform, link) {
-        switch (platform) {
-            case Platform.Android: return `in.fluffychat://`;
-            case Platform.iOS: return `in.fluffychat://`;
-            default: break;
-        }
-    }
-    canInterceptMatrixToLinks(platform) {
-        return platform === Platform.Android;
-    }
 
     getPreferredWebInstance(link) {}
 }
