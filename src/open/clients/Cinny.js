@@ -43,7 +43,6 @@ export class Cinny {
     getLinkInstructions(platform, link) {
         if (link.kind === LinkKind.User) {
             switch (platform) {
-                case Platform.Android: return "Cinny doesn't support Android devices.";
                 case Platform.DesktopWeb: return "Open the web app at https://cinny.in and log in to your account. Click on 'Public Rooms' and paste the username.";
                 default: return "Open the app and click on 'Public Rooms' and paste the username.";
             }
