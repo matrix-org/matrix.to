@@ -30,12 +30,7 @@ export class Cinny {
     get description() { return "Yet another Matrix client."; }
     getMaturity(platform) {
         switch (platform) {
-            case Platform.Android: return Maturity.Stable;
-            case Platform.iOS: return Maturity.Stable;
             case Platform.DesktopWeb: return Maturity.Stable;
-            case Platform.Linux: return Maturity.Stable;
-            case Platform.macOS: return Maturity.Beta;
-            case Platform.Windows: return Maturity.Beta;
         }
     }
 
