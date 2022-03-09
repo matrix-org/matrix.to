@@ -76,7 +76,7 @@ export class Element {
         } else if (platform === Platform.Linux || platform === Platform.Windows || platform === Platform.macOS) {
             return `element://vector/webapp/#/${encodeURIComponent(fragmentPath)}`;
         } else {
-            return `element://${encodeURIComponent(fragmentPath)}`;
+            return `element://${fragmentPath}`;
         }
     }
 
