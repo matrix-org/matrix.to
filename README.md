@@ -77,8 +77,13 @@ You can discuss matrix.to in
 ## Build Instructions
 
 1. Install [yarn](https://classic.yarnpkg.com/en/docs/install)
-1. `git clone https://github.com/matrix-org/matrix.to`
-1. `cd matrix.to`
-1. `yarn`
-1. `yarn start`
-1. Go to http://localhost:5000 in your browser
+2. `git clone https://github.com/matrix-org/matrix.to`
+3. `cd matrix.to`
+4. `yarn`
+5. `yarn start`
+6. Go to http://localhost:5000 in your browser
+
+## Docker instructions
+
+1. Build your own image, `docker build . -t matrixdotorg/matrix-to:dev`
+2. Run, `docker run -it -d --name matrix-to-dev -p 5000:5000 matrixdotorg/matrix-to:dev`
