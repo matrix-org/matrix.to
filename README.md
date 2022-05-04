@@ -68,7 +68,8 @@ practice for legibility we bend the rules and include it verbatim)
 https://matrix.to/#/#matrix:matrix.org?web-instance[element.io]=chat.mozilla.org
 
 - `client`, e.g. `client=im.fluffychat`, `client=element.io`
-- `web-instance[]`, e.g. `web-instance[element.io]=chat.mozilla.org`
+- `web-instance[]`, e.g. `web-instance[element.io]=chat.mozilla.org`.
+    - For [matrix.to](https://matrix.to/), we have this list of [trusted web instances](https://github.com/matrix-org/matrix.to/blob/260d2b61cdb6b0e4318bc1bd59b4e2deef86d2a5/src/open/clients/Element.js#L20-L25) configured.
 -  `via`, e.g. `via=mozilla.org`
 
 You can discuss matrix.to in
