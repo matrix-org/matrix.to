@@ -21,6 +21,25 @@ import {Fractal} from "./Fractal.js";
 import {Quaternion} from "./Quaternion.js";
 import {Tensor} from "./Tensor.js";
 import {Fluffychat} from "./Fluffychat.js";
+import {isWebPlatform} from "../../Platform.js"
+
+export function getMatchingPlatforms(client, supportedPlatforms) {
+    const clientPlatforms = client.platforms;
+    const matchingPlatforms = supportedPlatforms.filter(p => {
+        return clientPlatforms.includes(p);
+    });
+    return matchingPlatforms;
+}
+
+export function selectPlatforms(matchingPlatforms, userPreferredPlatform) {
+    const webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
+    const nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
+    const preferredPlatform = matchingPlatforms.find(p => p === userPreferredPlatform);
+    return {
+        proposedPlatform: preferredPlatform || nativePlatform || webPlatform,
+        nativePlatform, webPlatform
+    };
+}
 
 export function createClients() {
     return [

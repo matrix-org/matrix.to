@@ -17,14 +17,7 @@ limitations under the License.
 import {isWebPlatform, isDesktopPlatform, Platform} from "../Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {IdentifierKind} from "../Link.js";
-
-function getMatchingPlatforms(client, supportedPlatforms) {
-    const clientPlatforms = client.platforms;
-    const matchingPlatforms = supportedPlatforms.filter(p => {
-        return clientPlatforms.includes(p);
-    });
-    return matchingPlatforms;
-}
+import {getMatchingPlatforms, selectPlatforms} from "./clients/index.js";
 
 export class ClientViewModel extends ViewModel {
     constructor(options) {
@@ -40,10 +33,10 @@ export class ClientViewModel extends ViewModel {
 
     _update() {
         const matchingPlatforms = getMatchingPlatforms(this._client, this.platforms);
-        this._webPlatform = matchingPlatforms.find(p => isWebPlatform(p));
-        this._nativePlatform = matchingPlatforms.find(p => !isWebPlatform(p));
-        const preferredPlatform = matchingPlatforms.find(p => p === this.preferences.platform);
-        this._proposedPlatform = preferredPlatform || this._nativePlatform || this._webPlatform;
+        const {proposedPlatform, nativePlatform, webPlatform} = selectPlatforms(matchingPlatforms, this.preferences.platform);
+        this._nativePlatform = nativePlatform;
+        this._webPlatform = webPlatform;
+        this._proposedPlatform = proposedPlatform;
 
         this.openActions = this._createOpenActions();
         this.installActions = this._createInstallActions();

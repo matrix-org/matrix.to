@@ -63,6 +63,7 @@ export class ViewModel extends EventEmitter {
     get request() { return this._options.request; }
     get origin() { return this._options.origin; }
     get openLink() { return this._options.openLink; }
+    get setTimeout() { return this._options.setTimeout; }
     get platforms() { return this._options.platforms; }
     get preferences() { return this._options.preferences; }
 
@@ -71,6 +72,7 @@ export class ViewModel extends EventEmitter {
             request: this.request,
             origin: this.origin,
             openLink: this.openLink,
+            setTimeout: this.setTimeout,
             platforms: this.platforms,
             preferences: this.preferences,
         }, options);

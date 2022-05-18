@@ -30,12 +30,26 @@ export const IdentifierKind = createEnum(
     "GroupId",
 );
 
+function idToPath(identifier) {
+    return encodeURIComponent(identifier.substring(1));
+}
+
 function asPrefix(identifierKind) {
     switch (identifierKind) {
         case IdentifierKind.RoomId: return "!";
         case IdentifierKind.RoomAlias: return "#";
         case IdentifierKind.GroupId: return "+";
         case IdentifierKind.UserId: return "@";
+        default: throw new Error("invalid id kind " + identifierKind);
+    }
+}
+
+function asPath(identifierKind) {
+    switch (identifierKind) {
+        case IdentifierKind.RoomId: return "roomid";
+        case IdentifierKind.RoomAlias: return "r";
+        case IdentifierKind.GroupId: return null;
+        case IdentifierKind.UserId: return "u";
         default: throw new Error("invalid id kind " + identifierKind);
     }
 }
@@ -208,5 +222,16 @@ export class Link {
         } else {
             return `/${this.identifier}`;
         }
+    }
+
+    toMatrixUrl() {
+        const prefix = asPath(this.identifierKind);
+        if (!prefix) {
+            // Some matrix.to links aren't valid matrix: links (i.e. groups)
+            return null;
+        }
+        const identifier = idToPath(this.identifier);
+        const suffix = this.eventId ? `/e/${idToPath(this.eventId)}` : "";
+        return `matrix:${prefix}/${identifier}${suffix}`;
     }
 }

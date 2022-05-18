@@ -18,9 +18,12 @@ import {ViewModel} from "../utils/ViewModel.js";
 import {ClientListViewModel} from "./ClientListViewModel.js";
 import {ClientViewModel} from "./ClientViewModel.js";
 import {PreviewViewModel} from "../preview/PreviewViewModel.js";
+import {AutoOpenViewModel} from "./AutoOpenViewModel.js";
 import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
+import {getMatchingPlatforms, selectPlatforms} from "./clients/index.js";
+import {Platform} from "../Platform.js";
 
 export class OpenLinkViewModel extends ViewModel {
     constructor(options) {
@@ -28,10 +31,62 @@ export class OpenLinkViewModel extends ViewModel {
         const {clients, link} = options;
         this._link = link;
         this._clients = clients;
+        this.openDefaultViewModel = null;
         this.serverConsentViewModel = null;
         this.previewViewModel = null;
         this.clientsViewModel = null;
         this.previewLoading = false;
+        this.tryingLink = false;
+        if (!this._tryAutoOpen()) {
+            this._activeOpen();
+        }
+    }
+
+    _tryAutoOpen() {
+        const client = this._getPreferredClient();
+        let proposedPlatform = null;
+        let webPlatform = null;
+        if (client) {
+            const matchingPlatforms = getMatchingPlatforms(client, this.platforms);
+            const selectedPlatforms = selectPlatforms(matchingPlatforms, this.preferences.platform);
+            if (selectedPlatforms.proposedPlatform !== selectedPlatforms.nativePlatform) {
+                // Do not auto-open web applications
+                return false;
+            }
+            proposedPlatform = selectedPlatforms.proposedPlatform;
+            webPlatform = selectedPlatforms.webPlatform;
+
+            if (!client.getDeepLink(proposedPlatform, this._link)) {
+                // Client doesn't support deep links. We can't open it.
+                return false;
+            }
+        } else {
+            if (this.platforms.includes(Platform.iOS)) {
+                // Do not try to auto-open links on iOS because of the scary warning.
+                return false;
+            }
+        }
+        this.openDefaultViewModel = new AutoOpenViewModel(this.childOptions({
+            client,
+            link: this._link,
+            openLinkVM: this,
+            proposedPlatform,
+            webPlatform,
+        }));
+        this.openDefaultViewModel.tryOpenLink();
+        return true;
+    }
+
+    closeAutoOpen() {
+        this.openDefaultViewModel = null;
+        // If no client was selected, this is a no-op.
+        // Otherwise, see ClientViewModel.back for some reasons
+        // why we do this.
+        this.preferences.setClient(undefined, undefined);
+        this._activeOpen();
+    }
+
+    _activeOpen() {
         if (this.preferences.homeservers === null) {
             this._showServerConsent();
         } else {
@@ -53,11 +108,16 @@ export class OpenLinkViewModel extends ViewModel {
                 this._showLink();
             }
         }));
+        this.emitChange();
+    }
+
+    _getPreferredClient() {
+        const clientId = this.preferences.clientId || this._link.clientId;
+        return clientId ? this._clients.find(c => c.id === clientId) : null;
     }
 
     async _showLink() {
-        const clientId = this.preferences.clientId || this._link.clientId;
-        const preferredClient = clientId ? this._clients.find(c => c.id === clientId) : null;
+        const preferredClient = this._getPreferredClient();
         this.clientsViewModel = new ClientListViewModel(this.childOptions({
             clients: this._clients,
             link: this._link,
