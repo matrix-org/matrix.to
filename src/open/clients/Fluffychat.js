@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Maturity, Platform, LinkKind, FlathubLink, AppleStoreLink, PlayStoreLink, WebsiteLink } from "../types.js";
+import { Maturity, Platform, LinkKind, FlathubLink, AppleStoreLink, PlayStoreLink, FDroidLink, WebsiteLink } from "../types.js";
 
 /**
  * Information on how to deep link to a given matrix client.
@@ -44,8 +44,14 @@ export class Fluffychat {
     getInstallLinks(platform) {
         switch (platform) {
             case Platform.iOS: return [new AppleStoreLink("fluffychat", "id1551469600")];
-            case Platform.Android: return [new PlayStoreLink("chat.fluffy.fluffychat")];
-            case Platform.Linux: return [new FlathubLink("im.fluffychat.Fluffychat")];
+            case Platform.Android: return [
+                new PlayStoreLink("chat.fluffy.fluffychat"),
+                new FDroidLink('chat.fluffy.fluffychat'),
+            ];
+            case Platform.Linux: return [
+                new FlathubLink("im.fluffychat.Fluffychat"),
+                new WebsiteLink("https://fluffychat.im"),
+            ];
             default: return [new WebsiteLink("https://fluffychat.im")];
         }
     }

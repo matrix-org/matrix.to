@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind, FlathubLink, style} from "../types.js";
+import {Maturity, Platform, LinkKind, FlathubLink, WebsiteLink, style} from "../types.js";
 
 export class Quaternion {
     get id() { return "quaternion"; }
@@ -43,8 +43,12 @@ export class Quaternion {
     }
 
     getInstallLinks(platform) {
-        if (platform === Platform.Linux) {
-            return [new FlathubLink("com.github.quaternion")];
+        switch (platform) {
+            case Platform.Linux: return [
+                new FlathubLink("com.github.quaternion"),
+                new WebsiteLink("https://github.com/quotient-im/Quaternion/releases/latest"),
+            ];
+            default: return [new WebsiteLink("https://github.com/quotient-im/Quaternion/releases/latest")];
         }
     }
 
