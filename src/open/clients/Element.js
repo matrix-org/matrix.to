@@ -64,6 +64,11 @@ export class Element {
                 fragmentPath = `room/${link.identifier}/${link.eventId}`;
                 break;
         }
+
+        if ((link.kind === LinkKind.Event || link.kind === LinkKind.Room) && link.servers.length > 0) {
+            fragmentPath += '?' + link.servers.map(server => `via=${encodeURIComponent(server)}`).join('&');
+        }
+
         const isWebPlatform = platform === Platform.DesktopWeb || platform === Platform.MobileWeb;
         if (isWebPlatform || platform === Platform.iOS) {
             let instanceHost = trustedWebInstances[0];
