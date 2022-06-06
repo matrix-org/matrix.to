@@ -52,16 +52,16 @@ export class Element {
         let fragmentPath;
         switch (link.kind) {
             case LinkKind.User:
-                fragmentPath = `user/${link.identifier}`;
+                fragmentPath = `user/${encodeURIComponent(link.identifier)}`;
                 break;
             case LinkKind.Room:
-                fragmentPath = `room/${link.identifier}`;
+                fragmentPath = `room/${encodeURIComponent(link.identifier)}`;
                 break;
             case LinkKind.Group:
-                fragmentPath = `group/${link.identifier}`;
+                fragmentPath = `group/${encodeURIComponent(link.identifier)}`;
                 break;
             case LinkKind.Event:
-                fragmentPath = `room/${link.identifier}/${link.eventId}`;
+                fragmentPath = `room/${encodeURIComponent(link.identifier)}/${encodeURIComponent(link.eventId)}`;
                 break;
         }
 
@@ -77,9 +77,9 @@ export class Element {
             if (isWebPlatform && trustedWebInstances.includes(link.webInstances[this.id])) {
                 instanceHost = link.webInstances[this.id];
             }
-            return `https://${instanceHost}/#/${encodeURIComponent(fragmentPath)}`;
+            return `https://${instanceHost}/#/${fragmentPath}`;
         } else if (platform === Platform.Linux || platform === Platform.Windows || platform === Platform.macOS) {
-            return `element://vector/webapp/#/${encodeURIComponent(fragmentPath)}`;
+            return `element://vector/webapp/#/${fragmentPath}`;
         } else {
             return `element://${fragmentPath}`;
         }
