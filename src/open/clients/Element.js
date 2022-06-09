@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind,
-    FDroidLink, AppleStoreLink, PlayStoreLink, WebsiteLink} from "../types.js";
+import {Platform, LinkKind} from "../types.js";
+import {Client} from "./Client.js";
+import {data} from "./ElementData.js";
 
 const trustedWebInstances = [
     "app.element.io",   // first one is the default one
@@ -29,24 +30,12 @@ const trustedWebInstances = [
 /**
  * Information on how to deep link to a given matrix client.
  */
-export class Element {
-    get id() { return "element.io"; }
-
-    get platforms() {
-        return [
-            Platform.Android, Platform.iOS,
-            Platform.Windows, Platform.macOS, Platform.Linux,
-            Platform.DesktopWeb
-        ];
+export class Element extends Client {
+    constructor() {
+        super(data);
     }
 
-    get icon() { return "images/client-icons/element.svg"; }
     get appleAssociatedAppId() { return "7J4U792NQT.im.vector.app"; }
-    get name() {return "Element"; }
-    get description() { return 'Fully-featured Matrix client, used by millions.'; }
-    get homepage() { return "https://element.io"; }
-    get author() { return "Element"; }
-    getMaturity(platform) { return Maturity.Stable; }
 
     getDeepLink(platform, link) {
         let fragmentPath;
@@ -82,16 +71,6 @@ export class Element {
             return `element://vector/webapp/#/${fragmentPath}`;
         } else {
             return `element://${fragmentPath}`;
-        }
-    }
-
-    getLinkInstructions(platform, link) {}
-    getCopyString(platform, link) {}
-    getInstallLinks(platform) {
-        switch (platform) {
-            case Platform.iOS: return [new AppleStoreLink('vector', 'id1083446067')];
-            case Platform.Android: return [new PlayStoreLink('im.vector.app'), new FDroidLink('im.vector.app')];
-            default: return [new WebsiteLink("https://element.io/get-started")];
         }
     }
 
