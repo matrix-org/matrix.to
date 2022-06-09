@@ -45,8 +45,8 @@ function getWebInstanceMap(queryParams) {
     const postfix = "]";
     const webInstanceParams = queryParams.filter(([key]) => key.startsWith(prefix) && key.endsWith(postfix));
     const webInstances = webInstanceParams.map(([key, value]) => {
-        const noPrefix = key.substr(prefix.length);
-        const clientId = noPrefix.substr(0, noPrefix.length - postfix.length);
+        const noPrefix = key.slice(prefix.length);
+        const clientId = noPrefix.slice(0, -postfix.length);
         return [clientId, value];
     });
     return webInstances.reduce((map, [clientId, host]) => {
@@ -110,7 +110,7 @@ export class Link {
         if (!linkStr.startsWith("#/")) {
             return null;
         }
-        linkStr = linkStr.substr(2);
+        linkStr = linkStr.slice(2);
         const [identifier, eventId] = linkStr.split("/");
 
         let viaServers = [];

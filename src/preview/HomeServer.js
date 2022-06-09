@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 function noTrailingSlash(url) {
-    return url.endsWith("/") ? url.substr(0, url.length - 1) : url;
+    return url.endsWith("/") ? url.slice(0, -1) : url;
 }
 
 export async function resolveServer(request, baseURL) {
@@ -123,7 +123,7 @@ export class HomeServer {
 function parseMxcUrl(url) {
     const prefix = "mxc://";
     if (url.startsWith(prefix)) {
-        return url.substr(prefix.length).split("/", 2);
+        return url.slice(prefix.length).split("/", 2);
     } else {
         return null;
     }
