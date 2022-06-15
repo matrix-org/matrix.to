@@ -35,8 +35,6 @@ export class Element extends Client {
         super(data);
     }
 
-    get appleAssociatedAppId() { return "7J4U792NQT.im.vector.app"; }
-
     getDeepLink(platform, link) {
         let fragmentPath;
         switch (link.kind) {

@@ -10,6 +10,7 @@ export class Client {
     get platforms() { return this.data.platforms; }
 
     get icon() { return "images/client-icons/"+this.data.icon; }
+    get appleAssociatedAppId() { return this.data.appleAssociatedAppId; }
     get name() {return this.data.name; }
     get description() { return this.data.description; }
     get homepage() { return this.data.homepage; }
