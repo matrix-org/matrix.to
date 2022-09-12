@@ -111,7 +111,7 @@ export class Link {
         if (!linkStr.startsWith("#/")) {
             return null;
         }
-        linkStr = linkStr.substr(2);
+        linkStr = linkStr.slice(2);
 
         const linkStrMatrixUrl = fragment.substr(2).startsWith("matrix:") ? fragment.substr(2) : "matrix:"+fragment.substr(2);
 
@@ -134,6 +134,8 @@ export class Link {
 
             return link;
         } catch(e) {} // The fragment was no matrix-URL.
+        
+        linkStr = linkStr.substr(2);
 
         const [identifier, eventId] = linkStr.split("/");
 
