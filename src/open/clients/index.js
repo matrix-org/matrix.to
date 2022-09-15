@@ -22,6 +22,7 @@ import {Quaternion} from "./Quaternion.js";
 import {Tensor} from "./Tensor.js";
 import {Fluffychat} from "./Fluffychat.js";
 import {NeoChat} from "./NeoChat.js";
+import {Syphon} from "./Syphon.js";
 import {Thunderbird} from "./Thunderbird.js";
 
 export function createClients() {
@@ -34,6 +35,7 @@ export function createClients() {
         new Tensor(),
         new Fluffychat(),
         new NeoChat(),
+        new Syphon(),
         new Thunderbird(),
     ];
 }
