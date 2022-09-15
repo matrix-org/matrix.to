@@ -23,6 +23,7 @@ import {Tensor} from "./Tensor.js";
 import {Fluffychat} from "./Fluffychat.js";
 import {NeoChat} from "./NeoChat.js";
 import {Syphon} from "./Syphon.js";
+import {Thunderbird} from "./Thunderbird.js";
 
 export function createClients() {
     return [
@@ -35,5 +36,6 @@ export function createClients() {
         new Fluffychat(),
         new NeoChat(),
         new Syphon(),
+        new Thunderbird(),
     ];
 }
