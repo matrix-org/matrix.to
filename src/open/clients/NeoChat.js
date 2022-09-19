@@ -1,5 +1,6 @@
 /*
 Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2021 Carl Schwan <carl@carlschwan.eu>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,19 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind, FlathubLink, WebsiteLink, style} from "../types.js";
+import {Maturity, Platform, LinkKind, FlathubLink, style} from "../types.js";
 
-/**
- * Information on how to deep link to a given matrix client.
- */
-export class Nheko {
-    get id() { return "nheko"; }
-    get name() { return "Nheko"; }
-    get icon() { return "images/client-icons/nheko.svg"; }
-    get author() { return "mujx, red_sky, deepbluev7, Konstantinos Sideris"; }
-    get homepage() { return "https://github.com/Nheko-Reborn/nheko"; }
-    get platforms() { return [Platform.Windows, Platform.macOS, Platform.Linux]; }
-    get description() { return 'A native desktop app for Matrix that feels more like a mainstream chat app.'; }
+export class NeoChat {
+    get id() { return "neochat"; }
+    get name() { return "NeoChat"; }
+    get icon() { return "images/client-icons/org.kde.neochat.svg"; }
+    get author() { return "Tobias Fella and Carl Schwan"; }
+    get homepage() { return "https://apps.kde.org/neochat/"; }
+    get platforms() { return [Platform.Linux]; }
+    get description() { return 'NeoChat is a convergent, cross-platform Matrix client.'; }
     getMaturity(platform) { return Maturity.Beta; }
     getDeepLink(platform, link) {
         if (platform === Platform.Linux || platform === Platform.Windows) {
@@ -72,12 +70,8 @@ export class Nheko {
     }
 
     getInstallLinks(platform) {
-        switch (platform) {
-            case Platform.Linux: return [
-                new FlathubLink("io.github.NhekoReborn.Nheko"),
-                new WebsiteLink("https://github.com/Nheko-Reborn/nheko/releases/latest"),
-            ];
-            default: return [new WebsiteLink("https://github.com/Nheko-Reborn/nheko/releases/latest")];
+        if (platform === Platform.Linux) {
+            return [new FlathubLink("org.kde.neochat")];
         }
     }
 

@@ -66,7 +66,7 @@ export class RootViewModel extends ViewModel {
         this.createLinkViewModel = null;
         let newLink;
         if (hash.startsWith("#/policy/")) {
-            const server = hash.substr(9);
+            const server = hash.slice(9);
             this._updateChildVMs(null, oldLink);
             this.loadServerPolicyViewModel = new LoadServerPolicyViewModel(this.childOptions({server}));
             this.loadServerPolicyViewModel.load();

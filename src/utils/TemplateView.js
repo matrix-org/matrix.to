@@ -210,7 +210,7 @@ class TemplateBuilder {
                     setAttribute(node, key, classNames(value));
                 }
             } else if (key.startsWith("on") && key.length > 2 && isFn) {
-                const eventName = key.substr(2, 1).toLowerCase() + key.substr(3);
+                const eventName = key.slice(2, 3).toLowerCase() + key.slice(3);
                 const handler = value;
                 this._templateView._addEventListener(node, eventName, handler);
             } else if (isFn) {

@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind, FlathubLink, style} from "../types.js";
+import {Maturity, Platform, LinkKind, FlathubLink, WebsiteLink, style} from "../types.js";
 
 export class Quaternion {
     get id() { return "quaternion"; }
     get name() { return "Quaternion"; }
     get icon() { return "images/client-icons/quaternion.svg"; }
-    get author() { return "Felix Rohrbach"; }
-    get homepage() { return "https://github.com/Fxrh/Quaternion"; }
+    get author() { return "The Quotient project"; }
+    get homepage() { return "https://github.com/quotient-im/Quaternion"; }
     get platforms() { return [Platform.Windows, Platform.macOS, Platform.Linux]; }
     get description() { return 'Qt5 and C++ cross-platform desktop Matrix client.'; }
     getMaturity(platform) { return Maturity.Beta; }
@@ -43,8 +43,12 @@ export class Quaternion {
     }
 
     getInstallLinks(platform) {
-        if (platform === Platform.Linux) {
-            return [new FlathubLink("com.github.quaternion")];
+        switch (platform) {
+            case Platform.Linux: return [
+                new FlathubLink("com.github.quaternion"),
+                new WebsiteLink("https://github.com/quotient-im/Quaternion/releases/latest"),
+            ];
+            default: return [new WebsiteLink("https://github.com/quotient-im/Quaternion/releases/latest")];
         }
     }
 

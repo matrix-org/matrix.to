@@ -146,7 +146,7 @@ function buildAppleAssociatedAppsFile(clients) {
 async function buildCss(entryPath, targetDir, assets) {
     entryPath = path.join(projectDir, entryPath);
     const assetUrlMapper = ({absolutePath}) => {
-        const relPath = absolutePath.substr(projectDir.length);
+        const relPath = absolutePath.slice(projectDir.length);
         return assets.resolve(path.join(targetDir, relPath));
     };
 
@@ -211,7 +211,7 @@ class AssetMap {
             if (!resourcePath.startsWith(this._targetDir)) {
                 throw new Error(`absolute path ${resourcePath} that is not within target dir ${this._targetDir}`);
             }
-            relPath = resourcePath.substr(this._targetDir.length + 1); // + 1 for the /
+            relPath = resourcePath.slice(this._targetDir.length + 1); // + 1 for the /
         }
         return relPath;
     }
@@ -267,7 +267,7 @@ class AssetMap {
         if (!assetMap.directory.startsWith(this.directory)) {
             throw new Error(`map directory doesn't start with this directory: ${assetMap.directory} ${this.directory}`);
         }
-        const relSubRoot = assetMap.directory.substr(this.directory.length + 1);
+        const relSubRoot = assetMap.directory.slice(this.directory.length + 1);
         for (const [key, value] of assetMap._assets.entries()) {
             this._assets.set(path.join(relSubRoot, key), path.join(relSubRoot, value));
         }
