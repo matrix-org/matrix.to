@@ -4,6 +4,7 @@ Matrix.to is a simple url redirection service for the Matrix.org ecosystem
 which lets users share links to matrix entities without being tied to a
 specific app.
 Stylistically it serves as a landing page for rooms and communities.
+foo
 
 ## How can I put a badge on my website linking to my matrix room?
 
