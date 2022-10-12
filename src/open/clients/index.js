@@ -14,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Element} from "./Element.js";
-import {Weechat} from "./Weechat.js";
-import {Nheko} from "./Nheko.js";
-import {Fractal} from "./Fractal.js";
-import {Quaternion} from "./Quaternion.js";
-import {Tensor} from "./Tensor.js";
-import {Fluffychat} from "./Fluffychat.js";
-import {NeoChat} from "./NeoChat.js";
-import {Syphon} from "./Syphon.js";
-import {Thunderbird} from "./Thunderbird.js";
+import { Element } from "./Element.js";
+import { Weechat } from "./Weechat.js";
+import { Nheko } from "./Nheko.js";
+import { Fractal } from "./Fractal.js";
+import { Quaternion } from "./Quaternion.js";
+import { Tensor } from "./Tensor.js";
+import { Fluffychat } from "./Fluffychat.js";
+import { NeoChat } from "./NeoChat.js";
+import { Syphon } from "./Syphon.js";
+import { Thunderbird } from "./Thunderbird.js";
+import { Cinny } from "./cinny.js";
 
 export function createClients() {
     return [
@@ -37,5 +38,6 @@ export function createClients() {
         new NeoChat(),
         new Syphon(),
         new Thunderbird(),
+        new Cinny(),
     ];
 }
