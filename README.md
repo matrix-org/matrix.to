@@ -9,7 +9,7 @@ Stylistically it serves as a landing page for rooms and communities.
 
 You can use the badge image we've put up at https://matrix.to/img/matrix-badge.svg, and use it in a link like this:
 
-[![Chat on Matrix](https://matrix.to/images-nohash/matrix-badge.svg)](https://matrix.to/#/#matrix.to:matrix.org)
+[![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#matrix.to:matrix.org)
 
 You can use this Markdown:
 ```md
