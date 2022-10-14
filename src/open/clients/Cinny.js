@@ -57,7 +57,7 @@ export class Cinny {
 
     getLinkInstructions(platform, link) {
         return [
-            "Click on '+' in the top left corner and paste the ",
+            "Click on '+' in the top left corner, then 'Join with address' and paste the ",
             style.code(`${link.identifier} `),
             link.kind === LinkKind.User ? "username" : "identifier",
         ];
