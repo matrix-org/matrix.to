@@ -28,7 +28,7 @@ export class Cinny {
         return "images/client-icons/cinny.svg";
     }
     get author() {
-        return "???";
+        return "Copyright (c) 2021-present Ajay Bura (ajbura) and cinny contributors";
     }
     get homepage() {
         return "https://cinny.in";
@@ -45,44 +45,26 @@ export class Cinny {
         return "A Matrix client focusing primarily on simple, elegant and secure interface. The main goal is to have an instant messaging application that is easy on people and has a modern touch.";
     }
     getMaturity(platform) {
-        return Maturity.Beta;
+        return Maturity.Stable;
     }
-    getDeepLink(platform, link) {
-        // cinny doesn't support deep links (?)
-        return;
-    }
+
+    // cinny doesn't support deep links yet
+    getDeepLink(platform, link) {}
+
     canInterceptMatrixToLinks(platform) {
         return false;
     }
 
     getLinkInstructions(platform, link) {
-        switch (platform.kind) {
-            case Platform.DesktopWeb:
-                return [
-                    "Go to https://app.cinny.in",
-                    "Click on '+' in the top left corner and paste the " +
-                        (link.kind === LinkKind.User
-                            ? "username"
-                            : "identifier"),
-                ];
-            default:
-                return [
-                    "Click on '+' in the top left corner and paste the " +
-                        (link.kind === LinkKind.User
-                            ? "username"
-                            : "identifier"),
-                ];
-        }
+        return [
+            "Click on '+' in the top left corner and paste the ",
+            style.code(`${link.identifier} `),
+            link.kind === LinkKind.User ? "username" : "identifier",
+        ];
     }
 
     getCopyString(platform, link) {
         return link.identifier;
-        switch (link.kind) {
-            case LinkKind.User:
-                return `/invite ${link.identifier}`;
-            case LinkKind.Room:
-                return `/join ${link.identifier}`;
-        }
     }
 
     getInstallLinks(platform) {}
