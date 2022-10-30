@@ -28,7 +28,7 @@ export class Cinny {
         return "images/client-icons/cinny.svg";
     }
     get author() {
-        return "Copyright (c) 2021-present Ajay Bura (ajbura) and cinny contributors";
+        return "Copyright (c) 2021-present Ajay Bura (ajbura) and contributors";
     }
     get homepage() {
         return "https://cinny.in";
@@ -57,7 +57,7 @@ export class Cinny {
 
     getLinkInstructions(platform, link) {
         return [
-            "Click on '+' in the top left corner, then 'Join with address' and paste the ",
+            "While in Home, Click on '+' in the top left corner, then 'Join with address' and paste the ",
             style.code(`${link.identifier} `),
             link.kind === LinkKind.User ? "username" : "identifier",
         ];
