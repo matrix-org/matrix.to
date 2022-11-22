@@ -51,7 +51,7 @@ export class ServerConsentView extends TemplateView {
             t.form({action: "#", id: "serverConsentForm", onSubmit: evt => this._onSubmit(evt)}, [
                 t.mapView(vm => vm.showSelectServer, show => show ? new ServerOptions(vm) : null),
                 t.div({className: "actions"}, [
-                    t.label([t.input({type: "checkbox", name: "askEveryTime"}), "Ask every time"]),
+                    t.label([t.input({type: "checkbox", name: "askEveryTime", checked: true}), "Ask every time"]),
                     t.input({type: "submit", value: "Continue", className: "primary fullwidth"})
                 ])
             ])
