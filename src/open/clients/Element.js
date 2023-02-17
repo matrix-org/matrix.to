@@ -24,6 +24,7 @@ const trustedWebInstances = [
     "chat.fosdem.org",
     "chat.mozilla.org",
     "webchat.kde.org",
+    "app.gitter.im",
 ];
 
 /**
