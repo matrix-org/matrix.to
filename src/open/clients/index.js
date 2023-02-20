@@ -24,6 +24,7 @@ import {Fluffychat} from "./Fluffychat.js";
 import {NeoChat} from "./NeoChat.js";
 import {Syphon} from "./Syphon.js";
 import {Thunderbird} from "./Thunderbird.js";
+import {Cinny} from "./Cinny.js"
 
 export function createClients() {
     return [
@@ -37,5 +38,6 @@ export function createClients() {
         new NeoChat(),
         new Syphon(),
         new Thunderbird(),
+        new Cinny(),
     ];
 }
