@@ -21,6 +21,7 @@ import {
 
 const trustedWebInstances = [
     "app.schildi.chat",   // first one is the default one
+    "test.schildi.chat",
 ];
 
 /**
