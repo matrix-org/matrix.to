@@ -39,7 +39,7 @@ export class SchildiChat {
 
     get icon() { return "images/client-icons/schildichat.svg"; }
     get name() { return "SchildiChat"; }
-    get description() { return 'Secure messenger for Matrix with a traditional instant messaging experience.'; }
+    get description() { return 'Feature-rich messenger for Matrix based on Element with some extras and tweaks.'; }
     get homepage() { return "https://schildi.chat"; }
     get author() { return "SchildiChat team"; }
     getMaturity(platform) { return Maturity.Stable; }
