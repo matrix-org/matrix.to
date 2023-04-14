@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import {Element} from "./Element.js";
+import {SchildiChat} from "./SchildiChat.js";
 import {Weechat} from "./Weechat.js";
 import {Nheko} from "./Nheko.js";
 import {Fractal} from "./Fractal.js";
@@ -29,6 +30,7 @@ import {Cinny} from "./Cinny.js"
 export function createClients() {
     return [
         new Element(),
+        new SchildiChat(),
         new Weechat(),
         new Nheko(),
         new Fractal(),
