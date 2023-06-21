@@ -1,0 +1,3 @@
+# Remove the ACAO header which is added by default on Cloudflare Pages
+/*
+  ! Access-Control-Allow-Origin
