@@ -1,3 +1,7 @@
 # Remove the ACAO header which is added by default on Cloudflare Pages
 /*
   ! Access-Control-Allow-Origin
+
+# Add ACAO header for images
+/images/*
+  Access-Control-Allow-Origin: *
