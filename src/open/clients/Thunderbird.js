@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Maturity, Platform, LinkKind, WebsiteLink, style} from "../types.js";
+import { Maturity, Platform, LinkKind, FlathubLink, WebsiteLink, style} from "../types.js";
 
 /**
  * Information on how to deep link to a given matrix client.
@@ -33,7 +33,12 @@ export class Thunderbird {
     }
 
     getInstallLinks(platform) {
-        return [new WebsiteLink(this.homepage)];
+        const links = [];
+        if (platform === Platform.Linux) {
+            links.push(new FlathubLink("org.mozilla.Thunderbird"));
+        }
+        links.push(new WebsiteLink(this.homepage));
+        return links;
     }
 
     getLinkInstructions(platform, link) {
