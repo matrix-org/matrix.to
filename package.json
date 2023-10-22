@@ -7,7 +7,7 @@
     "node": ">= 14.0.0"
   },
   "scripts": {
-    "start": "node scripts/serve-local.js",
+    "start": "vite",
     "build": "node scripts/build.js"
   },
   "devDependencies": {
@@ -33,5 +33,9 @@
     "rollup-plugin-terser": "^7.0.2",
     "serve-static": "^1.14.1",
     "xxhashjs": "^0.2.2"
+  },
+  "dependencies": {
+    "matrix-uri-parser": "https://github.com/matrix-org/matrix-uri-parser-js",
+    "vite": "^2.5.10"
   }
 }
