@@ -23,7 +23,7 @@
     "core-js": "^3.6.5",
     "finalhandler": "^1.1.2",
     "mdn-polyfills": "^5.20.0",
-    "postcss": "^8.2.10",
+    "postcss": "^8.4.31",
     "postcss-css-variables": "^0.17.0",
     "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-import": "^12.0.1",
