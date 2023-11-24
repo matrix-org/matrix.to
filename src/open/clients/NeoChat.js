@@ -23,7 +23,7 @@ export class NeoChat {
     get icon() { return "images/client-icons/org.kde.neochat.svg"; }
     get author() { return "Tobias Fella and Carl Schwan"; }
     get homepage() { return "https://apps.kde.org/neochat/"; }
-    get platforms() { return [Platform.Linux]; }
+    get platforms() { return [Platform.Linux, Platform.Windows]; }
     get description() { return 'NeoChat is a convergent, cross-platform Matrix client.'; }
     getMaturity(platform) { return Maturity.Beta; }
     getDeepLink(platform, link) {
