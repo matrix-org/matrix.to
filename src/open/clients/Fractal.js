@@ -22,18 +22,18 @@ import {Maturity, Platform, LinkKind, FlathubLink} from "../types.js";
 export class Fractal {
     get id() { return "fractal"; }
     get name() { return "Fractal"; }
-    get icon() { return "images/client-icons/fractal.png"; }
+    get icon() { return "images/client-icons/fractal.svg"; }
     get author() { return "Daniel Garcia Moreno"; }
     get homepage() { return "https://gitlab.gnome.org/GNOME/fractal"; }
     get platforms() { return [Platform.Linux]; }
-    get description() { return 'Fractal is a Matrix Client written in Rust.'; }
+    get description() { return 'GNOME client, suitable for desktop and mobile. Written in Rust.'; }
     getMaturity(platform) { return Maturity.Beta; }
     getDeepLink(platform, link) {}
     canInterceptMatrixToLinks(platform) { return false; }
 
     getLinkInstructions(platform, link) {
         if (link.kind === LinkKind.User || link.kind === LinkKind.Room) {
-            return "Click the '+' button in the top right and paste the identifier";
+            return "Click the menu button above the list of rooms, select the Join Room entry, and paste the identifier";
         }
     }
 
