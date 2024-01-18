@@ -24,7 +24,7 @@ export class Fractal {
     get name() { return "Fractal"; }
     get icon() { return "images/client-icons/fractal.svg"; }
     get author() { return "Daniel Garcia Moreno"; }
-    get homepage() { return "https://gitlab.gnome.org/GNOME/fractal"; }
+    get homepage() { return "https://gitlab.gnome.org/World/fractal"; }
     get platforms() { return [Platform.Linux]; }
     get description() { return 'GNOME client, suitable for desktop and mobile. Written in Rust.'; }
     getMaturity(platform) { return Maturity.Beta; }
