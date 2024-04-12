@@ -124,7 +124,7 @@ async function buildJs(mainFile, assets, extraFiles = []) {
 }
 
 function buildAppleAssociatedAppsFile(clients) {
-    const appIds = clients.map(c => c.appleAssociatedAppId).filter(id => !!id);
+    const appIds = clients.map(c => c.appleAssociatedAppId).flat().filter(id => !!id);
     return JSON.stringify({
         "applinks": {
             "apps": [],

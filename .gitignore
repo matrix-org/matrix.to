@@ -2,3 +2,4 @@ node_modules
 build
 *.tar.gz
 /.idea
+.DS_Store
