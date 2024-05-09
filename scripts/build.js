@@ -127,14 +127,17 @@ function buildAppleAssociatedAppsFile(clients) {
     const appIds = clients.map(c => c.appleAssociatedAppId).flat().filter(id => !!id);
     return JSON.stringify({
         "applinks": {
-            "details": {
-                appIDs: appIds,
-                components: [
-                    {
-                        "#": "/*",  // only open urls with a fragment, so you can still create links
-                    }
-                ]
-            },
+            "details": [
+                {
+                    appIDs: appIds,
+                    components: [
+                        {
+                            "#": "/*",
+                            "comment": "Only open urls with a fragment, so you can still create links"
+                        }
+                    ]
+                }
+            ]
         }
     });
 }
