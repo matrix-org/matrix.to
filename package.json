@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node scripts/serve-local.js",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js && cp cloudflare/_headers build/"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
