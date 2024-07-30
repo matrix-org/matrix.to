@@ -53,7 +53,7 @@ export class Cinny {
 
         switch (link.kind) {
             case LinkKind.User:
-                fragmentPath = `direct/${encodeURIComponent(link.identifier)}`;
+                fragmentPath = `direct/create?userId${encodeURIComponent(link.identifier)}`;
                 break;
             case LinkKind.Room:
                 fragmentPath = `home/${encodeURIComponent(link.identifier)}`;
