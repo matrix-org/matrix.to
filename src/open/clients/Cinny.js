@@ -48,24 +48,35 @@ export class Cinny {
         return Maturity.Stable;
     }
 
-    // cinny doesn't support deep links yet
-    getDeepLink(platform, link) {}
+    getDeepLink(platform, link) {
+        let fragmentPath;
+
+        switch (link.kind) {
+            case LinkKind.User:
+                fragmentPath = `direct/create?userId=${encodeURIComponent(link.identifier)}`;
+                break;
+            case LinkKind.Room:
+                fragmentPath = `home/${encodeURIComponent(link.identifier)}`;
+                break;
+            case LinkKind.Event:
+                fragmentPath = `home/${encodeURIComponent(link.identifier)}/${encodeURIComponent(link.eventId)}`;
+                break;
+        }
+
+         if ((link.kind === LinkKind.Event || link.kind === LinkKind.Room) && link.servers.length > 0) {
+            fragmentPath += `?via=${link.servers.map(server => encodeURIComponent(server)).join(',')}`;
+        }
+
+        return `https://app.cinny.in/${fragmentPath}`
+    }
 
     canInterceptMatrixToLinks(platform) {
         return false;
     }
 
-    getLinkInstructions(platform, link) {
-        return [
-            "While in Home, Click on '+' in the top left corner, then 'Join with address' and paste the ",
-            style.code(`${link.identifier} `),
-            link.kind === LinkKind.User ? "username" : "identifier",
-        ];
-    }
+    getLinkInstructions(platform, link) {}
 
-    getCopyString(platform, link) {
-        return link.identifier;
-    }
+    getCopyString(platform, link) {}
 
     getInstallLinks(platform) {}
 
