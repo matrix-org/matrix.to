@@ -10,7 +10,7 @@
     "start": "node scripts/serve-local.js",
     "build": "node scripts/build.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "@rollup/plugin-babel": "^5.1.0",
