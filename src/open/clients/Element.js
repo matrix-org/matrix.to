@@ -18,6 +18,8 @@ import {Maturity, Platform, LinkKind,
     FDroidLink, AppleStoreLink, PlayStoreLink, WebsiteLink} from "../types.js";
 
 const trustedWebInstances = [
+    "chat.blender.org",
+    "chat.staging.blender.org",
     "app.element.io",   // first one is the default one
     "develop.element.io",
     "chat.fedoraproject.org",
