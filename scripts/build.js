@@ -124,21 +124,20 @@ async function buildJs(mainFile, assets, extraFiles = []) {
 }
 
 function buildAppleAssociatedAppsFile(clients) {
-    const appIds = clients.map(c => c.appleAssociatedAppId).filter(id => !!id);
+    const appIds = clients.map(c => c.appleAssociatedAppId).flat().filter(id => !!id);
     return JSON.stringify({
         "applinks": {
-            "apps": [],
-            "details": {
-                appIDs: appIds,
-                components: [
-                    {
-                        "#": "/*",  // only open urls with a fragment, so you can still create links
-                    }
-                ]
-            },
-        },
-        "webcredentials": {
-            "apps": appIds
+            "details": [
+                {
+                    appIDs: appIds,
+                    components: [
+                        {
+                            "#": "/*",
+                            "comment": "Only open urls with a fragment, so you can still create links"
+                        }
+                    ]
+                }
+            ]
         }
     });
 }
