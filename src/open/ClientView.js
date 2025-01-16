@@ -122,7 +122,7 @@ function showBack(t, vm) {
 function renderAction(t, a) {
     let badgeUrl;
     switch (a.kind) {
-        case "play-store": badgeUrl = "images/google-play-us.svg"; break;
+        case "play-store": badgeUrl = "images/google-play-us.png"; break;
         case "fdroid": badgeUrl = "images/fdroid-badge.png"; break;
         case "apple-app-store": badgeUrl = "images/app-store-us-alt.svg"; break;
         case "flathub": badgeUrl = "images/flathub-badge.svg"; break;
