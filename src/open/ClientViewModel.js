@@ -137,9 +137,9 @@ export class ClientViewModel extends ViewModel {
         const preferredWebInstance = this._client.getPreferredWebInstance(this._link);
         if (this._webPlatform && preferredWebInstance) {
             let label = preferredWebInstance;
-            const subDomainIdx = preferredWebInstance.lastIndexOf(".", preferredWebInstance.lastIndexOf("."));
+            const subDomainIdx = preferredWebInstance.lastIndexOf(".", preferredWebInstance.lastIndexOf(".") - 1);
             if (subDomainIdx !== -1) {
-                label = preferredWebInstance.slice(preferredWebInstance.length - subDomainIdx + 1);
+                label = preferredWebInstance.slice(subDomainIdx + 1);
             }
             return `Hosted by ${label}`;
         }
