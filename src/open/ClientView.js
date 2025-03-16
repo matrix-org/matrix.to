@@ -144,7 +144,7 @@ export class SetCustomWebInstanceView extends TemplateView {
         evt.preventDefault();
         const form = evt.target;
         const {instanceHostname} = form.elements;
-        this.value.setCustomWebInstance(instanceHostname.value || undefined);
+        this.value.setCustomWebInstance(instanceHostname.value);
         this.value.closeCustomWebInstanceForm();
     }
 

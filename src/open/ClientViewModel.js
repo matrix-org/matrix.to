@@ -262,8 +262,11 @@ export class ClientViewModel extends ViewModel {
     }
 
     setCustomWebInstance(hostname) {
+        if (hostname) {
+            hostname = hostname.trim().replace(/^https:\/\//, '').replace(/\/.*$/, '');
+        }
         this.preferences.setClient(this._client.id, hostname ? this._webPlatform : (this._nativePlatform || this._webPlatform));
-        this.preferences.setCustomWebInstance(this._client.id, hostname);
+        this.preferences.setCustomWebInstance(this._client.id, hostname || undefined);
         this._update();
     }
 }
