@@ -112,10 +112,41 @@ class InstallClientView extends TemplateView {
     }
 }
 
+export class SetCustomWebInstanceView extends TemplateView {
+    render(t, vm) {
+        return t.div({className: "SetCustomWebInstanceView"}, [
+            t.p([
+                "Use a custom web instance for the ", t.strong(vm.name), " client:",
+            ]),
+            t.form({action: "#", id: "setCustomWebInstanceForm", onSubmit: evt => this._onSubmit(evt)}, [
+                t.label([
+                    "Host name:",
+                    t.input({
+                        type: "text",
+                        className: "line",
+                        placeholder: "chat.example.org",
+                        name: "instanceHostname",
+                    })
+                ])
+            ])
+        ]);
+    }
+
+    _onSubmit(evt) {
+        evt.preventDefault();
+        this.value.continueWithSelection(this._askEveryTimeChecked);
+    }
+}
+
 function showBack(t, vm) {
     return t.p({className: {caption: true, "back": true, hidden: vm => !vm.showBack}}, [
         `Continue with ${vm.name} · `,
         t.button({className: "text", onClick: () => vm.back()}, "Change"),
+        t.span({hidden: vm => !vm.showSetWebInstance}, [
+            ' · ',
+            t.button({className: "text", onClick: () => vm.setCustomWebInstance()}, "Use Custom Web Instance"),
+        ])
+
     ]);
 }
 

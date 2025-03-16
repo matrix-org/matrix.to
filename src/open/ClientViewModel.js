@@ -231,6 +231,10 @@ export class ClientViewModel extends ViewModel {
         return !!this._clientListViewModel;
     }
 
+    get showSetWebInstance() {
+        return !!this._client.supportsCustomInstances;
+    }
+
     back() {
         if (this._clientListViewModel) {
             const vm = this._clientListViewModel;
@@ -239,6 +243,7 @@ export class ClientViewModel extends ViewModel {
             // in the list with all clients, and also if we refresh, we get the list with
             // all clients rather than having our "change client" click reverted.
             this.preferences.setClient(undefined, undefined);
+            this.preferences.setPreferredWebInstance(this._client.id, undefined);
             this._update();
             this.emitChange();
             vm.showAll();
