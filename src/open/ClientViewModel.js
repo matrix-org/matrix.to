@@ -35,6 +35,7 @@ export class ClientViewModel extends ViewModel {
         this._pickClient = pickClient;
         // to provide "choose other client" button after calling pick()
         this._clientListViewModel = null;
+        this.customWebInstanceFormOpen = false;
         this._update();
     }
 
@@ -132,7 +133,7 @@ export class ClientViewModel extends ViewModel {
         // also check there is a web platform that matches the platforms the user is on (mobile or desktop web)
         if (!this._webPlatform) return undefined;
         return (
-            this.preferences.getPreferredWebInstance(this._client.id)
+            this.preferences.getCustomWebInstance(this._client.id)
             || this._client.getPreferredWebInstance(this._link)
         );
     }
@@ -231,7 +232,7 @@ export class ClientViewModel extends ViewModel {
         return !!this._clientListViewModel;
     }
 
-    get showSetWebInstance() {
+    get supportsCustomWebInstances() {
         return !!this._client.supportsCustomInstances;
     }
 
@@ -243,10 +244,26 @@ export class ClientViewModel extends ViewModel {
             // in the list with all clients, and also if we refresh, we get the list with
             // all clients rather than having our "change client" click reverted.
             this.preferences.setClient(undefined, undefined);
-            this.preferences.setPreferredWebInstance(this._client.id, undefined);
+            this.preferences.setCustomWebInstance(this._client.id, undefined);
             this._update();
             this.emitChange();
             vm.showAll();
         }
+    }
+
+    configureCustomWebInstance() {
+        this.customWebInstanceFormOpen = true;
+        this.emitChange();
+    }
+
+    closeCustomWebInstanceForm() {
+        this.customWebInstanceFormOpen = false;
+        this.emitChange();
+    }
+
+    setCustomWebInstance(hostname) {
+        this.preferences.setClient(this._client.id, hostname ? this._webPlatform : (this._nativePlatform || this._webPlatform));
+        this.preferences.setCustomWebInstance(this._client.id, hostname);
+        this._update();
     }
 }
