@@ -55,8 +55,9 @@ export class Element {
     get homepage() { return "https://element.io"; }
     get author() { return "Element"; }
     getMaturity(platform) { return Maturity.Stable; }
+    get supportsCustomInstances() { return true; }
 
-    getDeepLink(platform, link) {
+    getDeepLink(platform, link, preferredWebInstance) {
         let fragmentPath;
         switch (link.kind) {
             case LinkKind.User:
@@ -82,8 +83,8 @@ export class Element {
             let instanceHost = trustedWebInstances[0];
             // we use app.element.io which iOS will intercept, but it likely won't intercept any other trusted instances
             // so only use a preferred web instance for true web links.
-            if (isWebPlatform && trustedWebInstances.includes(link.webInstances[this.id])) {
-                instanceHost = link.webInstances[this.id];
+            if (isWebPlatform && preferredWebInstance) {
+                instanceHost = preferredWebInstance;
             }
             return `https://${instanceHost}/#/${fragmentPath}`;
         } else if (platform === Platform.Linux || platform === Platform.Windows || platform === Platform.macOS) {
