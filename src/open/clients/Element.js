@@ -47,7 +47,8 @@ export class Element {
             "7J4U792NQT.im.vector.app",
             "7J4U792NQT.io.element.elementx",
             "7J4U792NQT.io.element.elementx.nightly",
-            "7J4U792NQT.io.element.elementx.pr"
+            "7J4U792NQT.io.element.elementx.pr",
+            "7J4U792NQT.io.element.enterprise"
         ]; 
     }
     get name() {return "Element"; }
