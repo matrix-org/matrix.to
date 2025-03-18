@@ -35,6 +35,7 @@ export class ClientViewModel extends ViewModel {
         this._pickClient = pickClient;
         // to provide "choose other client" button after calling pick()
         this._clientListViewModel = null;
+        this.customWebInstanceFormOpen = false;
         this._update();
     }
 
@@ -59,11 +60,11 @@ export class ClientViewModel extends ViewModel {
             if (this._proposedPlatform === this._nativePlatform) {
                 deepLinkLabel = "Open in app";
             } else {
-                deepLinkLabel = `Open on ${this._client.getPreferredWebInstance(this._link)}`;
+                deepLinkLabel = `Open on ${this.preferredWebInstance}`;
             }
         }
         const actions = [];
-        const proposedDeepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
+        const proposedDeepLink = this._client.getDeepLink(this._proposedPlatform, this._link, this.preferredWebInstance);
         if (proposedDeepLink) {
             actions.push({
                 label: deepLinkLabel,
@@ -83,8 +84,8 @@ export class ClientViewModel extends ViewModel {
         // show only if there is a preferred instance, and if we don't already link to it in the first button
         if (hasPreferredWebInstance && this._webPlatform && this._proposedPlatform !== this._webPlatform) {
             actions.push({
-                label: `Open on ${this._client.getPreferredWebInstance(this._link)}`,
-                url: this._client.getDeepLink(this._webPlatform, this._link),
+                label: `Open on ${this.preferredWebInstance}`,
+                url: this._client.getDeepLink(this._webPlatform, this._link, this.preferredWebInstance),
                 kind: "open-in-web",
                 activated: () => {} // don't persist this choice as we don't persist the preferred web instance, it's in the url
             });
@@ -108,10 +109,10 @@ export class ClientViewModel extends ViewModel {
             actions.push(...nativeActions);
         }
         if (this._webPlatform) {
-            const webDeepLink = this._client.getDeepLink(this._webPlatform, this._link);
+            const webDeepLink = this._client.getDeepLink(this._webPlatform, this._link, this.preferredWebInstance);
             if (webDeepLink) {
                 const webLabel = this.hasPreferredWebInstance ?
-                    `Open on ${this._client.getPreferredWebInstance(this._link)}` :
+                    `Open on ${this.preferredWebInstance}` :
                     `Continue in your browser`;
                 actions.push({
                     label: webLabel,
@@ -128,18 +129,26 @@ export class ClientViewModel extends ViewModel {
         return actions;
     }
 
-    get hasPreferredWebInstance() {
+    get preferredWebInstance() {
         // also check there is a web platform that matches the platforms the user is on (mobile or desktop web)
-        return this._webPlatform && typeof this._client.getPreferredWebInstance(this._link) === "string";
+        if (!this._webPlatform) return undefined;
+        return (
+            this.preferences.getCustomWebInstance(this._client.id)
+            || this._client.getPreferredWebInstance(this._link)
+        );
+    }
+
+    get hasPreferredWebInstance() {
+        return typeof this.preferredWebInstance === "string";
     }
 
     get hostedByBannerLabel() {
-        const preferredWebInstance = this._client.getPreferredWebInstance(this._link);
-        if (this._webPlatform && preferredWebInstance) {
+        if (this.hasPreferredWebInstance) {
+            const preferredWebInstance = this.preferredWebInstance;
             let label = preferredWebInstance;
-            const subDomainIdx = preferredWebInstance.lastIndexOf(".", preferredWebInstance.lastIndexOf("."));
+            const subDomainIdx = preferredWebInstance.lastIndexOf(".", preferredWebInstance.lastIndexOf(".") - 1);
             if (subDomainIdx !== -1) {
-                label = preferredWebInstance.slice(preferredWebInstance.length - subDomainIdx + 1);
+                label = preferredWebInstance.slice(subDomainIdx + 1);
             }
             return `Hosted by ${label}`;
         }
@@ -188,7 +197,7 @@ export class ClientViewModel extends ViewModel {
 
     get showDeepLinkInInstall() {
         // we can assume this._nativePlatform as this._clientCanIntercept already checks it
-        return this._clientCanIntercept && !!this._client.getDeepLink(this._nativePlatform, this._link);
+        return this._clientCanIntercept && !!this._client.getDeepLink(this._nativePlatform, this._link, this.preferredWebInstance);
     }
 
     get availableOnPlatformNames() {
@@ -223,6 +232,10 @@ export class ClientViewModel extends ViewModel {
         return !!this._clientListViewModel;
     }
 
+    get supportsCustomWebInstances() {
+        return !!this._client.supportsCustomInstances;
+    }
+
     back() {
         if (this._clientListViewModel) {
             const vm = this._clientListViewModel;
@@ -231,9 +244,29 @@ export class ClientViewModel extends ViewModel {
             // in the list with all clients, and also if we refresh, we get the list with
             // all clients rather than having our "change client" click reverted.
             this.preferences.setClient(undefined, undefined);
+            this.preferences.setCustomWebInstance(this._client.id, undefined);
             this._update();
             this.emitChange();
             vm.showAll();
         }
+    }
+
+    configureCustomWebInstance() {
+        this.customWebInstanceFormOpen = true;
+        this.emitChange();
+    }
+
+    closeCustomWebInstanceForm() {
+        this.customWebInstanceFormOpen = false;
+        this.emitChange();
+    }
+
+    setCustomWebInstance(hostname) {
+        if (hostname) {
+            hostname = hostname.trim().replace(/^https:\/\//, '').replace(/\/.*$/, '');
+        }
+        this.preferences.setClient(this._client.id, hostname ? this._webPlatform : (this._nativePlatform || this._webPlatform));
+        this.preferences.setCustomWebInstance(this._client.id, hostname || undefined);
+        this._update();
     }
 }
