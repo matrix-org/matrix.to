@@ -78,6 +78,8 @@ You can discuss matrix.to in
 
 ## Build Instructions
 
+### Native build
+
 1. Install [yarn](https://classic.yarnpkg.com/en/docs/install)
 1. `git clone https://github.com/matrix-org/matrix.to`
 1. `cd matrix.to`
@@ -85,7 +87,7 @@ You can discuss matrix.to in
 1. `yarn start`
 1. Go to http://localhost:5000 in your browser
 
-## Build with docker compose 
+### Build with docker compose 
 
 ```
 version: '3.8'
