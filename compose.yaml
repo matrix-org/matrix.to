@@ -2,7 +2,20 @@ version: '3.8'
 
 services:
   matrix-to:
-    build: .
+    container_name: Matrix-to
+    hostname: matrix-to
+    image: domoel/matrix-to:latest
     ports:
       - "5000:5000"
     restart: unless-stopped
+    environment:
+      - PORT=5000
+    volumes:
+      - ./data:/app
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    external: true
+    name: matrix
