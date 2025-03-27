@@ -75,6 +75,7 @@ https://matrix.to/#/#matrix:matrix.org?web-instance[element.io]=chat.mozilla.org
 You can discuss matrix.to in
 [`#matrix.to:matrix.org`](https://matrix.to/#/#matrix.to:matrix.org)
 
+
 ## Build Instructions
 
 1. Install [yarn](https://classic.yarnpkg.com/en/docs/install)
@@ -83,3 +84,19 @@ You can discuss matrix.to in
 1. `yarn`
 1. `yarn start`
 1. Go to http://localhost:5000 in your browser
+
+## Build with docker compose 
+
+```
+version: '3.8'
+
+services:
+  matrix-to:
+    container_name: Matrix-to
+    image: domoel/matrix-to:latest
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - PORT=5000
+```
