@@ -90,6 +90,9 @@ You can discuss matrix.to in
 ### Build with docker compose 
 
 ```
+version: '3.8'
+
+services:
   matrix-to:
     container_name: Matrix-to 
     image: domoel/matrix-to:latest
