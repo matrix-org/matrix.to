@@ -5,9 +5,9 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 COPY . .
 
-# Expose port 5000
-EXPOSE 5000
+# Expose port 80
+EXPOSE 80
 
 # Start
-ENV PORT=5000
+ENV PORT=80
 CMD ["yarn", "start"]
