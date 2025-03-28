@@ -1,19 +1,21 @@
-# Verwenden Sie ein Node.js-Image als Basis
-FROM node:20-alpine
-
-# Setzen Sie das Arbeitsverzeichnis im Container
+# Stage 1: Build
+FROM node:20-alpine AS build
 WORKDIR /app
-
-# Kopieren Sie die package.json und yarn.lock Dateien und installieren Sie die Abhängigkeiten
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-
-# Kopieren Sie den Rest des Codes in das Arbeitsverzeichnis
+RUN yarn install --frozen-lockfile && yarn cache clean
 COPY . .
 
-# Exponieren Sie den Port 5000
-EXPOSE 5000
+# Stage 2: Production
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Starten Sie die Anwendung und setzen Sie die PORT-Umgebungsvariable auf 5000
-ENV PORT=5000
-CMD ["yarn", "start"]
+# Expose ports 80 and 443
+EXPOSE 80
+EXPOSE 443
+
+# Healthcheck
+HEALTHCHECK CMD curl --fail http://localhost:80 || exit 1
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
