@@ -7,12 +7,13 @@ COPY . .
 
 # Stage 2: Production
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+WORKDIR /etc/nginx
 COPY nginx.conf /etc/nginx/nginx.conf
+WORKDIR /usr/share/nginx/html
+COPY --from=build /app/build .
 
-# Expose port 80 and 443
+# Expose port 80
 EXPOSE 80
-EXPOSE 443
 
 # Healthcheck
 HEALTHCHECK CMD curl --fail http://localhost:80 || exit 1
