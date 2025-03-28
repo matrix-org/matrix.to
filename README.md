@@ -90,20 +90,11 @@ You can discuss matrix.to in
 ### Build with docker compose 
 
 ```
-version: '3.8'
-
-services:
-  web:
+  matrix-to:
+    container_name: Matrix-to 
     image: domoel/matrix-to:latest
     ports:
       - "1336:80"
     environment:
       - NODE_ENV=production
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:80"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 ```
