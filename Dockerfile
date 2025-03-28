@@ -1,12 +1,12 @@
 # Stage 1: Build
-FROM node:20.2-alpine3.15 AS build
+FROM node:20.2-alpine AS build
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production && yarn cache clean
 COPY . .
 
 # Stage 2: Production
-FROM nginx:alpine3.15
+FROM nginx:alpine
 WORKDIR /etc/nginx
 COPY ./nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
