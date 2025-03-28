@@ -7,10 +7,8 @@ COPY . .
 
 # Stage 2: Production
 FROM nginx:latest
-WORKDIR /etc/nginx
 COPY ./nginx.conf /etc/nginx/nginx.conf
-WORKDIR /usr/share/nginx/html
-COPY --from=build /app/build .
+COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
