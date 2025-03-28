@@ -96,7 +96,7 @@ services:
   web:
     image: domoel/matrix-to:latest
     ports:
-      - "80:80"
+      - "1336:80"
     environment:
       - NODE_ENV=production
     volumes:
