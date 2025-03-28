@@ -1,16 +1,11 @@
 version: '3.8'
 
 services:
-  web:
+  matrix-to:
+    container_name: Matrix-to
     image: domoel/matrix-to:latest
     ports:
       - "5000:5000"
+    restart: unless-stopped
     environment:
-      - NODE_ENV=production
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:80"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - PORT=5000
