@@ -6,7 +6,7 @@ RUN yarn install --frozen-lockfile --production && yarn cache clean
 COPY . .
 
 # Stage 2: Production
-FROM nginx:alpine
+FROM nginx:latest
 WORKDIR /etc/nginx
 COPY ./nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
