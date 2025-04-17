@@ -99,8 +99,8 @@ export class Element {
     getCopyString(platform, link) {}
     getInstallLinks(platform) {
         switch (platform) {
-            case Platform.iOS: return [new AppleStoreLink('vector', 'id1083446067')];
-            case Platform.Android: return [new PlayStoreLink('im.vector.app'), new FDroidLink('im.vector.app')];
+            case Platform.iOS: return [new AppleStoreLink('element-x-secure-chat-call', 'id1631335820')];
+            case Platform.Android: return [new PlayStoreLink('io.element.android.x'), new FDroidLink('io.element.android.x')];
             default: return [new WebsiteLink("https://element.io/download")];
         }
     }
