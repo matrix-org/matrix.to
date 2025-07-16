@@ -18,7 +18,7 @@ import {createEnum} from "./utils/enum.js";
 import {orderedUnique} from "./utils/unique.js";
 
 const ROOMALIAS_PATTERN = /^#([^:]*):(.+)$/;
-const ROOMID_PATTERN = /^!([^:]*):(.+)$/;
+const ROOMID_PATTERN = /^!([^:]*)(:(.+))?$/; // As of room version 12, room IDs don't have domains
 const USERID_PATTERN = /^@([^:]+):(.+)$/;
 const EVENTID_PATTERN = /^$([^:]+):(.+)$/;
 const GROUPID_PATTERN = /^\+([^:]+):(.+)$/;
@@ -92,7 +92,7 @@ export class Link {
     static validateIdentifier(identifier) {
         return !!(
             USERID_PATTERN.exec(identifier) ||
-            ROOMALIAS_PATTERN.exec(identifier) || 
+            ROOMALIAS_PATTERN.exec(identifier) ||
             ROOMID_PATTERN.exec(identifier) ||
             GROUPID_PATTERN.exec(identifier)
         );
@@ -166,12 +166,19 @@ export class Link {
     }
 
     constructor(clientId, viaServers, identifierKind, localPart, server, webInstances, eventId) {
-        const servers = [server];
+        const servers = [];
+        if (server !== undefined) {
+            servers.push(server); // v12 rooms don't have domains, and therefore no server
+        }
         servers.push(...viaServers);
         this.webInstances = webInstances;
         this.servers = orderedUnique(servers);
         this.identifierKind = identifierKind;
-        this.identifier = `${asPrefix(identifierKind)}${localPart}:${server}`;
+        if (identifierKind === IdentifierKind.RoomId && !server) {
+            this.identifier = `${asPrefix(identifierKind)}${localPart}`;
+        } else {
+            this.identifier = `${asPrefix(identifierKind)}${localPart}:${server}`;
+        }
         this.eventId = eventId;
         this.clientId = clientId;
     }
