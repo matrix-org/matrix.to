@@ -152,7 +152,7 @@ export class Link {
         }
         matches = ROOMID_PATTERN.exec(identifier);
         if (matches) {
-            const server = matches[2];
+            const server = matches[3]; // group 2 is an optional over `:domain`, group 3 is just `domain`
             const localPart = matches[1];
             return new Link(clientId, viaServers, IdentifierKind.RoomId, localPart, server, webInstances, eventId);
         }
