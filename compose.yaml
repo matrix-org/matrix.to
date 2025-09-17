@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  matrix-to:
+    container_name: Matrix-to 
+    image: domoel/matrix-to:latest
+    ports:
+      - "1336:80"
+    environment:
+      - NODE_ENV=production
