@@ -211,9 +211,9 @@ export class Link {
 
     toFragment() {
         if (this.eventId) {
-            return `/${this.identifier}/${this.eventId}`;
+            return `/${encodeURIComponent(this.identifier)}/${encodeURIComponent(this.eventId)}`;
         } else {
-            return `/${this.identifier}`;
+            return `/${encodeURIComponent(this.identifier)}`;
         }
     }
 }
