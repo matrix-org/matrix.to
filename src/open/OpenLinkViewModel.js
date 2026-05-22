@@ -21,6 +21,7 @@ import {PreviewViewModel} from "../preview/PreviewViewModel.js";
 import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
+import {LinkKind} from "./types.js";
 
 export class OpenLinkViewModel extends ViewModel {
     constructor(options) {
@@ -37,6 +38,36 @@ export class OpenLinkViewModel extends ViewModel {
         } else {
             this._showLink();
         }
+
+        this._openLink();
+    }
+
+    async _openLink() {
+        // Proactively try to open the default Matrix client of the user.
+        let link = this._link;
+        let identifier = encodeURIComponent(link.identifier.substring(1));
+        let isRoomid = link.identifier.substring(0, 1) === '!';
+        let fragmentPath;
+        switch (link.kind) {
+            case LinkKind.User:
+                fragmentPath = `u/${identifier}?action=chat`;
+                break;
+            case LinkKind.Room:
+            case LinkKind.Event:
+                if (isRoomid)
+                    fragmentPath = `roomid/${identifier}`;
+                else
+                    fragmentPath = `r/${identifier}`;
+
+                if (link.kind === LinkKind.Event)
+                    fragmentPath += `/e/${encodeURIComponent(link.eventId.substring(1))}`;
+                fragmentPath += '?action=join';
+                fragmentPath += link.servers.map(server => `&via=${encodeURIComponent(server)}`).join('');
+                break;
+            case LinkKind.Group:
+                return;
+        }
+        window.open(`matrix:${fragmentPath}`, '_self');
     }
 
     _showServerConsent() {
