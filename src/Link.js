@@ -40,6 +40,16 @@ function asPrefix(identifierKind) {
     }
 }
 
+function asMSC4481Prefix(identifierKind) {
+    switch (identifierKind) {
+        case IdentifierKind.RoomId: return "roomid/";
+        case IdentifierKind.RoomAlias: return "r/";
+        case IdentifierKind.GroupId: return asPrefix(identifierKind);
+        case IdentifierKind.UserId: return "u/";
+        default: throw new Error("invalid id kind " + identifierKind);
+    }
+}
+
 function getWebInstanceMap(queryParams) {
     const prefix = "web-instance[";
     const postfix = "]";
@@ -225,10 +235,11 @@ export class Link {
     }
 
     toFragment() {
+        const id = `/${asMSC4481Prefix(this.identifierKind)}${this.identifier.substring(1)}`;
         if (this.eventId) {
-            return `/${this.identifier}/${this.eventId}`;
+            return `${id}/e/${this.eventId.substring(1)}`;
         } else {
-            return `/${this.identifier}`;
+            return id;
         }
     }
 }
