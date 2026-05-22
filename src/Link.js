@@ -216,4 +216,30 @@ export class Link {
             return `/${this.identifier}`;
         }
     }
+
+    static toMatrixUri(link) {
+        let identifier = encodeURIComponent(link.identifier.substring(1));
+        let isRoomid = link.identifier.substring(0, 1) === '!';
+        let fragmentPath;
+        switch (link.kind) {
+            case LinkKind.User:
+                fragmentPath = `u/${identifier}?action=chat`;
+                break;
+            case LinkKind.Room:
+            case LinkKind.Event:
+                if (isRoomid)
+                    fragmentPath = `roomid/${identifier}`;
+                else
+                    fragmentPath = `r/${identifier}`;
+
+                if (link.kind === LinkKind.Event)
+                    fragmentPath += `/e/${encodeURIComponent(link.eventId.substring(1))}`;
+                fragmentPath += '?action=join';
+                fragmentPath += link.servers.map(server => `&via=${encodeURIComponent(server)}`).join('');
+                break;
+            case LinkKind.Group:
+                return;
+        }
+        return `matrix:${fragmentPath}`;
+    }
 }
