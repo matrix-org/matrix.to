@@ -17,10 +17,10 @@ limitations under the License.
 import {createEnum} from "./utils/enum.js";
 import {orderedUnique} from "./utils/unique.js";
 
-const ROOMALIAS_PATTERN = /^#([^:]*):(.+)$/;
-const ROOMID_PATTERN = /^!([^:]*)(:(.+))?$/; // As of room version 12, room IDs don't have domains
-const USERID_PATTERN = /^@([^:]+):(.+)$/;
-const EVENTID_PATTERN = /^$([^:]+):(.+)$/;
+const ROOMALIAS_PATTERN = /^(?:#|r\/)([^:]*):(.+)$/;
+const ROOMID_PATTERN = /^(?:!|roomid\/)([^:]*)(:(.+))?$/; // As of room version 12, room IDs don't have domains
+const USERID_PATTERN = /^(?:@|u\/)([^:]+):(.+)$/;
+const EVENTID_PATTERN = /^(?:$|e\/)([^:]+):(.+)$/;
 const GROUPID_PATTERN = /^\+([^:]+):(.+)$/;
 
 export const IdentifierKind = createEnum(
@@ -111,7 +111,22 @@ export class Link {
             return null;
         }
         linkStr = linkStr.slice(2);
-        const [identifier, eventId] = linkStr.split("/");
+        const segments = linkStr.split("/");
+        let _1, identifier, _2, eventId;
+        if (/^(roomid|r|u)/.test(linkStr)) {
+            [_1, identifier, _2, eventId] = segments;
+            if (_1 === "roomid")
+                identifier = "!" + identifier;
+            else if (_1 === "r")
+                identifier = "#" + identifier;
+            else
+                identifier = "@" + identifier;
+
+            if (_2 === "e")
+                eventId = "$" + eventId;
+        } else {
+            [identifier, eventId] = segments;
+        }
 
         let viaServers = [];
         let clientId = null;
