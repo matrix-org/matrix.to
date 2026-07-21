@@ -28,7 +28,7 @@ import replace from "@rollup/plugin-replace";
 import postcssUrl from "postcss-url";
 import autoprefixer from "autoprefixer";
 
-import {createClients} from "../src/open/clients/index.js";
+import {resolveClients, createClientsPlugin} from "./clients-config.js";
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -47,9 +47,11 @@ async function build() {
     const assets = new AssetMap(targetDir);
     const imageAssets = await copyFolder(path.join(projectDir, "images"), path.join(targetDir, "images"));
     assets.addSubMap(imageAssets);
-    await assets.write(`bundle.js`, await buildJs("src/main.js", assets));
+    const clients = await resolveClients(projectDir, process.env);
+    console.log(`including ${clients.length} client(s): ${clients.map(c => c.instance.id).join(", ")}`);
+    await assets.write(`bundle.js`, await buildJs("src/main.js", assets, clients));
     await assets.write(`bundle.css`, await buildCss("css/main.css", targetDir, assets));
-    await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
+    await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(clients.map(c => c.instance)));
     await assets.writeUnhashed("index.html", await buildHtml(assets));
     await assets.writeUnhashed("img/matrix-badge.svg", await fs.readFile(path.join(projectDir, "images-nohash/matrix-badge.svg")));
     const globalHash = assets.hashForAll();
@@ -76,11 +78,11 @@ function createReplaceUrlPlugin(assets) {
     return replace({values: replacements, preventAssignment: true});
 }
 
-async function buildJs(mainFile, assets) {
+async function buildJs(mainFile, assets, clients) {
     // create js bundle
     const rollupConfig = {
         input: mainFile,
-        plugins: [createReplaceUrlPlugin(assets), terser()]
+        plugins: [createClientsPlugin(projectDir, clients), createReplaceUrlPlugin(assets), terser()]
     };
     const bundle = await rollup(rollupConfig);
     const {output} = await bundle.generate({
@@ -270,4 +272,7 @@ class AssetMap {
     }
 }
 
-build().catch(err => console.error(err));
+build().catch(err => {
+    console.error(err);
+    process.exitCode = 1;
+});

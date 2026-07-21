@@ -13,6 +13,7 @@
   "scripts": {
     "start": "node scripts/serve-local.js",
     "build": "node scripts/build.js",
+    "list-clients": "node scripts/list-clients.js",
     "lint": "eslint ."
   },
   "devDependencies": {

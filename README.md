@@ -84,9 +84,34 @@ You can discuss matrix.to in
 
 ## Build Instructions
 
-1. Install [yarn](https://classic.yarnpkg.com/en/docs/install)
+1. Install [yarn](https://classic.yarnpkg.com/en/docs/install) and Node.js 24+
 1. `git clone https://github.com/matrix-org/matrix.to`
 1. `cd matrix.to`
 1. `yarn`
 1. `yarn start`
 1. Go to http://localhost:5000 in your browser
+
+Run `yarn build` to produce a production build in `build/`, or `docker build .`
+to build a container image (a static nginx server) instead.
+
+### Customizing the client list
+
+Which clients are shown is decided at build time, so you can ship
+a build containing only the clients you care about:
+
+- `MATRIX_TO_CLIENTS` - comma-separated allow-list of built-in client ids to
+  include (run `yarn list-clients` to see the available ids). Leave unset to
+  include all of them.
+- `MATRIX_TO_CUSTOM_CLIENTS_DIR` - a directory of extra client modules to
+  include alongside the built-ins. See [`custom-clients/README.md`](custom-clients/README.md)
+  for the interface these need to implement. Defaults to `custom-clients`.
+
+```sh
+MATRIX_TO_CLIENTS=element.io,cinny yarn build
+```
+
+The same options are exposed as Docker build args:
+
+```sh
+docker build --build-arg CLIENTS=element.io,cinny --build-arg CUSTOM_CLIENTS_DIR=custom-clients .
+```
