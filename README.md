@@ -1,3 +1,8 @@
+# element.io fork
+
+Element maintains it's own fork of matrix.to for doing experimental work, but otherwise will continue
+to contribute to the primary project.
+
 # Matrix.to
 
 Matrix.to is a simple url redirection service for the Matrix.org ecosystem
