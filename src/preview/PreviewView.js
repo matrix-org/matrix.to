@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
-import {ClientListView} from "../open/ClientListView.js";
-import {ClientView} from "../open/ClientView.js";
 
 export class PreviewView extends TemplateView {
     render(t, vm) {

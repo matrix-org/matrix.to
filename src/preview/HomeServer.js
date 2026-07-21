@@ -75,7 +75,7 @@ export class HomeServer {
         let nextBatch;
         do {
             const queryParams = encodeQueryParams({limit: 10000, since: nextBatch});
-            const {body, status} = await this._request(`${this.baseURL}/_matrix/client/r0/publicRooms?${queryParams}`).response();
+            const {body} = await this._request(`${this.baseURL}/_matrix/client/r0/publicRooms?${queryParams}`).response();
             nextBatch = body.next_batch;
             const publicRoom = body.chunk.find(c => c.room_id === roomId);
             if (publicRoom) {

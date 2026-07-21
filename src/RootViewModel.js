@@ -21,7 +21,6 @@ import {createClients} from "./open/clients/index.js";
 import {CreateLinkViewModel} from "./create/CreateLinkViewModel.js";
 import {LoadServerPolicyViewModel} from "./policy/LoadServerPolicyViewModel.js";
 import {InvalidUrlViewModel} from "./InvalidUrlViewModel.js";
-import {Platform} from "./Platform.js";
 
 export class RootViewModel extends ViewModel {
     constructor(options) {
@@ -76,7 +75,7 @@ export class RootViewModel extends ViewModel {
         }  else if (hash === "" || hash === "#" || hash === "#/") {
             this._updateChildVMs(null, oldLink);
             this.createLinkViewModel = new CreateLinkViewModel(this.childOptions());
-        } else if (newLink = Link.parseFragment(hash)) {
+        } else if ((newLink = Link.parseFragment(hash))) {
             this._updateChildVMs(newLink, oldLink);
         } else {
             this._updateChildVMs(null, oldLink);

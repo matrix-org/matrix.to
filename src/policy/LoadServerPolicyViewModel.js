@@ -43,7 +43,7 @@ export class LoadServerPolicyViewModel extends ViewModel {
                 this.loading = false;
                 this.message = `${this.server} does not look like a matrix homeserver.`;
             }
-        } catch (err) {
+        } catch {
             this.loading = false;
             this.message = `Failed to get the privacy policy for ${this.server}`;
         }

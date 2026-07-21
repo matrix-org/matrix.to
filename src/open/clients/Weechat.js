@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind, WebsiteLink, style} from "../types.js";
+import {Maturity, Platform, LinkKind, style} from "../types.js";
 
 /**
  * Information on how to deep link to a given matrix client.

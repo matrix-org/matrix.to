@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Maturity, Platform, LinkKind, FlathubLink,  style} from "../types.js";
+import {Maturity, Platform, LinkKind, FDroidLink,  style} from "../types.js";
 
 export class Tensor {
     get id() { return "tensor"; }

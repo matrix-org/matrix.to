@@ -17,8 +17,6 @@ limitations under the License.
 import {LinkKind, IdentifierKind} from "../Link.js";
 import {ViewModel} from "../utils/ViewModel.js";
 import {resolveServer} from "./HomeServer.js";
-import {ClientListViewModel} from "../open/ClientListViewModel.js";
-import {ClientViewModel} from "../open/ClientViewModel.js";
 
 export class PreviewViewModel extends ViewModel {
     constructor(options) {
@@ -60,7 +58,7 @@ export class PreviewViewModel extends ViewModel {
                     this.loading = false;
                     this.emitChange();
                     return;
-                } catch (err) {
+                } catch {
                     continue;
                 }
             }

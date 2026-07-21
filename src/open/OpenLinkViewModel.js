@@ -16,7 +16,6 @@ limitations under the License.
 
 import {ViewModel} from "../utils/ViewModel.js";
 import {ClientListViewModel} from "./ClientListViewModel.js";
-import {ClientViewModel} from "./ClientViewModel.js";
 import {PreviewViewModel} from "../preview/PreviewViewModel.js";
 import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";

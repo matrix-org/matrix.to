@@ -16,7 +16,6 @@ limitations under the License.
 
 import {isWebPlatform, isDesktopPlatform, Platform} from "../Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
-import {IdentifierKind} from "../Link.js";
 
 function getMatchingPlatforms(client, supportedPlatforms) {
     const clientPlatforms = client.platforms;

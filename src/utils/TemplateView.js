@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { setAttribute, text, isChildren, classNames, TAG_NAMES, HTML_NS } from "./html.js";
+import { setAttribute, text, isChildren, classNames, TAG_NAMES, HTML_NS, tag } from "./html.js";
 
 /**
     Bindable template. Renders once, and allows bindings for given nodes. If you need

@@ -20,7 +20,6 @@ import {orderedUnique} from "./utils/unique.js";
 const ROOMALIAS_PATTERN = /^#([^:]*):(.+)$/;
 const ROOMID_PATTERN = /^!([^:]*)(:(.+))?$/; // As of room version 12, room IDs don't have domains
 const USERID_PATTERN = /^@([^:]+):(.+)$/;
-const EVENTID_PATTERN = /^$([^:]+):(.+)$/;
 const GROUPID_PATTERN = /^\+([^:]+):(.+)$/;
 
 export const IdentifierKind = createEnum(

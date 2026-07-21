@@ -15,12 +15,9 @@ limitations under the License.
 */
 
 import {TemplateView} from "../utils/TemplateView.js";
-import {PreviewView} from "../preview/PreviewView.js";
-import {copyButton} from "../utils/copy.js";
 
 export class CreateLinkView extends TemplateView {
     render(t, vm) {
-        const link = t.a({href: vm => vm.linkUrl}, vm => vm.linkUrl);
         return t.div({className: "CreateLinkView card"}, [
             t.h1("Create shareable links to Matrix rooms, users or messages without being tied to any app"),
             t.form({action: "#", onSubmit: evt => this._onSubmit(evt)}, [

@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import {ViewModel} from "../utils/ViewModel.js";
-import {PreviewViewModel} from "../preview/PreviewViewModel.js";
 import {Link} from "../Link.js";
 
 export class CreateLinkViewModel extends ViewModel {

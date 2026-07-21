@@ -15,10 +15,6 @@ limitations under the License.
 */
 
 import {ViewModel} from "../utils/ViewModel.js";
-import {ClientListViewModel} from "./ClientListViewModel.js";
-import {ClientViewModel} from "./ClientViewModel.js";
-import {PreviewViewModel} from "../preview/PreviewViewModel.js";
-import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
 
 export class ServerConsentViewModel extends ViewModel {
@@ -51,7 +47,7 @@ export class ServerConsentViewModel extends ViewModel {
                 this.selectServer(domainOrUrl);
                 return true;
             }
-        } catch (err) {}
+        } catch {}
         this.selectServer(null);
         return false;
     }
