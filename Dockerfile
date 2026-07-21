@@ -13,6 +13,11 @@
 # limitations under the License.
 
 FROM node:24-slim@sha256:6f7b03f7c2c8e2e784dcf9295400527b9b1270fd37b7e9a7285cf83b6951452d AS builder
+
+LABEL org.opencontainers.image.source=https://github.com/element-hq/matrix.to
+LABEL org.opencontainers.image.description=" A simple stateless privacy-protecting URL redirecting service for Matrix"
+LABEL org.opencontainers.image.licenses=Apache-2.0
+
 WORKDIR /src
 COPY package.json yarn.lock ./
 RUN corepack enable && yarn install --frozen-lockfile
