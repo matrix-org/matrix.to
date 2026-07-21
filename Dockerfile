@@ -26,5 +26,6 @@ ENV MATRIX_TO_CUSTOM_CLIENTS_DIR=$CUSTOM_CLIENTS_DIR
 RUN yarn build
 
 FROM nginx:alpine@sha256:4a73073bd557c65b759505da037898b61f1be6cbcc3c2c3aeac22d2a470c1752
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /src/build /usr/share/nginx/html
 EXPOSE 80
