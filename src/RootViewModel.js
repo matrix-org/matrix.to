@@ -18,6 +18,7 @@ import {Link} from "./Link.js";
 import {ViewModel} from "./utils/ViewModel.js";
 import {OpenLinkViewModel} from "./open/OpenLinkViewModel.js";
 import {createClients} from "./open/clients/index.js";
+import {loadRuntimeClients} from "./open/clients/loadRuntimeClients.js";
 import {CreateLinkViewModel} from "./create/CreateLinkViewModel.js";
 import {LoadServerPolicyViewModel} from "./policy/LoadServerPolicyViewModel.js";
 import {InvalidUrlViewModel} from "./InvalidUrlViewModel.js";
@@ -31,9 +32,24 @@ export class RootViewModel extends ViewModel {
         this.loadServerPolicyViewModel = null;
         this.invalidUrlViewModel = null;
         this.showDisclaimer = false;
+        this._builtinClients = createClients();
+        this._calculatedClients = [];
+        this.clientsLoading = true;
+        this._loadRuntimeClients();
         this.preferences.on("canClear", () => {
             this.emitChange();
         });
+    }
+
+    async _loadRuntimeClients() {
+        this._calculatedClients = await loadRuntimeClients(this._builtinClients);
+        this.clientsLoading = false;
+        this.openLinkViewModel?.setClients(this._allClients, false);
+        this.emitChange();
+    }
+
+    get _allClients() {
+        return this._calculatedClients;
     }
 
     _updateChildVMs(newLink, oldLink) {
@@ -43,7 +59,8 @@ export class RootViewModel extends ViewModel {
         } else if (!oldLink || !oldLink.equals(newLink)) {
             this.openLinkViewModel = new OpenLinkViewModel(this.childOptions({
                 link: newLink,
-                clients: createClients(),
+                clients: this._allClients,
+                clientsLoading: this.clientsLoading,
             }));
         }
     }

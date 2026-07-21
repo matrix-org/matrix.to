@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "visibleClients": ["element.io.custom"],
+  "clients": [
+    { "module": "./CustomElement.js" }
+  ]
+}

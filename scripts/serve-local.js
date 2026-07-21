@@ -30,8 +30,11 @@ const serve = serveStatic(
             res.setHeader("Pragma", "no-cache");
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             res.setHeader("Expires", "Wed, 21 Oct 2015 07:28:00 GMT");
-            // same CSP as matrix.to server is using, so local testing happens under similar environment
-            res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src * data:; connect-src *; font-src 'self'; manifest-src 'self'; form-action 'self'; navigate-to *;");
+            // same CSP as production (see nginx.conf), except script-src needs 'unsafe-inline'
+            // here: dev mode serves raw, unbundled source with an inline `<script type="module">`
+            // bootstrap in index.html, whereas the production build inlines nothing (see
+            // scripts/build.js's buildHtml/buildJs). Neither needs 'unsafe-eval'.
+            res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; img-src * data:; connect-src *; font-src 'self'; manifest-src 'self'; form-action 'self'; object-src 'none'; base-uri 'self';");
         },
         index: ['index.html', 'index.htm']
     }

@@ -30,11 +30,7 @@ jobs:
       - run: corepack enable
       - run: yarn install --frozen-lockfile
       - run: yarn lint
-      - name: Regular build
-        run: yarn build
-      # exercise the build-time client filtering feature so regressions are caught
-      - name: Filtered build
-        run: MATRIX_TO_CLIENTS=element.io,cinny yarn build
+      - run: yarn build
 
   docker:
     runs-on: ubuntu-latest
@@ -44,5 +40,3 @@ jobs:
         with:
           context: .
           push: false
-          build-args: |
-            CLIENTS=element.io,cinny

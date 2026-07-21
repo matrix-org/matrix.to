@@ -23,7 +23,7 @@ export default [
     },
     js.configs.recommended,
     {
-        files: ["src/**/*.js"],
+        files: ["src/**/*.js", "runtime-clients/**/*.js"],
         languageOptions: {
             ecmaVersion: 2020,
             sourceType: "module",

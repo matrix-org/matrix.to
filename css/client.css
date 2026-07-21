@@ -9,6 +9,21 @@
     margin: 8px 0;
 }
 
+.ClientListView .loadingMore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+    color: var(--grey);
+    font-size: 14px;
+}
+
+.ClientListView .loadingMore .spinner {
+    width: 16px;
+    height: 16px;
+}
+
 .ClientView {
     border: 1px solid #E6E6E6;
     border-radius: 8px;

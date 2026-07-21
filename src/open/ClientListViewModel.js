@@ -21,17 +21,25 @@ import {ViewModel} from "../utils/ViewModel.js";
 export class ClientListViewModel extends ViewModel {
     constructor(options) {
         super(options);
-        const {clients, client, link} = options;
+        const {clients, client, link, clientsLoading} = options;
         this._clients = clients;
         this._link = link;
         this.clientList = null;
         this._showExperimental = false;
         this._showUnsupportedPlatforms = false;
+        this.clientsLoading = !!clientsLoading;
         this._filterClients();
         this.clientViewModel = null;
         if (client) {
             this._pickClient(client);
         }
+    }
+
+    // called by OpenLinkViewModel once runtime-registered clients have resolved
+    setClients(clients, loading) {
+        this._clients = clients;
+        this.clientsLoading = !!loading;
+        this._filterClients();
     }
 
     get showUnsupportedPlatforms() {

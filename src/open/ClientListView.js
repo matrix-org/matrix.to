@@ -38,6 +38,10 @@ class AllClientsView extends TemplateView {
                     return t.view(new ClientView(clientViewModel));
                 }));
             }),
+            t.div({className: {loadingMore: true, hidden: vm => !vm.clientsLoading}}, [
+                t.div({className: "spinner"}),
+                t.span("Looking for more apps…"),
+            ]),
             t.div(t.label([
                 t.input({
                     type: "checkbox",

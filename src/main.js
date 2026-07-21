@@ -19,6 +19,11 @@ import {RootViewModel} from "./RootViewModel.js";
 import {RootView} from "./RootView.js";
 import {Preferences} from "./Preferences.js";
 import {guessApplicablePlatforms} from "./Platform.js";
+import * as clientTypes from "./open/types.js";
+
+// exposed so runtime-registered clients (see src/open/clients/loadRuntimeClients.js) can use
+// the same Maturity/Platform/LinkKind enums and install-link classes as built-in clients.
+window.MatrixTo = {types: clientTypes};
 
 export async function main(container) {
     const vm = new RootViewModel({

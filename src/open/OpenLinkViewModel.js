@@ -24,9 +24,10 @@ import {orderedUnique} from "../utils/unique.js";
 export class OpenLinkViewModel extends ViewModel {
     constructor(options) {
         super(options);
-        const {clients, link} = options;
+        const {clients, link, clientsLoading} = options;
         this._link = link;
         this._clients = clients;
+        this._clientsLoading = !!clientsLoading;
         this.serverConsentViewModel = null;
         this.previewViewModel = null;
         this.clientsViewModel = null;
@@ -36,6 +37,14 @@ export class OpenLinkViewModel extends ViewModel {
         } else {
             this._showLink();
         }
+    }
+
+    // called by RootViewModel once runtime-registered clients (see loadRuntimeClients.js)
+    // have resolved, so an already-open link picks them up without losing UI state
+    setClients(clients, loading) {
+        this._clients = clients;
+        this._clientsLoading = loading;
+        this.clientsViewModel?.setClients(clients, loading);
     }
 
     _showServerConsent() {
@@ -61,6 +70,7 @@ export class OpenLinkViewModel extends ViewModel {
             clients: this._clients,
             link: this._link,
             client: preferredClient,
+            clientsLoading: this._clientsLoading,
         }));
         this.previewViewModel = new PreviewViewModel(this.childOptions({
             link: this._link,

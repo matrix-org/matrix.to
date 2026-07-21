@@ -28,7 +28,7 @@ import replace from "@rollup/plugin-replace";
 import postcssUrl from "postcss-url";
 import autoprefixer from "autoprefixer";
 
-import {resolveClients, createClientsPlugin} from "./clients-config.js";
+import {createClients} from "../src/open/clients/index.js";
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -47,11 +47,9 @@ async function build() {
     const assets = new AssetMap(targetDir);
     const imageAssets = await copyFolder(path.join(projectDir, "images"), path.join(targetDir, "images"));
     assets.addSubMap(imageAssets);
-    const clients = await resolveClients(projectDir, process.env);
-    console.log(`including ${clients.length} client(s): ${clients.map(c => c.instance.id).join(", ")}`);
-    await assets.write(`bundle.js`, await buildJs("src/main.js", assets, clients));
+    await assets.write(`bundle.js`, await buildJs("src/main.js", assets));
     await assets.write(`bundle.css`, await buildCss("css/main.css", targetDir, assets));
-    await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(clients.map(c => c.instance)));
+    await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
     await assets.writeUnhashed("index.html", await buildHtml(assets));
     await assets.writeUnhashed("img/matrix-badge.svg", await fs.readFile(path.join(projectDir, "images-nohash/matrix-badge.svg")));
     const globalHash = assets.hashForAll();
@@ -62,11 +60,9 @@ async function buildHtml(assets) {
     const devHtml = await fs.readFile(path.join(projectDir, "index.html"), "utf8");
     const doc = loadHtml(devHtml);
     doc("link[rel=stylesheet]").attr("href", assets.resolve(`bundle.css`));
-    const mainScripts = [
-        `<script type="text/javascript" src="${assets.resolve(`bundle.js`)}"></script>`,
-        `<script type="text/javascript">bundle.main(document.body);</script>`
-    ];
-    doc("script#main").replaceWith(mainScripts.join(""));
+    // bundle.js calls bundle.main(document.body) itself (see buildJs's footer), so no inline
+    // script is needed here - that lets production ship a CSP with no 'unsafe-inline' in script-src.
+    doc("script#main").replaceWith(`<script type="text/javascript" src="${assets.resolve(`bundle.js`)}"></script>`);
     return doc.html();
 }
 
@@ -78,16 +74,17 @@ function createReplaceUrlPlugin(assets) {
     return replace({values: replacements, preventAssignment: true});
 }
 
-async function buildJs(mainFile, assets, clients) {
+async function buildJs(mainFile, assets) {
     // create js bundle
     const rollupConfig = {
         input: mainFile,
-        plugins: [createClientsPlugin(projectDir, clients), createReplaceUrlPlugin(assets), terser()]
+        plugins: [createReplaceUrlPlugin(assets), terser()]
     };
     const bundle = await rollup(rollupConfig);
     const {output} = await bundle.generate({
         format: 'iife',
-        name: `bundle`
+        name: `bundle`,
+        footer: 'bundle.main(document.body);'
     });
     const code = output[0].code;
     return code;

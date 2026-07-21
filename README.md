@@ -94,24 +94,11 @@ You can discuss matrix.to in
 Run `yarn build` to produce a production build in `build/`, or `docker build .`
 to build a container image (a static nginx server) instead.
 
-### Customizing the client list
+### Registering additional clients
 
-Which clients are shown is decided at build time, so you can ship
-a build containing only the clients you care about:
-
-- `MATRIX_TO_CLIENTS` - comma-separated allow-list of built-in client ids to
-  include (run `yarn list-clients` to see the available ids). Leave unset to
-  include all of them.
-- `MATRIX_TO_CUSTOM_CLIENTS_DIR` - a directory of extra client modules to
-  include alongside the built-ins. See [`custom-clients/README.md`](custom-clients/README.md)
-  for the interface these need to implement. Defaults to `custom-clients`.
-
-```sh
-MATRIX_TO_CLIENTS=element.io,cinny yarn build
-```
-
-The same options are exposed as Docker build args:
-
-```sh
-docker build --build-arg CLIENTS=element.io,cinny --build-arg CUSTOM_CLIENTS_DIR=custom-clients .
-```
+Site operators can add clients on top of the built-in list without touching
+the codebase or rebuilding the image - see [`runtime-clients/README.md`](runtime-clients/README.md).
+The browser loads these directly from your deployment on each page load, so
+adding or editing one takes effect on the next load with no rebuild and no
+restart. Run `yarn list-clients` to see the built-in client ids (useful for
+avoiding `id` collisions with your own).
