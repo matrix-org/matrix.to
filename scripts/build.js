@@ -15,28 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cheerio from "cheerio";
+import { load as loadHtml } from "cheerio";
 import fs from "fs/promises";
 import path from "path";
 import xxhash from 'xxhashjs';
 import { rollup } from 'rollup';
 import postcss from "postcss";
 import postcssImport from "postcss-import";
-// needed for legacy bundle
-import babel from '@rollup/plugin-babel';
-// needed to find the polyfill modules in the main-legacy.js bundle
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-// needed because some of the polyfills are written as commonjs modules
-import commonjs from '@rollup/plugin-commonjs';
-// multi-entry plugin so we can add polyfill file to main
-import multi from '@rollup/plugin-multi-entry';
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import replace from "@rollup/plugin-replace";
 // replace urls of asset names with content hashed version
 import postcssUrl from "postcss-url";
-import cssvariables from "postcss-css-variables";
 import autoprefixer from "autoprefixer";
-import flexbugsFixes from "postcss-flexbugs-fixes";
 
 import {createClients} from "../src/open/clients/index.js";
 
@@ -57,7 +47,7 @@ async function build() {
     const assets = new AssetMap(targetDir);
     const imageAssets = await copyFolder(path.join(projectDir, "images"), path.join(targetDir, "images"));
     assets.addSubMap(imageAssets);
-    await assets.write(`bundle.js`, await buildJs("src/main.js", assets, ["src/polyfill.js"]));
+    await assets.write(`bundle.js`, await buildJs("src/main.js", assets));
     await assets.write(`bundle.css`, await buildCss("css/main.css", targetDir, assets));
     await assets.writeUnhashed(".well-known/apple-app-site-association", buildAppleAssociatedAppsFile(createClients()));
     await assets.writeUnhashed("index.html", await buildHtml(assets));
@@ -68,13 +58,9 @@ async function build() {
 
 async function buildHtml(assets) {
     const devHtml = await fs.readFile(path.join(projectDir, "index.html"), "utf8");
-    const doc = cheerio.load(devHtml);
+    const doc = loadHtml(devHtml);
     doc("link[rel=stylesheet]").attr("href", assets.resolve(`bundle.css`));
     const mainScripts = [
-        // this is needed to avoid hitting https://github.com/facebook/regenerator/issues/378
-        // which prevents the whole bundle to load, as our CSP headers don't allow unsafe-eval
-        // and I preferred this over disabling strict mode for the whole bundle
-        `<script type="text/javascript">window.regeneratorRuntime = undefined;</script>`,
         `<script type="text/javascript" src="${assets.resolve(`bundle.js`)}"></script>`,
         `<script type="text/javascript">bundle.main(document.body);</script>`
     ];
@@ -87,32 +73,14 @@ function createReplaceUrlPlugin(assets) {
     for (const [key, value] of assets) {
         replacements[key] = value;
     }
-    return replace(replacements);
+    return replace({values: replacements, preventAssignment: true});
 }
 
-async function buildJs(mainFile, assets, extraFiles = []) {
-    // compile down to whatever IE 11 needs
-    const babelPlugin = babel.babel({
-        babelHelpers: 'bundled',
-        exclude: 'node_modules/**',
-        presets: [
-            [
-                "@babel/preset-env",
-                {
-                    useBuiltIns: "entry",
-                    corejs: "3",
-                    targets: "IE 11",
-                }
-            ]
-        ]
-    });
+async function buildJs(mainFile, assets) {
     // create js bundle
     const rollupConfig = {
-        // important the extraFiles come first,
-        // so polyfills are available in the global scope
-        // if needed for the mainfile
-        input: extraFiles.concat(mainFile),
-        plugins: [multi(), commonjs(), nodeResolve(), createReplaceUrlPlugin(assets), babelPlugin, terser()]
+        input: mainFile,
+        plugins: [createReplaceUrlPlugin(assets), terser()]
     };
     const bundle = await rollup(rollupConfig);
     const {output} = await bundle.generate({
@@ -152,9 +120,7 @@ async function buildCss(entryPath, targetDir, assets) {
     const preCss = await fs.readFile(entryPath, "utf8");
     const options = [
         postcssImport,
-        cssvariables(),
-        autoprefixer({overrideBrowserslist: ["IE 11"], grid: "no-autoplace"}),
-        flexbugsFixes(),
+        autoprefixer(),
         postcssUrl({url: assetUrlMapper}),
     ];
     const cssBundler = postcss(options);
@@ -164,7 +130,7 @@ async function buildCss(entryPath, targetDir, assets) {
 
 async function removeDirIfExists(targetDir) {
     try {
-        await fs.rmdir(targetDir, {recursive: true});
+        await fs.rm(targetDir, {recursive: true});
     } catch (err) {
         if (err.code !== "ENOENT") {
             throw err;
