@@ -17,10 +17,10 @@ limitations under the License.
 import {createEnum} from "./utils/enum.js";
 import {orderedUnique} from "./utils/unique.js";
 
-const ROOMALIAS_PATTERN = /^#([^:]*):(.+)$/;
-const ROOMID_PATTERN = /^!([^:]*)(:(.+))?$/; // As of room version 12, room IDs don't have domains
-const USERID_PATTERN = /^@([^:]+):(.+)$/;
-const EVENTID_PATTERN = /^$([^:]+):(.+)$/;
+const ROOMALIAS_PATTERN = /^(?:#|r\/)([^:]*):(.+)$/;
+const ROOMID_PATTERN = /^(?:!|roomid\/)([^:]*)(:(.+))?$/; // As of room version 12, room IDs don't have domains
+const USERID_PATTERN = /^(?:@|u\/)([^:]+):(.+)$/;
+const EVENTID_PATTERN = /^(?:$|e\/)([^:]+):(.+)$/;
 const GROUPID_PATTERN = /^\+([^:]+):(.+)$/;
 
 export const IdentifierKind = createEnum(
@@ -36,6 +36,16 @@ function asPrefix(identifierKind) {
         case IdentifierKind.RoomAlias: return "#";
         case IdentifierKind.GroupId: return "+";
         case IdentifierKind.UserId: return "@";
+        default: throw new Error("invalid id kind " + identifierKind);
+    }
+}
+
+function asMSC4481Prefix(identifierKind) {
+    switch (identifierKind) {
+        case IdentifierKind.RoomId: return "roomid/";
+        case IdentifierKind.RoomAlias: return "r/";
+        case IdentifierKind.GroupId: return asPrefix(identifierKind);
+        case IdentifierKind.UserId: return "u/";
         default: throw new Error("invalid id kind " + identifierKind);
     }
 }
@@ -111,7 +121,22 @@ export class Link {
             return null;
         }
         linkStr = linkStr.slice(2);
-        const [identifier, eventId] = linkStr.split("/");
+        const segments = linkStr.split("/");
+        let _1, identifier, _2, eventId;
+        if (/^(roomid|r|u)/.test(linkStr)) {
+            [_1, identifier, _2, eventId] = segments;
+            if (_1 === "roomid")
+                identifier = "!" + identifier;
+            else if (_1 === "r")
+                identifier = "#" + identifier;
+            else
+                identifier = "@" + identifier;
+
+            if (_2 === "e")
+                eventId = "$" + eventId;
+        } else {
+            [identifier, eventId] = segments;
+        }
 
         let viaServers = [];
         let clientId = null;
@@ -210,10 +235,11 @@ export class Link {
     }
 
     toFragment() {
+        const id = `/${asMSC4481Prefix(this.identifierKind)}${this.identifier.substring(1)}`;
         if (this.eventId) {
-            return `/${this.identifier}/${this.eventId}`;
+            return `${id}/e/${this.eventId.substring(1)}`;
         } else {
-            return `/${this.identifier}`;
+            return id;
         }
     }
 

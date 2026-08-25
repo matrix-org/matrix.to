@@ -46,12 +46,21 @@ increase its availability and avoid tampering.
 
 The matrix.to URL scheme is
 
+| Entity type: | Example URL                                                         |
+|--------------|---------------------------------------------------------------------|
+| Rooms:       | <https://matrix.to/#/r/matrix:matrix.org>                             |
+| Rooms by ID: | <https://matrix.to/#/roomid/cURbafjkfsMDVwdRDQ:matrix.org>            |
+| Users:       | <https://matrix.to/#/u/matthew:matrix.org>                            |
+| Messages:    | <https://matrix.to/#/r/matrix:matrix.org/e/1448831580433WbpiJ:jki.re> |
+
+The legacy scheme is deprecated, but as follows
+
 | Entity type: | Example URL                                                       |
 |--------------|-------------------------------------------------------------------|
-| Rooms:       | https://matrix.to/#/#matrix:matrix.org                            |
-| Rooms by ID: | https://matrix.to/#/!cURbafjkfsMDVwdRDQ:matrix.org                |
-| Users:       | https://matrix.to/#/@matthew:matrix.org                           |
-| Messages:    | https://matrix.to/#/#matrix:matrix.org/$1448831580433WbpiJ:jki.re |
+| Rooms:       | <https://matrix.to/#/#matrix:matrix.org>                            |
+| Rooms by ID: | <https://matrix.to/#/!cURbafjkfsMDVwdRDQ:matrix.org>                |
+| Users:       | <https://matrix.to/#/@matthew:matrix.org>                           |
+| Messages:    | <https://matrix.to/#/#matrix:matrix.org/$1448831580433WbpiJ:jki.re> |
 
 The #/ component is mandatory and exists to avoid leaking the target URL to the
 server hosting matrix.to.

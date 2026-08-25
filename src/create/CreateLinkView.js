@@ -29,7 +29,7 @@ export class CreateLinkView extends TemplateView {
                     type: "text",
                     name: "identifier",
                     required: true,
-                    placeholder: "#room:example.com, @user:example.com",
+                    placeholder: "r/room:example.com, u/user:example.com",
                     onChange: evt => this._onIdentifierChange(evt)
                 })),
                 t.div(t.input({className: "primary fullwidth icon link", type: "submit", value: "Create link"}))
@@ -48,7 +48,7 @@ export class CreateLinkView extends TemplateView {
     _onIdentifierChange(evt) {
         const inputField = evt.target;
         if (!this.value.validateIdentifier(inputField.value)) {
-            inputField.setCustomValidity("That doesn't seem valid. Try #room:example.com, @user:example.com or +group:example.com.");
+            inputField.setCustomValidity("That doesn't seem valid. Try r/room:example.com, u/user:example.com or +group:example.com.");
         } else {
             inputField.setCustomValidity("");
         }
