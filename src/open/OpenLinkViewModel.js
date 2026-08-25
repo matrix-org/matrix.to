@@ -21,6 +21,7 @@ import {PreviewViewModel} from "../preview/PreviewViewModel.js";
 import {ServerConsentViewModel} from "./ServerConsentViewModel.js";
 import {getLabelForLinkKind} from "../Link.js";
 import {orderedUnique} from "../utils/unique.js";
+import {Link} from "../Link.js"
 
 export class OpenLinkViewModel extends ViewModel {
     constructor(options) {
@@ -37,6 +38,13 @@ export class OpenLinkViewModel extends ViewModel {
         } else {
             this._showLink();
         }
+
+        this._openLink();
+    }
+
+    async _openLink() {
+        // Proactively try to open the default Matrix client of the user.
+        window.open(Link.toMatrixUri(this._link), '_self');
     }
 
     _showServerConsent() {
