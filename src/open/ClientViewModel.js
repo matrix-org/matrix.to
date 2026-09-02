@@ -16,7 +16,7 @@ limitations under the License.
 
 import {isWebPlatform, isDesktopPlatform, Platform} from "../Platform.js";
 import {ViewModel} from "../utils/ViewModel.js";
-import {IdentifierKind} from "../Link.js";
+import { copy } from "../utils/copy.js";
 
 function getMatchingPlatforms(client, supportedPlatforms) {
     const clientPlatforms = client.platforms;
@@ -51,32 +51,37 @@ export class ClientViewModel extends ViewModel {
         this._showOpen = this.openActions.length && !this._clientCanIntercept;
     }
 
+    _onDeepLinkClicked = async () => {
+        await copy(this.proposedDeepLink);
+        this._pickClient(this._client);
+        this.preferences.setClient(this._client.id, this._proposedPlatform);
+        // only show install screen if we tried to open a native deeplink
+        if (this._showOpen && this._proposedPlatform === this._nativePlatform) {
+            this._showOpen = false;
+            this.emitChange();
+        }
+    }
+
     // these are only shown in the open stage
     _createOpenActions() {
         const hasPreferredWebInstance = this.hasPreferredWebInstance;
-        let deepLinkLabel = "Continue";
+        this.deepLinkLabel = "Continue";
         if (hasPreferredWebInstance) {
             if (this._proposedPlatform === this._nativePlatform) {
-                deepLinkLabel = "Open in app";
+                this.deepLinkLabel = "Open in app";
             } else {
-                deepLinkLabel = `Open on ${this._client.getPreferredWebInstance(this._link)}`;
+                this.deepLinkLabel = `Open on ${this._client.getPreferredWebInstance(this._link)}`;
             }
         }
         const actions = [];
-        const proposedDeepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
-        if (proposedDeepLink) {
+        this.proposedDeepLink = this._client.getDeepLink(this._proposedPlatform, this._link);
+        if (this.proposedDeepLink) {
             actions.push({
-                label: deepLinkLabel,
-                url: proposedDeepLink,
+                label: this.deepLinkLabel,
+                url: this.proposedDeepLink,
                 primary: true,
-                activated: () => {
-                    this._pickClient(this._client);
-                    this.preferences.setClient(this._client.id, this._proposedPlatform);
-                    // only show install screen if we tried to open a native deeplink
-                    if (this._showOpen && this._proposedPlatform === this._nativePlatform) {
-                        this._showOpen = false;
-                        this.emitChange();
-                    }
+                activated: async () => {
+                    this._onDeepLinkClicked();
                 },
             });
         }
@@ -105,6 +110,18 @@ export class ClientViewModel extends ViewModel {
                     activated: () => this.preferences.setClient(this._client.id, this._nativePlatform),
                 };
             });
+
+            if (!this._webPlatform && this.proposedDeepLink) {
+                actions.push({
+                    label: this.deepLinkLabel,
+                    url: this.proposedDeepLink,
+                    primary: true,
+                    activated: async () => {
+                        this._onDeepLinkClicked();
+                    },
+                })
+            }
+
             actions.push(...nativeActions);
         }
         if (this._webPlatform) {
