@@ -39,6 +39,14 @@ function renderInstructions(parts) {
 export class ClientView extends TemplateView {
 
     render(t, vm) {
+        return t.mapView(vm => vm.customWebInstanceFormOpen, open => {
+            switch (open) {
+                case true: return new SetCustomWebInstanceView(vm);
+                case false: return new TemplateView(vm, t => this.renderContent(t, vm));
+            }
+        });
+    }
+    renderContent(t, vm) {
         return t.div({className: {"ClientView": true, "isPreferred": vm => vm.hasPreferredWebInstance}}, [
             ... vm.hasPreferredWebInstance ? [t.div({className: "hostedBanner"}, vm.hostedByBannerLabel)] : [],
             t.div({className: "header"}, [
@@ -112,10 +120,49 @@ class InstallClientView extends TemplateView {
     }
 }
 
+export class SetCustomWebInstanceView extends TemplateView {
+    render(t, vm) {
+        return t.div({className: "SetCustomWebInstanceView"}, [
+            t.p([
+                "Use a custom web instance for the ", t.strong(vm.name), " client:",
+            ]),
+            t.form({action: "#", id: "setCustomWebInstanceForm", onSubmit: evt => this._onSubmit(evt)}, [
+                t.input({
+                    type: "text",
+                    className: "fullwidth large",
+                    placeholder: "chat.example.org",
+                    name: "instanceHostname",
+                    value: vm.preferredWebInstance || "",
+                }),
+                t.input({type: "submit", value: "Save", className: "primary fullwidth"}),
+                t.input({type: "button", value: "Use Default Instance", className: "secondary fullwidth", onClick: evt => this._onReset(evt)}),
+            ])
+        ]);
+    }
+
+    _onSubmit(evt) {
+        evt.preventDefault();
+        const form = evt.target;
+        const {instanceHostname} = form.elements;
+        this.value.setCustomWebInstance(instanceHostname.value);
+        this.value.closeCustomWebInstanceForm();
+    }
+
+    _onReset(evt) {
+        this.value.setCustomWebInstance(undefined);
+        this.value.closeCustomWebInstanceForm();
+    }
+}
+
 function showBack(t, vm) {
     return t.p({className: {caption: true, "back": true, hidden: vm => !vm.showBack}}, [
         `Continue with ${vm.name} · `,
         t.button({className: "text", onClick: () => vm.back()}, "Change"),
+        t.span({hidden: vm => !vm.supportsCustomWebInstances}, [
+            ' · ',
+            t.button({className: "text", onClick: () => vm.configureCustomWebInstance()}, "Use Custom Web Instance"),
+        ])
+
     ]);
 }
 
