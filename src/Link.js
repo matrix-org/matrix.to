@@ -111,7 +111,14 @@ export class Link {
             return null;
         }
         linkStr = linkStr.slice(2);
-        const [identifier, eventId] = linkStr.split("/");
+        const parts = linkStr.split("/");
+        // some clients (e.g. Element with a custom permalink_prefix, see
+        // https://github.com/element-hq/element-web/issues/23933) prefix the
+        // identifier with a literal "room" or "user" segment. Strip it if present.
+        if ((parts[0] === "room" || parts[0] === "user") && parts.length > 1) {
+            parts.shift();
+        }
+        const [identifier, eventId] = parts;
 
         let viaServers = [];
         let clientId = null;
