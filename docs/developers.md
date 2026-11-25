@@ -2,12 +2,12 @@
 Clone the repo and
 
 ```
-yarn start
+pnpm start
 ```
 
 ## Storybook
 Storybook lets you view components individually.
 
 ```
-yarn storybook
+pnpm storybook
 ```

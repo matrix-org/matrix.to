@@ -79,9 +79,9 @@ You can discuss matrix.to in
 
 ## Build Instructions
 
-1. Install [yarn](https://classic.yarnpkg.com/en/docs/install)
+1. Install [pnpm](https://pnpm.io/installation)
 1. `git clone https://github.com/matrix-org/matrix.to`
 1. `cd matrix.to`
-1. `yarn`
-1. `yarn start`
+1. `pnpm install`
+1. `pnpm start`
 1. Go to http://localhost:5000 in your browser
