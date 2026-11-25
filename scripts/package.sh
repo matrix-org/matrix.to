@@ -1,7 +1,7 @@
 set -e
 VERSION=$(jq -r ".version" package.json)
 PACKAGE=matrixto-$VERSION.tar.gz
-yarn build
+pnpm build
 pushd build
 tar -czvf ../$PACKAGE ./
 popd
