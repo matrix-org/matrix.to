@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cheerio from "cheerio";
+import { load as loadHtml } from "cheerio";
 import fs from "fs/promises";
 import path from "path";
 import xxhash from 'xxhashjs';
@@ -30,7 +30,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 // multi-entry plugin so we can add polyfill file to main
 import multi from '@rollup/plugin-multi-entry';
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import replace from "@rollup/plugin-replace";
 // replace urls of asset names with content hashed version
 import postcssUrl from "postcss-url";
@@ -68,7 +68,7 @@ async function build() {
 
 async function buildHtml(assets) {
     const devHtml = await fs.readFile(path.join(projectDir, "index.html"), "utf8");
-    const doc = cheerio.load(devHtml);
+    const doc = loadHtml(devHtml);
     doc("link[rel=stylesheet]").attr("href", assets.resolve(`bundle.css`));
     const mainScripts = [
         // this is needed to avoid hitting https://github.com/facebook/regenerator/issues/378
