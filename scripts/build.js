@@ -163,13 +163,7 @@ async function buildCss(entryPath, targetDir, assets) {
 }
 
 async function removeDirIfExists(targetDir) {
-    try {
-        await fs.rmdir(targetDir, {recursive: true});
-    } catch (err) {
-        if (err.code !== "ENOENT") {
-            throw err;
-        }
-    }
+    await fs.rm(targetDir, {recursive: true, force: true});
 }
 
 async function copyFolder(srcRoot, dstRoot, filter = null, assets = null) {
