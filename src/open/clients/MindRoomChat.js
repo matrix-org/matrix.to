@@ -50,6 +50,7 @@ export class MindRoomChat {
             Platform.DesktopWeb,
             Platform.MobileWeb,
             Platform.macOS,
+            Platform.Linux,
             Platform.iOS,
         ];
     }
@@ -61,13 +62,14 @@ export class MindRoomChat {
             case Platform.DesktopWeb:
             case Platform.MobileWeb:
             case Platform.macOS:
+            case Platform.Linux:
             case Platform.iOS:
                 return Maturity.Stable;
         }
     }
 
     getDeepLink(platform, link) {
-        if (platform === Platform.macOS) {
+        if (platform === Platform.macOS || platform === Platform.Linux) {
             return;
         }
         if (!this.platforms.includes(platform)) {
@@ -77,6 +79,9 @@ export class MindRoomChat {
         let path;
         switch (link.kind) {
             case LinkKind.User:
+                if (platform === Platform.iOS) {
+                    return;
+                }
                 path = `direct/create?userId=${encodeURIComponent(link.identifier)}`;
                 break;
             case LinkKind.Room:
@@ -116,6 +121,7 @@ export class MindRoomChat {
             case Platform.iOS:
                 return [new AppleStoreLink("mindroom-ai", "id6760272172")];
             case Platform.macOS:
+            case Platform.Linux:
                 return [new WebsiteLink("https://github.com/mindroom-ai/mindroom-chat/releases")];
         }
     }
