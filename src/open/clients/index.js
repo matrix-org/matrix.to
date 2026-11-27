@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {Mango} from "./Mango.js";
 import {Element} from "./Element.js";
 import {SchildiChat} from "./SchildiChat.js";
 import {Weechat} from "./Weechat.js";
@@ -41,5 +42,6 @@ export function createClients() {
         new Syphon(),
         new Thunderbird(),
         new Cinny(),
+        new Mango(),
     ];
 }

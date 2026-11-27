@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title description">
+  <title id="title">Low-poly mango app icon</title>
+  <desc id="description">A faceted ivory, peach and slate-blue mango with a detached four-facet leaf, on a dark indigo rounded square. Reconstructed from individually editable vector shapes. No embedded bitmap, rim, glow or specular border.</desc>
+  <defs>
+    <linearGradient id="background-paint" x1="0" y1="0" x2="900" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3b3a50"/>
+      <stop offset="1" stop-color="#18192b"/>
+    </linearGradient>
+    <linearGradient id="mango-upper-left-paint" gradientUnits="userSpaceOnUse" x1="454.64" y1="335.57" x2="389.54" y2="271.42">
+      <stop stop-color="#f5eadf"/>
+      <stop offset="1" stop-color="#e8e6e9"/>
+    </linearGradient>
+    <linearGradient id="mango-top-paint" gradientUnits="userSpaceOnUse" x1="632.37" y1="201.41" x2="460.32" y2="306.84">
+      <stop stop-color="#dbdeec"/>
+      <stop offset="1" stop-color="#faf8f5"/>
+    </linearGradient>
+    <linearGradient id="mango-upper-light-paint" gradientUnits="userSpaceOnUse" x1="668.96" y1="347.40" x2="473.38" y2="302.10">
+      <stop stop-color="#eff3fb"/>
+      <stop offset="1" stop-color="#fffdfa"/>
+    </linearGradient>
+    <linearGradient id="mango-right-shoulder-paint" gradientUnits="userSpaceOnUse" x1="802.68" y1="397.26" x2="652.08" y2="373.78">
+      <stop stop-color="#b1b6cf"/>
+      <stop offset="1" stop-color="#bcbfd3"/>
+    </linearGradient>
+    <linearGradient id="mango-right-upper-paint" gradientUnits="userSpaceOnUse" x1="772.37" y1="520.91" x2="632.82" y2="469.48">
+      <stop stop-color="#5d6489"/>
+      <stop offset="1" stop-color="#676d8f"/>
+    </linearGradient>
+    <linearGradient id="mango-right-edge-paint" gradientUnits="userSpaceOnUse" x1="767.12" y1="627.99" x2="704.56" y2="518.81">
+      <stop stop-color="#676f95"/>
+      <stop offset="1" stop-color="#666c91"/>
+    </linearGradient>
+    <linearGradient id="mango-lower-right-paint" gradientUnits="userSpaceOnUse" x1="759.45" y1="667.04" x2="599.44" y2="676.33">
+      <stop stop-color="#393d5a"/>
+      <stop offset="1" stop-color="#3b405a"/>
+    </linearGradient>
+    <linearGradient id="mango-lower-middle-paint" gradientUnits="userSpaceOnUse" x1="634.98" y1="594.84" x2="532.95" y2="812.54">
+      <stop stop-color="#52587b"/>
+      <stop offset="1" stop-color="#646b8f"/>
+    </linearGradient>
+    <linearGradient id="mango-bottom-paint" gradientUnits="userSpaceOnUse" x1="496.81" y1="726.87" x2="373.61" y2="916.83">
+      <stop stop-color="#3a3f5e"/>
+      <stop offset="1" stop-color="#40415f"/>
+    </linearGradient>
+    <linearGradient id="mango-lower-left-paint" gradientUnits="userSpaceOnUse" x1="381.75" y1="692.97" x2="309.88" y2="872.07">
+      <stop stop-color="#5c6281"/>
+      <stop offset="1" stop-color="#606587"/>
+    </linearGradient>
+    <linearGradient id="mango-left-tip-paint" gradientUnits="userSpaceOnUse" x1="313.09" y1="859.25" x2="248.26" y2="706.46">
+      <stop stop-color="#8086a5"/>
+      <stop offset="1" stop-color="#7d83a0"/>
+    </linearGradient>
+    <linearGradient id="mango-cream-edge-paint" gradientUnits="userSpaceOnUse" x1="274.95" y1="555.80" x2="251.31" y2="764.70">
+      <stop stop-color="#fff7e5"/>
+      <stop offset="1" stop-color="#e8e0e2"/>
+    </linearGradient>
+    <linearGradient id="mango-peach-paint" gradientUnits="userSpaceOnUse" x1="410.67" y1="609.69" x2="292.86" y2="456.21">
+      <stop stop-color="#f1c3b2"/>
+      <stop offset="1" stop-color="#ffe5ba"/>
+    </linearGradient>
+    <linearGradient id="mango-blush-paint" gradientUnits="userSpaceOnUse" x1="410.91" y1="451.44" x2="278.13" y2="392.31">
+      <stop stop-color="#efceb9"/>
+      <stop offset="1" stop-color="#c8c8d8"/>
+    </linearGradient>
+    <linearGradient id="mango-ivory-paint" gradientUnits="userSpaceOnUse" x1="512.45" y1="530.10" x2="393.87" y2="380.58">
+      <stop stop-color="#e9e7ed"/>
+      <stop offset="1" stop-color="#fffee9"/>
+    </linearGradient>
+    <linearGradient id="mango-center-upper-paint" gradientUnits="userSpaceOnUse" x1="630.83" y1="447.79" x2="458.96" y2="336.51">
+      <stop stop-color="#c7cee5"/>
+      <stop offset="1" stop-color="#f6e5d6"/>
+    </linearGradient>
+    <linearGradient id="mango-center-right-paint" gradientUnits="userSpaceOnUse" x1="683.13" y1="475.70" x2="591.89" y2="517.43">
+      <stop stop-color="#b4b9cc"/>
+      <stop offset="1" stop-color="#b0b5c9"/>
+    </linearGradient>
+    <linearGradient id="mango-center-lower-paint" gradientUnits="userSpaceOnUse" x1="595.87" y1="684.28" x2="463.42" y2="527.26">
+      <stop stop-color="#ccd1e5"/>
+      <stop offset="1" stop-color="#cfd2df"/>
+    </linearGradient>
+    <linearGradient id="mango-bottom-light-paint" gradientUnits="userSpaceOnUse" x1="670.45" y1="598.08" x2="358.59" y2="737.21">
+      <stop stop-color="#676e91"/>
+      <stop offset="1" stop-color="#a0a5bf"/>
+    </linearGradient>
+    <linearGradient id="leaf-top-paint" gradientUnits="userSpaceOnUse" x1="837.36" y1="58.93" x2="705.75" y2="119.39">
+      <stop stop-color="#e3eafb"/>
+      <stop offset="1" stop-color="#fefdfb"/>
+    </linearGradient>
+    <linearGradient id="leaf-left-paint" gradientUnits="userSpaceOnUse" x1="685.79" y1="96.16" x2="687.95" y2="222.87">
+      <stop stop-color="#e5e6ef"/>
+      <stop offset="1" stop-color="#d7d8e7"/>
+    </linearGradient>
+    <linearGradient id="leaf-right-paint" gradientUnits="userSpaceOnUse" x1="841.43" y1="65.10" x2="733.03" y2="166.51">
+      <stop stop-color="#686f97"/>
+      <stop offset="1" stop-color="#9ea3be"/>
+    </linearGradient>
+    <linearGradient id="leaf-bottom-paint" gradientUnits="userSpaceOnUse" x1="734.09" y1="211.19" x2="683.69" y2="161.47">
+      <stop stop-color="#696f92"/>
+      <stop offset="1" stop-color="#747999"/>
+    </linearGradient>
+  </defs>
+  <!-- Native SVG rounded corners. Change rx to adjust the corner radius. -->
+  <rect id="background" width="1024" height="1024" rx="256" fill="url(#background-paint)"/>
+  <!-- Tiny matching strokes prevent hairline gaps between adjoining facets. -->
+  <g id="mango" stroke-width="0.6" stroke-linejoin="round">
+    <polygon points="474.5,208 284.5,378 469,321" id="mango-upper-left" fill="url(#mango-upper-left-paint)" stroke="url(#mango-upper-left-paint)"/>
+    <polygon points="474.5,208 669.5,262 469,321" id="mango-top" fill="url(#mango-top-paint)" stroke="url(#mango-top-paint)"/>
+    <polygon points="669.5,262 654,412 469,321" id="mango-upper-light" fill="url(#mango-upper-light-paint)" stroke="url(#mango-upper-light-paint)"/>
+    <polygon points="669.5,262 791.5,469 654,412" id="mango-right-shoulder" fill="url(#mango-right-shoulder-paint)" stroke="url(#mango-right-shoulder-paint)"/>
+    <polygon points="654,412 791.5,469 678,615" id="mango-right-upper" fill="url(#mango-right-upper-paint)" stroke="url(#mango-right-upper-paint)"/>
+    <polygon points="791.5,469 757.5,633.5 678,615" id="mango-right-edge" fill="url(#mango-right-edge-paint)" stroke="url(#mango-right-edge-paint)"/>
+    <polygon points="757.5,633.5 606.5,798 678,615" id="mango-lower-right" fill="url(#mango-lower-right-paint)" stroke="url(#mango-lower-right-paint)"/>
+    <polygon points="678,615 606.5,798 431.5,765" id="mango-lower-middle" fill="url(#mango-lower-middle-paint)" stroke="url(#mango-lower-middle-paint)"/>
+    <polygon points="606.5,798 296,866.5 431.5,765" id="mango-bottom" fill="url(#mango-bottom-paint)" stroke="url(#mango-bottom-paint)"/>
+    <polygon points="296,866.5 329.5,672 431.5,765" id="mango-lower-left" fill="url(#mango-lower-left-paint)" stroke="url(#mango-lower-left-paint)"/>
+    <polygon points="296,866.5 196.5,758.5 329.5,672" id="mango-left-tip" fill="url(#mango-left-tip-paint)" stroke="url(#mango-left-tip-paint)"/>
+    <path d="M 196.5 758.5 C 204 691 228 621 259 554 L 329.5 672 Z" id="mango-cream-edge" fill="url(#mango-cream-edge-paint)" stroke="url(#mango-cream-edge-paint)"/>
+    <polygon points="259,554 469,321 329.5,672" id="mango-peach" fill="url(#mango-peach-paint)" stroke="url(#mango-peach-paint)"/>
+    <path d="M 284.5 378 C 272 435 264 500 259 554 L 469 321 Z" id="mango-blush" fill="url(#mango-blush-paint)" stroke="url(#mango-blush-paint)"/>
+    <polygon points="469,321 575,480.5 348.5,624.2" id="mango-ivory" fill="url(#mango-ivory-paint)" stroke="url(#mango-ivory-paint)"/>
+    <polygon points="469,321 654,412 575,480.5" id="mango-center-upper" fill="url(#mango-center-upper-paint)" stroke="url(#mango-center-upper-paint)"/>
+    <polygon points="654,412 678,615 575,480.5" id="mango-center-right" fill="url(#mango-center-right-paint)" stroke="url(#mango-center-right-paint)"/>
+    <polygon points="348.5,624.2 575,480.5 678,615 329.5,672" id="mango-center-lower" fill="url(#mango-center-lower-paint)" stroke="url(#mango-center-lower-paint)"/>
+    <polygon points="329.5,672 678,615 431.5,765" id="mango-bottom-light" fill="url(#mango-bottom-light-paint)" stroke="url(#mango-bottom-light-paint)"/>
+  </g>
+  <g id="detached-leaf" stroke-width="0.6" stroke-linejoin="round">
+    <path d="M 695 96 Q 749 71 839 62.5 L 717 142 Z" id="leaf-top" fill="url(#leaf-top-paint)" stroke="url(#leaf-top-paint)"/>
+    <path d="M 622 224 Q 657 147 695 96 L 717 142 Z" id="leaf-left" fill="url(#leaf-left-paint)" stroke="url(#leaf-left-paint)"/>
+    <path d="M 839 62.5 Q 800 131 755 190 L 717 142 Z" id="leaf-right" fill="url(#leaf-right-paint)" stroke="url(#leaf-right-paint)"/>
+    <polygon points="622,224 717,142 755,190" id="leaf-bottom" fill="url(#leaf-bottom-paint)" stroke="url(#leaf-bottom-paint)"/>
+  </g>
+</svg>
