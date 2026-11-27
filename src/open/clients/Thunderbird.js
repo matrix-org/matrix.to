@@ -35,7 +35,7 @@ export class Thunderbird {
     getInstallLinks(platform) {
         const links = [];
         if (platform === Platform.Linux) {
-            links.push(new FlathubLink("org.mozilla.Thunderbird"));
+            links.push(new FlathubLink("org.mozilla.thunderbird"));
         }
         links.push(new WebsiteLink(this.homepage));
         return links;
