@@ -82,8 +82,8 @@ class InstallClientView extends TemplateView {
                 className: "copy",
                 title: "Copy instructions",
                 "aria-label": "Copy instructions",
-                onClick: evt => {
-                    if (copy(vm.copyString, copyButton.parentElement)) {
+                onClick: async (evt) => {
+                    if (await copy(vm.copyString, copyButton.parentElement)) {
                         copyButton.className = "tick";
                         setTimeout(() => {
                             copyButton.className = "copy";

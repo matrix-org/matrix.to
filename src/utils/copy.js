@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,14 +22,21 @@ function selectNode(node) {
     selection.addRange(range);
 }
 
-export function copy(text, parent) {
-    const span = document.createElement("span");
-    span.innerText = text;
-    parent.appendChild(span);
-    selectNode(span);
-    const result = document.execCommand("copy");
-    parent.removeChild(span);
-    return result;
+export async function copy(text, parent) {
+    if ("clipboard" in navigator) {
+        const type = "text/plain";
+        const blob = new Blob([text], { type });
+        const data = [new ClipboardItem({ [type]: blob })];
+        return navigator.clipboard.write(data);
+    } else {
+        const span = document.createElement("span");
+        span.innerText = text;
+        parent.appendChild(span);
+        selectNode(span);
+        const result = document.execCommand("copy");
+        parent.removeChild(span);
+        return result;
+    }
 }
 
 export function copyButton(t, getCopyText, label, classNames) {
