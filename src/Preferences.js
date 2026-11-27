@@ -25,6 +25,7 @@ export class Preferences extends EventEmitter {
         // used to differentiate web from native if a client supports both
         this.platform = null;
         this.homeservers = null;
+        this.customWebInstances = {};
 
         const prefsStr = localStorage.getItem("preferred_client");
         if (prefsStr) {
@@ -35,6 +36,10 @@ export class Preferences extends EventEmitter {
         const serversStr = localStorage.getItem("consented_servers");
         if (serversStr) {
             this.homeservers = JSON.parse(serversStr);
+        }
+        const customWebInstancesStr = localStorage.getItem("custom_web_instances");
+        if (customWebInstancesStr) {
+            this.customWebInstances = JSON.parse(customWebInstancesStr);
         }
     }
 
@@ -54,15 +59,27 @@ export class Preferences extends EventEmitter {
         }
     }
 
+    setCustomWebInstance(client_id, instance_url) {
+        this.customWebInstances[client_id] = instance_url;
+        this._localStorage.setItem("custom_web_instances", JSON.stringify(this.customWebInstances));
+        this.emit("canClear");
+    }
+
+    getCustomWebInstance(client_id) {
+        return this.customWebInstances[client_id];
+    }
+
     clear() {
         this._localStorage.removeItem("preferred_client");
         this._localStorage.removeItem("consented_servers");
+        this._localStorage.removeItem("custom_web_instances");
         this.clientId = null;
         this.platform = null;
         this.homeservers = null;
+        this.customWebInstances = {};
     }
 
     get canClear() {
-        return !!this.clientId || !!this.platform || !!this.homeservers;
+        return !!this.clientId || !!this.platform || !!this.homeservers || !!this.customWebInstances;
     }
 }
