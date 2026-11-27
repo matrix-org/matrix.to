@@ -10,7 +10,7 @@
 }
 
 .ClientView {
-    border: 1px solid #E6E6E6;
+    border: 1px solid var(--foreground);
     border-radius: 8px;
     margin: 16px 0;
     padding: 16px;
@@ -95,4 +95,3 @@
 .InstallClientView .instructions button.tick {
     background-image: url('../images/tick-dark.svg');
 }
-

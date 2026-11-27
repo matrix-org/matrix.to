@@ -21,11 +21,12 @@ limitations under the License.
 @import url('open.css');
 
 :root {
-    --app-background: #f4f4f4;
-    --background: #ffffff;
-    --foreground: #000000;
-    --font: #333333;
-    --grey: #666666;
+    color-scheme: light dark;
+    --app-background: light-dark(#f4f4f4,#0a0a0a);
+    --background: light-dark(#ffffff,#000000);
+    --foreground: light-dark(#444,#aaa);
+    --font: light-dark(#333333,#cccccc);
+    --grey: light-dark(#666666,#999999);
     --accent: #0098d4;
     --error: #d6001c;
     --link: #0098d4;
@@ -44,7 +45,7 @@ body {
     background-image: url('../images/background.svg');
     background-attachment: fixed;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     background-position: center -50px;
     height: 100%;
     width: 100%;
@@ -76,6 +77,7 @@ textarea {
 
 button, input[type=submit] {
     cursor: pointer;
+    color: white;
 }
 
 button, input {
@@ -175,7 +177,7 @@ button.text:hover {
 
 .primary {
     background: var(--link);
-    color: var(--background);
+    color: white;
     border-radius: 32px;
 }
 
